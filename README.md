@@ -8,7 +8,7 @@
 
 ## Team Members
 
-- Person 1: one sentence about you!
+- Yelin (Andy) Hu: Passionate about building exciting products!
 - Person 2: one sentence about you!
 - Person 3: one sentence about you!
 - Person 4: one sentence about you!
