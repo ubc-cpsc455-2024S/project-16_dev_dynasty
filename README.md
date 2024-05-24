@@ -47,6 +47,28 @@ Our application will store data of different user accounts with different roles 
 
 
 
+### 2 Minimal Requirements Breakdown
+
+
+
+Point 1: Add house 
+- Design the database schema to store the info needed for this project.
+- Deploy the database and connect it to our app
+- Create a button and form that allow info submission 
+
+
+Point 4: Create “Production Line Status Board” 
+
+- A user should be able to view the production line status board and see current houses at their different production bay and stages
+- Once a new house is is added, a user should be able to see the new house represented on the status board at the beginning bay or stage
+- Once the stage of a house is updated, the production stage board should reflect the change and move the house accordingly to the new bay or stage
+
+
+
+
+
+
+
 
 
 
