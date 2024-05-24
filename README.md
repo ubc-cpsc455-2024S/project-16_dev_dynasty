@@ -9,7 +9,7 @@
 ## Team Members
 
 - Yelin (Andy) Hu: Passionate about building exciting products!
-- Person 2: one sentence about you!
+- Andrew Liu: Passionate about web dev with AI intergration!
 - Person 3: one sentence about you!
 - Person 4: one sentence about you!
 
