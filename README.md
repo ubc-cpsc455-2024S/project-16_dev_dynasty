@@ -21,6 +21,35 @@ Our application will store data of different user accounts with different roles 
 - View “Production Line Status Board” -  A user should be able to go to the production board and see the status of all houses on the assembly line.
 
 
+### Standard Requirements
+
+
+- User Account Setup -  allow administrators to create accounts with different permission levels and allow them to login and logout. 
+
+- Create Quality Control Forms that need to be completed at Each Stage of the Assembly Line -  A user should be able to complete a Quality Control Form at each stage of the housing process. There are 19 stages so there are many stages.  
+
+- Track House Progress with Status on “Production Line Status Board” -  A user should be able to mark “work completed” on the current stage so that a quality control person can do a quality check and move the house to the next stage
+
+- Create And Update House Defects -  A user should be able to create defects that will be associated with the current stage the house is in. A user should be able to mark defects as fixed. Defects can have pictures attached
+ 
+- Attach External Documents to House Record - A user should be able to attach pictures to the house document page for later reference. This can include blueprints or contract documents
+
+- Customer Setup -  A user should be able to add, edit and delete a customer. When a house is being added, each house should be associated with one customer.
+
+
+### Strech Requirements
+
+- Drag and Drop Houses Between Stages -  A user can drag and drop houses between stages via the assembly line status board. 
+
+- Automated Email Status Updates -  A user will receive daily update on the statuses of houses in the current assembly line
+
+- Analytics Page - A user should be able to see the average time to complete a house per square footage.
+
+
+
+
+
+
 ## Team Members
 
 - Yelin (Andy) Hu: Passionate about building exciting products!
