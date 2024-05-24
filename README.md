@@ -1,10 +1,13 @@
-# Group YY - {Short snappy Title of your project}
+# Group DevDynasty - {BayBuild}
 
-- Your title can change over time.
+## BayBuild
 
-## Describe your topic/interest in about 150-200 words
 
-{Add your stuff here}
+Multimillion dollar modular home construction firm has requested us to build this software to track their current home construction process. Currently this company uses excel and whiteboards to track everything.
+A real modular home factory builds 25 houses a day and needs a planning and resource tracking system. This system will track homes through the 19 stages of manufacturing (plumbing, electrical, drywall etc). 
+Currently homes are being shipped to their final destination without proper quality checks and approvals. On top of that, if information needs to be looked up about a home after it was shipped to site an employee has to waste their time digging through a filing cabinet of spreadsheets and paper based work orders.
+
+
 
 ## Team Members
 
