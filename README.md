@@ -1,89 +1,75 @@
-# Group DevDynasty - {BayBuild}
+# Group 16 DevDynasty - BayBuild
 
 ## BayBuild
 
-
-Multimillion dollar modular home construction firm has requested us to build this software to track their current home construction process. 
-A real modular home factory builds 25 houses a day and needs a planning and resource tracking system. This system will track homes through the 19 stages of manufacturing in 20 production bays (plumbing, electrical, drywall etc). Currently this company uses excel and whiteboards to track everything and homes are being shipped to their final destination without proper quality checks and approvals. 
-Our application will store data of different user accounts with different roles and permission levels, modular homes built by the company, and production bays on the production site. Users of this application will be able to add and manage homes in the production site, track and manage the production processes of homes being built in different production bays including defect management and quality checks, and send customers current home building progress in real time.
-
-## Project Description & Goals
-
---------------------------------------------------------------------------------------------------
-### Minimal requirements
-- Add House -  allow users to be able to add a house (to be constructed). Each house should contain details such as house number, price, size, house model etc.
-
-- Search For House In List and See House Details -  A user should be able to search their house number from a list via a search. When a user clicks on a house in the list of houses they will be taken to a page with details about that house.
-
-
-- Modify Current House Stage -  A user should be able to modify the current house stage. Eg. A house has completed all the electrical work; they should be able to move it to the next stage which is the plumbing stage.
-
-- View “Production Line Status Board” -  A user should be able to go to the production board and see the status of all houses on the assembly line.
-
-
-### Standard Requirements
-
-
-- User Account Setup -  allow administrators to create accounts with different permission levels and allow them to login and logout. 
-
-- Create Quality Control Forms that need to be completed at Each Stage of the Assembly Line -  A user should be able to complete a Quality Control Form at each stage of the housing process. There are 19 stages so there are many stages.  
-
-- Track House Progress with Status on “Production Line Status Board” -  A user should be able to mark “work completed” on the current stage so that a quality control person can do a quality check and move the house to the next stage
-
-- Create And Update House Defects -  A user should be able to create defects that will be associated with the current stage the house is in. A user should be able to mark defects as fixed. Defects can have pictures attached
- 
-- Attach External Documents to House Record - A user should be able to attach pictures to the house document page for later reference. This can include blueprints or contract documents
-
-- Customer Setup -  A user should be able to add, edit and delete a customer. When a house is being added, each house should be associated with one customer.
-
-
-### Strech Requirements
-
-- Drag and Drop Houses Between Stages -  A user can drag and drop houses between stages via the assembly line status board. 
-
-- Automated Email Status Updates -  A user will receive daily update on the statuses of houses in the current assembly line
-
-- Analytics Page - A user should be able to see the average time to complete a house per square footage.
-
-
-
-### Breakdown Two Minimal Requirements
-
-
-
-Point 1: Add house 
-- Design the database schema to store the info needed for this project.
-- Deploy the database and connect it to our app
-- Create a button and form that allow info submission 
-
-
-Point 4: Create “Production Line Status Board” 
-
-- A user should be able to view the production line status board and see current houses at their different production bay and stages
-- Once a new house is is added, a user should be able to see the new house represented on the status board at the beginning bay or stage
-- Once the stage of a house is updated, the production stage board should reflect the change and move the house accordingly to the new bay or stage
-
-
-
-
-
-
-
-
-
+BayBuild is a project management web application specifically designed for a modular home construction company to streamline their business processes. The company constructs up to 25 homes daily and currently depends on a manual planning and record-keeping system. BayBuild enables the company to track homes through a 20 stage production line and automates the creation, modification, and retrieval of quality check and approval documents, ensuring a controlled handoff between construction stages. Additional functionalities, such as business analytics, inventory management and automated email status updates, may be implemented based on time constraints.
 
 ## Team Members
 
 - Yelin (Andy) Hu: Passionate about building exciting products!
-- Andrew Liu: Passionate about web dev with AI intergration!
-- Person 3: one sentence about you!
+- Andrew Liu: Passionate about web dev with AI integration!
+- Justin Burden: Former geotechnical engineer and aspiring software developer!
 - Person 4: one sentence about you!
+
+--------------------------------------------------------------------------------------------------
+## Project Requirements
+
+### Minimal requirements
+
+1. **Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.
+
+2. **View Production Line Status Board** - allow users to view the production line status board and see the position of each home in the 20 stages of production.
+
+3. **Find Home Record** - allow users to find a particular home in the system via a search and view the record specific to that home.
+
+4. **Modify Home Record (Update Home Status)** - allow users to modify a home record and update the position of a home in the 20 stage production line (e.g., a home that has completed all work at the electrical stage and can be moved forward to the next stage, plumbing).
+
+### Standard Requirements
+
+1. **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. 
+
+2. **Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
+
+3. **Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").
+
+4. **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage.
+ 
+5. **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. 
+
+6. **Customer Record Management** -  allow users to add, edit, and delete a customer record and link each home with a customer.
+
+
+### Strech Requirements
+
+1. **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board. 
+
+2. **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
+
+3. **Business Analytics** - allow users to access business analytics such as average time spent per production line stage and average square ft. of home production per day.
+
+--------------------------------------------------------------------------------------------------
+
+## Breakdown of Two Minimal Requirements
+
+1. **Add Home Record** 
+- Design the database schema to store the required information.
+- Deploy the database and connect it to our application.
+- Create a button and form to allow information submission. 
+
+2. **View Production Line Status Board** 
+- Allow users to view the production line status board and see the position of each home in the 20 stages of production.
+- Once a new home is added to the system, allow users to see the new home represented on the status board at the beginning production stage.
+- Once the stage of a house is updated, the production stage board should reflect the change and move the home accordingly to the next production stage.
+  
+--------------------------------------------------------------------------------------------------
 
 ## Images
 
 {You should use this area to add a screenshot of your app or website }
 
 <img src ="images/test.png" width="100px">
+
+--------------------------------------------------------------------------------------------------
 
 ## References
 
