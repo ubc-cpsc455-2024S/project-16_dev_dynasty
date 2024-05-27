@@ -10,7 +10,6 @@ BayBuild is a project management web application specifically designed for a mod
 - Andrew Liu: Passionate about web dev with AI integration!
 - Justin Burden: Former geotechnical engineer and aspiring software developer!
 - Ryan Dick: Former Civil Engineer - passionate about fullstack development
-- Person 4: one sentence about you!
 
 --------------------------------------------------------------------------------------------------
 ## Project Requirements
