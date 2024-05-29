@@ -15,12 +15,13 @@ import HousesPage from '../pages/HousesPage'
 import HousesAddPage from '../pages/HousesAddPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { routes } from './routes'
+import TestPage from '../pages/TestPage'
 
 const MainRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path={'/'} element={<WorkshopPage />} />
+        <Route path={'/'} element={<TestPage />} />
         <Route path={routes.loginRoute} element={<LoginPage />} />
         <Route path={routes.workshopRoute} element={<WorkshopPage />} />
         <Route path={routes.customersRoute} element={<CustomersPage />} />
