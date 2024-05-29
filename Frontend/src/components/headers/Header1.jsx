@@ -1,12 +1,7 @@
 import { Box, Container, Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
-interface Header1Props {
-  children: ReactNode | ReactNode[]
-  title: string
-}
-
-const Header1 = ({ children, title }: Header1Props) => {
+const Header1 = ({ children, title }) => {
   return (
     <Container>
       <Typography style={{ marginTop: 15 }} variant='h3'>

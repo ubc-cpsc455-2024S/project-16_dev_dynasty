@@ -1,10 +1,6 @@
 import React, { ReactNode } from 'react'
 
-interface NavbarProps {
-  children: ReactNode | ReactNode[]
-}
-
-const Navbar = ({ children }: NavbarProps) => {
+const Navbar = ({ children }) => {
   return (
     <div>
       <div style={{ width: '100%', background: 'brown' }}>Navigation Part</div>
