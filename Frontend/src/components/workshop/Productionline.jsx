@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import './productionline.css'
+import './productionlineVnew.css'
 
 const Productionline = ({ children }) => {
   return (
@@ -42,6 +42,15 @@ const Productionline = ({ children }) => {
 
           <div className='grid-item bay-13a plus13'>Bay13A</div>
           <div className='grid-item bay-13b plus13'>Bay13B</div>
+
+          <div className='topwall'></div>
+          <div className='botwall'></div>
+          <div className='rightwall1'></div>
+          <div className='rightwall2'></div>
+          <div className='leftwall1'></div>
+          <div className='leftwall2'></div>
+          <div className='middlewall1'></div>
+          <div className='middlewall2'></div>
         </div>
       </div>
     </div>

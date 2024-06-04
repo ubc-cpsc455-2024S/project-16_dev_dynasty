@@ -1,0 +1,234 @@
+/* 
+vertical layout
+grid is 66 cols, and 48 rows
+each bay takes 6 cols in height and 4 rows in width
+gap 1 col and 1 row between each bay
+allow walls and doors to take 1 col or 1 row
+9bays * (6cols + 1 col gap) = 63 cols, plus 2 walls and 1 gap in the front = 66 cols
+9bays * (5rows + 1 row gap) = 45 rows, plus 2 walls and 1 gap on the top = 48 rows
+ */
+
+.production-line-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 200vh;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(48, 1fr);
+  grid-template-rows: repeat(66, 1fr);
+  width: 70vw;
+  height: 150vh;
+  /* border: 1px solid #ccc; */
+  overflow-y: auto;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  border: 1px solid #000;
+  padding: 5px;
+  text-align: center;
+}
+
+.half-bay {
+  background-color: lightgray;
+}
+.plus13 {
+  background-color: azure;
+}
+
+.topwall {
+    background-color: black;
+    grid-row: 1/1;
+    grid-column: 1/49;
+}
+.botwall {
+    background-color: black;
+    grid-row: 66/67;
+    grid-column: 17/29;
+}
+.rightwall1 {
+    background-color: black;
+    grid-row: 1/17;
+    grid-column: 48/49;
+}
+.rightwall2 {
+    background-color: black;
+    grid-row: 18/67;
+    grid-column: 29/29;
+}
+.leftwall1 {
+    background-color: black;
+    grid-row: 1/17;
+    grid-column: 1/1;
+}
+.leftwall2 {
+    background-color: black;
+    grid-row: 17/67;
+    grid-column: 16/17;
+}
+
+.middlewall1 {
+    background-color: black;
+    grid-row: 17/18;
+    grid-column: 1/16;
+}
+.middlewall2 {
+    background-color: black;
+    grid-row: 17/18;
+    grid-column: 29/49;
+}
+
+.name-date {
+  grid-column: 3/7;
+  grid-row: 24/36;
+  background-color: rgb(234, 237, 161);
+}
+
+.bay-20 {
+  grid-column: 18/22;
+  grid-row: 59/65;
+}
+
+.bay-19 {
+  grid-column: 18/22;
+  grid-row: 52/58;
+}
+
+.bay-18 {
+  grid-column: 18/22;
+  grid-row: 45/51;
+}
+
+.bay-17 {
+  grid-column: 18/22;
+  grid-row: 38/44;
+}
+
+.bay-16 {
+  grid-column: 18/22;
+  grid-row: 31/37;
+}
+.bay-15 {
+  grid-column: 18/22;
+  grid-row: 24/30;
+}
+
+.bay-14 {
+  grid-column: 18/22;
+  grid-row: 17/23;
+}
+
+.bay-13 {
+  grid-column: 18/22;
+  grid-row: 10/16;
+}
+
+.bay-13a {
+  grid-column: 13/17;
+  grid-row: 10/13;
+}
+.bay-13b {
+  grid-column: 8/12;
+  grid-row: 10/13;
+}
+
+.bay-12 {
+  grid-column: 23/27;
+  grid-row: 10/16;
+}
+.bay-11 {
+  grid-column: 28/32;
+  grid-row: 10/16;
+}
+.bay-10 {
+  grid-column: 33/37;
+  grid-row: 10/16;
+}
+.bay-9 {
+  grid-column: 38/42;
+  grid-row: 10/16;
+}
+
+.bay-8 {
+  grid-column: 38/42;
+  grid-row: 3/9;
+}
+
+.bay-85 {
+  grid-column: 43/47;
+  grid-row: 3/6;
+}
+
+.bay-7 {
+  grid-column: 33/37;
+  grid-row: 3/9;
+}
+.bay-6 {
+  grid-column: 28/32;
+  grid-row: 3/9;
+}
+.bay-5 {
+  grid-column: 23/27;
+  grid-row: 3/9;
+}
+.bay-4 {
+  grid-column: 18/22;
+  grid-row: 3/9;
+}
+.bay-3 {
+  grid-column: 13/17;
+  grid-row: 3/9;
+}
+.bay-2 {
+  grid-column: 8/12;
+  grid-row: 3/9;
+}
+.bay-1 {
+  grid-column: 3/7;
+  grid-row: 3/9;
+}
+
+.bay-4 {
+  grid-column: 18/22;
+  grid-row: 3/9;
+}
+
+.bay-205 {
+  grid-column: 23/27;
+  grid-row: 59/62;
+}
+
+.bay-195 {
+  grid-column: 23/27;
+  grid-row: 52/55;
+}
+
+.bay-185 {
+  grid-column: 23/27;
+  grid-row: 45/48;
+}
+
+.bay-175 {
+  grid-column: 23/27;
+  grid-row: 38/41;
+}
+
+.bay-165 {
+  grid-column: 23/27;
+  grid-row: 31/34;
+}
+.bay-155 {
+  grid-column: 23/27;
+  grid-row: 24/27;
+}
+
+.bay-145 {
+  grid-column: 23/27;
+  grid-row: 17/20;
+}
