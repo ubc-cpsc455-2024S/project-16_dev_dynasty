@@ -1,11 +1,11 @@
 /* 
 vertical layout
-grid is 66 cols, and 48 rows
-each bay takes 6 cols in height and 4 rows in width
+grid is 48 cols, and 66 rows
+each bay takes 6 rows in height and 4 cols in width
 gap 1 col and 1 row between each bay
 allow walls and doors to take 1 col or 1 row
-9bays * (6cols + 1 col gap) = 63 cols, plus 2 walls and 1 gap in the front = 66 cols
-9bays * (5rows + 1 row gap) = 45 rows, plus 2 walls and 1 gap on the top = 48 rows
+9bays * (6rows + 1 row gap) = 63 rows, plus 2 walls and 1 gap in the front = 66 rows
+9bays * (4cols + 1 col gap) = 45 cols, plus 2 walls and 1 gap on the top = 48 cols
  */
 
 .production-line-layout {
