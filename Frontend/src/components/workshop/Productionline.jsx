@@ -1,15 +1,20 @@
 import React, { ReactNode } from 'react'
+import { Box, Container, Typography } from '@mui/material'
 import './productionlineVnew.css'
 
 const Productionline = ({ children }) => {
   return (
     <div>
       <div style={{ width: '100%', background: 'brown' }}>Production Line</div>
-      <div>{children}</div>
+      <div>{children}</div>     
 
       <div className='production-line-layout'>
         <div className='grid-container'>
-          <div className='grid-item name-date'>Production Line Status  Date</div>
+          {/* <div className='grid-item name-date'>Production Line Status  Date</div> */}
+          {/* <div className='grid-item bay-20'>
+            <div className='bayNum'>Bay20</div>
+            <div className='bayCard'></div>
+          </div> */}
           <div className='grid-item bay-20'>Bay20</div>
           <div className='grid-item bay-19'>Bay19</div>
           <div className='grid-item bay-18'>Bay18</div>
@@ -51,6 +56,16 @@ const Productionline = ({ children }) => {
           <div className='leftwall2'></div>
           <div className='middlewall1'></div>
           <div className='middlewall2'></div>
+
+          <div className='door1 vdoor'>DOOR 1</div>
+          <div className='door2'>DOOR 2</div>
+          <div className='door3'>DOOR 3</div>
+          <div className='door4'>DOOR 4</div>
+          <div className='door5 vdoor'>DOOR 5</div>
+          <div className='door12 vdoor'>DOOR 12</div>
+          <div className='door14'>DOOR 14</div>
+          <div className='door14a'>DOOR</div>
+          <div className='door14b'>DOOR</div>
         </div>
       </div>
     </div>
