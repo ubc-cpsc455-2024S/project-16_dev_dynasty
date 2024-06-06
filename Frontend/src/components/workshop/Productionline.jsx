@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { Box, Container, Typography } from '@mui/material'
-import './productionlineVnew.css'
+import './productionlineV.css'
 
 const Productionline = ({ children }) => {
   return (
@@ -48,7 +48,7 @@ const Productionline = ({ children }) => {
           <div className='grid-item bay-13a plus13'>Bay13A</div>
           <div className='grid-item bay-13b plus13'>Bay13B</div>
 
-          <div className='topwall'></div>
+          {/* <div className='topwall'></div>
           <div className='botwall'></div>
           <div className='rightwall1'></div>
           <div className='rightwall2'></div>
@@ -65,7 +65,7 @@ const Productionline = ({ children }) => {
           <div className='door12 vdoor'>DOOR 12</div>
           <div className='door14'>DOOR 14</div>
           <div className='door14a'>DOOR</div>
-          <div className='door14b'>DOOR</div>
+          <div className='door14b'>DOOR</div> */}
         </div>
       </div>
     </div>
