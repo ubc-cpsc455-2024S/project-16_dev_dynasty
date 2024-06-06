@@ -1,21 +1,19 @@
-import React from 'react'
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
-} from 'react-router-dom'
-import LoginPage from '../pages/LoginPage'
-import WorkshopPage from '../pages/WorkshopPage'
-import CustomersPage from '../pages/CustomersPage'
-import CustomersAddPage from '../pages/CustomersAddPage'
-import UsersPage from '../pages/UsersPage'
-import UsersAddPage from '../pages/UsersAddPage'
-import HousesPage from '../pages/HousesPage'
-import HousesAddPage from '../pages/HousesAddPage'
-import NotFoundPage from '../pages/NotFoundPage'
-import { routes } from './routes'
-// import TestPage from '../pages/TestPage'
+} from 'react-router-dom';
+import LoginPage from '../pages/LoginPage';
+import WorkshopPage from '../pages/WorkshopPage';
+import CustomersPage from '../pages/CustomersPage';
+import CustomersAddPage from '../pages/CustomersAddPage';
+import UsersPage from '../pages/UsersPage';
+import UsersAddPage from '../pages/UsersAddPage';
+import HousesPage from '../pages/HousesPage';
+import HousesAddPage from '../pages/HousesAddPage';
+import NotFoundPage from '../pages/NotFoundPage';
+import { routes } from './routes';
 
 const MainRouter = () => {
   return (
@@ -33,7 +31,7 @@ const MainRouter = () => {
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
-  )
-}
+  );
+};
 
-export default MainRouter
+export default MainRouter;

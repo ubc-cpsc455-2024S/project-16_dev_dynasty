@@ -1,12 +1,33 @@
-import React, { ReactNode } from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import CompanyLogo from '../../assets/logo.png';
+import { toggleSidebar } from '../../store/sidebarSlice';
 
-const Navbar = ({ children }) => {
+const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const handleMenuClick = () => {
+    dispatch(toggleSidebar());
+  };
+
   return (
-    <div>
-      <div style={{ width: '100%', background: 'brown' }}>Navigation Part</div>
-      <div>{children}</div>
-    </div>
-  )
-}
+    <AppBar position="static" style={{ background: 'white', color: 'black' }}>
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
+          <MenuIcon />
+        </IconButton>
+        <img src={CompanyLogo} alt="Company Logo" style={{ height: '40px', marginRight: '20px' }} />
+        <Typography variant="h6" style={{ flexGrow: 1 }}>
+          Navigation Part
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
-export default Navbar
+export default Navbar;
