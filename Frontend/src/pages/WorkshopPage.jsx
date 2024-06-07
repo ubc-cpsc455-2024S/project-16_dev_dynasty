@@ -10,9 +10,6 @@ const WorkshopPage = () => {
       <Navbar>
         <Header1 title={'Workshop Page'}>
           <div>WorkshopPage Information</div>
-          <Button variant={'contained'} color='success'>
-            Sample Button
-          </Button>
         </Header1>
       </Navbar>
       <Productionline />
