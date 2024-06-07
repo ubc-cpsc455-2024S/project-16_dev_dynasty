@@ -6,11 +6,11 @@ const Header1 = ({ children, title, button }) => {
     <Container sx={{ pt: '20px' }}>
       <Box
         display={'flex'}
-        justifyContent={'space-around'}
+        justifyContent={'space-between'}
         alignItems={'center'}
       >
         <Typography variant='h4'>{title}</Typography>
-        {button}
+        {button == null ? <div /> : button}
       </Box>
       <Box>{children}</Box>
     </Container>
