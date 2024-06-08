@@ -33,50 +33,13 @@ allow walls and doors to take 1 col or 1 row
   padding: 0;
   width: 100%;
   height: 100%;
-
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: flex-start;*/
-  /*align-items: center;*/
-  /*background-color: bisque;*/
   border: 2px solid #000;
-  /*padding: 0;*/
   text-align: center;
 }
 
-/* .grid-item {
-    display: grid;
-    grid-template-columns: 1fr;
-  grid-template-rows: repeat(6, 1fr);
-    justify-content: center;
-    align-items: center;
-
-    border: 1px solid #000;
-
-    text-align: center;
-  }
-
-  .bayNum {
-    grid-row: 1/1;
-    grid-column: 1/1;
-    background-color: lightblue;
-    border-bottom: 1px solid black;
-
-  }
-
-  .bayCard {
-    grid-row: 2/7;
-    grid-column: 1/1;
-    background-color: bisque;
-
-  }
-   */
-
-.half-bay {
-  background-color: lightgray;
-}
-.plus13 {
-  background-color: azure;
+.grid-item:hover {
+  background-color: white;
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .topwall {
