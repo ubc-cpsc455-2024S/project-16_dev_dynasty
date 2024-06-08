@@ -8,9 +8,10 @@ const WorkshopPage = () => {
   return (
     <Navbar>
       <Header1 title={'Workshop Page'}>
-        <div>WorkshopPage Information</div>
-      </Header1>
       <Productionline />
+        
+      </Header1>
+      
     </Navbar>
   )
 }

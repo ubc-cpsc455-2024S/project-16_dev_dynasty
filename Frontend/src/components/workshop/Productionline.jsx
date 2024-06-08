@@ -9,8 +9,8 @@ const Productionline = ({ children }) => {
   const bayArray = bayData
   return (
     <div>
-      <div style={{ width: '100%', background: 'brown' }}>Production Line</div>
-      <div>{children}</div>
+      <div style={{ width: '100%', background: '#ffa726', textAlign: 'center'}}>Production Line Status</div>
+      
 
       <div className='production-line-layout'>
         <div className='grid-container'>
