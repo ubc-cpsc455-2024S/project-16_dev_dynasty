@@ -1,4 +1,4 @@
-/* 
+/*
 vertical layout
 grid is 48 cols, and 66 rows
 each bay takes 6 rows in height and 4 cols in width
@@ -27,12 +27,20 @@ allow walls and doors to take 1 col or 1 row
 }
 
 .grid-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: bisque;
-  border: 1px solid #000;
-  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: flex-start;*/
+  /*align-items: center;*/
+  /*background-color: bisque;*/
+  border: 2px solid #000;
+  /*padding: 0;*/
   text-align: center;
 }
 
@@ -42,9 +50,9 @@ allow walls and doors to take 1 col or 1 row
   grid-template-rows: repeat(6, 1fr);
     justify-content: center;
     align-items: center;
-    
+
     border: 1px solid #000;
-    
+
     text-align: center;
   }
 
@@ -159,13 +167,13 @@ allow walls and doors to take 1 col or 1 row
   grid-row: 10/16;
 }
 
-.bay-13a {
+.bay-13A {
   grid-column: 13/17;
-  grid-row: 10/13;
+  grid-row: 10/16;
 }
-.bay-13b {
+.bay-13B {
   grid-column: 8/12;
-  grid-row: 10/13;
+  grid-row: 10/16;
 }
 
 .bay-12 {
@@ -190,9 +198,9 @@ allow walls and doors to take 1 col or 1 row
   grid-row: 3/9;
 }
 
-.bay-85 {
+.bay-8h {
   grid-column: 43/47;
-  grid-row: 3/6;
+  grid-row: 3/9;
 }
 
 .bay-7 {
@@ -229,38 +237,38 @@ allow walls and doors to take 1 col or 1 row
   grid-row: 3/9;
 }
 
-.bay-205 {
+.bay-20h {
   grid-column: 23/27;
-  grid-row: 59/62;
+  grid-row: 59/65;
 }
 
-.bay-195 {
+.bay-19h {
   grid-column: 23/27;
-  grid-row: 52/55;
+  grid-row: 52/58;
 }
 
-.bay-185 {
+.bay-18h {
   grid-column: 23/27;
-  grid-row: 45/48;
+  grid-row: 45/51;
 }
 
-.bay-175 {
+.bay-17h {
   grid-column: 23/27;
-  grid-row: 38/41;
+  grid-row: 38/44;
 }
 
-.bay-165 {
+.bay-16h {
   grid-column: 23/27;
-  grid-row: 31/34;
+  grid-row: 31/37;
 }
-.bay-155 {
+.bay-15h {
   grid-column: 23/27;
-  grid-row: 24/27;
+  grid-row: 24/30;
 }
 
-.bay-145 {
+.bay-14h {
   grid-column: 23/27;
-  grid-row: 17/20;
+  grid-row: 17/23;
 }
 
 .door1 {
@@ -283,26 +291,26 @@ allow walls and doors to take 1 col or 1 row
 
   .door3 {
     display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-column: 18/22;
+    justify-content: center;
+    align-items: center;
+    grid-column: 18/22;
     grid-row: 1/1;
     background-color: lightgray;
   }
 
   .door4 {
     display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-column: 38/42;
+    justify-content: center;
+    align-items: center;
+    grid-column: 38/42;
     grid-row: 1/1;
     background-color: lightgray;
   }
 
   .door5 {
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     grid-row: 18/23;
     grid-column: 34/34;
@@ -310,8 +318,8 @@ allow walls and doors to take 1 col or 1 row
 
 .door12 {
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     grid-row: 53/59;
     grid-column: 34/34;
@@ -319,24 +327,24 @@ allow walls and doors to take 1 col or 1 row
 
 .door14 {
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     grid-row: 66/67;
     grid-column: 23/27;
 }
 .door14a {
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     grid-row: 66/67;
     grid-column: 18/22;
 }
 .door14b {
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
     background-color: lightgray;
     grid-row: 66/67;
     grid-column: 13/17;
