@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,6 +15,8 @@ import HousesPage from '../pages/HousesPage'
 import HousesAddPage from '../pages/HousesAddPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { routes } from './routes'
+import Navbar from '../components/navigation/Navbar'
+import Sidebar from '../components/navigation/Sidebar'
 
 const MainRouter = () => {
   return (
@@ -32,7 +34,7 @@ const MainRouter = () => {
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
-  );
-};
+  )
+}
 
-export default MainRouter;
+export default MainRouter
