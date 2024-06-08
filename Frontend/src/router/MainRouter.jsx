@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -32,7 +32,7 @@ const MainRouter = () => {
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
-  )
-}
+  );
+};
 
-export default MainRouter
+export default MainRouter;
