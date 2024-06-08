@@ -15,7 +15,8 @@ import HousesPage from '../pages/HousesPage'
 import HousesAddPage from '../pages/HousesAddPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { routes } from './routes'
-// import TestPage from '../pages/TestPage'
+import Navbar from '../components/navigation/Navbar'
+import Sidebar from '../components/navigation/Sidebar'
 
 const MainRouter = () => {
   return (
