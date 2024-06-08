@@ -1,0 +1,43 @@
+.bay-card {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 2vh;
+
+}
+
+.card-bayName {
+  font-weight: bold;
+  background-color: #DCE6F1;
+  grid-row: 1/1;
+  grid-column: 1/1;
+}
+
+.card-onlineDate {
+  grid-row: 2/2;
+  grid-column: 1/1;
+}
+
+.card-npl {
+  grid-row: 3/3;
+  grid-column: 1/1;
+  font-weight: bold;
+  font-size: 2.2vh;
+}
+
+.card-modelNumber {
+  grid-row: 4/4;
+  grid-column: 1/1;
+}
+
+.card-customer {
+  grid-row: 5/5;
+  grid-column: 1/1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-size {
+  grid-row: 6/6;
+  grid-column: 1/1;
+}
