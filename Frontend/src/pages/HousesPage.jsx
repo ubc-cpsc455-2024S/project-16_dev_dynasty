@@ -18,7 +18,7 @@ const HousePage = () => {
             onClick={() => navigate(routes.housesAddRoute)}
           >
             <MdAdd />
-            Add User
+            Add House
           </Button>
         }
       >
