@@ -70,8 +70,10 @@ const updateHouseInDb = (houseid, houseInfo) => {
 
 // Function to attach/detach a bay
 const toggleBayAssignment = (houseid, bayid) => {
-  const index = housesJson.findIndex((house) => house.house_id === houseid);
-  if (house) {
+  const index = housesJson.findIndex((house) => house.house_id === parseInt(houseid));
+  console.log(houseid);
+  console.log(index);
+  if (index !== -1) {
     housesJson[index] = { ...housesJson[index], bay_id: bayid };
     return { success: true };
   } else {
