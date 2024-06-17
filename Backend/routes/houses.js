@@ -39,7 +39,7 @@ router.get("/:houseid", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newHouse = await addHouseToDb(req.body); // Function to add a new house
-    res.status(200).json({ result: { house_id: newHouse.id } });
+    res.status(200).json({ result: { house_id: newHouse.house_id } });
   } catch (error) {
     switch (error.code) {
       case "BAY_IN_USE":
