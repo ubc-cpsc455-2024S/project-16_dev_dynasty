@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import  houseSlice  from './houses/sliceHouses'
 import  baySlice  from './bays/sliceBays'
-import sidebarSlice from '../store/sidebarSlice';
+import sidebarSlice from './sidebar/sidebarSlice';
 
 export const store = configureStore({
   reducer: {

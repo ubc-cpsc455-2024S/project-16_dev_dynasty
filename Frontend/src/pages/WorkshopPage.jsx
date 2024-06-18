@@ -42,11 +42,11 @@ const WorkshopPage = () => {
   //     houseId: 14,
   //     bayId: 7
   //   }
-  //   dispatch(bayToHouseAsync(payload));
+  //   dispatch(getAllHousesAsync());
   // },[])
 
   // const log = () =>{
-  //   console.log(housefound);
+  //   console.log(houses);
   // }
 
   return (
