@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { houseSlice } from './sliceHouses'
-import { baySlice } from './sliceBays'
+import { houseSlice } from './houses/sliceHouses'
+import { baySlice } from './bays/sliceBays'
 
 export const store = configureStore({
   reducer: {

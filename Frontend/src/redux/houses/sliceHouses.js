@@ -5,7 +5,7 @@ import {
   addHouseAsync,
   deleteHouseAsync,
   updateHouseAsync,
-} from './thunksBays'
+} from './thunksHouses'
 
 export const INITIAL_STATE = {
   list: [],

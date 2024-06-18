@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-export const actionTypes = {
+const actionTypes = {
   GET_HOUSES: 'houses',
   GET_HOUSE: 'houses/house',
   ADD_HOUSE: 'houses/add',
   DELETE_HOUSE: 'houses/delete',
   UPDATE_HOUSE: 'houses/update',
+  BAY_HOUSES: 'houses/housebay'
 }
 
 // prettier-ignore

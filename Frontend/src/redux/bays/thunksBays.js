@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const actionTypes = {
+const actionTypes = {
   GET_BAYS: 'bays',
-  GET_BAY: 'bay/addUser',
+  GET_BAY: 'bays/bay',
 }
 
 // Fetch all bays
