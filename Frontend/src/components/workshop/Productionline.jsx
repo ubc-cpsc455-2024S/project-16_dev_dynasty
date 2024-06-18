@@ -5,8 +5,8 @@ import bayData from '../../data/bayData.js'
 // import './productionline.css'
 import './productionlineVnew.css'
 
-const Productionline = ({ children }) => {
-  const bayArray = bayData
+const Productionline = () => {
+  const bayArray = bayData;
   return (
     <div>
       <div className='layout-lable'

@@ -7,7 +7,7 @@ const {
   deleteHouseFromDb,
   updateHouseInDb,
   toggleBayAssignment,
-} = require("../services/services");
+} = require("../services/houseServices");
 
 // GET endpoint to retrieve all houses
 router.get("/", async (req, res) => {

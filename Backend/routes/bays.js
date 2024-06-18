@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { getBaysFromDb, getBayFromDb } = require("../services/services");
+const { getBaysFromDb, getBayFromDb } = require("../services/bayServices");
 
 // GET endpoint to retrieve all bays
 router.get("/", async (req, res) => {
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:bayid", async (req, res) => {
   const { bayid } = req.params;
   try {
-    const bay = await getBayFromDb(parseInt(bayid));
+    const bay = await getBayFromDb(bayid);
     if (!bay) {
       res.status(404).send("Bay not found");
     } else {

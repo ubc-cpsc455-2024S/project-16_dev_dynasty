@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import BayService from './serviceBays'
 
 const actionTypes = {
   GET_BAYS: 'bays',
@@ -8,14 +8,16 @@ const actionTypes = {
 
 // Fetch all bays
 // prettier-ignore
-export const getAllBaysAsync = createAsyncThunk(actionTypes.GET_BAYS, async () => {
-  const response = await axios('http://localhost:3000/bays')
-  return response.data.result
+export const getAllBaysAsync = createAsyncThunk(
+  actionTypes.GET_BAYS, 
+  async () => {
+  return await BayService.getAllBays();
 })
 
 // Fetch a specific bay by ID
 // prettier-ignore
-export const getBayAsync = createAsyncThunk(actionTypes.GET_BAY, async bayId => {
-  const response = await axios(`http://localhost:3000/bays/${bayId}`)
-  return response.data.result
+export const getBayAsync = createAsyncThunk(
+  actionTypes.GET_BAY, 
+  async (bayId) => {
+  return await BayService.getBay(bayId);
 })

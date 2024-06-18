@@ -1,4 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import HouseService from './serviceHouses';
 
 const actionTypes = {
   GET_HOUSES: 'houses',
@@ -10,16 +11,18 @@ const actionTypes = {
 }
 
 // prettier-ignore
-export const getAllHousesAsync = createAsyncThunk(actionTypes.GET_HOUSES, async () => {
-    const response = await axios('http://localhost:3000/houses')
-    return response.data.result
+export const getAllHousesAsync = createAsyncThunk(
+  actionTypes.GET_HOUSES, 
+  async () => {
+    return await HouseService.getAllHouses();
   }
 )
 
 // prettier-ignore
-export const getHouseAsync = createAsyncThunk(actionTypes.GET_HOUSE, async (houseId) => {
-    const response = await axios(`http://localhost:3000/houses/${house}`)
-    return response.data.result;
+export const getHouseAsync = createAsyncThunk(
+  actionTypes.GET_HOUSE, 
+  async (houseId) => {
+    return await HouseService.getHouse(houseId);
   });
 
 // prettier-ignore
