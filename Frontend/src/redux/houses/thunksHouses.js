@@ -3,42 +3,60 @@ import HouseService from './serviceHouses';
 
 const actionTypes = {
   GET_HOUSES: 'houses',
+  GET_HOUSE_INBAY: 'houses/inbay',
   GET_HOUSE: 'houses/house',
   ADD_HOUSE: 'houses/add',
   DELETE_HOUSE: 'houses/delete',
   UPDATE_HOUSE: 'houses/update',
-  BAY_HOUSES: 'houses/housebay'
+  BAY_HOUSE: 'houses/housebay'
 }
 
 // prettier-ignore
 export const getAllHousesAsync = createAsyncThunk(
-  actionTypes.GET_HOUSES, 
+  actionTypes.GET_HOUSES,
   async () => {
     return await HouseService.getAllHouses();
   }
 )
 
+export const getHousesInbayAsync = createAsyncThunk(
+  actionTypes.GET_HOUSE_INBAY,
+  async () => {
+    return await HouseService.getHousesInbay();
+  }
+)
+
 // prettier-ignore
 export const getHouseAsync = createAsyncThunk(
-  actionTypes.GET_HOUSE, 
+  actionTypes.GET_HOUSE,
   async (houseId) => {
     return await HouseService.getHouse(houseId);
   });
 
 // prettier-ignore
-export const addHouseAsync = createAsyncThunk(actionTypes.addHouseAsync, async (houseData) => {
-    const response = await axios.post("http://localhost:3000/houses", houseData);
-    return response.data.result;
+export const addHouseAsync = createAsyncThunk(
+  actionTypes.ADD_HOUSE,
+  async (houseData) => {
+    return await HouseService.addHouse(houseData);
   });
 
 // prettier-ignore
-export const deleteHouseAsync = createAsyncThunk(actionTypes.DELETE_HOUSE, async (houseId) => {
-    const response = await axios.delete(`http://localhost:3000/houses/${houseId}`);
-    return response.data.result;  // Assuming the backend doesn't return the deleted object
+export const deleteHouseAsync = createAsyncThunk(
+  actionTypes.DELETE_HOUSE,
+  async (houseId) => {
+    return await HouseService.deleteHouse(houseId);
   });
 
 // prettier-ignore
-export const updateHouseAsync = createAsyncThunk(actionTypes.UPDATE_HOUSE, async ({ houseId, houseData }) => {
-    const response = await axios.put(`http://localhost:3000/houses/${houseId}`, houseData);
-    return response.data.result;
+export const updateHouseAsync = createAsyncThunk(
+  actionTypes.UPDATE_HOUSE,
+  async ({ houseId, houseData }) => {
+    return await HouseService.updateHouse(houseId, houseData);
+  });
+
+
+export const bayToHouseAsync = createAsyncThunk(
+  actionTypes.BAY_HOUSE,
+  async ({ houseId, bayId }) => {
+    return await HouseService.bayToHouse(houseId, bayId);
   });

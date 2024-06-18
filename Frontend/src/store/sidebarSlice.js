@@ -4,7 +4,7 @@ const initialState = {
   isOpen: false,
 };
 
-const sidebarSlice = createSlice({
+export const sidebarSlice = createSlice({
   name: 'sidebar',
   initialState,
   reducers: {

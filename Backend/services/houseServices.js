@@ -3,64 +3,69 @@ var housesJson = require("../data/houses.json");
 // Function to fetch all houses
 const getHousesFromDb = () => {
     return housesJson;
-  };
-  
-  // Function to fetch a specific house
-  const getHouseFromDb = (houseid) => {
+};
+
+// Function to fetch a specific house
+const getHouseFromDb = (houseid) => {
     return housesJson.find((house) => house.house_id === houseid);
-  };
-  
-  // Function to add a new house
-  const addHouseToDb = async (houseInfo) => {
+};
+
+// Function to fetch all houses that are in production 
+const getHousesInBays = () => {
+    return housesJson.filter(house => house.bay_id !== null);
+}
+
+// Function to add a new house
+const addHouseToDb = async (houseInfo) => {
     const newHouseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
     const newHouse = { house_id: newHouseId, ...houseInfo };
     housesJson.push(newHouse);
     return newHouse;
-  };
-  
-  // Function to delete a house
-  const deleteHouseFromDb = (houseid) => {
+};
+
+// Function to delete a house
+const deleteHouseFromDb = (houseid) => {
     const index = housesJson.findIndex((house) => house.house_id === houseid);
     if (index > -1) {
-      housesJson.splice(index, 1);
-      return { deleted: true };
+        housesJson.splice(index, 1);
+        return { deleted: true };
     } else {
-      return { deleted: false };
+        return { deleted: false };
     }
-  };
-  
-  // Function to update house details
-  const updateHouseInDb = (houseid, houseInfo) => {
+};
+
+// Function to update house details
+const updateHouseInDb = (houseid, houseInfo) => {
     const index = housesJson.findIndex(
-      (house) => house.house_id === parseInt(houseid)
+        (house) => house.house_id === parseInt(houseid)
     );
     if (index > -1) {
-      housesJson[index] = { ...housesJson[index], ...houseInfo };
-      return housesJson[index];
+        housesJson[index] = { ...housesJson[index], ...houseInfo };
+        return housesJson[index];
     } else {
-      return null;
+        return null;
     }
-  };
-  
-  // Function to attach/detach a bay
-  const toggleBayAssignment = (houseid, bayid) => {
+};
+
+// Function to attach/detach a bay
+const toggleBayAssignment = (houseid, bayid) => {
     const index = housesJson.findIndex((house) => house.house_id === parseInt(houseid));
     console.log(houseid);
     console.log(index);
     if (index !== -1) {
-      housesJson[index] = { ...housesJson[index], bay_id: bayid, bay_name: `Bay ${bayid}` };
-      return { success: true };
+        housesJson[index] = { ...housesJson[index], bay_id: bayid, bay_name: `Bay ${bayid}` };
+        return { success: true };
     } else {
-      return { error: "House not found" };
+        return { error: "House not found" };
     }
-  };
-  
-  module.exports = {
+};
+
+module.exports = {
     getHousesFromDb,
     getHouseFromDb,
+    getHousesInBays,
     addHouseToDb,
     deleteHouseFromDb,
     updateHouseInDb,
     toggleBayAssignment,
-  };
-  
+};

@@ -3,6 +3,7 @@ var router = express.Router();
 const {
   getHousesFromDb,
   getHouseFromDb,
+  getHousesInBays,
   addHouseToDb,
   deleteHouseFromDb,
   updateHouseInDb,
@@ -13,6 +14,17 @@ const {
 router.get("/", async (req, res) => {
   try {
     const houses = await getHousesFromDb(); // Function to fetch all houses
+    res.json({ result: houses });
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
+
+
+// GET endpoint to retrieve all houses
+router.get("/inbay", async (req, res) => {
+  try {
+    const houses = await getHousesInBays(); 
     res.json({ result: houses });
   } catch (error) {
     res.status(500).send("Server error");
@@ -34,6 +46,8 @@ router.get("/:houseid", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+
 
 // POST endpoint to add a new house
 router.post("/", async (req, res) => {
@@ -93,7 +107,7 @@ router.patch("/:houseid/:bayid", async (req, res) => {
   try {
     const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
     if (result.success) {
-      res.status(200).send("Success");
+      res.status(200).json({ message: `Successfully updated bay for house ${houseid}`, house_id: houseid, bay_id: bayid});
     } else if (result.error === "BAY_IN_USE") {
       res.status(409).send("Bay in use");
     } else {

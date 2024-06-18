@@ -11,7 +11,7 @@ const INITIAL_BAY_STATE = {
   error: null,
 }
 
-export const baySlice = createSlice({
+const baySlice = createSlice({
   name: 'bays',
   initialState: INITIAL_BAY_STATE,
   reducers: {},
