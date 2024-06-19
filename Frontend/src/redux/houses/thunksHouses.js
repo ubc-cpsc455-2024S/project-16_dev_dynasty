@@ -4,6 +4,7 @@ import HouseService from './serviceHouses';
 const actionTypes = {
   GET_HOUSES: 'houses',
   GET_HOUSE_INBAY: 'houses/inbay',
+  GET_ONE_HOUSE_INBAY: 'houses/inbay/bayid',
   GET_HOUSE: 'houses/house',
   ADD_HOUSE: 'houses/add',
   DELETE_HOUSE: 'houses/delete',
@@ -22,7 +23,15 @@ export const getAllHousesAsync = createAsyncThunk(
 export const getHousesInbayAsync = createAsyncThunk(
   actionTypes.GET_HOUSE_INBAY,
   async () => {
-    return await HouseService.getHousesInbay();
+    return await HouseService.getHousesInbays();
+  }
+)
+
+
+export const getHouseInAbayAsync = createAsyncThunk(
+  actionTypes.GET_ONE_HOUSE_INBAY,
+  async (bayId) => {
+    return await HouseService.getHouseInAbay(bayId);
   }
 )
 

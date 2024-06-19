@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   getAllHousesAsync,
   getHousesInbayAsync,
+  getHouseInAbayAsync,
   getHouseAsync,
   addHouseAsync,
   deleteHouseAsync,
@@ -13,9 +14,11 @@ export const INITIAL_STATE = {
   list: [],
   findHouse: null,
   inbayList: [],
+  inbayHouse: null,
   status: {
     getAll: 'idle',
     getInBay: 'idle',
+    getOneInABay: 'idle',
     getOne: 'idle',
     add: 'idle',
     delete: 'idle',
@@ -73,6 +76,18 @@ const houseSlice = createSlice({
       })
       .addCase(getHousesInbayAsync.rejected, (state, action) => {
         state.status.getInBay = 'rejected';
+        state.error = action.error.message;
+      })
+      // Handle getHouseAsync
+      .addCase(getHouseInAbayAsync.pending, state => {
+        state.status.getOneInABay = 'pending';
+      })
+      .addCase(getHouseInAbayAsync.fulfilled, (state, action) => {
+        state.status.getOneInABay = 'fulfilled';
+        state.inbayHouse = action.payload;
+      })
+      .addCase(getHouseInAbayAsync.rejected, (state, action) => {
+        state.status.getOneInABay = 'rejected';
         state.error = action.error.message;
       })
       // Handle addHouseAsync

@@ -18,9 +18,19 @@ const getHouse = async (houseid) => {
     }
 }
 
-const getHousesInbay = async () => {
+const getHousesInbays = async () => {
     try {
         const response = await axios.get(`http://localhost:3000/houses/inbay`);
+        return response.data.result;
+    } catch (error) {
+        console.error(`Error fetching houses that are in production:`, error);
+    }
+}
+
+
+const getHouseInAbay = async (bayId) => {
+    try {
+        const response = await axios.get(`http://localhost:3000/houses/inbay/${bayId}`);
         return response.data.result;
     } catch (error) {
         console.error(`Error fetching houses that are in production:`, error);
@@ -66,7 +76,8 @@ const bayToHouse = async (houseId, bayId) => {
 export default {
     getAllHouses,
     getHouse,
-    getHousesInbay,
+    getHousesInbays,
+    getHouseInAbay,
     addHouse,
     deleteHouse,
     updateHouse,

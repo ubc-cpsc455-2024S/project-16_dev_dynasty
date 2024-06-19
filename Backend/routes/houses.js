@@ -4,6 +4,7 @@ const {
   getHousesFromDb,
   getHouseFromDb,
   getHousesInBays,
+  getHouseInBay,
   addHouseToDb,
   deleteHouseFromDb,
   updateHouseInDb,
@@ -21,11 +22,23 @@ router.get("/", async (req, res) => {
 });
 
 
-// GET endpoint to retrieve all houses
+// GET endpoint to retrieve all houses that has bay
 router.get("/inbay", async (req, res) => {
   try {
     const houses = await getHousesInBays(); 
     res.json({ result: houses });
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
+
+// GET endpoint to retrieve all houses that has bay
+router.get("/inbay/:bayid", async (req, res) => {
+  const { bayid } = req.params;
+  console.log("bayid", bayid);
+  try {
+    const house = await getHouseInBay(parseInt(bayid)); 
+    res.json({ result: house });
   } catch (error) {
     res.status(500).send("Server error");
   }

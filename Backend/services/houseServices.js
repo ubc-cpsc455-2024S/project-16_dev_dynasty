@@ -15,6 +15,11 @@ const getHousesInBays = () => {
     return housesJson.filter(house => house.bay_id !== null);
 }
 
+// Function to fetch the house in a specified bay
+const getHouseInBay = (bayId) => {
+    return housesJson.find((house) => house.bay_id === bayId) || null;
+}
+
 // Function to add a new house
 const addHouseToDb = async (houseInfo) => {
     const newHouseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
@@ -64,6 +69,7 @@ module.exports = {
     getHousesFromDb,
     getHouseFromDb,
     getHousesInBays,
+    getHouseInBay,
     addHouseToDb,
     deleteHouseFromDb,
     updateHouseInDb,

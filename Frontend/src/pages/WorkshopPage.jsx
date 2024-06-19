@@ -10,6 +10,7 @@ import {
   getAllHousesAsync,
   getHouseAsync,
   getHousesInbayAsync,
+  getHouseInAbayAsync,
   addHouseAsync,
   deleteHouseAsync,
   updateHouseAsync,
@@ -18,6 +19,7 @@ import {
 
 const WorkshopPage = () => {
   // const dispatch = useDispatch();
+  // const inBayHouse = useSelector((state) => state.houses.inbayHouse || null);
   // const bays = useSelector(state => state.bays.list);
   // const bayfound = useSelector((state) => state.bays.findBay || null);
   // const houses = useSelector((state) => state.houses.list || []);
@@ -42,11 +44,11 @@ const WorkshopPage = () => {
   //     houseId: 14,
   //     bayId: 7
   //   }
-  //   dispatch(getAllHousesAsync());
+  //   dispatch(getHouseInAbayAsync(1));
   // },[])
 
   // const log = () =>{
-  //   console.log(houses);
+  //   console.log(inBayHouse);
   // }
 
   return (
