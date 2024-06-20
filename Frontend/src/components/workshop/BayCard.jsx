@@ -13,10 +13,10 @@ export default function BayCard({bay, houses}) {
   
 
   return (
-    <div className='bay-card-div' ref={setNodeRef}>
+    <div className={`grid-card-items bay-${bayIdQuery}`} ref={setNodeRef}>
       <p className='bay-card card-bayName'>{bayIdQuery}</p>
       {theHouse && (
-        <HouseCard house = {theHouse}></HouseCard>
+        <HouseCard house = {theHouse} key={theHouse.house_id}></HouseCard>
       )}
     </div>
   )

@@ -6,7 +6,7 @@ import LengendExample from './LengendExample.jsx'
 import './styles/productionlineVnew.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllBaysAsync } from '../../redux/bays/thunksBays'
-import { getHousesInbayAsync } from '../../redux/houses/thunksHouses'
+import { getHousesInbayAsync, bayToHouseAsync } from '../../redux/houses/thunksHouses'
 import { DndContext } from '@dnd-kit/core'
 
 const Productionline = () => {
@@ -19,20 +19,24 @@ const Productionline = () => {
     dispatch(getHousesInbayAsync())
   }, [dispatch])
 
+  const handleDragEnd = (event) => {
+    const {active, over} = event;
+    console.log(over);
+    console.log(active);
+    const houseId = parseInt(active.id);
+    const newBayId = parseInt(over.id);
+    dispatch(bayToHouseAsync({houseId: houseId, bayId: newBayId}));
+  }
+
   return (
     <div>
       <div className='layout-label'>Production Line Status</div>
       <div className='production-line-layout'>
-        <DndContext>
+        <DndContext onDragEnd={handleDragEnd}>
           <div className='production-line-grid'>
             {bayArray.map(bay => {
               return (
-                <div
-                  className={`grid-card-items bay-${bay.bay_id}`}
-                  key={bay.bay_id}
-                >
-                  <BayCard bay={bay} houses={allInBayHouses}></BayCard>
-                </div>
+                  <BayCard bay={bay} houses={allInBayHouses} key={bay.bay_id}></BayCard>
               )
             })}
             <LengendExample></LengendExample>
