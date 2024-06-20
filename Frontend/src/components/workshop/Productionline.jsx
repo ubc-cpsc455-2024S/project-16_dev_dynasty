@@ -30,7 +30,7 @@ const Productionline = () => {
               </div>
             )
           })}
-         <LengendExample></LengendExample>
+          <LengendExample></LengendExample>
           <Walls></Walls>
           <Doors></Doors>
         </div>
