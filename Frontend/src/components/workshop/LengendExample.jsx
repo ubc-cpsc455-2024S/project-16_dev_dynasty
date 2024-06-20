@@ -1,5 +1,6 @@
 import React from 'react'
 import BayCard from './BayCard'
+import './styles/legendExample.css'
 import productionLineLegendExample from './data/productionLineLegendExample.js'
 
 const LengendExample = () => {

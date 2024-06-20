@@ -23,6 +23,10 @@
   grid-column: 1/1;
 }
 
+.status1 {
+  background-color: rgb(255, 255, 255);
+}
+
 .status2 {
   background-color: rgb(242, 155, 155);
 }

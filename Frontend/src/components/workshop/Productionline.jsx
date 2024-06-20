@@ -25,7 +25,7 @@ const Productionline = () => {
         <div className='production-line-grid'>
           {bayArray.map(bay => {
             return (
-              <div className={`grid-item bay-${bay.bay_id}`} key={bay.bay_id}>
+              <div className={`grid-card-items bay-${bay.bay_id}`} key={bay.bay_id}>
                 <BayCard bay={bay} houses={allInBayHouses}></BayCard>
               </div>
             )
