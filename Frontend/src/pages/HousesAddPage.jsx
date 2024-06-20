@@ -4,14 +4,19 @@ import Header1 from '../components/headers/Header1'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
+import { addHouseAsync } from '../redux/houses/thunksHouses.js'
 
 const HousesAddPage = () => {
-  const [formFields, setFormFields] = useState({
-    project: '',
-    customer: '',
-    model: '',
-    area: '',
-  })
+  const initialState = {
+    npl: '',
+    customer_name: '',
+    house_model: '',
+    square_ft: '',
+  }
+
+  const [formFields, setFormFields] = useState(initialState)
+
+  const dispatch = useDispatch()
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -20,6 +25,12 @@ const HousesAddPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    dispatch(addHouseAsync(formFields))
+    clearFormFields()
+  }
+
+  const clearFormFields = () => {
+    setFormFields(initialState)
   }
 
   return (
@@ -31,33 +42,33 @@ const HousesAddPage = () => {
               Fill in the form below to add a new house
             </Typography>
             <TextField
-              name={'project'}
+              name={'npl'}
               label={'Project #'}
               type={'number'}
-              value={formFields.project}
+              value={formFields.npl}
               onChange={handleChange}
             />
             <TextField
-              name={'customer'}
+              name={'customer_name'}
               label={'Customer name'}
-              value={formFields.customer}
+              value={formFields.customer_name}
               onChange={handleChange}
             />
             <TextField
-              name={'model'}
+              name={'house_model'}
               label={'Model #'}
-              value={formFields.model}
+              value={formFields.house_model}
               onChange={handleChange}
             />
             <TextField
-              name={'area'}
+              name={'square_ft'}
               label={
                 <span>
                   Floor area (ft<sup>2</sup>)
                 </span>
               }
               type={'number'}
-              value={formFields.area}
+              value={formFields.square_ft}
               onChange={handleChange}
             />
             <Button variant='contained' type='submit'>
