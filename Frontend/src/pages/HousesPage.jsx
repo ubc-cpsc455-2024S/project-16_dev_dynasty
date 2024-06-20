@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { MdAdd } from 'react-icons/md'
 import { routes } from '../router/routes'
 
-const HousePage = () => {
+const HousesPage = () => {
   const navigate = useNavigate()
   return (
     <Navbar>
@@ -22,11 +22,11 @@ const HousePage = () => {
           </Button>
         }
       >
-        <div>HousePage Information</div>
+        <div>HousesPage Information</div>
         Large Table
       </Header1>
     </Navbar>
   )
 }
 
-export default HousePage
+export default HousesPage
