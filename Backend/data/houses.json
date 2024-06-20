@@ -102,7 +102,7 @@
     "bay_name": "Bay 17",
     "bay_description": "description for bay 17",
     "house_records_id": "string",
-    "status": 1
+    "status": 2
   },
   {
     "house_id": 8,
@@ -117,7 +117,7 @@
     "bay_name": "Bay 14",
     "bay_description": "description for bay 14",
     "house_records_id": "string",
-    "status": 1
+    "status": 3
   },
   {
     "house_id": 9,
@@ -132,7 +132,7 @@
     "bay_name": "Bay 13",
     "bay_description": "description for bay 13",
     "house_records_id": "string",
-    "status": 1
+    "status": 3
   },
   {
     "house_id": 10,

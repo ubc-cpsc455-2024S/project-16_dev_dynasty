@@ -2,7 +2,7 @@ import React from 'react'
 
 const HouseCard = ({ house }) => {
   return (
-    <div className='house-card'>
+    <div className={`house-card status${house.status}`}>
       <p className='bay-card card-onlineDate'>{house.online_date}</p>
       <p className='bay-card card-npl'>{house.npl}</p>
       <p className='bay-card card-modelNumber'>{house.house_model}</p>
