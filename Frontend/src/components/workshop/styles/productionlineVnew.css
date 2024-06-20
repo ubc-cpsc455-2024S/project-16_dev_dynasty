@@ -212,7 +212,7 @@ allow walls and doors to take 1 col or 1 row
 }
 
 
-.grid-item:hover {
+.grid-card-items:hover {
   background-color: white;
   transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
@@ -257,13 +257,6 @@ allow walls and doors to take 1 col or 1 row
     background-color: black;
     grid-row: 17/18;
     grid-column: 34/49;
-}
-
-.name-date {
-  grid-column: 3/7;
-  grid-row: 24/36;
-  writing-mode: vertical-rl;
-  background-color: rgb(234, 237, 161);
 }
 
 .bay-20\.5 {
