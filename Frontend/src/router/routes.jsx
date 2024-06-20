@@ -7,4 +7,5 @@ export const routes = {
   usersAddRoute: '/users/add',
   housesRoute: '/houses',
   housesAddRoute: '/houses/add',
+  houseRoutes: '/houses/:id',
 }
