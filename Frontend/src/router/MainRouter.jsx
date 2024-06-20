@@ -15,8 +15,7 @@ import HousesPage from '../pages/HousesPage'
 import HousesAddPage from '../pages/HousesAddPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { routes } from './routes'
-import Navbar from '../components/navigation/Navbar'
-import Sidebar from '../components/navigation/Sidebar'
+import HousePage from '../pages/HousePage'
 
 const MainRouter = () => {
   return (
@@ -31,6 +30,7 @@ const MainRouter = () => {
         <Route path={routes.usersAddRoute} element={<UsersAddPage />} />
         <Route path={routes.housesRoute} element={<HousesPage />} />
         <Route path={routes.housesAddRoute} element={<HousesAddPage />} />
+        <Route path={routes.houseRoutes} element={<HousePage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
