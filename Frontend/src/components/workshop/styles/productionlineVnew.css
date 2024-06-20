@@ -11,170 +11,170 @@ allow walls and doors to take 1 col or 1 row
 :root {
   --nbays-hor: 9; /* num of bays horizontally */
   --nbays-ver: 9; /* num of bays vertically */
-  --wall: 1;      /* num of fractions (either col or row) walls should take */
-  --bay-col: 4;   /* num of columns a bay should take */
-  --bay-row: 6;   /* num of rows a bay should take */
-  --gap-col: 1;   /* num of columns a gap should take horizontally*/
-  --gap-row: 1;   /* num of rows a gap should take vertically*/
+  --wall: 1; /* num of fractions (either col or row) walls should take */
+  --bay-col: 4; /* num of columns a bay should take */
+  --bay-row: 6; /* num of rows a bay should take */
+  --gap-col: 1; /* num of columns a gap should take horizontally*/
+  --gap-row: 1; /* num of rows a gap should take vertically*/
 
-  --total-col: calc(var(--wall) + var(--gap-col) + (var(--bay-col) + var(--gap-col)) * var(--nbays-hor) + 
-    var(--wall));  /* total num of column fractions the grid should have horizontally */
-  --total-row: calc(var(--wall) + var(--gap-row) + (var(--bay-row) + var(--gap-row)) * var(--nbays-ver) + 
-    var(--wall));  /* total num of row fractions the grid should have vertically */
-  
+  --total-col: calc(
+    var(--wall) + var(--gap-col) + (var(--bay-col) + var(--gap-col)) *
+      var(--nbays-hor) + var(--wall)
+  ); /* total num of column fractions the grid should have horizontally */
+  --total-row: calc(
+    var(--wall) + var(--gap-row) + (var(--bay-row) + var(--gap-row)) *
+      var(--nbays-ver) + var(--wall)
+  ); /* total num of row fractions the grid should have vertically */
 
-  --bay1-col-strt: calc( var(--wall) + var(--gap-col) + 1);
-  --bay1-col-end:  calc(var(--bay1-col-strt) + var(--bay-col));
-  --bay1-row-strt: calc( var(--wall) + var(--gap-row) + 1);
-  --bay1-row-end:  calc(var(--bay1-col-strt) + var(--bay-row));
-
+  --bay1-col-strt: calc(var(--wall) + var(--gap-col) + 1);
+  --bay1-col-end: calc(var(--bay1-col-strt) + var(--bay-col));
+  --bay1-row-strt: calc(var(--wall) + var(--gap-row) + 1);
+  --bay1-row-end: calc(var(--bay1-col-strt) + var(--bay-row));
 
   --bay2-col-strt: calc(var(--bay1-col-end) + var(--gap-col));
-  --bay2-col-end:  calc(var(--bay2-col-strt) + var(--bay-col));
+  --bay2-col-end: calc(var(--bay2-col-strt) + var(--bay-col));
   --bay2-row-strt: var(--bay1-row-strt);
-  --bay2-row-end:  var(--bay1-row-end);
+  --bay2-row-end: var(--bay1-row-end);
 
   --bay3-col-strt: calc(var(--bay2-col-end) + var(--gap-col));
-  --bay3-col-end:  calc(var(--bay3-col-strt) + var(--bay-col));
+  --bay3-col-end: calc(var(--bay3-col-strt) + var(--bay-col));
   --bay3-row-strt: var(--bay1-row-strt);
-  --bay3-row-end:  var(--bay1-row-end);
+  --bay3-row-end: var(--bay1-row-end);
 
   --bay4-col-strt: calc(var(--bay3-col-end) + var(--gap-col));
-  --bay4-col-end:  calc(var(--bay4-col-strt) + var(--bay-col));
+  --bay4-col-end: calc(var(--bay4-col-strt) + var(--bay-col));
   --bay4-row-strt: var(--bay1-row-strt);
-  --bay4-row-end:  var(--bay1-row-end);
+  --bay4-row-end: var(--bay1-row-end);
 
   --bay5-col-strt: calc(var(--bay4-col-end) + var(--gap-col));
-  --bay5-col-end:  calc(var(--bay5-col-strt) + var(--bay-col));
+  --bay5-col-end: calc(var(--bay5-col-strt) + var(--bay-col));
   --bay5-row-strt: var(--bay1-row-strt);
-  --bay5-row-end:  var(--bay1-row-end);
+  --bay5-row-end: var(--bay1-row-end);
 
   --bay6-col-strt: calc(var(--bay5-col-end) + var(--gap-col));
-  --bay6-col-end:  calc(var(--bay6-col-strt) + var(--bay-col));
+  --bay6-col-end: calc(var(--bay6-col-strt) + var(--bay-col));
   --bay6-row-strt: var(--bay1-row-strt);
-  --bay6-row-end:  var(--bay1-row-end);
+  --bay6-row-end: var(--bay1-row-end);
 
   --bay7-col-strt: calc(var(--bay6-col-end) + var(--gap-col));
-  --bay7-col-end:  calc(var(--bay7-col-strt) + var(--bay-col));
+  --bay7-col-end: calc(var(--bay7-col-strt) + var(--bay-col));
   --bay7-row-strt: var(--bay1-row-strt);
-  --bay7-row-end:  var(--bay1-row-end);
+  --bay7-row-end: var(--bay1-row-end);
 
   --bay8-col-strt: calc(var(--bay7-col-end) + var(--gap-col));
-  --bay8-col-end:  calc(var(--bay8-col-strt) + var(--bay-col));
+  --bay8-col-end: calc(var(--bay8-col-strt) + var(--bay-col));
   --bay8-row-strt: var(--bay1-row-strt);
-  --bay8-row-end:  var(--bay1-row-end);
+  --bay8-row-end: var(--bay1-row-end);
 
   --bay8\.5-col-strt: calc(var(--bay8-col-end) + var(--gap-col));
-  --bay8\.5-col-end:  calc(var(--bay8\.5-col-strt) + var(--bay-col));
+  --bay8\.5-col-end: calc(var(--bay8\.5-col-strt) + var(--bay-col));
   --bay8\.5-row-strt: var(--bay1-row-strt);
-  --bay8\.5-row-end:  var(--bay1-row-end);
-
-
+  --bay8\.5-row-end: var(--bay1-row-end);
 
   --bay9-col-strt: var(--bay8-col-strt);
-  --bay9-col-end:  var(--bay8-col-end);
-  --bay9-row-strt: calc( var(--bay8-row-end) + var(--gap-row) );
-  --bay9-row-end:  calc(var(--bay9-row-strt) + var(--bay-row));
+  --bay9-col-end: var(--bay8-col-end);
+  --bay9-row-strt: calc(var(--bay8-row-end) + var(--gap-row));
+  --bay9-row-end: calc(var(--bay9-row-strt) + var(--bay-row));
 
   --bay10-col-strt: var(--bay7-col-strt);
-  --bay10-col-end:  var(--bay7-col-end);
+  --bay10-col-end: var(--bay7-col-end);
   --bay10-row-strt: var(--bay9-row-strt);
-  --bay10-row-end:  var(--bay9-row-end);
+  --bay10-row-end: var(--bay9-row-end);
 
   --bay11-col-strt: var(--bay6-col-strt);
-  --bay11-col-end:  var(--bay6-col-end);
+  --bay11-col-end: var(--bay6-col-end);
   --bay11-row-strt: var(--bay9-row-strt);
-  --bay11-row-end:  var(--bay9-row-end);
+  --bay11-row-end: var(--bay9-row-end);
 
   --bay12-col-strt: var(--bay5-col-strt);
-  --bay12-col-end:  var(--bay5-col-end);
+  --bay12-col-end: var(--bay5-col-end);
   --bay12-row-strt: var(--bay9-row-strt);
-  --bay12-row-end:  var(--bay9-row-end);
+  --bay12-row-end: var(--bay9-row-end);
 
   --bay13-col-strt: var(--bay4-col-strt);
-  --bay13-col-end:  var(--bay4-col-end);
+  --bay13-col-end: var(--bay4-col-end);
   --bay13-row-strt: var(--bay9-row-strt);
-  --bay13-row-end:  var(--bay9-row-end);
+  --bay13-row-end: var(--bay9-row-end);
 
   --bay13a-col-strt: var(--bay3-col-strt);
-  --bay13a-col-end:  var(--bay3-col-end);
+  --bay13a-col-end: var(--bay3-col-end);
   --bay13a-row-strt: var(--bay9-row-strt);
-  --bay13a-row-end:  var(--bay9-row-end);
+  --bay13a-row-end: var(--bay9-row-end);
 
   --bay13b-col-strt: var(--bay2-col-strt);
-  --bay13b-col-end:  var(--bay2-col-end);
+  --bay13b-col-end: var(--bay2-col-end);
   --bay13b-row-strt: var(--bay9-row-strt);
-  --bay13b-row-end:  var(--bay9-row-end);
+  --bay13b-row-end: var(--bay9-row-end);
 
   --bay14-col-strt: var(--bay4-col-strt);
-  --bay14-col-end:  var(--bay4-col-end);
+  --bay14-col-end: var(--bay4-col-end);
   --bay14-row-strt: calc(var(--bay13-row-end) + var(--gap-row));
-  --bay14-row-end:  calc(var(--bay14-row-strt) + var(--bay-row));
+  --bay14-row-end: calc(var(--bay14-row-strt) + var(--bay-row));
 
   --bay15-col-strt: var(--bay4-col-strt);
-  --bay15-col-end:  var(--bay4-col-end);
+  --bay15-col-end: var(--bay4-col-end);
   --bay15-row-strt: calc(var(--bay14-row-end) + var(--gap-row));
-  --bay15-row-end:  calc(var(--bay15-row-strt) + var(--bay-row));
+  --bay15-row-end: calc(var(--bay15-row-strt) + var(--bay-row));
 
   --bay16-col-strt: var(--bay4-col-strt);
-  --bay16-col-end:  var(--bay4-col-end);
+  --bay16-col-end: var(--bay4-col-end);
   --bay16-row-strt: calc(var(--bay15-row-end) + var(--gap-row));
-  --bay16-row-end:  calc(var(--bay16-row-strt) + var(--bay-row));
+  --bay16-row-end: calc(var(--bay16-row-strt) + var(--bay-row));
 
   --bay17-col-strt: var(--bay4-col-strt);
-  --bay17-col-end:  var(--bay4-col-end);
+  --bay17-col-end: var(--bay4-col-end);
   --bay17-row-strt: calc(var(--bay16-row-end) + var(--gap-row));
-  --bay17-row-end:  calc(var(--bay17-row-strt) + var(--bay-row));
+  --bay17-row-end: calc(var(--bay17-row-strt) + var(--bay-row));
 
   --bay18-col-strt: var(--bay4-col-strt);
-  --bay18-col-end:  var(--bay4-col-end);
+  --bay18-col-end: var(--bay4-col-end);
   --bay18-row-strt: calc(var(--bay17-row-end) + var(--gap-row));
-  --bay18-row-end:  calc(var(--bay18-row-strt) + var(--bay-row));
+  --bay18-row-end: calc(var(--bay18-row-strt) + var(--bay-row));
 
   --bay19-col-strt: var(--bay4-col-strt);
-  --bay19-col-end:  var(--bay4-col-end);
+  --bay19-col-end: var(--bay4-col-end);
   --bay19-row-strt: calc(var(--bay18-row-end) + var(--gap-row));
-  --bay19-row-end:  calc(var(--bay19-row-strt) + var(--bay-row));
+  --bay19-row-end: calc(var(--bay19-row-strt) + var(--bay-row));
 
   --bay20-col-strt: var(--bay4-col-strt);
-  --bay20-col-end:  var(--bay4-col-end);
+  --bay20-col-end: var(--bay4-col-end);
   --bay20-row-strt: calc(var(--bay19-row-end) + var(--gap-row));
-  --bay20-row-end:  calc(var(--bay20-row-strt) + var(--bay-row));
+  --bay20-row-end: calc(var(--bay20-row-strt) + var(--bay-row));
 
   --bay14\.5-col-strt: var(--bay5-col-strt);
-  --bay14\.5-col-end:  var(--bay5-col-end);
+  --bay14\.5-col-end: var(--bay5-col-end);
   --bay14\.5-row-strt: var(--bay14-row-strt);
-  --bay14\.5-row-end:  var(--bay14-row-end);
+  --bay14\.5-row-end: var(--bay14-row-end);
 
   --bay15\.5-col-strt: var(--bay5-col-strt);
-  --bay15\.5-col-end:  var(--bay5-col-end);
+  --bay15\.5-col-end: var(--bay5-col-end);
   --bay15\.5-row-strt: var(--bay15-row-strt);
-  --bay15\.5-row-end:  var(--bay15-row-end);
+  --bay15\.5-row-end: var(--bay15-row-end);
 
   --bay16\.5-col-strt: var(--bay5-col-strt);
-  --bay16\.5-col-end:  var(--bay5-col-end);
+  --bay16\.5-col-end: var(--bay5-col-end);
   --bay16\.5-row-strt: var(--bay16-row-strt);
-  --bay16\.5-row-end:  var(--bay16-row-end);
+  --bay16\.5-row-end: var(--bay16-row-end);
 
   --bay17\.5-col-strt: var(--bay5-col-strt);
-  --bay17\.5-col-end:  var(--bay5-col-end);
+  --bay17\.5-col-end: var(--bay5-col-end);
   --bay17\.5-row-strt: var(--bay17-row-strt);
-  --bay17\.5-row-end:  var(--bay17-row-end);
+  --bay17\.5-row-end: var(--bay17-row-end);
 
   --bay18\.5-col-strt: var(--bay5-col-strt);
-  --bay18\.5-col-end:  var(--bay5-col-end);
+  --bay18\.5-col-end: var(--bay5-col-end);
   --bay18\.5-row-strt: var(--bay18-row-strt);
-  --bay18\.5-row-end:  var(--bay18-row-end);
+  --bay18\.5-row-end: var(--bay18-row-end);
 
   --bay19\.5-col-strt: var(--bay5-col-strt);
-  --bay19\.5-col-end:  var(--bay5-col-end);
+  --bay19\.5-col-end: var(--bay5-col-end);
   --bay19\.5-row-strt: var(--bay19-row-strt);
-  --bay19\.5-row-end:  var(--bay19-row-end);
+  --bay19\.5-row-end: var(--bay19-row-end);
 
   --bay20\.5-col-strt: var(--bay5-col-strt);
-  --bay20\.5-col-end:  var(--bay5-col-end);
+  --bay20\.5-col-end: var(--bay5-col-end);
   --bay20\.5-row-strt: var(--bay20-row-strt);
-  --bay20\.5-row-end:  var(--bay20-row-end);
+  --bay20\.5-row-end: var(--bay20-row-end);
 }
 
 .layout-label {
@@ -211,272 +211,273 @@ allow walls and doors to take 1 col or 1 row
   text-align: center;
 }
 
-
 .grid-card-items:hover {
   background-color: white;
-  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(
+    1.5
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .topwall {
-    background-color: rgb(0, 0, 0);
-    grid-row: 1/1;
-    grid-column: 1/49;
+  background-color: rgb(0, 0, 0);
+  grid-row: 1/1;
+  grid-column: 1/calc(var(--total-col) + 1);
 }
 .botwall {
-    background-color: black;
-    grid-row: 66/67;
-    grid-column: 11/34;
+  background-color: black;
+  grid-row: var(--total-row);
+  grid-column: var(--bay13b-col-end)/var(--bay10-col-strt);
 }
 .rightwall1 {
-    background-color: black;
-    grid-row: 1/17;
-    grid-column: 48/49;
+  background-color: black;
+  grid-row: 1/calc(var(--bay10-row-end) + 1);
+  grid-column: var(--total-col);
 }
 .rightwall2 {
-    background-color: black;
-    grid-row: 18/67;
-    grid-column: 34/34;
+  background-color: black;
+  grid-row: calc(var(--bay10-row-end) + 1)/calc(var(--total-row) + 1);
+  grid-column: var(--bay10-col-strt);
 }
 .leftwall1 {
-    background-color: black;
-    grid-row: 1/17;
-    grid-column: 1/1;
+  background-color: black;
+  grid-row: 1/calc(var(--bay10-row-end) + 1);
+  grid-column: 1/1;
 }
 .leftwall2 {
-    background-color: black;
-    grid-row: 17/67;
-    grid-column: 11/11;
+  background-color: black;
+  grid-row: calc(var(--bay13b-row-end) + 1)/calc(var(--total-row) + 1);
+  grid-column: calc(var(--bay13b-col-end) - 1);
 }
 
 .middlewall1 {
-    background-color: black;
-    grid-row: 17/18;
-    grid-column: 1/11;
+  background-color: black;
+  grid-row: calc(var(--bay10-row-end) + 1);
+  grid-column: 1/var(--bay13b-col-end);
 }
 .middlewall2 {
-    background-color: black;
-    grid-row: 17/18;
-    grid-column: 34/49;
+  background-color: black;
+  grid-row: calc(var(--bay10-row-end) + 1);
+  grid-column: var(--bay10-col-strt) / calc(var(--total-col) + 1);
 }
 
 .bay-20\.5 {
-  grid-column: var(--bay20\.5-col-strt)/var(--bay20\.5-col-end);
-  grid-row: var(--bay20\.5-row-strt)/var(--bay20\.5-row-end);
+  grid-column: var(--bay20\.5-col-strt) / var(--bay20\.5-col-end);
+  grid-row: var(--bay20\.5-row-strt) / var(--bay20\.5-row-end);
 }
 
 .bay-19\.5 {
-  grid-column: var(--bay19\.5-col-strt)/var(--bay19\.5-col-end);
-  grid-row: var(--bay19\.5-row-strt)/var(--bay19\.5-row-end);
+  grid-column: var(--bay19\.5-col-strt) / var(--bay19\.5-col-end);
+  grid-row: var(--bay19\.5-row-strt) / var(--bay19\.5-row-end);
 }
 
 .bay-18\.5 {
-  grid-column: var(--bay18\.5-col-strt)/var(--bay18\.5-col-end);
-  grid-row: var(--bay18\.5-row-strt)/var(--bay18\.5-row-end);
+  grid-column: var(--bay18\.5-col-strt) / var(--bay18\.5-col-end);
+  grid-row: var(--bay18\.5-row-strt) / var(--bay18\.5-row-end);
 }
 
 .bay-17\.5 {
-  grid-column: var(--bay17\.5-col-strt)/var(--bay17\.5-col-end);
-  grid-row: var(--bay17\.5-row-strt)/var(--bay17\.5-row-end);
+  grid-column: var(--bay17\.5-col-strt) / var(--bay17\.5-col-end);
+  grid-row: var(--bay17\.5-row-strt) / var(--bay17\.5-row-end);
 }
 
 .bay-16\.5 {
-  grid-column: var(--bay16\.5-col-strt)/var(--bay16\.5-col-end);
-  grid-row: var(--bay16\.5-row-strt)/var(--bay16\.5-row-end);
+  grid-column: var(--bay16\.5-col-strt) / var(--bay16\.5-col-end);
+  grid-row: var(--bay16\.5-row-strt) / var(--bay16\.5-row-end);
 }
 .bay-15\.5 {
-  grid-column: var(--bay15\.5-col-strt)/var(--bay15\.5-col-end);
-  grid-row: var(--bay15\.5-row-strt)/var(--bay15\.5-row-end);
+  grid-column: var(--bay15\.5-col-strt) / var(--bay15\.5-col-end);
+  grid-row: var(--bay15\.5-row-strt) / var(--bay15\.5-row-end);
 }
 
 .bay-14\.5 {
-  grid-column: var(--bay14\.5-col-strt)/var(--bay14\.5-col-end);
-  grid-row: var(--bay14\.5-row-strt)/var(--bay14\.5-row-end);
+  grid-column: var(--bay14\.5-col-strt) / var(--bay14\.5-col-end);
+  grid-row: var(--bay14\.5-row-strt) / var(--bay14\.5-row-end);
 }
 
 .bay-20 {
-  grid-column: var(--bay20-col-strt)/var(--bay20-col-end);
-  grid-row: var(--bay20-row-strt)/var(--bay20-row-end);
+  grid-column: var(--bay20-col-strt) / var(--bay20-col-end);
+  grid-row: var(--bay20-row-strt) / var(--bay20-row-end);
 }
 
 .bay-19 {
-  grid-column: var(--bay19-col-strt)/var(--bay19-col-end);
-  grid-row: var(--bay19-row-strt)/var(--bay19-row-end);
+  grid-column: var(--bay19-col-strt) / var(--bay19-col-end);
+  grid-row: var(--bay19-row-strt) / var(--bay19-row-end);
 }
 
 .bay-18 {
-  grid-column: var(--bay18-col-strt)/var(--bay18-col-end);
-  grid-row: var(--bay18-row-strt)/var(--bay18-row-end);
+  grid-column: var(--bay18-col-strt) / var(--bay18-col-end);
+  grid-row: var(--bay18-row-strt) / var(--bay18-row-end);
 }
 
 .bay-17 {
-  grid-column: var(--bay17-col-strt)/var(--bay17-col-end);
-  grid-row: var(--bay17-row-strt)/var(--bay17-row-end);
+  grid-column: var(--bay17-col-strt) / var(--bay17-col-end);
+  grid-row: var(--bay17-row-strt) / var(--bay17-row-end);
 }
 
 .bay-16 {
-  grid-column: var(--bay16-col-strt)/var(--bay16-col-end);
-  grid-row: var(--bay16-row-strt)/var(--bay16-row-end);
+  grid-column: var(--bay16-col-strt) / var(--bay16-col-end);
+  grid-row: var(--bay16-row-strt) / var(--bay16-row-end);
 }
 .bay-15 {
-  grid-column: var(--bay15-col-strt)/var(--bay15-col-end);
-  grid-row: var(--bay15-row-strt)/var(--bay15-row-end);
+  grid-column: var(--bay15-col-strt) / var(--bay15-col-end);
+  grid-row: var(--bay15-row-strt) / var(--bay15-row-end);
 }
 
 .bay-14 {
-  grid-column: var(--bay14-col-strt)/var(--bay14-col-end);
-  grid-row: var(--bay14-row-strt)/var(--bay14-row-end);
+  grid-column: var(--bay14-col-strt) / var(--bay14-col-end);
+  grid-row: var(--bay14-row-strt) / var(--bay14-row-end);
 }
 
 .bay-13A {
-  grid-column: var(--bay13a-col-strt)/var(--bay13a-col-end);
-  grid-row: var(--bay13a-row-strt)/var(--bay13a-row-end);
+  grid-column: var(--bay13a-col-strt) / var(--bay13a-col-end);
+  grid-row: var(--bay13a-row-strt) / var(--bay13a-row-end);
 }
 .bay-13B {
-  grid-column: var(--bay13b-col-strt)/var(--bay13b-col-end);
-  grid-row: var(--bay13b-row-strt)/var(--bay13b-row-end);
+  grid-column: var(--bay13b-col-strt) / var(--bay13b-col-end);
+  grid-row: var(--bay13b-row-strt) / var(--bay13b-row-end);
 }
 
 .bay-13 {
-  grid-column: var(--bay13-col-strt)/var(--bay13-col-end);
-  grid-row: var(--bay13-row-strt)/var(--bay13-row-end);
+  grid-column: var(--bay13-col-strt) / var(--bay13-col-end);
+  grid-row: var(--bay13-row-strt) / var(--bay13-row-end);
 }
 
 .bay-12 {
-  grid-column: var(--bay12-col-strt)/var(--bay12-col-end);
-  grid-row: var(--bay12-row-strt)/var(--bay12-row-end);
+  grid-column: var(--bay12-col-strt) / var(--bay12-col-end);
+  grid-row: var(--bay12-row-strt) / var(--bay12-row-end);
 }
 .bay-11 {
-  grid-column: var(--bay11-col-strt)/var(--bay11-col-end);
-  grid-row: var(--bay11-row-strt)/var(--bay11-row-end);
+  grid-column: var(--bay11-col-strt) / var(--bay11-col-end);
+  grid-row: var(--bay11-row-strt) / var(--bay11-row-end);
 }
 .bay-10 {
-  grid-column: var(--bay10-col-strt)/var(--bay10-col-end);
-  grid-row: var(--bay10-row-strt)/var(--bay10-row-end);
+  grid-column: var(--bay10-col-strt) / var(--bay10-col-end);
+  grid-row: var(--bay10-row-strt) / var(--bay10-row-end);
 }
 .bay-9 {
-  grid-column: var(--bay9-col-strt)/var(--bay9-col-end);
-  grid-row: var(--bay9-row-strt)/var(--bay9-row-end);
+  grid-column: var(--bay9-col-strt) / var(--bay9-col-end);
+  grid-row: var(--bay9-row-strt) / var(--bay9-row-end);
 }
 
 .bay-8\.5 {
-  grid-column: var(--bay8\.5-col-strt)/var(--bay8\.5-col-end);
-  grid-row: var(--bay8\.5-row-strt)/var(--bay8\.5-row-end);
+  grid-column: var(--bay8\.5-col-strt) / var(--bay8\.5-col-end);
+  grid-row: var(--bay8\.5-row-strt) / var(--bay8\.5-row-end);
 }
 
 .bay-8 {
-  grid-column: var(--bay8-col-strt)/var(--bay8-col-end);
-  grid-row: var(--bay8-row-strt)/var(--bay8-row-end);
+  grid-column: var(--bay8-col-strt) / var(--bay8-col-end);
+  grid-row: var(--bay8-row-strt) / var(--bay8-row-end);
 }
 
 .bay-7 {
-  grid-column: var(--bay7-col-strt)/var(--bay7-col-end);
-  grid-row: var(--bay7-row-strt)/var(--bay7-row-end);
+  grid-column: var(--bay7-col-strt) / var(--bay7-col-end);
+  grid-row: var(--bay7-row-strt) / var(--bay7-row-end);
 }
 .bay-6 {
-  grid-column: var(--bay6-col-strt)/var(--bay6-col-end);
-  grid-row: var(--bay6-row-strt)/var(--bay6-row-end);
+  grid-column: var(--bay6-col-strt) / var(--bay6-col-end);
+  grid-row: var(--bay6-row-strt) / var(--bay6-row-end);
 }
 .bay-5 {
-  grid-column: var(--bay5-col-strt)/var(--bay5-col-end);
-  grid-row: var(--bay5-row-strt)/var(--bay5-row-end);
+  grid-column: var(--bay5-col-strt) / var(--bay5-col-end);
+  grid-row: var(--bay5-row-strt) / var(--bay5-row-end);
 }
 .bay-4 {
-  grid-column: var(--bay4-col-strt)/var(--bay4-col-end);
-  grid-row: var(--bay4-row-strt)/var(--bay4-row-end);
+  grid-column: var(--bay4-col-strt) / var(--bay4-col-end);
+  grid-row: var(--bay4-row-strt) / var(--bay4-row-end);
 }
 .bay-3 {
-  grid-column: var(--bay3-col-strt)/var(--bay3-col-end);
-  grid-row: var(--bay3-row-strt)/var(--bay3-row-end);
+  grid-column: var(--bay3-col-strt) / var(--bay3-col-end);
+  grid-row: var(--bay3-row-strt) / var(--bay3-row-end);
 }
 .bay-2 {
-  grid-column: var(--bay2-col-strt)/var(--bay2-col-end);
-  grid-row: var(--bay2-row-strt)/var(--bay2-row-end);
+  grid-column: var(--bay2-col-strt) / var(--bay2-col-end);
+  grid-row: var(--bay2-row-strt) / var(--bay2-row-end);
 }
 .bay-1 {
-  grid-column: var(--bay1-col-strt)/var(--bay1-col-end);
-  grid-row: var(--bay1-row-strt)/var(--bay1-row-end);
+  grid-column: var(--bay1-col-strt) / var(--bay1-col-end);
+  grid-row: var(--bay1-row-strt) / var(--bay1-row-end);
 }
 
 .door1 {
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-    background-color: lightgray;
-    grid-row: 18/23;
-    grid-column: 11/11;
+  background-color: lightgray;
+  grid-row: calc(var(--bay14-row-strt) + 1) / var(--bay14-row-end);
+  grid-column: calc(var(--bay13a-col-strt) - 2);
 }
 
 .door2 {
-    display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-    grid-column: 3/7;
-    grid-row: 1/1;
-    background-color: lightgray;
-  }
+  grid-column: var(--bay1-col-strt)/var(--bay1-col-end);
+  grid-row: 1/1;
+  background-color: lightgray;
+}
 
-  .door3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: 18/22;
-    grid-row: 1/1;
-    background-color: lightgray;
-  }
+.door3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: var(--bay4-col-strt)/var(--bay4-col-end);
+  grid-row: 1/1;
+  background-color: lightgray;
+}
 
-  .door4 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: 38/42;
-    grid-row: 1/1;
-    background-color: lightgray;
-  }
+.door4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: var(--bay8-col-strt)/var(--bay8-col-end);
+  grid-row: 1/1;
+  background-color: lightgray;
+}
 
-  .door5 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgray;
-    grid-row: 18/23;
-    grid-column: 34/34;
+.door5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  grid-row: calc(var(--bay14-row-strt) + 1) / var(--bay14-row-end);
+  grid-column: var(--bay10-col-strt);
 }
 
 .door12 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgray;
-    grid-row: 53/59;
-    grid-column: 34/34;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  grid-row: 53/59;
+  grid-column: var(--bay10-col-strt);
 }
 
 .door14 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgray;
-    grid-row: 66/67;
-    grid-column: 23/27;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  grid-row: var(--total-row);
+  grid-column: 23/27;
 }
 .door14a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgray;
-    grid-row: 66/67;
-    grid-column: 18/22;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  grid-row: var(--total-row);
+  grid-column: 18/22;
 }
 .door14b {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgray;
-    grid-row: 66/67;
-    grid-column: 13/17;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  grid-row: var(--total-row);
+  grid-column: 13/17;
 }
 
 .vdoor {
-    writing-mode: vertical-rl;
-    font-size: 2vh;
+  writing-mode: vertical-rl;
+  font-size: 2vh;
 }
