@@ -94,7 +94,6 @@ const houseSlice = createSlice({
       .addCase(getHousesInbayAsync.fulfilled, (state, action) => {
         state.status.getInBay = 'fulfilled';
         state.inbayList = action.payload;
-        console.log(state.inbayList);
       })
       .addCase(getHousesInbayAsync.rejected, (state, action) => {
         state.status.getInBay = 'rejected';
