@@ -49,6 +49,40 @@ allow walls and doors to take 1 col or 1 row
   text-align: center;
 }
 
+.legend-example {
+  display: grid;
+  text-align: center;
+  grid-template-columns: 5fr 1fr 5fr;
+  grid-template-rows: repeat(7, 1fr);
+  grid-column: 37/48;
+  grid-row: 23/31;
+  border: 2px solid #000;
+}
+.legend {
+  grid-column: 1/2;
+  grid-row: 1/1;
+  font-weight: bold;
+  color: red;
+}
+.example {
+  grid-column: 3/3;
+  grid-row: 1/1;
+  font-weight: bold;
+  color: #ffa726;
+}
+.legend-card {
+  grid-column: 1/2;
+  grid-row: 2/9;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+}
+.example-card {
+  grid-column: 3/3;
+  grid-row: 2/9;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+}
+
 .grid-item:hover {
   background-color: white;
   transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
