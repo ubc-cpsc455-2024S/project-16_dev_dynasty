@@ -7,6 +7,7 @@ import './styles/productionlineVnew.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllBaysAsync } from '../../redux/bays/thunksBays'
 import { getHousesInbayAsync } from '../../redux/houses/thunksHouses'
+import { DndContext } from '@dnd-kit/core'
 
 const Productionline = () => {
   const dispatch = useDispatch()
@@ -22,18 +23,23 @@ const Productionline = () => {
     <div>
       <div className='layout-label'>Production Line Status</div>
       <div className='production-line-layout'>
-        <div className='production-line-grid'>
-          {bayArray.map(bay => {
-            return (
-              <div className={`grid-card-items bay-${bay.bay_id}`} key={bay.bay_id}>
-                <BayCard bay={bay} houses={allInBayHouses}></BayCard>
-              </div>
-            )
-          })}
-          <LengendExample></LengendExample>
-          <Walls></Walls>
-          <Doors></Doors>
-        </div>
+        <DndContext>
+          <div className='production-line-grid'>
+            {bayArray.map(bay => {
+              return (
+                <div
+                  className={`grid-card-items bay-${bay.bay_id}`}
+                  key={bay.bay_id}
+                >
+                  <BayCard bay={bay} houses={allInBayHouses}></BayCard>
+                </div>
+              )
+            })}
+            <LengendExample></LengendExample>
+            <Walls></Walls>
+            <Doors></Doors>
+          </div>
+        </DndContext>
       </div>
     </div>
   )

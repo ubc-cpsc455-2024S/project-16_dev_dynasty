@@ -13,7 +13,7 @@ allow walls and doors to take 1 col or 1 row
   --nbays-ver: 9; /* num of bays vertically */
   --wall: 1; /* num of fractions (either col or row) walls should take */
   --bay-col: 4; /* num of columns a bay should take */
-  --bay-row: 6; /* num of rows a bay should take */
+  --bay-row: 7; /* num of rows a bay should take */
   --gap-col: 1; /* num of columns a gap should take horizontally*/
   --gap-row: 1; /* num of rows a gap should take vertically*/
 
