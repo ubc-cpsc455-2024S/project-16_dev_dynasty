@@ -6,13 +6,16 @@ import { getAllBaysAsync } from '../../redux/bays/thunksBays'
 import { getHousesInbayAsync } from '../../redux/houses/thunksHouses'
 
 const Productionline = () => {
-  const dispatch = useDispatch()
-  const bayArray = useSelector(state => state.bays.list || [])
+  const dispatch = useDispatch();
+  const bayArray = useSelector(state => state.bays.list || []);
+  const allInBayHouses = useSelector(state => state.houses.inbayList || []);
 
   useEffect(() => {
     dispatch(getAllBaysAsync());
     dispatch(getHousesInbayAsync());
   }, [dispatch])
+
+
 
   return (
     <div>
@@ -22,7 +25,7 @@ const Productionline = () => {
           {bayArray.map(bay => {
             return (
               <div className={`grid-item bay-${bay.bay_id}`} key={bay.bay_id}>
-                <BayCard bay={bay}></BayCard>
+                <BayCard bay={bay} houses = {allInBayHouses} ></BayCard>
               </div>
             )
           })}

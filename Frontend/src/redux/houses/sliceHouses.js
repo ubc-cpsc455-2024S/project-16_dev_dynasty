@@ -86,8 +86,7 @@ const houseSlice = createSlice({
       })
       .addCase(getHousesInbayAsync.fulfilled, (state, action) => {
         state.status.getInBay = 'fulfilled'
-        state.inBayList = action.payload
-        console.log(state.inBayList)
+        state.inbayList = action.payload
       })
       .addCase(getHousesInbayAsync.rejected, (state, action) => {
         state.status.getInBay = 'rejected'
