@@ -1,25 +1,27 @@
-import React, { ReactNode } from 'react'
-import { Box, Container, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
 import BayCard from './BayCard.jsx'
-import bayData from '../../data/bayData.js'
-// import './productionline.css'
-import './productionlineVnew.css'
+import './styles/productionlineVnew.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllBaysAsync } from '../../redux/bays/thunksBays'
+import { getHousesInbayAsync } from '../../redux/houses/thunksHouses'
 
 const Productionline = () => {
-  const bayArray = bayData;
+  const dispatch = useDispatch()
+  const bayArray = useSelector(state => state.bays.list || [])
+
+  useEffect(() => {
+    dispatch(getAllBaysAsync());
+    dispatch(getHousesInbayAsync());
+  }, [dispatch])
+
   return (
     <div>
-      <div className='layout-lable'
-        style={{ width: '100%', background: '#ffa726', textAlign: 'center' }}
-      >
-        Production Line Status
-      </div>
-
+      <div className='layout-label'>Production Line Status</div>
       <div className='production-line-layout'>
-        <div className='grid-container'>
+        <div className='production-line-grid'>
           {bayArray.map(bay => {
             return (
-              <div className={`grid-item bay-${bay.bayName}`} key={bay.bayName}>
+              <div className={`grid-item bay-${bay.bay_id}`} key={bay.bay_id}>
                 <BayCard bay={bay}></BayCard>
               </div>
             )

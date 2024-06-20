@@ -15,6 +15,27 @@ export const INITIAL_STATE = {
   findHouse: null,
   inbayList: [],
   inbayHouse: null,
+  bayHouseMap: {20: null,
+    19: null,
+    18: null,
+    17: null,
+    16: null,
+    15: null,
+    14: null,
+    13: null,
+    12: null,
+    11: null,
+    10: null,
+    9: null,
+    8: null,
+    7: null,
+    6: null,
+    5: null,
+    4: null,
+    3: null,
+    2: null,
+    1: null
+  },
   status: {
     getAll: 'idle',
     getInBay: 'idle',
@@ -73,6 +94,7 @@ const houseSlice = createSlice({
       .addCase(getHousesInbayAsync.fulfilled, (state, action) => {
         state.status.getInBay = 'fulfilled';
         state.inbayList = action.payload;
+        console.log(state.inbayList);
       })
       .addCase(getHousesInbayAsync.rejected, (state, action) => {
         state.status.getInBay = 'rejected';
@@ -85,6 +107,10 @@ const houseSlice = createSlice({
       .addCase(getHouseInAbayAsync.fulfilled, (state, action) => {
         state.status.getOneInABay = 'fulfilled';
         state.inbayHouse = action.payload;
+        if (action.payload) {
+          const bid = action.payload.bay_id;
+          state.bayHouseMap[bid] = action.payload;
+        }
       })
       .addCase(getHouseInAbayAsync.rejected, (state, action) => {
         state.status.getOneInABay = 'rejected';

@@ -5,9 +5,19 @@
         "bay_description": "description for bay 20"
       },
       {
+        "bay_id": "20.5",
+        "bay_name": "Bay 20.5",
+        "bay_description": "description for bay 20.5"
+      },
+      {
         "bay_id": "19",
         "bay_name": "Bay 19",
         "bay_description": "description for bay 19"
+      },
+      {
+        "bay_id": "19.5",
+        "bay_name": "Bay 19.5",
+        "bay_description": "description for bay 19.5"
       },
       {
         "bay_id": "18",
@@ -15,9 +25,19 @@
         "bay_description": "description for bay 18"
       },
       {
+        "bay_id": "18.5",
+        "bay_name": "Bay 18.5",
+        "bay_description": "description for bay 18.5"
+      },
+      {
         "bay_id": "17",
         "bay_name": "Bay 17",
         "bay_description": "description for bay 17"
+      },
+      {
+        "bay_id": "17.5",
+        "bay_name": "Bay 17.5",
+        "bay_description": "description for bay 17.5"
       },
       {
         "bay_id": "16",
@@ -25,9 +45,19 @@
         "bay_description": "description for bay 16"
       },
       {
+        "bay_id": "16.5",
+        "bay_name": "Bay 16.5",
+        "bay_description": "description for bay 16.5"
+      },
+      {
         "bay_id": "15",
         "bay_name": "Bay 15",
         "bay_description": "description for bay 15"
+      },
+      {
+        "bay_id": "15.5",
+        "bay_name": "Bay 15.5",
+        "bay_description": "description for bay 15.5"
       },
       {
         "bay_id": "14",
@@ -35,9 +65,24 @@
         "bay_description": "description for bay 14"
       },
       {
+        "bay_id": "14.5",
+        "bay_name": "Bay 14.5",
+        "bay_description": "description for bay 14.5"
+      },
+      {
         "bay_id": "13",
         "bay_name": "Bay 13",
         "bay_description": "description for bay 13"
+      },
+      {
+        "bay_id": "13A",
+        "bay_name": "Bay 13A",
+        "bay_description": "description for bay 13A"
+      },
+      {
+        "bay_id": "13B",
+        "bay_name": "Bay 13B",
+        "bay_description": "description for bay 13B"
       },
       {
         "bay_id": "12",

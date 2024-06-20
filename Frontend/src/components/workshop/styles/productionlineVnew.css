@@ -8,6 +8,18 @@ allow walls and doors to take 1 col or 1 row
 9bays * (4cols + 1 col gap) = 45 cols, plus 2 walls and 1 gap on the top = 48 cols
  */
 
+ .label {
+  width: 100%;
+  background-color: #ffa726;
+  text-align: center;
+}
+
+.layout-label {
+  width: 100%;
+  background-color: #ffa726;
+  text-align: center;
+}
+
 .production-line-layout {
   display: flex;
   justify-content: center;
@@ -16,7 +28,7 @@ allow walls and doors to take 1 col or 1 row
   height: 200vh;
   font-size: 1vw;
 }
-.grid-container {
+.production-line-grid {
   display: grid;
   grid-template-columns: repeat(48, 1fr);
   grid-template-rows: repeat(66, 1fr);
@@ -43,7 +55,7 @@ allow walls and doors to take 1 col or 1 row
 }
 
 .topwall {
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     grid-row: 1/1;
     grid-column: 1/49;
 }
@@ -200,36 +212,36 @@ allow walls and doors to take 1 col or 1 row
   grid-row: 3/9;
 }
 
-.bay-20h {
+.bay-20\.5 {
   grid-column: 23/27;
   grid-row: 59/65;
 }
 
-.bay-19h {
+.bay-19\.5 {
   grid-column: 23/27;
   grid-row: 52/58;
 }
 
-.bay-18h {
+.bay-18\.5 {
   grid-column: 23/27;
   grid-row: 45/51;
 }
 
-.bay-17h {
+.bay-17\.5 {
   grid-column: 23/27;
   grid-row: 38/44;
 }
 
-.bay-16h {
+.bay-16\.5 {
   grid-column: 23/27;
   grid-row: 31/37;
 }
-.bay-15h {
+.bay-15\.5 {
   grid-column: 23/27;
   grid-row: 24/30;
 }
 
-.bay-14h {
+.bay-14\.5 {
   grid-column: 23/27;
   grid-row: 17/23;
 }

@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
   font-size: min(2vh, 1vw);
-  
 }
 
 .card-bayName {
@@ -11,7 +10,13 @@
   background-color: #DCE6F1;
   grid-row: 1/1;
   grid-column: 1/1;
+  /* border: 2px solid #000; */
 }
+/* .house-card {
+  border-bottom: 2px solid #000;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+} */
 
 .card-onlineDate {
   grid-row: 2/2;
@@ -33,6 +38,7 @@
 .card-customer {
   grid-row: 5/5;
   grid-column: 1/1;
+  height: 2.2vh;
   overflow: hidden;
   text-overflow: ellipsis;
 }
