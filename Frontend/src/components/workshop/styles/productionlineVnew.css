@@ -173,7 +173,7 @@ allow walls and doors to take 1 col or 1 row
   grid-row: 3/9;
 }
 
-.bay-8h {
+.bay-8\.5 {
   grid-column: 43/47;
   grid-row: 3/9;
 }

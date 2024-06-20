@@ -110,6 +110,11 @@
         "bay_description": "description for bay 8"
       },
       {
+        "bay_id": "8.5",
+        "bay_name": "Bay 8.5",
+        "bay_description": "description for bay 8.5"
+      },
+      {
         "bay_id": "7",
         "bay_name": "Bay 7",
         "bay_description": "description for bay 7"
