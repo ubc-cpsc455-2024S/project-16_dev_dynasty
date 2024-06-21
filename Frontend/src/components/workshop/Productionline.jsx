@@ -12,12 +12,12 @@ import { DndContext } from '@dnd-kit/core'
 const Productionline = () => {
   const dispatch = useDispatch()
   const bayArray = useSelector(state => state.bays.list || [])
-  const allInBayHouses = useSelector(state => state.houses.inbayList || [])
+  const allInBayHouses = useSelector(state => state.houses.inBayList || [])
 
   useEffect(() => {
     dispatch(getAllBaysAsync())
     dispatch(getHousesInbayAsync())
-  }, [dispatch])
+  }, [])
 
   const handleDragEnd = (event) => {
     const {active, over} = event;
