@@ -4,8 +4,12 @@ import { CSS } from '@dnd-kit/utilities'
 
 const HouseCard = ({ house }) => {
   const houseId = house.house_id
+  const houseStatus = house.status
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: houseId,
+    id: houseId, 
+    data: {
+      status: houseStatus,
+    },
   })
 
   const style = {

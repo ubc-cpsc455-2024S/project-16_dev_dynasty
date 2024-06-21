@@ -191,6 +191,7 @@ const houseSlice = createSlice({
             ...inBayListCopy[index],
             bay_id: action.payload.bay_id,
             bay_name: `Bay ${action.payload.bay_id}`,
+            status: 1
           }
           state.inBayList = inBayListCopy;
         } else {

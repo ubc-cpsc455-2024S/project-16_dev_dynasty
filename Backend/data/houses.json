@@ -102,7 +102,7 @@
     "bay_name": "Bay 17",
     "bay_description": "description for bay 17",
     "house_records_id": "string",
-    "status": 2
+    "status": 4
   },
   {
     "house_id": 8,

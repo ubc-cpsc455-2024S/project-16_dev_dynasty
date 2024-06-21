@@ -76,6 +76,7 @@ const toggleBayAssignment = (houseid, bayid) => {
       ...housesJson[index],
       bay_id: bayid,
       bay_name: `Bay ${bayid}`,
+      status: 1
     };
     return { success: true };
   } else {

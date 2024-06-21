@@ -23,6 +23,18 @@ const Productionline = () => {
     const {active, over} = event;
     console.log(over);
     console.log(active);
+    const houseStatus = active.data.current.status;
+    console.log(houseStatus);
+
+    if (houseStatus !== 4) {
+      alert ("house not ready to be moved to the next bay");
+      return;
+    }
+    if(houseStatus === 0) {
+      alert("cancelled house, should be out of bay")
+      return;
+    }
+
     const houseId = parseInt(active.id);
     const newBayId = parseInt(over.id);
     dispatch(bayToHouseAsync({houseId: houseId, bayId: newBayId}));
