@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../components/headers/Header1'
-import Header1 from '../components/navigation/Navbar'
+import Navbar from '../components/navigation/Navbar.jsx'
+import Header1 from '../components/headers/Header1'
 import { TextField, Button, Box, Typography } from '@mui/material'
 
 const UsersAddPage = () => {

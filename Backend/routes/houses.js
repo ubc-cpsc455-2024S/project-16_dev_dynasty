@@ -21,11 +21,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 // GET endpoint to retrieve all houses that has bay
 router.get("/inbay", async (req, res) => {
   try {
-    const houses = await getHousesInBays(); 
+    const houses = await getHousesInBays();
     res.json({ result: houses });
   } catch (error) {
     res.status(500).send("Server error");
@@ -37,7 +36,7 @@ router.get("/inbay/:bayid", async (req, res) => {
   const { bayid } = req.params;
   console.log("bayid", bayid);
   try {
-    const house = await getHouseInBay(parseInt(bayid)); 
+    const house = await getHouseInBay(parseInt(bayid));
     res.json({ result: house });
   } catch (error) {
     res.status(500).send("Server error");
@@ -60,13 +59,11 @@ router.get("/:houseid", async (req, res) => {
   }
 });
 
-
-
 // POST endpoint to add a new house
 router.post("/", async (req, res) => {
   try {
     const newHouse = await addHouseToDb(req.body); // Function to add a new house
-    res.status(200).json({ result: { house_id: newHouse.house_id } });
+    res.status(200).json({ result: newHouse });
   } catch (error) {
     switch (error.code) {
       case "BAY_IN_USE":
@@ -120,7 +117,13 @@ router.patch("/:houseid/:bayid", async (req, res) => {
   try {
     const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
     if (result.success) {
-      res.status(200).json({ message: `Successfully updated bay for house ${houseid}`, house_id: houseid, bay_id: bayid});
+      res
+        .status(200)
+        .json({
+          message: `Successfully updated bay for house ${houseid}`,
+          house_id: houseid,
+          bay_id: bayid,
+        });
     } else if (result.error === "BAY_IN_USE") {
       res.status(409).send("Bay in use");
     } else {
