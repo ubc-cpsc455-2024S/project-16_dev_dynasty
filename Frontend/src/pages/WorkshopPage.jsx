@@ -1,62 +1,13 @@
-import React, { useEffect } from 'react';
-import {store} from '../redux/store';
+import React from 'react';
 import Navbar from '../components/navigation/Navbar';
 import Header1 from '../components/headers/Header1';
-import { Button } from '@mui/material';
 import Productionline from '../components/workshop/Productionline';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllBaysAsync, getBayAsync } from '../redux/bays/thunksBays';
-import {
-  getAllHousesAsync,
-  getHouseAsync,
-  getHousesInbayAsync,
-  getHouseInAbayAsync,
-  addHouseAsync,
-  deleteHouseAsync,
-  updateHouseAsync,
-  bayToHouseAsync,
-} from '../redux/houses/thunksHouses';
 
 const WorkshopPage = () => {
-  // const dispatch = useDispatch();
-  // const inBayHouse = useSelector((state) => state.houses.inbayHouse || null);
-  // const bays = useSelector(state => state.bays.list);
-  // const bayfound = useSelector((state) => state.bays.findBay || null);
-  // const houses = useSelector((state) => state.houses.list || []);
-  // const housefound = useSelector((state) => state.houses.findHouse || null);
-  // const housesInBay = useSelector((state) => state.houses.inbayList || []);
-
-  // useEffect(() => {
-  //   const newhouse =  {
-  //     "npl": "1918",
-  //     "customer_id": 4,
-  //     "customer_name": "Dene Tha'",
-  //     "online_date": "18-Jan-24 ",
-  //     "created_on": "17-Jan-24",
-  //     "house_model": "026-035",
-  //     "square_ft": 1482,
-  //     "bay_id": null,
-  //     "bay_name": null,
-  //     "bay_description": null,
-  //     "house_records_id": "string"
-  //   }
-  //   const payload = {
-  //     houseId: 14,
-  //     bayId: 7
-  //   }
-  //   dispatch(getHouseInAbayAsync(1));
-  // },[])
-
-  // const log = () =>{
-  //   console.log(inBayHouse);
-  // }
-
   return (
     <Navbar>
       <Header1 title={'Workshop Page'}>
-      {/* <button onClick={log}>log</button> */}
         <Productionline />
-        
       </Header1>
     </Navbar>
   )
