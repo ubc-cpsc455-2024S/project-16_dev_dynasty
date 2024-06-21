@@ -169,17 +169,26 @@ const houseSlice = createSlice({
       })
       .addCase(bayToHouseAsync.fulfilled, (state, action) => {
         state.status.bayToHouse = 'fulfilled'
-        console.log(action.payload)
-        console.log(state.list)
-        console.log('State list type:', Array.isArray(state.list) ? 'Array' : typeof state.list);
-        const index = state.list.findIndex(
-          house => parseInt(house.house_id) === parseInt(action.payload.house_id)
+        // console.log(action.payload)
+        // console.log("inbaylist", state)
+        // console.log('State list type:', Array.isArray(state.list) ? 'Array' : typeof state.list);
+
+        const index = state.inBayList.findIndex(
+          house => { console.log("house", house);
+            console.log(action.payload);
+            return parseInt(house.house_id) === parseInt(action.payload.house_id)}
         )
+
+        // const houseChanged = state.list.find(
+        //   house => parseInt(house.house_id) === parseInt(action.payload.house_id)
+        // )
+
+        // console.log("House changed is found is",houseChanged)
         console.log("index for found is",index)
         
         if (index !== -1) {
-          state.list[index] = {
-            ...state.list[index],
+          state.inBayList[index] = {
+            ...state.inBayList[index],
             bay_id: action.payload.bay_id,
             bay_name: `Bay ${action.payload.bay_id}`,
           }

@@ -28,9 +28,19 @@ const Productionline = () => {
     dispatch(bayToHouseAsync({houseId: houseId, bayId: newBayId}));
   }
 
+  const log = () =>{
+    console.log(allInBayHouses);
+  }
+
+  const send = () =>{
+    dispatch(bayToHouseAsync({houseId: 1, bayId: 6}));
+  }
+
   return (
     <div>
       <div className='layout-label'>Production Line Status</div>
+      <button onClick={log}>log</button>
+      <button onClick={send}>send</button>
       <div className='production-line-layout'>
         <DndContext onDragEnd={handleDragEnd}>
           <div className='production-line-grid'>
