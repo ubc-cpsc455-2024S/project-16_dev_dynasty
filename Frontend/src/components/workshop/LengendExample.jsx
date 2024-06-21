@@ -1,7 +1,6 @@
 import React from 'react'
 import './styles/legendExample.css'
 
-
 const LengendExample = () => {
   return (
     <div className='legend-example'>
@@ -23,6 +22,13 @@ const LengendExample = () => {
         <p className='bay-card card-modelNumber'>023-002</p>
         <p className='bay-card card-customer'>Conklin</p>
         <p className='bay-card card-size'>999</p>
+      </div>
+      <div className='color-legend'>
+        House Card Color Status 
+        <div className='white-status'>White: Not Started </div>
+        <div className='red-status'>Red: In Progress </div>
+        <div className='yellow-status'>Yellow: QA Reqiured</div>
+        <div className='white-status'>Green: 'Completed</div>
       </div>
     </div>
   )

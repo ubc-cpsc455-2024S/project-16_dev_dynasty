@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BayCard from './BayCard.jsx'
 import Walls from './Walls.jsx'
 import Doors from './Doors.jsx'
@@ -10,9 +10,12 @@ import { getHousesInbayAsync, bayToHouseAsync } from '../../redux/houses/thunksH
 import { DndContext } from '@dnd-kit/core'
 
 const Productionline = () => {
+  
   const dispatch = useDispatch()
   const bayArray = useSelector(state => state.bays.list || [])
   const allInBayHouses = useSelector(state => state.houses.inBayList || [])
+
+  const lastUpdated = new Date().toLocaleString();
 
   useEffect(() => {
     dispatch(getAllBaysAsync())
@@ -40,19 +43,19 @@ const Productionline = () => {
     dispatch(bayToHouseAsync({houseId: houseId, bayId: newBayId}));
   }
 
-  const log = () =>{
-    console.log(allInBayHouses);
-  }
+  // const log = () =>{
+  //   console.log(allInBayHouses);
+  // }
 
-  const send = () =>{
-    dispatch(bayToHouseAsync({houseId: 1, bayId: 6}));
-  }
+  // const send = () =>{
+  //   dispatch(bayToHouseAsync({houseId: 1, bayId: 6}));
+  // }
 
   return (
     <div>
-      <div className='layout-label'>Production Line Status</div>
-      <button onClick={log}>log</button>
-      <button onClick={send}>send</button>
+      <div className='layout-label'>Production Line last update on {lastUpdated}</div>
+      {/* <button onClick={log}>log</button>
+      <button onClick={send}>send</button> */}
       <div className='production-line-layout'>
         <DndContext onDragEnd={handleDragEnd}>
           <div className='production-line-grid'>
