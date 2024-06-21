@@ -5,10 +5,12 @@ import { CSS } from '@dnd-kit/utilities'
 const HouseCard = ({ house }) => {
   const houseId = house.house_id
   const houseStatus = house.status
+  const bayId = parseInt(house.bay_id)
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: houseId, 
     data: {
       status: houseStatus,
+      oldBay: bayId
     },
   })
 

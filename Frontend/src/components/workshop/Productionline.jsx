@@ -37,9 +37,13 @@ const Productionline = () => {
       alert("cancelled house, should be out of bay")
       return;
     }
-
+  
     const houseId = parseInt(active.id);
-    const newBayId = parseInt(over.id);
+    const newBayId = parseFloat(over.id);
+    const oldBay = active.data.current.oldBay;
+    if (oldBay === newBayId) {
+      return;
+    }
     dispatch(bayToHouseAsync({houseId: houseId, bayId: newBayId}));
   }
 
