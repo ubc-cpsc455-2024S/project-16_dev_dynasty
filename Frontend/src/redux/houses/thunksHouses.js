@@ -15,10 +15,10 @@ const actionTypes = {
 // prettier-ignore
 export const getAllHousesAsync = createAsyncThunk(
   actionTypes.GET_HOUSES,
-  async () => {
-    return await HouseService.getAllHouses();
+  async ({ query, nplQuery, customerNameQuery, houseModelQuery }) => {
+    return await HouseService.getAllHouses({ query, nplQuery, customerNameQuery, houseModelQuery });
   }
-)
+);
 
 export const getHousesInbayAsync = createAsyncThunk(
   actionTypes.GET_HOUSE_INBAY,
