@@ -1,9 +1,32 @@
 var housesJson = require("../data/houses.json");
 
 // Function to fetch all houses
-const getHousesFromDb = () => {
-  return housesJson;
+const getHousesFromDb = ({ query, nplQuery, customerNameQuery, houseModelQuery }) => {
+  let filteredHouses = housesJson;
+
+  if (query) {
+    if (query === 'inBay') {
+      filteredHouses = filteredHouses.filter(house => house.bay_id !== null);
+    } else {
+      filteredHouses = filteredHouses.filter(house => house.status.toString() === query);
+    }
+  }
+
+  if (nplQuery) {
+    filteredHouses = filteredHouses.filter(house => house.npl.includes(nplQuery));
+  }
+
+  if (customerNameQuery) {
+    filteredHouses = filteredHouses.filter(house => house.customer_name.toLowerCase().includes(customerNameQuery.toLowerCase()));
+  }
+
+  if (houseModelQuery) {
+    filteredHouses = filteredHouses.filter(house => house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase()));
+  }
+
+  return filteredHouses;
 };
+
 
 // Function to fetch a specific house
 const getHouseFromDb = (houseid) => {

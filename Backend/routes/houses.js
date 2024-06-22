@@ -14,7 +14,8 @@ const {
 // GET endpoint to retrieve all houses
 router.get("/", async (req, res) => {
   try {
-    const houses = await getHousesFromDb(); // Function to fetch all houses
+    const { query, nplQuery, customerNameQuery, houseModelQuery } = req.query;
+    const houses = getHousesFromDb({ query, nplQuery, customerNameQuery, houseModelQuery });
     res.json({ result: houses });
   } catch (error) {
     res.status(500).send("Server error");
