@@ -30,7 +30,7 @@ BayBuild is a project management web application specifically designed for a mod
 
 2. **Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
 
-3. **Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").
+3. ~~**Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").~~
 
 4. **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage.
  
@@ -41,7 +41,7 @@ BayBuild is a project management web application specifically designed for a mod
 
 ### Strech Requirements
 
-1. **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board. 
+1. ~~**Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board.~~
 
 2. **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
 
