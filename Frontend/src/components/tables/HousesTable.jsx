@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteHouseAsync, getAllHousesAsync } from '../../redux/houses/thunksHouses';
 import { houseStatusEnum } from '../../constants/contants';
+import { useNavigate } from 'react-router-dom';
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -16,6 +17,7 @@ const TableRowStyled = styled(TableRow)({
   '&:nth-of-type(odd)': {
     backgroundColor: '#f9f9f9',
   },
+  cursor: 'pointer',
 });
 
 const StatusCell = styled(TableCell)(({ status }) => ({
@@ -36,10 +38,15 @@ const getStatusColor = (status) => {
 
 const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDelete = async (houseId) => {
     await dispatch(deleteHouseAsync(houseId));
     dispatch(getAllHousesAsync({ query: '', nplQuery: '', customerNameQuery: '', houseModelQuery: '' }));
+  };
+
+  const handleRowClick = (houseId) => {
+    navigate(`/houses/${houseId}`);
   };
 
   return (
@@ -47,9 +54,6 @@ const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChange
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeadCell>
-              <Typography variant="h6">House ID</Typography>
-            </TableHeadCell>
             <TableHeadCell>
               <Typography variant="h6">NPL</Typography>
             </TableHeadCell>
@@ -78,8 +82,7 @@ const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChange
         </TableHead>
         <TableBody>
           {houses.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((house) => (
-            <TableRowStyled key={house.house_id}>
-              <TableCell>{house.house_id}</TableCell>
+            <TableRowStyled key={house.house_id} onClick={() => handleRowClick(house.house_id)}>
               <TableCell>{house.npl}</TableCell>
               <TableCell>{house.customer_name}</TableCell>
               <TableCell>{house.house_model}</TableCell>
@@ -87,7 +90,7 @@ const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChange
               <StatusCell status={house.status}>{houseStatusEnum[house.status]}</StatusCell>
               <TableCell>{house.bay_id}</TableCell>
               <TableCell>{house.bay_name}</TableCell>
-              <TableCell>
+              <TableCell onClick={(e) => e.stopPropagation()}>
                 <IconButton onClick={() => handleDelete(house.house_id)}>
                   <DeleteIcon />
                 </IconButton>
