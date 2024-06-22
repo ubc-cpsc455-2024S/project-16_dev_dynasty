@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, TablePagination, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, TablePagination, IconButton } from '@mui/material';
 import { styled } from '@mui/system';
+import { useDispatch } from 'react-redux';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteHouseAsync, getAllHousesAsync } from '../../redux/houses/thunksHouses';
 import { houseStatusEnum } from '../../constants/contants';
 
 const TableHeadCell = styled(TableCell)({
@@ -32,6 +35,13 @@ const getStatusColor = (status) => {
 };
 
 const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = async (houseId) => {
+    await dispatch(deleteHouseAsync(houseId));
+    dispatch(getAllHousesAsync({ query: '', nplQuery: '', customerNameQuery: '', houseModelQuery: '' }));
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -61,6 +71,9 @@ const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChange
             <TableHeadCell>
               <Typography variant="h6">Bay Name</Typography>
             </TableHeadCell>
+            <TableHeadCell>
+              <Typography variant="h6">Actions</Typography>
+            </TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,6 +87,11 @@ const HousesTable = ({ houses, page, rowsPerPage, handleChangePage, handleChange
               <StatusCell status={house.status}>{houseStatusEnum[house.status]}</StatusCell>
               <TableCell>{house.bay_id}</TableCell>
               <TableCell>{house.bay_name}</TableCell>
+              <TableCell>
+                <IconButton onClick={() => handleDelete(house.house_id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRowStyled>
           ))}
         </TableBody>
