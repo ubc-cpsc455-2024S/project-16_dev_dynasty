@@ -11,6 +11,7 @@ import Navbar from '../components/navigation/Navbar';
 import Header1 from '../components/headers/Header1';
 import { houseStatusEnum } from '../constants/contants';
 
+
 const LoadingContainer = styled(Box)({
   display: 'flex',
   justifyContent: 'center',

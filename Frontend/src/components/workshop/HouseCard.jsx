@@ -1,8 +1,10 @@
 import React from 'react'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
+import { useNavigate } from 'react-router-dom';
 
 const HouseCard = ({ house }) => {
+  const navigate = useNavigate();
   const houseId = house.house_id
   const houseStatus = house.status
   const bayId = parseInt(house.bay_id)
@@ -25,6 +27,7 @@ const HouseCard = ({ house }) => {
       style={style}
       {...listeners}
       {...attributes}
+      onClick={()=>{navigate(`/houses/${houseId}`)}}
     >
       <p className='bay-card card-onlineDate'>{house.online_date}</p>
       <p className='bay-card card-npl'>{house.npl}</p>

@@ -7,7 +7,8 @@ import './styles/productionlineVnew.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllBaysAsync } from '../../redux/bays/thunksBays'
 import { getHousesInbayAsync, bayToHouseAsync } from '../../redux/houses/thunksHouses'
-import { DndContext } from '@dnd-kit/core'
+import { DndContext, useSensor,useSensors, MouseSensor,
+  TouchSensor, } from '@dnd-kit/core'
 
 const Productionline = () => {
   
@@ -21,6 +22,15 @@ const Productionline = () => {
     dispatch(getAllBaysAsync())
     dispatch(getHousesInbayAsync())
   }, [])
+
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      delay: 100,
+      tolerance: 1,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor);
 
   const handleDragEnd = (event) => {
     const {active, over} = event;
@@ -61,7 +71,7 @@ const Productionline = () => {
       {/* <button onClick={log}>log</button>
       <button onClick={send}>send</button> */}
       <div className='production-line-layout'>
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
           <div className='production-line-grid'>
             {bayArray.map(bay => {
               return (
