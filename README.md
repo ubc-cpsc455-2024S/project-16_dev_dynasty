@@ -16,13 +16,13 @@ BayBuild is a project management web application specifically designed for a mod
 
 ### Minimal requirements
 
-1. **Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.
+1. ~~**Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.~~
 
-2. **View Production Line Status Board** - allow users to view the production line status board and see the position of each home in the 20 stages of production.
+2. ~~**View Production Line Status Board** - allow users to view the production line status board and see the position of each home in the 20 stages of production.~~
 
-3. **Find Home Record** - allow users to find a particular home in the system via a search and view the record specific to that home.
+3. ~~**Find Home Record** - allow users to find a particular home in the system via a search and view the record specific to that home.~~
 
-4. **Modify Home Record (Update Home Status)** - allow users to modify a home record and update the position of a home in the 20 stage production line (e.g., a home that has completed all work at the electrical stage and can be moved forward to the next stage, plumbing).
+4. ~~**Modify Home Record (Update Home Status)** - allow users to modify a home record and update the position of a home in the 20 stage production line (e.g., a home that has completed all work at the electrical stage and can be moved forward to the next stage, plumbing).~~
 
 ### Standard Requirements
 
