@@ -25,8 +25,7 @@ const Productionline = () => {
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      delay: 100,
-      tolerance: 1,
+      distance: 3,
     },
   });
 
