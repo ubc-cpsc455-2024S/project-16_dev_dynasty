@@ -12,6 +12,7 @@ const HouseCard = ({ house }) => {
       status: houseStatus,
       oldBay: bayId
     },
+    disabled: houseStatus !== 4,
   })
 
   const style = {
