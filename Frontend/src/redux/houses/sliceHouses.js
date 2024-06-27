@@ -128,7 +128,7 @@ const houseSlice = createSlice({
       .addCase(deleteHouseAsync.fulfilled, (state, action) => {
         state.status.delete = 'fulfilled'
         state.list = state.list.filter(
-          house => house.house_id !== action.payload
+          house => house.house_id !== action.payload.house_id
         )
       })
       .addCase(deleteHouseAsync.rejected, (state, action) => {
