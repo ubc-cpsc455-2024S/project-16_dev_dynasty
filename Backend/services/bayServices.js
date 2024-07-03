@@ -1,6 +1,6 @@
 var baysJson = require("../data/bays.json");
 
-
+// Ryan
 // TODO: Needs Fixing
 // Funtion to retrieve all bays
 const getBaysFromDb = () => {
@@ -19,11 +19,8 @@ const getBaysFromDb = () => {
 // Funtion to retrieve a specific bay by ID
 const getBayFromDb = (bayid) => {
   const bay = baysJson.find((bay) => bay.bay_id === bayid);
-  return bay
-    ? bay
-    : null;
+  return bay ? bay : null;
 };
-
 
 module.exports = {
   getBaysFromDb,

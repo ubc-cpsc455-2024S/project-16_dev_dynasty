@@ -86,29 +86,13 @@ const houseSlice = createSlice({
       .addCase(getHousesInbayAsync.fulfilled, (state, action) => {
         state.status.getInBay = 'fulfilled'
         state.inBayList = action.payload
-        console.log("State print in get all inbayhouses", state)
-        console.log("printing state.inbaylist", state.inBayList)
+        console.log('State print in get all inbayhouses', state)
+        console.log('printing state.inbaylist', state.inBayList)
       })
       .addCase(getHousesInbayAsync.rejected, (state, action) => {
         state.status.getInBay = 'rejected'
         state.error = action.error.message
       })
-      // // Handle getHouseAsync
-      // .addCase(getHouseInAbayAsync.pending, state => {
-      //   state.status.getOneInABay = 'pending'
-      // })
-      // .addCase(getHouseInAbayAsync.fulfilled, (state, action) => {
-      //   state.status.getOneInABay = 'fulfilled'
-      //   state.inBayHouse = action.payload
-      //   if (action.payload) {
-      //     const bid = action.payload.bay_id
-      //     state.bayHouseMap[bid] = action.payload
-      //   }
-      // })
-      // .addCase(getHouseInAbayAsync.rejected, (state, action) => {
-      //   state.status.getOneInABay = 'rejected'
-      //   state.error = action.error.message
-      // })
       // Handle addHouseAsync
       .addCase(addHouseAsync.pending, state => {
         state.status.add = 'pending'
@@ -170,37 +154,30 @@ const houseSlice = createSlice({
       })
       .addCase(bayToHouseAsync.fulfilled, (state, action) => {
         state.status.bayToHouse = 'fulfilled'
-        // console.log(action.payload)
-        console.log("State print in attach bay to house", state)
-        console.log("printing state.inbaylist", state.inBayList)
-        // console.log('State list type:', Array.isArray(state.list) ? 'Array' : typeof state.list);
-        const inBayListCopy = [
-          ...state.inBayList
-        ];
+        console.log('State print in attach bay to house', state)
+        console.log('printing state.inbaylist', state.inBayList)
+        const inBayListCopy = [...state.inBayList]
 
-        const index = inBayListCopy.findIndex(
-          house => {
-            console.log("in findIndex");
-            return parseInt(house.house_id) === parseInt(action.payload.house_id)
-          }
-        )
-        console.log("index for found is", index)
+        const index = inBayListCopy.findIndex(house => {
+          console.log('in findIndex')
+          return parseInt(house.house_id) === parseInt(action.payload.house_id)
+        })
+        console.log('index for found is', index)
 
         if (index !== -1) {
           inBayListCopy[index] = {
             ...inBayListCopy[index],
             bay_id: action.payload.bay_id,
             bay_name: `Bay ${action.payload.bay_id}`,
-            status: 1
+            status: 1,
           }
-          state.inBayList = inBayListCopy;
+          state.inBayList = inBayListCopy
         } else {
           console.error(
             'bayToHouse action fullfilled by house not found in list'
           )
         }
-      }
-      )
+      })
       .addCase(bayToHouseAsync.rejected, (state, action) => {
         state.status.bayToHouse = 'rejected'
         state.error = action.error.message

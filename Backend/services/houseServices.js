@@ -1,48 +1,67 @@
 var housesJson = require("../data/houses.json");
 
+// Andrew
 // Function to fetch all houses
-const getHousesFromDb = ({ query, nplQuery, customerNameQuery, houseModelQuery }) => {
+const getHousesFromDb = ({
+  query,
+  nplQuery,
+  customerNameQuery,
+  houseModelQuery,
+}) => {
   let filteredHouses = housesJson;
 
   if (query) {
-    if (query === 'inBay') {
-      filteredHouses = filteredHouses.filter(house => house.bay_id !== null);
+    if (query === "inBay") {
+      filteredHouses = filteredHouses.filter((house) => house.bay_id !== null);
     } else {
-      filteredHouses = filteredHouses.filter(house => house.status.toString() === query);
+      filteredHouses = filteredHouses.filter(
+        (house) => house.status.toString() === query
+      );
     }
   }
 
   if (nplQuery) {
-    filteredHouses = filteredHouses.filter(house => house.npl.includes(nplQuery));
+    filteredHouses = filteredHouses.filter((house) =>
+      house.npl.includes(nplQuery)
+    );
   }
 
   if (customerNameQuery) {
-    filteredHouses = filteredHouses.filter(house => house.customer_name.toLowerCase().includes(customerNameQuery.toLowerCase()));
+    filteredHouses = filteredHouses.filter((house) =>
+      house.customer_name
+        .toLowerCase()
+        .includes(customerNameQuery.toLowerCase())
+    );
   }
 
   if (houseModelQuery) {
-    filteredHouses = filteredHouses.filter(house => house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase()));
+    filteredHouses = filteredHouses.filter((house) =>
+      house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase())
+    );
   }
 
   return filteredHouses;
 };
 
-
+// Andrew
 // Function to fetch a specific house
 const getHouseFromDb = (houseid) => {
   return housesJson.find((house) => house.house_id === houseid);
 };
 
+// Ryan
 // Function to fetch all houses that are in production
 const getHousesInBays = () => {
   return housesJson.filter((house) => house.bay_id !== null);
 };
 
+// Andrew
 // Function to fetch the house in a specified bay
 const getHouseInBay = (bayId) => {
   return housesJson.find((house) => house.bay_id === bayId) || null;
 };
 
+// Ryan
 // Function to add a new house
 const addHouseToDb = async (houseData) => {
   const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
@@ -63,6 +82,7 @@ const addHouseToDb = async (houseData) => {
   return newHouse;
 };
 
+// Ryan
 // Function to delete a house
 const deleteHouseFromDb = (houseid) => {
   const index = housesJson.findIndex((house) => house.house_id === houseid);
@@ -74,10 +94,11 @@ const deleteHouseFromDb = (houseid) => {
   }
 };
 
+// Andrew
 // Function to update house details
 const updateHouseInDb = (houseid, houseInfo) => {
   const index = housesJson.findIndex(
-    (house) => house.house_id === parseInt(houseid),
+    (house) => house.house_id === parseInt(houseid)
   );
   if (index > -1) {
     housesJson[index] = { ...housesJson[index], ...houseInfo };
@@ -87,10 +108,11 @@ const updateHouseInDb = (houseid, houseInfo) => {
   }
 };
 
+// Andy
 // Function to attach/detach a bay
 const toggleBayAssignment = (houseid, bayid) => {
   const index = housesJson.findIndex(
-    (house) => house.house_id === parseInt(houseid),
+    (house) => house.house_id === parseInt(houseid)
   );
   console.log(houseid);
   console.log(index);
@@ -99,7 +121,7 @@ const toggleBayAssignment = (houseid, bayid) => {
       ...housesJson[index],
       bay_id: bayid,
       bay_name: `Bay ${bayid}`,
-      status: 1
+      status: 1,
     };
     return { success: true };
   } else {
