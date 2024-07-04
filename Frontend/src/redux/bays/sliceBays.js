@@ -35,15 +35,6 @@ const baySlice = createSlice({
       })
       .addCase(getBayAsync.fulfilled, (state, action) => {
         state.status.getOne = 'fulfilled';
-        // const index = state.list.findIndex(
-        //   bay => bay.bay_id === action.payload.bay_id
-        // );
-        // if (index !== -1) {
-        //   state.list[index] = action.payload;
-        // } else {
-        //   // Optionally add the bay if not found in the list
-        //   state.list.push(action.payload);
-        // }
         state.findBay = action.payload;
       })
       .addCase(getBayAsync.rejected, (state, action) => {
