@@ -5,7 +5,6 @@ const houseSchema = new mongoose.Schema(
         npl: {
             type: String,
             required: true,
-            unique: true,
         },
         customer_id: {
             type: String,
@@ -33,20 +32,18 @@ const houseSchema = new mongoose.Schema(
         },
         bay_id: {
             type: String,
-            required: true,
-            unique: true,
+     
+            default: null
         },
         bay_name: {
             type: String,
-            required: true,
-            unique: true,
-        },
-        bay_description: {
-            type: String,
+        
+            default: null
         },
         house_records_id: {
             type: String,
-            unique: true,
+          
+            default: null
         },
         status: {
             type: Number,
@@ -55,6 +52,8 @@ const houseSchema = new mongoose.Schema(
         }
     }
 );
+
+
 
 const House = mongoose.model('House', houseSchema);
 
