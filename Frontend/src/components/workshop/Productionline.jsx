@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import BayCard from './BayCard.jsx'
 import Walls from './Walls.jsx'
 import Doors from './Doors.jsx'
@@ -7,8 +7,7 @@ import './styles/productionlineVnew.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllBaysAsync } from '../../redux/bays/thunksBays'
 import { getHousesInbayAsync, bayToHouseAsync } from '../../redux/houses/thunksHouses'
-import { DndContext, useSensor,useSensors, MouseSensor,
-  TouchSensor, } from '@dnd-kit/core'
+import { DndContext, useSensor,useSensors, MouseSensor } from '@dnd-kit/core'
 
 const Productionline = () => {
   

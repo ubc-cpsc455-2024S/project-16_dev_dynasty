@@ -10,8 +10,7 @@
     "square_ft": 999,
     "bay_id": "15",
     "bay_name": "Bay 15",
-    "bay_description": "description for bay 15",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 2
   },
   {
@@ -25,8 +24,7 @@
     "square_ft": 999,
     "bay_id": null,
     "bay_name": null,
-    "bay_description": null,
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 4
   },
   {
@@ -40,8 +38,7 @@
     "square_ft": 999,
     "bay_id": null,
     "bay_name": null,
-    "bay_description": null,
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 3
   },
   {
@@ -55,8 +52,7 @@
     "square_ft": 1359,
     "bay_id": "20",
     "bay_name": "Bay 20",
-    "bay_description": "description for bay 20",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 1
   },
   {
@@ -70,8 +66,7 @@
     "square_ft": 1482,
     "bay_id": "19",
     "bay_name": "Bay 19",
-    "bay_description": "description for bay 19",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 1
   },
   {
@@ -85,8 +80,7 @@
     "square_ft": 1482,
     "bay_id": "18",
     "bay_name": "Bay 18",
-    "bay_description": "description for bay 18",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 1
   },
   {
@@ -100,8 +94,7 @@
     "square_ft": 1456,
     "bay_id": "17",
     "bay_name": "Bay 17",
-    "bay_description": "description for bay 17",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 4
   },
   {
@@ -115,8 +108,7 @@
     "square_ft": 999,
     "bay_id": "14",
     "bay_name": "Bay 14",
-    "bay_description": "description for bay 14",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 3
   },
   {
@@ -130,8 +122,7 @@
     "square_ft": 999,
     "bay_id": "13",
     "bay_name": "Bay 13",
-    "bay_description": "description for bay 13",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 3
   },
   {
@@ -145,8 +136,7 @@
     "square_ft": 1482,
     "bay_id": "4",
     "bay_name": "Bay 4",
-    "bay_description": "description for bay 4",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 1
   },
   {
@@ -160,8 +150,7 @@
     "square_ft": 1482,
     "bay_id": "1",
     "bay_name": "Bay 1",
-    "bay_description": "description for bay 1",
-    "house_records_id": "string",
+    "house_records_id": null,
     "status": 1
   }
 ]
