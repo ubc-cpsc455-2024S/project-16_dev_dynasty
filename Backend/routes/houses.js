@@ -15,7 +15,12 @@ const {
 router.get("/", async (req, res) => {
   try {
     const { query, nplQuery, customerNameQuery, houseModelQuery } = req.query;
-    const houses = getHousesFromDb({ query, nplQuery, customerNameQuery, houseModelQuery });
+    const houses = await getHousesFromDb({
+      query,
+      nplQuery,
+      customerNameQuery,
+      houseModelQuery,
+    });
     res.json({ result: houses });
   } catch (error) {
     res.status(500).send("Server error");
@@ -37,7 +42,7 @@ router.get("/inbay/:bayid", async (req, res) => {
   const { bayid } = req.params;
   console.log("bayid", bayid);
   try {
-    const house = await getHouseInBay(parseInt(bayid));
+    const house = await getHouseInBay(bayid);
     res.json({ result: house });
   } catch (error) {
     res.status(500).send("Server error");
@@ -49,11 +54,11 @@ router.get("/:houseid", async (req, res) => {
   const { houseid } = req.params;
   console.log("houseid", houseid);
   try {
-    const house = await getHouseFromDb(parseInt(houseid)); // Function to fetch a specific house
+    const house = await getHouseFromDb(houseid); // Function to fetch a specific house
     if (!house) {
       res.status(404).send("House not found");
     } else {
-      res.json({ result: house });
+      res.json({ result: house[0] });
     }
   } catch (error) {
     res.status(500).send("Server error");
@@ -86,13 +91,14 @@ router.post("/", async (req, res) => {
 router.delete("/:houseid", async (req, res) => {
   const { houseid } = req.params;
   try {
-    const result = await deleteHouseFromDb(parseInt(houseid)); // Function to delete a house
+    const result = await deleteHouseFromDb(houseid); // Function to delete a house
     if (result.deleted) {
       res.status(200).json({ result: { house_id: houseid } });
     } else {
       res.status(404).send("House not found");
     }
   } catch (error) {
+    console.log("error", error);
     res.status(500).send("Server error");
   }
 });
@@ -101,7 +107,7 @@ router.delete("/:houseid", async (req, res) => {
 router.put("/:houseid", async (req, res) => {
   const { houseid } = req.params;
   try {
-    const updatedHouse = await updateHouseInDb(parseInt(houseid), req.body); // Function to update house details
+    const updatedHouse = await updateHouseInDb(houseid, req.body); // Function to update house details
     if (updatedHouse) {
       res.status(200).json({ result: updatedHouse });
     } else {
@@ -118,13 +124,11 @@ router.patch("/:houseid/:bayid", async (req, res) => {
   try {
     const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
     if (result.success) {
-      res
-        .status(200)
-        .json({
-          message: `Successfully updated bay for house ${houseid}`,
-          house_id: houseid,
-          bay_id: bayid,
-        });
+      res.status(200).json({
+        message: `Successfully updated bay for house ${houseid}`,
+        house_id: houseid,
+        bay_id: bayid,
+      });
     } else if (result.error === "BAY_IN_USE") {
       res.status(409).send("Bay in use");
     } else {

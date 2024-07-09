@@ -1,14 +1,24 @@
 import axios from 'axios'
 
-const getAllHouses = async ({ query, nplQuery, customerNameQuery, houseModelQuery }) => {
+const getAllHouses = async ({
+  query,
+  nplQuery,
+  customerNameQuery,
+  houseModelQuery,
+}) => {
   try {
-    const params = new URLSearchParams({ query, nplQuery, customerNameQuery, houseModelQuery }).toString();
-    const response = await axios.get(`http://localhost:3000/houses?${params}`);
-    return response.data.result;
+    const params = new URLSearchParams({
+      query,
+      nplQuery,
+      customerNameQuery,
+      houseModelQuery,
+    }).toString()
+    const response = await axios.get(`http://localhost:3000/houses?${params}`)
+    return response.data.result
   } catch (error) {
-    console.error('Error fetching houses:', error);
+    console.error('Error fetching houses:', error)
   }
-};
+}
 
 const getHouse = async houseid => {
   try {
@@ -28,7 +38,7 @@ const getHousesInbays = async () => {
   }
 }
 
-const getHouseInAbay = async bayId => {
+const getHouseInABay = async bayId => {
   try {
     const response = await axios.get(
       `http://localhost:3000/houses/inbay/${bayId}`
@@ -97,7 +107,7 @@ export default {
   getAllHouses,
   getHouse,
   getHousesInbays,
-  getHouseInAbay,
+  getHouseInABay,
   addHouse,
   deleteHouse,
   updateHouse,

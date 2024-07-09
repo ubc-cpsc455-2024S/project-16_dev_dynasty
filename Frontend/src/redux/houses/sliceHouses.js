@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   getAllHousesAsync,
   getHousesInbayAsync,
-  getHouseInAbayAsync,
+  getHouseInABayAsync,
   getHouseAsync,
   addHouseAsync,
   deleteHouseAsync,
