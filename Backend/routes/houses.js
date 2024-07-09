@@ -15,7 +15,12 @@ const {
 router.get("/", async (req, res) => {
   try {
     const { query, nplQuery, customerNameQuery, houseModelQuery } = req.query;
-    const houses = getHousesFromDb({ query, nplQuery, customerNameQuery, houseModelQuery });
+    const houses = await getHousesFromDb({
+      query,
+      nplQuery,
+      customerNameQuery,
+      houseModelQuery,
+    });
     res.json({ result: houses });
   } catch (error) {
     res.status(500).send("Server error");
@@ -118,13 +123,11 @@ router.patch("/:houseid/:bayid", async (req, res) => {
   try {
     const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
     if (result.success) {
-      res
-        .status(200)
-        .json({
-          message: `Successfully updated bay for house ${houseid}`,
-          house_id: houseid,
-          bay_id: bayid,
-        });
+      res.status(200).json({
+        message: `Successfully updated bay for house ${houseid}`,
+        house_id: houseid,
+        bay_id: bayid,
+      });
     } else if (result.error === "BAY_IN_USE") {
       res.status(409).send("Bay in use");
     } else {
