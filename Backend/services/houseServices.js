@@ -120,7 +120,16 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 // Andy
 // Function to attach/detach a bay
 const toggleBayAssignment = async (houseid, bayid) => {
-  return await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid } });
+  // return await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid } });
+
+
+  try {
+    const result = await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid, status: 1 } });
+    return result;
+  } catch (error) {
+    console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
+    throw error; // Re-throw the error for further handling
+  }
 };
 
 const formatDate = (date) => {
