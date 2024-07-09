@@ -1,132 +1,117 @@
 var housesJson = require("../data/houses.json");
-
+const House = require("../models/House");
+const mongoose = require("mongoose");
+const houses_view = require("../models/House_View");
 // Andrew
 // Function to fetch all houses
-const getHousesFromDb = ({
+const getHousesFromDb = async ({
   query,
   nplQuery,
   customerNameQuery,
   houseModelQuery,
 }) => {
-  let filteredHouses = housesJson;
-
-  if (query) {
-    if (query === "inBay") {
-      filteredHouses = filteredHouses.filter((house) => house.bay_id !== null);
-    } else {
-      filteredHouses = filteredHouses.filter(
-        (house) => house.status.toString() === query
-      );
-    }
+  // let filteredHouses = housesJson;
+  console.log("made it here");
+  let filteredHouses;
+  try {
+    filteredHouses = await houses_view();
+    // filteredHouses = await addHouseToDb(data);
+  } catch (e) {
+    console.log("error: ", e);
   }
 
-  if (nplQuery) {
-    filteredHouses = filteredHouses.filter((house) =>
-      house.npl.includes(nplQuery)
-    );
-  }
+  // if (query) {
+  //   if (query === "inBay") {
+  //     filteredHouses = filteredHouses.filter((house) => house.bay_id !== null);
+  //   } else {
+  //     filteredHouses = filteredHouses.filter(
+  //       (house) => house.status.toString() === query
+  //     );
+  //   }
+  // }
 
-  if (customerNameQuery) {
-    filteredHouses = filteredHouses.filter((house) =>
-      house.customer_name
-        .toLowerCase()
-        .includes(customerNameQuery.toLowerCase())
-    );
-  }
+  // if (nplQuery) {
+  //   filteredHouses = filteredHouses.filter((house) =>
+  //     house.npl.includes(nplQuery)
+  //   );
+  // }
 
-  if (houseModelQuery) {
-    filteredHouses = filteredHouses.filter((house) =>
-      house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase())
-    );
-  }
+  // if (customerNameQuery) {
+  //   filteredHouses = filteredHouses.filter((house) =>
+  //     house.customer_name
+  //       .toLowerCase()
+  //       .includes(customerNameQuery.toLowerCase())
+  //   );
+  // }
+
+  // if (houseModelQuery) {
+  //   filteredHouses = filteredHouses.filter((house) =>
+  //     house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase())
+  //   );
+  // }
 
   return filteredHouses;
 };
 
 // Andrew
 // Function to fetch a specific house
-const getHouseFromDb = (houseid) => {
-  return housesJson.find((house) => house.house_id === houseid);
+const getHouseFromDb = async (houseid) => {
+  return houses_view({ _id: houseid });
 };
 
 // Ryan
 // Function to fetch all houses that are in production
-const getHousesInBays = () => {
-  return housesJson.filter((house) => house.bay_id !== null);
+const getHousesInBays = async () => {
+  return bay_view();
 };
 
 // Andrew
 // Function to fetch the house in a specified bay
-const getHouseInBay = (bayId) => {
-  return housesJson.find((house) => house.bay_id === bayId) || null;
+const getHouseInBay = async (bayId) => {
+  return bay_view({ bay_id: bayId });
 };
 
 // Ryan
 // Function to add a new house
 const addHouseToDb = async (houseData) => {
-  const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
+  // const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
   const dateCreated = formatDate(new Date());
   const newHouse = {
-    house_id: houseId,
-    ...houseData,
+    // house_id: houseId,
+    // ...houseData,
+    npl: "1",
+    customer_id: new mongoose.Types.ObjectId("668b69cf786dde065ccf8f34"),
+    online_date: "2021-09-01",
     created_on: dateCreated,
-    customer_id: null,
-    online_date: null,
-    bay_id: null,
-    bay_name: null,
-    bay_description: null,
+    house_model: "Model 1",
+    square_ft: 1000,
+    bay_id: 1,
     house_records_id: null,
     status: 1,
   };
-  housesJson.push(newHouse);
-  return newHouse;
+  const newHouseMade = await House.create(newHouse);
+  return newHouseMade;
 };
 
 // Ryan
 // Function to delete a house
-const deleteHouseFromDb = (houseid) => {
-  const index = housesJson.findIndex((house) => house.house_id === houseid);
-  if (index > -1) {
-    housesJson.splice(index, 1);
-    return { deleted: true };
-  } else {
-    return { deleted: false };
-  }
+const deleteHouseFromDb = async (houseid) => {
+  const houseDeleted = await House.deleteOne({
+    _id: _id,
+  });
+  return houseDeleted;
 };
 
 // Andrew
 // Function to update house details
-const updateHouseInDb = (houseid, houseInfo) => {
-  const index = housesJson.findIndex(
-    (house) => house.house_id === parseInt(houseid)
-  );
-  if (index > -1) {
-    housesJson[index] = { ...housesJson[index], ...houseInfo };
-    return housesJson[index];
-  } else {
-    return null;
-  }
+const updateHouseInDb = async (houseid, houseInfo) => {
+  return await House.updateOne({ _id: houseid }, { $set: houseInfo });
 };
 
 // Andy
 // Function to attach/detach a bay
-const toggleBayAssignment = (houseid, bayid) => {
-  const index = housesJson.findIndex(
-    (house) => house.house_id === parseInt(houseid)
-  );
-  console.log(houseid);
-  console.log(index);
-  if (index !== -1) {
-    housesJson[index] = {
-      ...housesJson[index],
-      bay_id: bayid,
-      bay_name: `Bay ${bayid}`,
-      status: 1,
-    };
-    return { success: true };
-  } else {
-    return { error: "House not found" };
-  }
+const toggleBayAssignment = async (houseid, bayid) => {
+  return await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid } });
 };
 
 const formatDate = (date) => {
