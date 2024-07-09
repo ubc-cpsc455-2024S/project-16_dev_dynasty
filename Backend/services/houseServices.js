@@ -72,7 +72,7 @@ module.exports = getHouseFromDb;
 // Ryan
 // Function to fetch all houses that are in production
 const getHousesInBays = async () => {
-  return await Bay_View();
+  return await House_View({ bay_id: { $ne: null } });;
 };
 
 // Andrew
@@ -89,13 +89,13 @@ const addHouseToDb = async (houseData) => {
   const newHouse = {
     // house_id: houseId,
     // ...houseData,
-    npl: "1",
+    npl: "124",
     customer_id: new mongoose.Types.ObjectId("668b69cf786dde065ccf8f34"),
     online_date: "2021-09-01",
     created_on: dateCreated,
-    house_model: "Model 1",
-    square_ft: 1000,
-    bay_id: 1,
+    house_model: "Model 6",
+    square_ft: 1840,
+    bay_id: 5,
     house_records_id: null,
     status: 1,
   };

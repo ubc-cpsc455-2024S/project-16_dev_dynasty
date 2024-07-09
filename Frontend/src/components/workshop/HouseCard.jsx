@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const HouseCard = ({ house }) => {
   const navigate = useNavigate();
-  const houseId = house.house_id
+  const houseId = house._id
   const houseStatus = house.status
   const bayId = parseInt(house.bay_id)
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
