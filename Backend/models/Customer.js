@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const customerSchema = mongoose.Schema({
+const customerSchema = new mongoose.Schema({
   customer_name: {
     type: String,
     required: true,
   },
-  email: {
+  customer_email: {
     type: String,
     required: true,
   },

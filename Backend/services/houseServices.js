@@ -1,7 +1,10 @@
 var housesJson = require("../data/houses.json");
 const House = require("../models/House");
 const mongoose = require("mongoose");
-const houses_view = require("../models/House_View");
+const House_View = require("../models/House_View");
+const Bay_View = require("../models/Bay_View");
+const { ObjectId } = require("mongodb");
+
 // Andrew
 // Function to fetch all houses
 const getHousesFromDb = async ({
@@ -14,7 +17,7 @@ const getHousesFromDb = async ({
   console.log("made it here");
   let filteredHouses;
   try {
-    filteredHouses = await houses_view();
+    filteredHouses = await House_View();
     // filteredHouses = await addHouseToDb(data);
   } catch (e) {
     console.log("error: ", e);
@@ -56,19 +59,26 @@ const getHousesFromDb = async ({
 // Andrew
 // Function to fetch a specific house
 const getHouseFromDb = async (houseid) => {
-  return houses_view({ _id: houseid });
+  try {
+    return await House_View({ _id: new ObjectId(houseid) });
+  } catch (error) {
+    console.error("Error fetching house from DB:", error);
+    throw error;
+  }
 };
+
+module.exports = getHouseFromDb;
 
 // Ryan
 // Function to fetch all houses that are in production
 const getHousesInBays = async () => {
-  return bay_view();
+  return await Bay_View();
 };
 
 // Andrew
 // Function to fetch the house in a specified bay
 const getHouseInBay = async (bayId) => {
-  return bay_view({ bay_id: bayId });
+  return await Bay_View({ bay_id: bayId });
 };
 
 // Ryan
@@ -96,9 +106,8 @@ const addHouseToDb = async (houseData) => {
 // Ryan
 // Function to delete a house
 const deleteHouseFromDb = async (houseid) => {
-  const houseDeleted = await House.deleteOne({
-    _id: _id,
-  });
+  console.log("house delete id", houseid);
+  const houseDeleted = await House.findByIdAndDelete(houseid);
   return houseDeleted;
 };
 
