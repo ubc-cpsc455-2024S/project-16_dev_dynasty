@@ -7,13 +7,18 @@ import React from 'react'
 // Value Needs to be in this form
 // 'value' or null
 const SelectCustom = props => {
-  const { options, value, onChange, extraOption, label, style } = props
+  const { options, value, name, onChange, extraOption, label, style } = props
   return (
     <FormControl size='small' sx={{ width: 200, ...style }}>
       <InputLabel sx={{ background: 'white' }} id='demo-simple-select-label'>
         {label}
       </InputLabel>
-      <Select value={value} sx={{ width: '200px' }} onChange={onChange}>
+      <Select
+        name={name}
+        value={value}
+        sx={{ width: '200px' }}
+        onChange={onChange}
+      >
         {extraOption && (
           <MenuItem key={extraOption.value} value={extraOption.value}>
             {extraOption.label}

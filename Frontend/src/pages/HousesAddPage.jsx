@@ -1,8 +1,15 @@
 import React from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
-import { TextField, Button, Box, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+} from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
 
@@ -12,9 +19,14 @@ const HousesAddPage = () => {
     customer_name: '',
     house_model: '',
     square_ft: '',
+    customer: '',
   }
 
   const [formFields, setFormFields] = useState(initialState)
+  const customers = useSelector(state => state.customers.list)
+  useEffect(() => {
+    dispatch(getAllCustomersAsync())
+  }, [])
 
   const dispatch = useDispatch()
 
@@ -32,6 +44,10 @@ const HousesAddPage = () => {
   const clearFormFields = () => {
     setFormFields(initialState)
   }
+  const reformattedCustomers = customers.map(customer => ({
+    value: customer.id,
+    label: customer.name,
+  }))
 
   return (
     <Navbar>
@@ -46,6 +62,12 @@ const HousesAddPage = () => {
               label={'Project #'}
               type={'number'}
               value={formFields.npl}
+              onChange={handleChange}
+            />
+            <SelectCustom
+              label={'Customer'}
+              options={reformattedCustomers}
+              value={formFields.customer}
               onChange={handleChange}
             />
             <TextField
