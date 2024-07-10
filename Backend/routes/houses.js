@@ -91,15 +91,11 @@ router.post("/", async (req, res) => {
 router.delete("/:houseid", async (req, res) => {
   const { houseid } = req.params;
   try {
-    const result = await deleteHouseFromDb(houseid); // Function to delete a house
-    if (result.deleted) {
-      res.status(200).json({ result: { house_id: houseid } });
-    } else {
-      res.status(404).send("House not found");
-    }
+    const houseDeleted = await deleteHouseFromDb(houseid); // Function to delete a house
+    res.status(200).json({ result: { houseDeleted } });
   } catch (error) {
     console.log("error", error);
-    res.status(500).send("Server error");
+    res.status(500).send("Server error", error);
   }
 });
 

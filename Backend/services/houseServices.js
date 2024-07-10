@@ -18,6 +18,8 @@ const getHousesFromDb = async ({
   let filteredHouses;
   try {
     filteredHouses = await House_View();
+    console.log(filteredHouses[0]);
+    // filteredHouses = await House.find();
     // filteredHouses = await addHouseToDb(data);
   } catch (e) {
     console.log("error: ", e);
@@ -107,7 +109,15 @@ const addHouseToDb = async (houseData) => {
 // Function to delete a house
 const deleteHouseFromDb = async (houseid) => {
   console.log("house delete id", houseid);
-  const houseDeleted = await House.findByIdAndDelete(houseid);
+  let houseDeleted;
+  try {
+    console.log("right befoer delete", houseid);
+    houseDeleted = await House.findByIdAndDelete(houseid);
+    console.log("right after delete, houseDeleted", houseDeleted);
+  } catch (error) {
+    console.error("Error deleting house from DB:", error);
+    throw error;
+  }
   return houseDeleted;
 };
 
