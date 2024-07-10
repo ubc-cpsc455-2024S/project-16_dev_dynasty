@@ -107,13 +107,13 @@ const deleteHouseFromDb = async (houseid) => {
 };
 
 // Andrew
-// Function to update house details
+// Function to update house details, DO NOT use this endpoint to update bay!!
 const updateHouseInDb = async (houseid, houseInfo) => {
   return await House.updateOne({ _id: houseid }, { $set: houseInfo });
 };
 
 // Andy
-// Function to attach/detach a bay
+// Function to attach/detach a bay. Checks bay availability, updates bay name and status at the same time!!
 const toggleBayAssignment = async (houseid, bayid) => {
   try {
     const newBay = await Bay_View({ bay_id: bayid });
@@ -124,7 +124,7 @@ const toggleBayAssignment = async (houseid, bayid) => {
     }
     const result = await House.updateOne(
       { _id: houseid },
-      { $set: { bay_id: bayid, status: 1 } }
+      { $set: { bay_id: bayid,bay_name: `Bay ${bayid}`, status: 1 } }
     );
     return result;
   } catch (error) {
