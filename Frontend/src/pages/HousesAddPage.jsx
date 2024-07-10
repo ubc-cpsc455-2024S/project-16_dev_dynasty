@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import {
@@ -12,14 +12,15 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
+import { getAllCustomersAsync } from '../redux/customers/thunksCustomers'
+import SelectCustom from '../components/inputs/SelectCustom'
 
 const HousesAddPage = () => {
   const initialState = {
     npl: '',
-    customer_name: '',
     house_model: '',
     square_ft: '',
-    customer: '',
+    customer_id: '',
   }
 
   const [formFields, setFormFields] = useState(initialState)
@@ -45,15 +46,20 @@ const HousesAddPage = () => {
     setFormFields(initialState)
   }
   const reformattedCustomers = customers.map(customer => ({
-    value: customer.id,
-    label: customer.name,
+    value: customer._id,
+    label: customer.customer_name,
   }))
 
   return (
     <Navbar>
       <Header1 title={'Add House'}>
         <form onSubmit={handleSubmit}>
-          <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'10px'}
+            // width={'500px'}
+          >
             <Typography sx={{ pt: '50px' }} variant='label'>
               Fill in the form below to add a new house
             </Typography>
@@ -65,15 +71,11 @@ const HousesAddPage = () => {
               onChange={handleChange}
             />
             <SelectCustom
+              width={'calc(100vw - 60px)'}
               label={'Customer'}
+              name={'customer_id'}
               options={reformattedCustomers}
               value={formFields.customer}
-              onChange={handleChange}
-            />
-            <TextField
-              name={'customer_name'}
-              label={'Customer name'}
-              value={formFields.customer_name}
               onChange={handleChange}
             />
             <TextField
