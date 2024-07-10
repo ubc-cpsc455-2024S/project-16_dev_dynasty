@@ -1,20 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
-import { TextField, Button, Box, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+} from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
+import { getAllCustomersAsync } from '../redux/customers/thunksCustomers'
+import SelectCustom from '../components/inputs/SelectCustom'
 
 const HousesAddPage = () => {
   const initialState = {
     npl: '',
-    customer_name: '',
     house_model: '',
     square_ft: '',
+    customer_id: '',
   }
 
   const [formFields, setFormFields] = useState(initialState)
+  const customers = useSelector(state => state.customers.list)
+  useEffect(() => {
+    dispatch(getAllCustomersAsync())
+  }, [])
 
   const dispatch = useDispatch()
 
@@ -32,12 +45,21 @@ const HousesAddPage = () => {
   const clearFormFields = () => {
     setFormFields(initialState)
   }
+  const reformattedCustomers = customers.map(customer => ({
+    value: customer._id,
+    label: customer.customer_name,
+  }))
 
   return (
     <Navbar>
       <Header1 title={'Add House'}>
         <form onSubmit={handleSubmit}>
-          <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'10px'}
+            // width={'500px'}
+          >
             <Typography sx={{ pt: '50px' }} variant='label'>
               Fill in the form below to add a new house
             </Typography>
@@ -48,10 +70,12 @@ const HousesAddPage = () => {
               value={formFields.npl}
               onChange={handleChange}
             />
-            <TextField
-              name={'customer_name'}
-              label={'Customer name'}
-              value={formFields.customer_name}
+            <SelectCustom
+              width={'calc(100vw - 60px)'}
+              label={'Customer'}
+              name={'customer_id'}
+              options={reformattedCustomers}
+              value={formFields.customer}
               onChange={handleChange}
             />
             <TextField

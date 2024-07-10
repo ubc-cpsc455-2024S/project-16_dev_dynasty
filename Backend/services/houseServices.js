@@ -18,6 +18,8 @@ const getHousesFromDb = async ({
   let filteredHouses;
   try {
     filteredHouses = await House_View();
+    console.log(filteredHouses[0]);
+    // filteredHouses = await House.find();
     // filteredHouses = await addHouseToDb(data);
   } catch (e) {
     console.log("error: ", e);
@@ -72,7 +74,7 @@ module.exports = getHouseFromDb;
 // Ryan
 // Function to fetch all houses that are in production
 const getHousesInBays = async () => {
-  return await House_View({ bay_id: { $ne: null } });;
+  return await House_View({ bay_id: { $ne: null } });
 };
 
 // Andrew
@@ -87,15 +89,9 @@ const addHouseToDb = async (houseData) => {
   // const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
   const dateCreated = formatDate(new Date());
   const newHouse = {
-    // house_id: houseId,
-    // ...houseData,
-    npl: "124",
-    customer_id: new mongoose.Types.ObjectId("668b69cf786dde065ccf8f34"),
-    online_date: "2021-09-01",
+    ...houseData,
     created_on: dateCreated,
-    house_model: "Model 6",
-    square_ft: 1840,
-    bay_id: 5,
+    bay_id: null,
     house_records_id: null,
     status: 1,
   };
@@ -107,8 +103,7 @@ const addHouseToDb = async (houseData) => {
 // Function to delete a house
 const deleteHouseFromDb = async (houseid) => {
   console.log("house delete id", houseid);
-  const houseDeleted = await House.findByIdAndDelete(houseid);
-  return houseDeleted;
+  return await House.findByIdAndDelete(houseid);
 };
 
 // Andrew
@@ -123,9 +118,14 @@ const toggleBayAssignment = async (houseid, bayid) => {
   try {
     const newBay = await Bay_View({ bay_id: bayid });
     if (newBay[0].house_id) {
-      throw new Error(`Bay in use: ${bayid} is already assigned to another house.`);
+      throw new Error(
+        `Bay in use: ${bayid} is already assigned to another house.`
+      );
     }
-    const result = await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid, status: 1 } });
+    const result = await House.updateOne(
+      { _id: houseid },
+      { $set: { bay_id: bayid, status: 1 } }
+    );
     return result;
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
