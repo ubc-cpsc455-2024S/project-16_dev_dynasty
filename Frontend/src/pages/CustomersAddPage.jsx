@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../components/headers/Header1'
-import Header1 from '../components/navigation/Navbar'
+import Header1 from '../components/headers/Header1'
+import Navbar from '../components/navigation/Navbar'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'

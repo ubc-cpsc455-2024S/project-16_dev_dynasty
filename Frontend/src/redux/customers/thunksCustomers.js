@@ -9,9 +9,23 @@ const actionTypes = {
   UPDATE_CUSTOMER: 'customers/update',
 }
 
+export const getCustomersAsync = createAsyncThunk(
+  actionTypes.GET_CUSTOMERS,
+  async ({ customerNameQuery }) => {
+    return await CustomerService.getCustomers({ customerNameQuery })
+  }
+)
+
 export const addCustomerAsync = createAsyncThunk(
   actionTypes.ADD_CUSTOMER,
   async customerData => {
     return await CustomerService.addCustomer(customerData)
+  }
+)
+
+export const deleteCustomerAsync = createAsyncThunk(
+  actionTypes.DELETE_CUSTOMER,
+  async customerId => {
+    return await CustomerService.deleteCustomer(customerId)
   }
 )
