@@ -134,7 +134,11 @@ router.patch("/:houseid/:bayid", async (req, res) => {
       res.status(404).send("House not found");
     }
   } catch (error) {
-    res.status(500).send("Server error");
+    if (error.message.includes("Bay in use")) {
+      res.status(400).send(error.message);
+    } else {
+      res.status(500).send("Server error");
+    }
   }
 });
 

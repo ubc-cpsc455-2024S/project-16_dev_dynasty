@@ -120,15 +120,16 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 // Andy
 // Function to attach/detach a bay
 const toggleBayAssignment = async (houseid, bayid) => {
-  // return await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid } });
-
-
   try {
+    const newBay = await Bay_View({ bay_id: bayid });
+    if (newBay[0].house_id) {
+      throw new Error(`Bay in use: ${bayid} is already assigned to another house.`);
+    }
     const result = await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid, status: 1 } });
     return result;
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
-    throw error; // Re-throw the error for further handling
+    throw error;
   }
 };
 
