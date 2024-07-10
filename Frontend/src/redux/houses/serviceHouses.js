@@ -94,7 +94,7 @@ const bayToHouse = async (houseId, bayId) => {
     const response = await axios.patch(
       `http://localhost:3000/houses/${houseId}/${bayId}`
     )
-    return response.data
+    return response.data;
   } catch (error) {
     console.error(
       `Error updating house with id  ${houseId} to bay ${bayId}:`,

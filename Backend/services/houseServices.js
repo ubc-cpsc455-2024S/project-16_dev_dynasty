@@ -74,7 +74,7 @@ module.exports = getHouseFromDb;
 // Ryan
 // Function to fetch all houses that are in production
 const getHousesInBays = async () => {
-  return await Bay_View();
+  return await House_View({ bay_id: { $ne: null } });;
 };
 
 // Andrew
@@ -91,13 +91,13 @@ const addHouseToDb = async (houseData) => {
   const newHouse = {
     // house_id: houseId,
     // ...houseData,
-    npl: "1",
+    npl: "124",
     customer_id: new mongoose.Types.ObjectId("668b69cf786dde065ccf8f34"),
     online_date: "2021-09-01",
     created_on: dateCreated,
-    house_model: "Model 1",
-    square_ft: 1000,
-    bay_id: 1,
+    house_model: "Model 6",
+    square_ft: 1840,
+    bay_id: 5,
     house_records_id: null,
     status: 1,
   };
@@ -130,7 +130,17 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 // Andy
 // Function to attach/detach a bay
 const toggleBayAssignment = async (houseid, bayid) => {
-  return await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid } });
+  try {
+    const newBay = await Bay_View({ bay_id: bayid });
+    if (newBay[0].house_id) {
+      throw new Error(`Bay in use: ${bayid} is already assigned to another house.`);
+    }
+    const result = await House.updateOne({ _id: houseid }, { $set: { bay_id: bayid, status: 1 } });
+    return result;
+  } catch (error) {
+    console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
+    throw error;
+  }
 };
 
 const formatDate = (date) => {

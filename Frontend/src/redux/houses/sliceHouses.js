@@ -151,13 +151,13 @@ const houseSlice = createSlice({
       })
       .addCase(bayToHouseAsync.fulfilled, (state, action) => {
         state.status.bayToHouse = 'fulfilled'
-        console.log('State print in attach bay to house', state)
+        console.log('action payload', action.payload)
         console.log('printing state.inbaylist', state.inBayList)
         const inBayListCopy = [...state.inBayList]
 
         const index = inBayListCopy.findIndex(house => {
           console.log('in findIndex')
-          return parseInt(house._id) === parseInt(action.payload._id)
+          return house._id === action.payload.house_id
         })
         console.log('index for found is', index)
 

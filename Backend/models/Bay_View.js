@@ -58,7 +58,7 @@ const Bay_View = async (query) => {
     },
   ];
   if (query !== undefined) {
-    house_join.unshift({
+    bay_join.unshift({
       $match: {
         ...query,
       },
