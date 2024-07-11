@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Table,
   TableBody,
@@ -54,7 +53,7 @@ const CustomersTable = ({
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} elevation={3}>
       <Table>
         <TableHead>
           <TableRow>

@@ -16,6 +16,7 @@ import HousesAddPage from '../pages/HousesAddPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import { routes } from './routes'
 import HousePage from '../pages/HousePage'
+import CustomerPage from '../pages/CustomerPage.jsx'
 
 const MainRouter = () => {
   return (
@@ -31,6 +32,7 @@ const MainRouter = () => {
         <Route path={routes.housesRoute} element={<HousesPage />} />
         <Route path={routes.housesAddRoute} element={<HousesAddPage />} />
         <Route path={routes.houseRoutes} element={<HousePage />} />
+        <Route path={routes.customerRoute} element={<CustomerPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>

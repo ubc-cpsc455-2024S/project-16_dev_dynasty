@@ -16,6 +16,13 @@ export const getCustomersAsync = createAsyncThunk(
   }
 )
 
+export const getCustomerAsync = createAsyncThunk(
+  actionTypes.GET_CUSTOMER,
+  async customerId => {
+    return await CustomerService.getCustomer(customerId)
+  }
+)
+
 export const addCustomerAsync = createAsyncThunk(
   actionTypes.ADD_CUSTOMER,
   async customerData => {

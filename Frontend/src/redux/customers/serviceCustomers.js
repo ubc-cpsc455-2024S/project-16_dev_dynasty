@@ -12,6 +12,17 @@ const getCustomers = async ({ customerNameQuery }) => {
   }
 }
 
+const getCustomer = async customerId => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/customers/${customerId}`
+    )
+    return response.data.result
+  } catch (error) {
+    console.error(`Error fetching customer with id ${customerId}:`, error)
+  }
+}
+
 const addCustomer = async customerData => {
   try {
     const response = await axios.post(
@@ -35,6 +46,7 @@ const deleteCustomer = async customerId => {
 
 export default {
   getCustomers,
+  getCustomer,
   addCustomer,
   deleteCustomer,
 }

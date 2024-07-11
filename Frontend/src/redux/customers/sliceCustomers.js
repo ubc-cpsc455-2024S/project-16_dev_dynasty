@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   addCustomerAsync,
   deleteCustomerAsync,
+  getCustomerAsync,
   getCustomersAsync,
 } from './thunksCustomers.js'
 
 const INITIAL_STATE = {
   list: [],
+  findCustomer: null,
   status: {
     getAll: 'idle',
     getOne: 'idle',
@@ -33,6 +35,18 @@ const customerSlice = createSlice({
       })
       .addCase(getCustomersAsync.rejected, (state, action) => {
         state.status.getAll = 'rejected'
+        state.error = action.error.message
+      })
+      // Handle getCustomersAsync
+      .addCase(getCustomerAsync.pending, state => {
+        state.status.getOne = 'pending'
+      })
+      .addCase(getCustomerAsync.fulfilled, (state, action) => {
+        state.status.getOne = 'fulfilled'
+        state.findCustomer = action.payload
+      })
+      .addCase(getCustomerAsync.rejected, (state, action) => {
+        state.status.getOne = 'rejected'
         state.error = action.error.message
       })
       // Handle addCustomerAsync
