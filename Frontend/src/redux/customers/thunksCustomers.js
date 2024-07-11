@@ -11,7 +11,7 @@ const actionTypes = {
 
 export const getCustomersAsync = createAsyncThunk(
   actionTypes.GET_CUSTOMERS,
-  async ({ customerNameQuery }) => {
+  async ({ customerNameQuery } = {}) => {
     return await CustomerService.getCustomers({ customerNameQuery })
   }
 )

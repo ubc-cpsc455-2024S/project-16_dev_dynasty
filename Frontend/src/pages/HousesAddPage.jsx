@@ -1,22 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
-import { TextField, Button, Box, Typography } from '@mui/material'
-import { useDispatch } from 'react-redux'
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Select,
+  InputLabel,
+  MenuItem,
+} from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
+import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
 
 const HousesAddPage = () => {
+  const dispatch = useDispatch()
+
   const initialState = {
     npl: '',
     customer_name: '',
     house_model: '',
     square_ft: '',
   }
-
   const [formFields, setFormFields] = useState(initialState)
 
-  const dispatch = useDispatch()
+  const customers = useSelector(state => state.customers.list)
+
+  useEffect(() => {
+    dispatch(getCustomersAsync())
+  }, [])
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -49,11 +63,18 @@ const HousesAddPage = () => {
               onChange={handleChange}
             />
             <TextField
+              select={true}
               name={'customer_name'}
               label={'Customer name'}
               value={formFields.customer_name}
               onChange={handleChange}
-            />
+            >
+              {customers.map(customer => (
+                <MenuItem key={customer._id} value={customer.customer_name}>
+                  {customer.customer_name}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               name={'house_model'}
               label={'Model #'}

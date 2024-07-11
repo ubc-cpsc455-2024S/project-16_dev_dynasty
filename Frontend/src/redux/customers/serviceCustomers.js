@@ -2,10 +2,13 @@ import axios from 'axios'
 
 const getCustomers = async ({ customerNameQuery }) => {
   try {
-    const params = new URLSearchParams({ customerNameQuery }).toString()
-    const response = await axios.get(
-      `http://localhost:3000/customers?${params}`
-    )
+    let response
+    if (customerNameQuery === undefined) {
+      response = await axios.get(`http://localhost:3000/customers`)
+    } else {
+      const params = new URLSearchParams({ customerNameQuery }).toString()
+      response = await axios.get(`http://localhost:3000/customers?${params}`)
+    }
     return response.data.result
   } catch (error) {
     console.error('Error fetching customers:', error)

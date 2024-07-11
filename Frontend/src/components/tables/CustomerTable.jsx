@@ -9,13 +9,6 @@ import {
   TableRow,
 } from '@mui/material'
 
-const TableRowStyled = styled(TableRow)({
-  '&:nth-of-type(odd)': {
-    backgroundColor: '#f9f9f9',
-  },
-  cursor: 'pointer',
-})
-
 const CustomerTable = ({ customer }) => {
   return (
     <TableContainer component={Paper} elevation={3}>
