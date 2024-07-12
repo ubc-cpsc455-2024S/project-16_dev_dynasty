@@ -14,12 +14,11 @@ import UsersAddPage from '../pages/UsersAddPage';
 import HousesPage from '../pages/HousesPage';
 import HousesAddPage from '../pages/HousesAddPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import HousePage from '../pages/HousePage';
-import CustomerPage from '../pages/CustomerPage.jsx';
-import HouseDetails from '../pages/HouseDetailsPage.jsx';
-import HouseDefects from '../pages/HouseDefectsPage.jsx';
-import HouseDocuments from '../pages/HouseDocumentsPage.jsx';
-import HouseChecklist from '../pages/HouseCheckListPage.jsx';
+import CustomerPage from '../pages/CustomerPage';
+import HouseDetailsPage from '../pages/HouseDetailsPage';
+import HouseDefectsPage from '../pages/HouseDefectsPage';
+import HouseDocumentsPage from '../pages/HouseDocumentsPage';
+import HouseChecklistPage from '../pages/HouseChecklistPage';
 import { routes } from './routes';
 
 const MainRouter = () => {
@@ -35,13 +34,10 @@ const MainRouter = () => {
         <Route path={routes.usersAddRoute} element={<UsersAddPage />} />
         <Route path={routes.housesRoute} element={<HousesPage />} />
         <Route path={routes.housesAddRoute} element={<HousesAddPage />} />
-        <Route path={routes.houseRoutes} element={<HousePage />}>
-          <Route path="details" element={<HouseDetails />} />
-          <Route path="defects" element={<HouseDefects />} />
-          <Route path="documents" element={<HouseDocuments />} />
-          <Route path="checklist" element={<HouseChecklist />} />
-          <Route index element={<Navigate to="details" />} />
-        </Route>
+        <Route path={`${routes.houseRoutes}/details`} element={<HouseDetailsPage />} />
+        <Route path={`${routes.houseRoutes}/defects`} element={<HouseDefectsPage />} />
+        <Route path={`${routes.houseRoutes}/documents`} element={<HouseDocumentsPage />} />
+        <Route path={`${routes.houseRoutes}/checklist`} element={<HouseChecklistPage />} />
         <Route path={routes.customerRoute} element={<CustomerPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
