@@ -16,7 +16,7 @@ const HouseChecklistPage = () => {
           <Typography variant="h6" gutterBottom>
             House Checklist
           </Typography>
-          {/* Add your checklist content here */}
+          {/* Todo */}
         </Box>
       </Container>
     </Navbar>

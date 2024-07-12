@@ -16,7 +16,7 @@ const HouseDocumentsPage = () => {
           <Typography variant="h6" gutterBottom>
             House Documents
           </Typography>
-          {/* Add your documents content here */}
+          {/* Todo */}
         </Box>
       </Container>
     </Navbar>

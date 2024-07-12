@@ -17,12 +17,15 @@ import {
 } from '@mui/material';
 import Navbar from '../components/navigation/Navbar';
 import HouseTabs from '../components/navigation/HouseTabs';
+import Header1 from '../components/headers/Header1';
+import HouseHeader from '../components/headers/HouseHeader';
 
 const HouseDefectsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const defects = useSelector((state) => state.defects.list);
   const loading = useSelector((state) => state.defects.loading);
+  const houseInfo = useSelector((state) => state.houses.findHouse || null);
 
   useEffect(() => {
     dispatch(fetchDefectsByHouseId(id));
@@ -33,6 +36,7 @@ const HouseDefectsPage = () => {
   return (
     <Navbar>
       <Container>
+        <Header1 title={<HouseHeader npl={houseInfo?.npl} />} />
         <HouseTabs />
         <Box mt={3}>
           <Paper elevation={3} style={{ padding: '16px' }}>

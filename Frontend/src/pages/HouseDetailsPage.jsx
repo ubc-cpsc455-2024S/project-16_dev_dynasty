@@ -7,6 +7,8 @@ import { houseStatusEnum } from '../constants/contants';
 import Navbar from '../components/navigation/Navbar';
 import Header1 from '../components/headers/Header1';
 import SelectCustom from '../components/inputs/SelectCustom';
+import HouseTabs from '../components/navigation/HouseTabs';
+import HouseHeader from '../components/headers/HouseHeader';
 import {
   Box,
   CircularProgress,
@@ -20,7 +22,6 @@ import {
   TableContainer,
   TableRow,
   TableHead,
-  Link,
   Button,
   Dialog,
   DialogActions,
@@ -61,8 +62,9 @@ const HouseDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const houseInfo = useSelector((state) => state.houses.findHouse || null);
+  const houseInfoFromState = useSelector((state) => state.houses.findHouse || null);
   const bays = useSelector((state) => state.bays.list || []);
+  const [houseInfo, setHouseInfo] = useState(houseInfoFromState);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -70,11 +72,17 @@ const HouseDetailsPage = () => {
     dispatch(getAllBaysAsync());
   }, [dispatch, id]);
 
+  useEffect(() => {
+    setHouseInfo(houseInfoFromState);
+  }, [houseInfoFromState]);
+
   const handleChangeStatus = (event) => {
     const status = Number(event.target.value);
+    const updatedHouseInfo = { ...houseInfo, status: status };
+    setHouseInfo(updatedHouseInfo);
     const houseData = {
       houseId: houseInfo._id,
-      houseData: { ...houseInfo, status: status },
+      houseData: updatedHouseInfo,
     };
     dispatch(updateHouseAsync(houseData));
   };
@@ -84,9 +92,11 @@ const HouseDetailsPage = () => {
     if (bay_id === 'No Bay') {
       bay_id = null;
     }
+    const updatedHouseInfo = { ...houseInfo, bay_id: bay_id };
+    setHouseInfo(updatedHouseInfo);
     const houseData = {
       houseId: houseInfo._id,
-      houseData: { ...houseInfo, bay_id: bay_id },
+      houseData: updatedHouseInfo,
     };
     dispatch(updateHouseAsync(houseData));
   };
@@ -121,18 +131,7 @@ const HouseDetailsPage = () => {
     <Navbar>
       <Container>
         <Header1
-          title={
-            <Box>
-              <Link href="/houses" underline="none">
-                <Typography variant="h6" component="span" color="primary">
-                  Houses
-                </Typography>
-              </Link>
-              <Typography variant="h6" component="span" color="textPrimary">
-                {' > House ' + houseInfo.npl}
-              </Typography>
-            </Box>
-          }
+          title={<HouseHeader npl={houseInfo.npl} />}
           button={
             <Box display={'flex'}>
               <SelectCustom
@@ -149,7 +148,7 @@ const HouseDetailsPage = () => {
                 value={houseInfo.bay_id || 'No Bay'}
                 onChange={handleChangeBay}
               />
-              <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+              <Button variant="outlined" color="secondary" onClick={handleClickOpen} style={{ marginLeft: '10px' }}>
                 Delete House
               </Button>
             </Box>
@@ -171,6 +170,7 @@ const HouseDetailsPage = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        <HouseTabs />
         <Box mt={3}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -242,4 +242,3 @@ const HouseDetailsPage = () => {
 };
 
 export default HouseDetailsPage;
-

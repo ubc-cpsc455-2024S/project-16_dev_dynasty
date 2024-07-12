@@ -18,7 +18,7 @@ import CustomerPage from '../pages/CustomerPage';
 import HouseDetailsPage from '../pages/HouseDetailsPage';
 import HouseDefectsPage from '../pages/HouseDefectsPage';
 import HouseDocumentsPage from '../pages/HouseDocumentsPage';
-import HouseChecklistPage from '../pages/HouseChecklistPage';
+import HouseChecklistPage from '../pages/HouseCheckListPage';
 import { routes } from './routes';
 
 const MainRouter = () => {
