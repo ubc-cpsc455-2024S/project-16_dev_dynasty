@@ -1,62 +1,34 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import * as defectService from './serviceDefect';
+import * as serviceDefects from './serviceDefects';
 
 export const fetchDefectsByHouseId = createAsyncThunk(
   'defects/fetchByHouseId',
-  async (houseId, thunkAPI) => {
-    try {
-      const defects = await defectService.getDefectsByHouseId(houseId);
-      return defects;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
+  async (houseId) => {
+    const response = await serviceDefects.getDefectsByHouseId(houseId);
+    return response;
   }
 );
 
-export const fetchDefectById = createAsyncThunk(
-  'defects/fetchById',
-  async ({ houseId, defectId }, thunkAPI) => {
-    try {
-      const defect = await defectService.getDefectById(houseId, defectId);
-      return defect;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
+export const addDefectAsync = createAsyncThunk(
+  'defects/addDefect',
+  async ({ houseId, defectData }) => {
+    const response = await serviceDefects.addDefect(houseId, defectData);
+    return response;
   }
 );
 
-export const createDefect = createAsyncThunk(
-  'defects/create',
-  async ({ houseId, defectData }, thunkAPI) => {
-    try {
-      const newDefect = await defectService.addDefect(houseId, defectData);
-      return newDefect;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
+export const updateDefectAsync = createAsyncThunk(
+  'defects/updateDefect',
+  async ({ houseId, defectId, defectData }) => {
+    const response = await serviceDefects.updateDefect(houseId, defectId, defectData);
+    return response;
   }
 );
 
-export const modifyDefect = createAsyncThunk(
-  'defects/update',
-  async ({ houseId, defectId, defectData }, thunkAPI) => {
-    try {
-      const updatedDefect = await defectService.updateDefect(houseId, defectId, defectData);
-      return updatedDefect;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const removeDefect = createAsyncThunk(
-  'defects/delete',
-  async ({ houseId, defectId }, thunkAPI) => {
-    try {
-      await defectService.deleteDefect(houseId, defectId);
-      return defectId;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
+export const deleteDefectAsync = createAsyncThunk(
+  'defects/deleteDefect',
+  async ({ houseId, defectId }) => {
+    const response = await serviceDefects.deleteDefect(houseId, defectId);
+    return response;
   }
 );

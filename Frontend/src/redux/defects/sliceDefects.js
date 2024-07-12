@@ -1,11 +1,6 @@
+// src/redux/defects/sliceDefects.js
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  fetchDefectsByHouseId,
-  fetchDefectById,
-  createDefect,
-  modifyDefect,
-  removeDefect,
-} from './thunksDefects';
+import { fetchDefectsByHouseId, addDefectAsync, updateDefectAsync, deleteDefectAsync } from './thunksDefects';
 
 const defectsSlice = createSlice({
   name: 'defects',
@@ -14,6 +9,7 @@ const defectsSlice = createSlice({
     loading: false,
     error: null,
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchDefectsByHouseId.pending, (state) => {
@@ -25,22 +21,43 @@ const defectsSlice = createSlice({
       })
       .addCase(fetchDefectsByHouseId.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message;
       })
-      .addCase(fetchDefectById.fulfilled, (state, action) => {
-        // Handle specific defect fetched
+      .addCase(addDefectAsync.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(createDefect.fulfilled, (state, action) => {
+      .addCase(addDefectAsync.fulfilled, (state, action) => {
+        state.loading = false;
         state.list.push(action.payload);
       })
-      .addCase(modifyDefect.fulfilled, (state, action) => {
+      .addCase(addDefectAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateDefectAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateDefectAsync.fulfilled, (state, action) => {
+        state.loading = false;
         const index = state.list.findIndex(defect => defect._id === action.payload._id);
         if (index !== -1) {
           state.list[index] = action.payload;
         }
       })
-      .addCase(removeDefect.fulfilled, (state, action) => {
-        state.list = state.list.filter(defect => defect._id !== action.meta.arg.defectId);
+      .addCase(updateDefectAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(deleteDefectAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteDefectAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.list = state.list.filter(defect => defect._id !== action.payload._id);
+      })
+      .addCase(deleteDefectAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { fetchDefectsByHouseId } from '../redux/defects/thunksDefects';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchDefectsByHouseId, deleteDefectAsync } from '../redux/defects/thunksDefects';
 import {
   Box,
   CircularProgress,
@@ -14,15 +14,20 @@ import {
   TableContainer,
   TableRow,
   TableHead,
+  Button,
+  IconButton,
 } from '@mui/material';
 import Navbar from '../components/navigation/Navbar';
 import HouseTabs from '../components/navigation/HouseTabs';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const HouseDefectsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const defects = useSelector((state) => state.defects.list);
   const loading = useSelector((state) => state.defects.loading);
   const houseInfo = useSelector((state) => state.houses.findHouse || null);
@@ -30,6 +35,11 @@ const HouseDefectsPage = () => {
   useEffect(() => {
     dispatch(fetchDefectsByHouseId(id));
   }, [dispatch, id]);
+
+  const handleDelete = async (defectId) => {
+    await dispatch(deleteDefectAsync({ houseId: id, defectId }));
+    dispatch(fetchDefectsByHouseId(id));
+  };
 
   if (loading) return <CircularProgress />;
 
@@ -39,7 +49,10 @@ const HouseDefectsPage = () => {
         <Header1 title={<HouseHeader npl={houseInfo?.npl} />} />
         <HouseTabs />
         <Box mt={3}>
-          <Paper elevation={3} style={{ padding: '16px' }}>
+          <Button variant="contained" color="primary" onClick={() => navigate(`/houses/${id}/defects/add`)}>
+            Add Defect
+          </Button>
+          <Paper elevation={3} style={{ padding: '16px', marginTop: '20px' }}>
             <Typography variant="h6" gutterBottom>
               House Defects
             </Typography>
@@ -52,6 +65,7 @@ const HouseDefectsPage = () => {
                     <TableCell>Status</TableCell>
                     <TableCell>Bay ID</TableCell>
                     <TableCell>Images</TableCell>
+                    <TableCell>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -65,6 +79,14 @@ const HouseDefectsPage = () => {
                         {defect.images.map((url, index) => (
                           <img key={index} src={url} alt={`defect-${index}`} width={50} />
                         ))}
+                      </TableCell>
+                      <TableCell>
+                        <IconButton onClick={() => navigate(`/houses/${id}/defects/edit/${defect._id}`)}>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleDelete(defect._id)}>
+                          <DeleteIcon />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))}

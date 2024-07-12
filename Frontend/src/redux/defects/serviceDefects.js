@@ -7,18 +7,6 @@ export const getDefectsByHouseId = async (houseId) => {
     return response.data;
   } catch (error) {
     console.error(`Error fetching defects for house with id ${houseId}:`, error);
-    throw error;
-  }
-};
-
-// Fetch a specific defect by ID
-export const getDefectById = async (houseId, defectId) => {
-  try {
-    const response = await axios.get(`http://localhost:3000/defects/${houseId}/${defectId}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching defect with id ${defectId}:`, error);
-    throw error;
   }
 };
 
@@ -44,7 +32,6 @@ export const addDefect = async (houseId, defectData) => {
     return response.data;
   } catch (error) {
     console.error(`Error adding defect to house with id ${houseId}:`, error);
-    throw error;
   }
 };
 
@@ -70,7 +57,6 @@ export const updateDefect = async (houseId, defectId, defectData) => {
     return response.data;
   } catch (error) {
     console.error(`Error updating defect with id ${defectId}:`, error);
-    throw error;
   }
 };
 
@@ -81,6 +67,5 @@ export const deleteDefect = async (houseId, defectId) => {
     return response.data;
   } catch (error) {
     console.error(`Error deleting defect with id ${defectId}:`, error);
-    throw error;
   }
 };
