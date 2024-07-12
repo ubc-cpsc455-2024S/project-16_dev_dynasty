@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
-import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Select,
-  InputLabel,
-  MenuItem,
-} from '@mui/material'
+import { TextField, Button, Box, Typography, MenuItem } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
