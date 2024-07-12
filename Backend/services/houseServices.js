@@ -55,7 +55,6 @@ const getHouseInBay = async (bayId) => {
 // Ryan
 // Function to add a new house
 const addHouseToDb = async (houseData) => {
-  // const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
   const dateCreated = formatDate(new Date());
   const newHouse = {
     ...houseData,
@@ -93,7 +92,7 @@ const toggleBayAssignment = async (houseid, bayid) => {
     }
     const result = await House.updateOne(
       { _id: houseid },
-      { $set: { bay_id: bayid,bay_name: `Bay ${bayid}`, status: 1 } }
+      { $set: { bay_id: bayid, bay_name: `Bay ${bayid}`, status: 1 } }
     );
     return result;
   } catch (error) {

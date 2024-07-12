@@ -72,19 +72,8 @@ router.post("/", async (req, res) => {
     const newHouse = await addHouseToDb(req.body); // Function to add a new house
     res.status(200).json({ result: newHouse });
   } catch (error) {
-    switch (error.code) {
-      case "BAY_IN_USE":
-        res.status(400).send("Bay in use");
-        break;
-      case "NPL_OR_BAY_NOT_EXIST":
-        res.status(404).send("NPL#/Bay not exist");
-        break;
-      case "FORBIDDEN":
-        res.status(403).send("Forbidden");
-        break;
-      default:
-        res.status(500).send("Server error");
-    }
+    console.log("error", error);
+    res.status(500).send("Server error", error);
   }
 });
 
