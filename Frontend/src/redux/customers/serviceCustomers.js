@@ -1,8 +1,14 @@
 import axios from 'axios'
 
-const getAllCustomers = async () => {
+const getCustomers = async ({ customerNameQuery }) => {
   try {
-    const response = await axios.get(`http://localhost:3000/customers`)
+    let response
+    if (customerNameQuery === undefined) {
+      response = await axios.get(`http://localhost:3000/customers`)
+    } else {
+      const params = new URLSearchParams({ customerNameQuery }).toString()
+      response = await axios.get(`http://localhost:3000/customers?${params}`)
+    }
     return response.data.result
   } catch (error) {
     console.error('Error fetching customers:', error)
@@ -24,12 +30,7 @@ const addCustomer = async customerData => {
   try {
     const response = await axios.post(
       `http://localhost:3000/customers`,
-      customerData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      customerData
     )
     return response.data.result
   } catch (error) {
@@ -37,33 +38,18 @@ const addCustomer = async customerData => {
   }
 }
 
-const updateCustomer = async (customerId, customerData) => {
-  try {
-    const response = await axios.put(
-      `http://localhost:3000/customers/${customerId}`,
-      customerData
-    )
-    return response.data.result
-  } catch (error) {
-    console.error(`Error updating customer with id ${customerId}:`, error)
-  }
-}
-
 const deleteCustomer = async customerId => {
   try {
-    const response = await axios.delete(
-      `http://localhost:3000/customers/${customerId}`
-    )
-    return response.data.result
+    await axios.delete(`http://localhost:3000/customers/${customerId}`)
+    return customerId
   } catch (error) {
     console.error(`Error deleting customer with id ${customerId}:`, error)
   }
 }
 
 export default {
-  getAllCustomers,
+  getCustomers,
   getCustomer,
   addCustomer,
-  updateCustomer,
   deleteCustomer,
 }
