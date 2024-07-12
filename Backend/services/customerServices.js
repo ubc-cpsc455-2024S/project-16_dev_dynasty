@@ -1,7 +1,15 @@
 const Customer = require("../models/Customer");
 const housesJson = require("../data/houses.json");
 
-const getCustomersFromDb = () => Customer.find({});
+const getCustomersFromDb = async ({ customerNameQuery }) => {
+  const filter = customerNameQuery
+    ? {
+        customer_name: { $regex: customerNameQuery, $options: "i" },
+      }
+    : {};
+
+  return Customer.find(filter);
+};
 
 const addCustomerToDb = async (customerData) => {
   const { customer_name, customer_email } = customerData;

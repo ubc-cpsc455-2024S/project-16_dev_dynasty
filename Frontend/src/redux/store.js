@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import houseSlice from './houses/sliceHouses'
 import baySlice from './bays/sliceBays'
-import sidebarSlice from './sidebar/sidebarSlice'
 import customerSlice from './customers/sliceCustomers'
+import sidebarSlice from './sidebar/sidebarSlice'
 
 export const store = configureStore({
   reducer: {

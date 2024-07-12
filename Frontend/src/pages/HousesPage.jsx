@@ -84,7 +84,7 @@ const HousesPage = () => {
     setPage(0)
     fetchData()
   }
-  console.log(houses)
+
   return (
     <Navbar>
       <Container>

@@ -15,7 +15,8 @@ const {
 // GET endpoint to retrieve all customers
 router.get("/", async (req, res, next) => {
   try {
-    const customers = await getCustomersFromDb();
+    const { customerNameQuery } = req.query;
+    const customers = await getCustomersFromDb({ customerNameQuery });
     res.status(200).send({ result: customers });
   } catch (err) {
     res.status(500).send("Server error");

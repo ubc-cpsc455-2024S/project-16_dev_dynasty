@@ -8,4 +8,5 @@ export const routes = {
   housesRoute: '/houses',
   housesAddRoute: '/houses/add',
   houseRoutes: '/houses/:id',
+  customerRoute: '/customers/:id',
 }
