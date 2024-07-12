@@ -3,6 +3,7 @@ import houseSlice from './houses/sliceHouses'
 import baySlice from './bays/sliceBays'
 import customerSlice from './customers/sliceCustomers'
 import sidebarSlice from './sidebar/sidebarSlice'
+import defectsReducer from './defects/sliceDefects';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     houses: houseSlice,
     customers: customerSlice,
     sidebar: sidebarSlice,
+    defects: defectsReducer,
   },
 })
 
