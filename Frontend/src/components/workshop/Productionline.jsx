@@ -46,8 +46,10 @@ const Productionline = () => {
       return;
     }
   
-    const houseId = parseInt(active.id);
+    const houseId = active.id;
+    console.log('houseid: ', houseId);
     const newBayId = parseFloat(over.id);
+    console.log('bayid: ', newBayId);
     const oldBay = active.data.current.oldBay;
     if (oldBay === newBayId) {
       return;

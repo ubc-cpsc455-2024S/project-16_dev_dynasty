@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import HouseService from './serviceHouses';
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import HouseService from './serviceHouses'
 
 const actionTypes = {
   GET_HOUSES: 'houses',
@@ -9,7 +9,7 @@ const actionTypes = {
   ADD_HOUSE: 'houses/add',
   DELETE_HOUSE: 'houses/delete',
   UPDATE_HOUSE: 'houses/update',
-  BAY_HOUSE: 'houses/housebay'
+  BAY_HOUSE: 'houses/housebay',
 }
 
 // prettier-ignore
@@ -23,15 +23,14 @@ export const getAllHousesAsync = createAsyncThunk(
 export const getHousesInbayAsync = createAsyncThunk(
   actionTypes.GET_HOUSE_INBAY,
   async () => {
-    return await HouseService.getHousesInbays();
+    return await HouseService.getHousesInbays()
   }
 )
 
-
-export const getHouseInAbayAsync = createAsyncThunk(
+export const getHouseInABayAsync = createAsyncThunk(
   actionTypes.GET_ONE_HOUSE_INBAY,
-  async (bayId) => {
-    return await HouseService.getHouseInAbay(bayId);
+  async bayId => {
+    return await HouseService.getHouseInABay(bayId)
   }
 )
 
@@ -63,9 +62,9 @@ export const updateHouseAsync = createAsyncThunk(
     return await HouseService.updateHouse(houseId, houseData);
   });
 
-
 export const bayToHouseAsync = createAsyncThunk(
   actionTypes.BAY_HOUSE,
   async ({ houseId, bayId }) => {
-    return await HouseService.bayToHouse(houseId, bayId);
-  });
+    return await HouseService.bayToHouse(houseId, bayId)
+  }
+)

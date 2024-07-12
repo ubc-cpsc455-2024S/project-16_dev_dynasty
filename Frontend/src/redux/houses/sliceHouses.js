@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   getAllHousesAsync,
   getHousesInbayAsync,
-  getHouseInAbayAsync,
+  getHouseInABayAsync,
   getHouseAsync,
   addHouseAsync,
   deleteHouseAsync,
@@ -112,7 +112,7 @@ const houseSlice = createSlice({
       .addCase(deleteHouseAsync.fulfilled, (state, action) => {
         state.status.delete = 'fulfilled'
         state.list = state.list.filter(
-          house => house.house_id !== action.payload.house_id
+          house => house._id !== action.payload._id
         )
       })
       .addCase(deleteHouseAsync.rejected, (state, action) => {
@@ -128,7 +128,7 @@ const houseSlice = createSlice({
         state.status.update = 'fulfilled'
         // Update house list
         const index = state.list.findIndex(
-          house => house.house_id === action.payload.house_id
+          house => house._id === action.payload._id
         )
         if (index !== -1) {
           state.list[index] = action.payload
@@ -137,10 +137,7 @@ const houseSlice = createSlice({
           console.error('updateHouse action fullfilled by house not found in list')
         }
         // Update Find house
-        if (
-          state.findHouse &&
-          state.findHouse.house_id === action.payload.house_id
-        ) {
+        if (state.findHouse && state.findHouse._id === action.payload._id) {
           state.findHouse = action.payload
         }
       })
@@ -154,13 +151,13 @@ const houseSlice = createSlice({
       })
       .addCase(bayToHouseAsync.fulfilled, (state, action) => {
         state.status.bayToHouse = 'fulfilled'
-        console.log('State print in attach bay to house', state)
+        console.log('action payload', action.payload)
         console.log('printing state.inbaylist', state.inBayList)
         const inBayListCopy = [...state.inBayList]
 
         const index = inBayListCopy.findIndex(house => {
           console.log('in findIndex')
-          return parseInt(house.house_id) === parseInt(action.payload.house_id)
+          return house._id === action.payload.house_id
         })
         console.log('index for found is', index)
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import CustomerService from './serviceCustomers.js'
+import CustomerService from './serviceCustomers'
 
 const actionTypes = {
   GET_CUSTOMERS: 'customers',

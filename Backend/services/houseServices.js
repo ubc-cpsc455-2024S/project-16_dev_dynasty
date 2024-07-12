@@ -1,131 +1,135 @@
 var housesJson = require("../data/houses.json");
+const House = require("../models/House");
+const mongoose = require("mongoose");
+const House_View = require("../models/House_View");
+const Bay_View = require("../models/Bay_View");
+const { ObjectId } = require("mongodb");
 
 // Andrew
 // Function to fetch all houses
-const getHousesFromDb = ({
+const getHousesFromDb = async ({
   query,
   nplQuery,
   customerNameQuery,
   houseModelQuery,
 }) => {
-  let filteredHouses = housesJson;
-
-  if (query) {
-    if (query === "inBay") {
-      filteredHouses = filteredHouses.filter((house) => house.bay_id !== null);
-    } else {
-      filteredHouses = filteredHouses.filter(
-        (house) => house.status.toString() === query
-      );
-    }
+  // let filteredHouses = housesJson;
+  console.log("made it here");
+  let filteredHouses;
+  try {
+    filteredHouses = await House_View();
+    console.log(filteredHouses[0]);
+    // filteredHouses = await House.find();
+    // filteredHouses = await addHouseToDb(data);
+  } catch (e) {
+    console.log("error: ", e);
   }
 
-  if (nplQuery) {
-    filteredHouses = filteredHouses.filter((house) =>
-      house.npl.includes(nplQuery)
-    );
-  }
+  // if (query) {
+  //   if (query === "inBay") {
+  //     filteredHouses = filteredHouses.filter((house) => house.bay_id !== null);
+  //   } else {
+  //     filteredHouses = filteredHouses.filter(
+  //       (house) => house.status.toString() === query
+  //     );
+  //   }
+  // }
 
-  if (customerNameQuery) {
-    filteredHouses = filteredHouses.filter((house) =>
-      house.customer_name
-        .toLowerCase()
-        .includes(customerNameQuery.toLowerCase())
-    );
-  }
+  // if (nplQuery) {
+  //   filteredHouses = filteredHouses.filter((house) =>
+  //     house.npl.includes(nplQuery)
+  //   );
+  // }
 
-  if (houseModelQuery) {
-    filteredHouses = filteredHouses.filter((house) =>
-      house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase())
-    );
-  }
+  // if (customerNameQuery) {
+  //   filteredHouses = filteredHouses.filter((house) =>
+  //     house.customer_name
+  //       .toLowerCase()
+  //       .includes(customerNameQuery.toLowerCase())
+  //   );
+  // }
+
+  // if (houseModelQuery) {
+  //   filteredHouses = filteredHouses.filter((house) =>
+  //     house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase())
+  //   );
+  // }
 
   return filteredHouses;
 };
 
 // Andrew
 // Function to fetch a specific house
-const getHouseFromDb = (houseid) => {
-  return housesJson.find((house) => house.house_id === houseid);
+const getHouseFromDb = async (houseid) => {
+  try {
+    return await House_View({ _id: new ObjectId(houseid) });
+  } catch (error) {
+    console.error("Error fetching house from DB:", error);
+    throw error;
+  }
 };
+
+module.exports = getHouseFromDb;
 
 // Ryan
 // Function to fetch all houses that are in production
-const getHousesInBays = () => {
-  return housesJson.filter((house) => house.bay_id !== null);
+const getHousesInBays = async () => {
+  return await House_View({ bay_id: { $ne: null } });
 };
 
 // Andrew
 // Function to fetch the house in a specified bay
-const getHouseInBay = (bayId) => {
-  return housesJson.find((house) => house.bay_id === bayId) || null;
+const getHouseInBay = async (bayId) => {
+  return await Bay_View({ bay_id: bayId });
 };
 
 // Ryan
 // Function to add a new house
 const addHouseToDb = async (houseData) => {
-  const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
+  // const houseId = Math.max(...housesJson.map((house) => house.house_id)) + 1; // Generate a new ID
   const dateCreated = formatDate(new Date());
   const newHouse = {
-    house_id: houseId,
     ...houseData,
     created_on: dateCreated,
-    customer_id: null,
-    online_date: null,
     bay_id: null,
-    bay_name: null,
-    bay_description: null,
     house_records_id: null,
     status: 1,
   };
-  housesJson.push(newHouse);
-  return newHouse;
+  const newHouseMade = await House.create(newHouse);
+  return newHouseMade;
 };
 
 // Ryan
 // Function to delete a house
-const deleteHouseFromDb = (houseid) => {
-  const index = housesJson.findIndex((house) => house.house_id === houseid);
-  if (index > -1) {
-    housesJson.splice(index, 1);
-    return { deleted: true };
-  } else {
-    return { deleted: false };
-  }
+const deleteHouseFromDb = async (houseid) => {
+  console.log("house delete id", houseid);
+  return await House.findByIdAndDelete(houseid);
 };
 
 // Andrew
-// Function to update house details
-const updateHouseInDb = (houseid, houseInfo) => {
-  const index = housesJson.findIndex(
-    (house) => house.house_id === parseInt(houseid)
-  );
-  if (index > -1) {
-    housesJson[index] = { ...housesJson[index], ...houseInfo };
-    return housesJson[index];
-  } else {
-    return null;
-  }
+// Function to update house details, DO NOT use this endpoint to update bay!!
+const updateHouseInDb = async (houseid, houseInfo) => {
+  return await House.updateOne({ _id: houseid }, { $set: houseInfo });
 };
 
 // Andy
-// Function to attach/detach a bay
-const toggleBayAssignment = (houseid, bayid) => {
-  const index = housesJson.findIndex(
-    (house) => house.house_id === parseInt(houseid)
-  );
-  console.log(houseid);
-  console.log(index);
-  if (index !== -1) {
-    housesJson[index] = {
-      ...housesJson[index],
-      bay_id: bayid,
-      bay_name: `Bay ${bayid}`,
-      status: 1,
-    };
-    return { success: true };
-  } else {
-    return { error: "House not found" };
+// Function to attach/detach a bay. Checks bay availability, updates bay name and status at the same time!!
+const toggleBayAssignment = async (houseid, bayid) => {
+  try {
+    const newBay = await Bay_View({ bay_id: bayid });
+    if (newBay[0].house_id) {
+      throw new Error(
+        `Bay in use: ${bayid} is already assigned to another house.`
+      );
+    }
+    const result = await House.updateOne(
+      { _id: houseid },
+      { $set: { bay_id: bayid,bay_name: `Bay ${bayid}`, status: 1 } }
+    );
+    return result;
+  } catch (error) {
+    console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
+    throw error;
   }
 };
 
