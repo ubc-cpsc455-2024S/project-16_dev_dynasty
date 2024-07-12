@@ -24,37 +24,6 @@ const getHousesFromDb = async ({
   } catch (e) {
     console.log("error: ", e);
   }
-
-  // if (query) {
-  //   if (query === "inBay") {
-  //     filteredHouses = filteredHouses.filter((house) => house.bay_id !== null);
-  //   } else {
-  //     filteredHouses = filteredHouses.filter(
-  //       (house) => house.status.toString() === query
-  //     );
-  //   }
-  // }
-
-  // if (nplQuery) {
-  //   filteredHouses = filteredHouses.filter((house) =>
-  //     house.npl.includes(nplQuery)
-  //   );
-  // }
-
-  // if (customerNameQuery) {
-  //   filteredHouses = filteredHouses.filter((house) =>
-  //     house.customer_name
-  //       .toLowerCase()
-  //       .includes(customerNameQuery.toLowerCase())
-  //   );
-  // }
-
-  // if (houseModelQuery) {
-  //   filteredHouses = filteredHouses.filter((house) =>
-  //     house.house_model.toLowerCase().includes(houseModelQuery.toLowerCase())
-  //   );
-  // }
-
   return filteredHouses;
 };
 

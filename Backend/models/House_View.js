@@ -11,7 +11,10 @@ const House_View = async (query) => {
       },
     },
     {
-      $unwind: "$customerDetails",
+      $unwind: {
+        path: "$customerDetails",
+        preserveNullAndEmptyArrays: true, 
+      },
     },
     {
       $lookup: {
@@ -50,6 +53,14 @@ const House_View = async (query) => {
       },
     });
   }
-  return await House.aggregate(house_join);
+  // return await House.aggregate(house_join);
+  try {
+    const result = await House.aggregate(house_join);
+    
+    return result;
+  } catch (error) {
+    console.error("Error in aggregation:", error);
+    throw error; // Throw the error to handle it upstream
+  }
 };
 module.exports = House_View;

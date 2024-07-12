@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
     });
     res.json({ result: houses });
   } catch (error) {
+    console.log(error);
     res.status(500).send("Server error");
   }
 });
