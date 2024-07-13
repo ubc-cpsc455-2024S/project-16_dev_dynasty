@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import {
@@ -18,7 +18,11 @@ import {
 } from '@mui/material'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses'
+import {
+  bayToHouseAsync,
+  getHouseAsync,
+  updateHouseAsync,
+} from '../redux/houses/thunksHouses'
 import { houseStatusEnum } from '../constants/contants'
 import SelectCustom from '../components/inputs/SelectCustom'
 import { getAllBaysAsync } from '../redux/bays/thunksBays'
@@ -32,10 +36,10 @@ const TableHeadCell = styled(TableCell)({
 const StatusCell = styled(TableCell)(({ status }) => ({
   color: getStatusColor(status),
   fontWeight: 'bold',
+  width: '100px',
 }))
 
 const getStatusColor = status => {
-  console.log(typeof status)
   switch (status) {
     case 0:
       return 'red'
@@ -55,11 +59,10 @@ const getStatusColor = status => {
 const HousePage = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const houseInfo = useSelector(state => state.houses.findHouse || null)
+  const { findHouse: houseInfo, status } = useSelector(state => state.houses)
   const bays = useSelector(state => state.bays.list || [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(getHouseAsync(id))
     dispatch(getAllBaysAsync())
   }, [dispatch, id])
@@ -80,9 +83,9 @@ const HousePage = () => {
     }
     const houseData = {
       houseId: houseInfo._id,
-      houseData: { ...houseInfo, bay_id: bay_id },
+      bayId: bay_id,
     }
-    dispatch(updateHouseAsync(houseData))
+    dispatch(bayToHouseAsync(houseData))
   }
 
   const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
@@ -94,8 +97,21 @@ const HousePage = () => {
     value: bay_id,
     label: bay_id,
   }))
-  if (!houseInfo) return <CircularProgress />
-  console.log(houseInfo)
+  if (!houseInfo || status.getOne === 'pending')
+    return (
+      <Navbar>
+        <Container>
+          <Box
+            height={'80vh'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <CircularProgress size={'large'} />
+          </Box>
+        </Container>
+      </Navbar>
+    )
 
   return (
     <Navbar>
@@ -109,7 +125,7 @@ const HousePage = () => {
                 </Typography>
               </Link>
               <Typography variant='h6' component='span' color='textPrimary'>
-                {' > House ' + houseInfo.npl}
+                {' > NPL# ' + houseInfo.npl}
               </Typography>
             </Box>
           }
@@ -187,7 +203,7 @@ const HousePage = () => {
                         <TableCell>{houseInfo.bay_name}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Bay Description</TableCell>
+                        <TableCell width={'100px'}>Bay Description</TableCell>
                         <TableCell>{houseInfo.bay_description}</TableCell>
                       </TableRow>
                     </TableBody>
