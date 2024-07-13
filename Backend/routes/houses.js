@@ -53,7 +53,6 @@ router.get("/inbay/:bayid", async (req, res) => {
 // GET endpoint to retrieve a specific house
 router.get("/:houseid", async (req, res) => {
   const { houseid } = req.params;
-  console.log("houseid", houseid);
   try {
     const house = await getHouseFromDb(houseid); // Function to fetch a specific house
     if (!house) {
@@ -109,7 +108,6 @@ router.patch("/:houseid/:bayid", async (req, res) => {
   const { houseid, bayid } = req.params;
   try {
     const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
-    console.log(result);
     if (result.acknowledged) {
       res.status(200).json({
         message: `Successfully updated bay for house ${houseid}`,

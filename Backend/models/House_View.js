@@ -13,7 +13,7 @@ const House_View = async (query) => {
     {
       $unwind: {
         path: "$customerDetails",
-        preserveNullAndEmptyArrays: true, 
+        preserveNullAndEmptyArrays: true,
       },
     },
     {
@@ -47,7 +47,7 @@ const House_View = async (query) => {
     },
   ];
   if (query !== undefined) {
-    house_join.unshift({
+    house_join.push({
       $match: {
         ...query,
       },
@@ -56,7 +56,7 @@ const House_View = async (query) => {
   // return await House.aggregate(house_join);
   try {
     const result = await House.aggregate(house_join);
-    
+
     return result;
   } catch (error) {
     console.error("Error in aggregation:", error);

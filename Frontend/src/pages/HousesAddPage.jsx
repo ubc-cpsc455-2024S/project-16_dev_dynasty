@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
+import { useNavigate } from 'react-router-dom'
 
 const HousesAddPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const initialState = {
     npl: '',
@@ -32,12 +34,13 @@ const HousesAddPage = () => {
   const handleSubmit = e => {
     e.preventDefault()
     dispatch(addHouseAsync(formFields))
-    clearFormFields()
+    // clearFormFields()
+    navigate(-1)
   }
 
-  const clearFormFields = () => {
-    setFormFields(initialState)
-  }
+  // const clearFormFields = () => {
+  //   setFormFields(initialState)
+  // }
 
   return (
     <Navbar>

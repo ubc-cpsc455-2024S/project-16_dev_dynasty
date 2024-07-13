@@ -5,8 +5,10 @@ import { TextField, Button, Box, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { addCustomerAsync } from '../redux/customers/thunksCustomers.js'
+import { useNavigate } from 'react-router-dom'
 
 const CustomersAddPage = () => {
+  const navigate = useNavigate()
   const initialState = {
     customer_name: '',
     customer_email: '',
@@ -24,12 +26,13 @@ const CustomersAddPage = () => {
   const handleSubmit = e => {
     e.preventDefault()
     dispatch(addCustomerAsync(formFields))
-    clearFormFields()
+    // clearFormFields()
+    navigate(-1)
   }
 
-  const clearFormFields = () => {
-    setFormFields(initialState)
-  }
+  // const clearFormFields = () => {
+  //   setFormFields(initialState)
+  // }
 
   return (
     <Navbar>

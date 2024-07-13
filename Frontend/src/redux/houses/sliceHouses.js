@@ -174,6 +174,15 @@ const houseSlice = createSlice({
             'bayToHouse action fullfilled by house not found in list'
           )
         }
+        // Update Find house
+        if (state.findHouse._id === action.payload.house_id) {
+          state.findHouse = {
+            ...state.findHouse,
+            bay_id: action.payload.bay_id,
+            bay_name: `Bay ${action.payload.bay_id}`,
+            status: 1,
+          }
+        }
       })
       .addCase(bayToHouseAsync.rejected, (state, action) => {
         state.status.bayToHouse = 'rejected'
