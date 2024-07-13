@@ -20,6 +20,7 @@ import HouseDefectsPage from '../pages/HouseDefectsPage';
 import HouseDocumentsPage from '../pages/HouseDocumentsPage';
 import HouseChecklistPage from '../pages/HouseCheckListPage';
 import AddHouseDefectPage from '../pages/AddHouseDefectPage';
+import EditDefectPage from '../pages/EditDefectsPage';
 import { routes } from './routes';
 
 const MainRouter = () => {
@@ -38,6 +39,7 @@ const MainRouter = () => {
         <Route path={`${routes.houseRoutes}/details`} element={<HouseDetailsPage />} />
         <Route path={`${routes.houseRoutes}/defects`} element={<HouseDefectsPage />} />
         <Route path={`${routes.houseRoutes}/defects/add`} element={<AddHouseDefectPage />} />
+        <Route path={`${routes.houseRoutes}/defects/:defectId/edit`} element={<EditDefectPage />} />
         <Route path={`${routes.houseRoutes}/documents`} element={<HouseDocumentsPage />} />
         <Route path={`${routes.houseRoutes}/checklist`} element={<HouseChecklistPage />} />
         <Route path={routes.customerRoute} element={<CustomerPage />} />

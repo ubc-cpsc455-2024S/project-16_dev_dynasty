@@ -81,7 +81,7 @@ const HouseDefectsPage = () => {
                         ))}
                       </TableCell>
                       <TableCell>
-                        <IconButton onClick={() => navigate(`/houses/${id}/defects/edit/${defect._id}`)}>
+                        <IconButton onClick={() => navigate(`/houses/${id}/defects/${defect._id}/edit`)}>
                           <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => handleDelete(defect._id)}>

@@ -105,25 +105,31 @@ router.post('/:houseId', upload.array('images', 10), async (req, res) => {
   }
 });
 
-// Update a defect
+
 router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) => {
   try {
-    const house = await House.findById(req.params.houseId).populate('defects');
+    const house = await House.findById(req.params.houseId);
     if (!house) return res.status(404).json({ message: 'House not found' });
 
-    const defect = await Defect.findById(req.params.defectId);
-    if (!defect) return res.status(404).json({ message: 'Defect not found' });
+    const defectIndex = house.defects.findIndex(def => def._id.toString() === req.params.defectId);
+    if (defectIndex === -1) return res.status(404).json({ message: 'Defect not found' });
 
+    const defect = house.defects[defectIndex];
     const { title, status, description, bay_id } = req.body;
+    
     if (title) defect.title = title;
     if (status) defect.status = status;
     if (description) defect.description = description;
     if (bay_id) defect.bay_id = bay_id;
 
-    const imageUrls = req.files.map((file) => file.location);
-    if (imageUrls.length > 0) defect.images.push(...imageUrls);
+    // Handle images
+    if (req.files.length > 0) {
+      defect.images = req.files.map((file) => file.location);
+    } else if (req.body.images) {
+      defect.images = req.body.images;
+    }
 
-    await defect.save();
+    await house.save();
 
     res.status(200).json({ message: 'Defect updated successfully', defect });
   } catch (err) {
@@ -131,22 +137,36 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
   }
 });
 
+
+
+
 // Delete a defect
 router.delete('/:houseId/:defectId', async (req, res) => {
   try {
+    console.log("Delete Request:", req.params);
+
     const house = await House.findById(req.params.houseId);
     if (!house) return res.status(404).json({ message: 'House not found' });
 
-    const defectIndex = house.defects.indexOf(req.params.defectId);
+    const defectIdStr = req.params.defectId.toString();
+    const defectIndex = house.defects.findIndex(defect => defect._id.toString() === defectIdStr);
+
+    console.log("Defect Index:", defectIndex);
+
     if (defectIndex > -1) {
       house.defects.splice(defectIndex, 1);
       await house.save();
       await Defect.findByIdAndDelete(req.params.defectId);
-    }
 
-    res.status(200).json({ message: 'Defect deleted successfully' });
+      console.log("Defect deleted successfully");
+      return res.status(200).json({ message: 'Defect deleted successfully' });
+    } else {
+      console.log("Defect not found in house");
+      return res.status(404).json({ message: 'Defect not found in house' });
+    }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Error deleting defect:", err);
+    return res.status(500).json({ error: err.message });
   }
 });
 
