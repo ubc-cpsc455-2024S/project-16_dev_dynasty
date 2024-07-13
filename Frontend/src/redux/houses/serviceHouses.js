@@ -100,6 +100,7 @@ const bayToHouse = async (houseId, bayId) => {
       `Error updating house with id  ${houseId} to bay ${bayId}:`,
       error
     )
+    throw error;
   }
 }
 

@@ -187,6 +187,7 @@ const houseSlice = createSlice({
       .addCase(bayToHouseAsync.rejected, (state, action) => {
         state.status.bayToHouse = 'rejected'
         state.error = action.error.message
+        alert('The new bay currently occupied and unavailable for a new house to move in')
       })
   },
 })
