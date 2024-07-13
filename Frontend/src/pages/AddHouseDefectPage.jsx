@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addDefectAsync } from '../redux/defects/thunksDefects';
+import { useDropzone } from 'react-dropzone';
+import { addDefectAsync, fetchDefectsByHouseId } from '../redux/defects/thunksDefects';
+import { getAllBaysAsync } from '../redux/bays/thunksBays';
+import { getHouseAsync } from '../redux/houses/thunksHouses';
 import {
   Box,
   Button,
@@ -10,10 +13,18 @@ import {
   Typography,
   Paper,
   CircularProgress,
+  Card,
+  CardMedia,
   Grid,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Snackbar,
+  Alert,
   IconButton,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 import Navbar from '../components/navigation/Navbar';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
@@ -22,41 +33,82 @@ const AddHouseDefectPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const house = useSelector((state) => state.houses.findHouse);
+  const bays = useSelector((state) => state.bays.list);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [bayId, setBayId] = useState('');
   const [images, setImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    dispatch(getAllBaysAsync());
+    dispatch(getHouseAsync(id)).then((houseData) => {
+      if (houseData.payload && houseData.payload.bay_id) {
+        setBayId(houseData.payload.bay_id);
+      }
+    });
+  }, [dispatch, id]);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = [...images, ...files].slice(0, 10);
-    const newPreviews = newImages.map((file) => URL.createObjectURL(file));
-    setImages(newImages);
-    setImagePreviews(newPreviews);
+    const validFiles = files.filter((file) => file.type.startsWith('image/'));
+    if (validFiles.length !== files.length) {
+      setError('Some files were not valid images and were not added.');
+    }
+    setImages((prevImages) => [...prevImages, ...validFiles]);
   };
 
-  const handleImageRemove = (index) => {
-    const newImages = images.filter((_, i) => i !== index);
-    const newPreviews = imagePreviews.filter((_, i) => i !== index);
-    setImages(newImages);
-    setImagePreviews(newPreviews);
+  const onDrop = useCallback((acceptedFiles) => {
+    const validFiles = acceptedFiles.filter((file) => file.type.startsWith('image/'));
+    if (validFiles.length !== acceptedFiles.length) {
+      setError('Some files were not valid images and were not added.');
+    }
+    setImages((prevImages) => [...prevImages, ...validFiles]);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: 'image/*',
+    multiple: true,
+  });
+
+  const handleDeleteImage = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     const defectData = {
       title,
       description,
-      status: 0, // Default to 'incomplete' state
+      bay_id: bayId,
       images,
     };
 
-    await dispatch(addDefectAsync({ houseId: id, defectData }));
-    setLoading(false);
-    navigate(`/houses/${id}/defects`);
+    console.log("Defect Data:", defectData);
+
+    try {
+      const response = await dispatch(addDefectAsync({ houseId: id, defectData })).unwrap();
+      if(!response) throw new error;
+      setLoading(false);
+      dispatch(fetchDefectsByHouseId(id)); // Update the defects list
+      navigate(`/houses/${id}/defects`);
+    } catch (err) {
+      setLoading(false);
+      console.error("Error adding defect:", err);
+      if (err.response && err.response.status === 400) {
+        setError('Bad request. Please check the input data.');
+      } else if (err.response && err.response.status === 500) {
+        setError('Server error. Please try again later.');
+      } else {
+        setError('Failed to add defect. Please try again.');
+      }
+    }
   };
 
   return (
@@ -84,54 +136,73 @@ const AddHouseDefectPage = () => {
               multiline
               rows={4}
             />
-            <input
-              accept="image/*"
-              style={{ display: 'none' }}
-              id="raised-button-file"
-              multiple
-              type="file"
-              onChange={handleFileChange}
-            />
-            <label htmlFor="raised-button-file">
-              <Button
-                variant="outlined"
-                component="span"
-                style={{ marginRight: '10px', marginTop: '20px', height: '36.5px' }}
-                disabled={images.length >= 10}
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Bay ID</InputLabel>
+              <Select
+                value={bayId}
+                onChange={(e) => setBayId(e.target.value)}
+                label="Bay ID"
               >
-                Upload Images
-              </Button>
-            </label>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: '20px', height: '36.5px' }}
-              disabled={loading}
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {bays.map((bay) => (
+                  <MenuItem key={bay._id} value={bay.bay_id}>
+                    {bay.bay_id}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <div
+              {...getRootProps()}
+              style={{
+                border: '2px dashed #ccc',
+                padding: '20px',
+                marginTop: '20px',
+                backgroundColor: isDragActive ? '#e0e0e0' : '#fafafa',
+                textAlign: 'center'
+              }}
             >
-              {loading ? <CircularProgress size={24} /> : 'Add Defect'}
-            </Button>
-          </form>
-          <Box mt={3}>
-            <Typography variant="h6" gutterBottom>
-              Image Previews
-            </Typography>
-            <Grid container spacing={2}>
-              {imagePreviews.map((preview, index) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                  <Box position="relative">
-                    <img src={preview} alt={`Defect ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
+              <input {...getInputProps()} />
+              <Typography align="center">
+                {isDragActive ? 'Drop the files here ...' : 'Drag & drop files here, or click to select files'}
+              </Typography>
+            </div>
+            <Grid container spacing={2} style={{ marginTop: '20px' }}>
+              {images.map((image, index) => (
+                <Grid item xs={4} key={index}>
+                  <Card style={{ position: 'relative' }}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={URL.createObjectURL(image)}
+                      alt={`defect-image-${index}`}
+                    />
                     <IconButton
-                      onClick={() => handleImageRemove(index)}
-                      style={{ position: 'absolute', top: '5px', right: '5px', background: 'rgba(255, 255, 255, 0.7)' }}
+                      style={{ position: 'absolute', top: '5px', right: '5px' }}
+                      onClick={() => handleDeleteImage(index)}
                     >
-                      <DeleteIcon />
+                      <DeleteIcon color="error" />
                     </IconButton>
-                  </Box>
+                  </Card>
                 </Grid>
               ))}
             </Grid>
-          </Box>
+            {loading ? (
+              <CircularProgress style={{ marginTop: '20px' }} />
+            ) : (
+              <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px' }}>
+                Add Defect
+              </Button>
+            )}
+          </form>
+          {error && (
+            <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')}>
+              <Alert onClose={() => setError('')} severity="error" sx={{ width: '100%' }}>
+                {error}
+              </Alert>
+            </Snackbar>
+          )}
         </Paper>
       </Container>
     </Navbar>

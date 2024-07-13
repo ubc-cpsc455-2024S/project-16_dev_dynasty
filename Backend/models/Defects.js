@@ -7,7 +7,7 @@ const defectSchema = new mongoose.Schema({
   },
   images: {
     type: [String],
-    required: true
+    required: false
   },
   status: {
     type: String,
@@ -21,15 +21,15 @@ const defectSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  created_date: {
-    type: Date,
-    required: true,
-    default: Date.now
-  },
-  resolved_date: {
-    type: Date,
-    default: null
-  }
+  // created_date: {
+  //   type: Date,
+  //   required: true,
+  //   default: Date.now
+  // },
+  // resolved_date: {
+  //   type: Date,
+  //   default: null
+  // }
 });
 
 const Defect = mongoose.model('Defect', defectSchema);
