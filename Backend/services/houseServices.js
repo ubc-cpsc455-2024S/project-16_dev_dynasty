@@ -67,9 +67,9 @@ const addHouseToDb = async (houseData) => {
   const newHouse = {
     ...houseData,
     created_on: dateCreated,
-    bay_id: null,
-    house_records_id: null,
-    status: 1,
+    // bay_id: null,
+    // house_records_id: null,
+    // status: 1,
   };
   const newHouseMade = await House.create(newHouse);
   return newHouseMade;

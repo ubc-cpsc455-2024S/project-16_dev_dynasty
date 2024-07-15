@@ -3,26 +3,28 @@ const mongoose = require("mongoose");
 const houseSchema = new mongoose.Schema({
   npl: {
     type: String,
-    // required: true,
+    required: true,
   },
   customer_id: {
     type: mongoose.Schema.Types.ObjectId,
     // required: true,
+    default: null,
   },
   online_date: {
     type: String,
+    deault: null,
   },
   created_on: {
     type: String,
-    // required: true,
+    required: true,
   },
   house_model: {
     type: String,
-    // required: true,
+    required: true,
   },
   square_ft: {
     type: Number,
-    // required: true,
+    required: true,
   },
   bay_id: {
     type: String,
@@ -39,7 +41,7 @@ const houseSchema = new mongoose.Schema({
   status: {
     type: Number,
     required: true,
-    default: 0,
+    default: 1,
   },
 });
 

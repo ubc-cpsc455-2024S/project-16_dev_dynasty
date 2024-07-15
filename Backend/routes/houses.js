@@ -69,7 +69,7 @@ router.get("/:houseid", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newHouse = await addHouseToDb(req.body); // Function to add a new house
-    res.status(200).json({ result: newHouse });
+    res.status(201).json({ result: newHouse });
   } catch (error) {
     console.log("error", error);
     res.status(500).send("Server error", error);
@@ -119,7 +119,7 @@ router.patch("/:houseid/:bayid", async (req, res) => {
     }
   } catch (error) {
     if (error.message.includes("Bay in use")) {
-      res.status(400).send(error.message);
+      res.status(400).json({bayInUseError: error.message});
     } else {
       res.status(500).send("Server error");
     }
