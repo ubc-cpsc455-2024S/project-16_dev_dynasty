@@ -8,6 +8,25 @@ var app = require("../app");
 var debug = require("debug")("ass3:server");
 var http = require("http");
 
+
+
+
+
+require("dotenv").config();
+const mongoose = require("mongoose");
+const uri = process.env.MONGODB_URI;
+main().catch((err) => console.log(err));
+async function main() {
+  try {
+    await mongoose.connect(uri);
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("Failed to connect to MongoDB", err);
+  }
+}
+
+
+
 /**
  * Get port from environment and store in Express.
  */

@@ -4,18 +4,18 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 
-require("dotenv").config();
-const mongoose = require("mongoose");
-const uri = process.env.MONGODB_URI;
-main().catch((err) => console.log(err));
-async function main() {
-  try {
-    await mongoose.connect(uri);
-    console.log("Connected to MongoDB");
-  } catch (err) {
-    console.error("Failed to connect to MongoDB", err);
-  }
-}
+// require("dotenv").config();
+// const mongoose = require("mongoose");
+// const uri = process.env.MONGODB_URI;
+// main().catch((err) => console.log(err));
+// async function main() {
+//   try {
+//     await mongoose.connect(uri);
+//     console.log("Connected to MongoDB");
+//   } catch (err) {
+//     console.error("Failed to connect to MongoDB", err);
+//   }
+// }
 
 var indexRouter = require("./routes/index");
 var housesRouter = require("./routes/houses");
