@@ -32,11 +32,11 @@ const House_View = async (query) => {
     },
     {
       $addFields: {
-        customer_id: "$customerDetails._id",
-        customer_name: "$customerDetails.customer_name",
-        customer_email: "$customerDetails.customer_email",
-        bay_name: "$bayDetails.bay_name",
-        bay_description: "$bayDetails.bay_description",
+        customer_id: { $ifNull: ["$customerDetails._id", null] },
+        customer_name: { $ifNull: ["$customerDetails.customer_name", null] },
+        customer_email: { $ifNull: ["$customerDetails.customer_email", null] },
+        bay_name: { $ifNull: ["$bayDetails.bay_name", null] },
+        bay_description: { $ifNull: ["$bayDetails.bay_description", null] },
       },
     },
     {
