@@ -105,11 +105,23 @@ const toggleBayAssignment = async (houseid, bayid) => {
         `Bay in use: ${bayid} is already assigned to another house.`
       );
     }
-    const result = await House.updateOne(
-      { _id: houseid },
-      { $set: { bay_id: bayid, bay_name: `Bay ${bayid}`, status: 1 } }
-    );
-    return result;
+    const house = await House.findById(houseid);
+    if (!house.online_date) {
+      house.online_date = formatDate(new Date());
+    }
+    house.bay_id = bayid;
+    house.bay_name = `Bay ${bayid}`;
+    house.status = 1;
+    await house.save();
+
+    // const result = await House.updateOne(
+    //   { _id: houseid },
+    //   { $set: { bay_id: bayid, bay_name: `Bay ${bayid}`, status: 1 } }
+    // );
+
+
+    return house;
+
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
     throw error;
