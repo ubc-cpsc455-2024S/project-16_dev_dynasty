@@ -105,7 +105,9 @@ const toggleBayAssignment = async (houseid, bayid) => {
         `Bay in use: ${bayid} is already assigned to another house.`
       );
     }
+    console.log('houseid is: ',houseid);
     const house = await House.findById(houseid);
+    console.log('the house found is:', house);
     if (!house.online_date) {
       house.online_date = formatDate(new Date());
     }
