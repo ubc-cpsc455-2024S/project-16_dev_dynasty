@@ -1,15 +1,21 @@
-name: CI/CD BayBuild
+name: CI/CD BayBuild Backend
 on:
   push:
     branches:
       - main
+    paths:
+      - 'Backend/**'
+      - '.github/workflows/cicd-backend.yml'
 
   pull_request:
     branches:
       - main
+    paths:
+      - 'Backend/**'
+      - '.github/workflows/cicd-backend.yml'
 
 jobs:
-  build:
+  build_test_backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,4 +41,16 @@ jobs:
           npm install
           echo "running tests"
           npm run test
+
+  deploy_backend: 
+    needs: build_test_backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
+        run: |
+          curl "$deploy_url"
+
+     
           
