@@ -1,0 +1,35 @@
+name: CI/CD BayBuild
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Backend Dependencies and Run Tests
+        run: |
+          echo "files in current dir: "
+          ls
+          cd backend
+          echo "files in backend dir: "
+          ls
+          echo "running npm install"
+          npm install
+          echo "running tests"
+          npm run test
+          
