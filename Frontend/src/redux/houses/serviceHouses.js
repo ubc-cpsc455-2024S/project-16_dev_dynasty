@@ -1,4 +1,5 @@
 import axios from 'axios'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const getAllHouses = async ({
   query,
@@ -13,7 +14,7 @@ const getAllHouses = async ({
       customerNameQuery,
       houseModelQuery,
     }).toString()
-    const response = await axios.get(`http://localhost:3000/houses?${params}`)
+    const response = await axios.get(`${BACKEND_URL}/houses?${params}`)
     return response.data.result
   } catch (error) {
     console.error('Error fetching houses:', error)
@@ -22,7 +23,7 @@ const getAllHouses = async ({
 
 const getHouse = async houseid => {
   try {
-    const response = await axios.get(`http://localhost:3000/houses/${houseid}`)
+    const response = await axios.get(`${BACKEND_URL}/houses/${houseid}`)
     return response.data.result
   } catch (error) {
     console.error(`Error fetching house with id ${houseid}:`, error)
@@ -31,7 +32,7 @@ const getHouse = async houseid => {
 
 const getHousesInbays = async () => {
   try {
-    const response = await axios.get(`http://localhost:3000/houses/inbay`)
+    const response = await axios.get(`${BACKEND_URL}/houses/inbay`)
     return response.data.result
   } catch (error) {
     console.error(`Error fetching houses that are in production:`, error)
@@ -41,7 +42,7 @@ const getHousesInbays = async () => {
 const getHouseInABay = async bayId => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/houses/inbay/${bayId}`
+      `${BACKEND_URL}/houses/inbay/${bayId}`
     )
     return response.data.result
   } catch (error) {
@@ -52,7 +53,7 @@ const getHouseInABay = async bayId => {
 const addHouse = async houseData => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/houses`,
+      `${BACKEND_URL}/houses`,
       houseData,
       {
         headers: {
@@ -69,7 +70,7 @@ const addHouse = async houseData => {
 const deleteHouse = async houseId => {
   try {
     const response = await axios.delete(
-      `http://localhost:3000/houses/${houseId}`
+      `${BACKEND_URL}/houses/${houseId}`
     )
     return response.data.result
   } catch (error) {
@@ -80,7 +81,7 @@ const deleteHouse = async houseId => {
 const updateHouse = async (houseId, houseData) => {
   try {
     const response = await axios.put(
-      `http://localhost:3000/houses/${houseId}`,
+      `${BACKEND_URL}/houses/${houseId}`,
       houseData
     )
     return response.data.result
@@ -92,7 +93,7 @@ const updateHouse = async (houseId, houseData) => {
 const bayToHouse = async (houseId, bayId) => {
   try {
     const response = await axios.patch(
-      `http://localhost:3000/houses/${houseId}/${bayId}`
+      `${BACKEND_URL}/houses/${houseId}/${bayId}`
     )
     return response.data
   } catch (error) {

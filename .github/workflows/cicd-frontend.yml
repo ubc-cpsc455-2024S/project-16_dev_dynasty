@@ -1,0 +1,53 @@
+name: CI/CD BayBuild Frontend
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/cicd-frontend.yml'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/cicd-frontend.yml'
+
+jobs:
+  build_test_frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Frontend Dependencies and Run Tests
+        env: 
+            MONGODB_URI: ${{secrets.MONGODB_URI}}
+            MONGODB_TEST_URI: ${{secrets.MONGODB_TEST_URI}}
+        run: |
+          echo "files in current dir: "
+          ls
+          cd Frontend
+          echo "files in frontend dir: "
+          ls
+          echo "running npm install"
+          npm install
+          echo "running build"
+          npm run build
+
+  deploy_frontend: 
+    needs: build_test_frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_FRONTEND }}
+        run: |
+          curl "$deploy_url"

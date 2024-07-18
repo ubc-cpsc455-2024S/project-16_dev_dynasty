@@ -12,7 +12,7 @@ const houseSchema = new mongoose.Schema({
   },
   online_date: {
     type: String,
-    deault: null,
+    default: null,
   },
   created_on: {
     type: String,
