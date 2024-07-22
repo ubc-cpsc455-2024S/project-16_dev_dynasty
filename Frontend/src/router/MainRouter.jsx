@@ -1,22 +1,27 @@
-import React from 'react'
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom'
-import LoginPage from '../pages/LoginPage'
-import WorkshopPage from '../pages/WorkshopPage'
-import CustomersPage from '../pages/CustomersPage'
-import CustomersAddPage from '../pages/CustomersAddPage'
-import UsersPage from '../pages/UsersPage'
-import UsersAddPage from '../pages/UsersAddPage'
-import HousesPage from '../pages/HousesPage'
-import HousesAddPage from '../pages/HousesAddPage'
-import NotFoundPage from '../pages/NotFoundPage'
-import { routes } from './routes'
-import HousePage from '../pages/HousePage'
-import CustomerPage from '../pages/CustomerPage.jsx'
+} from 'react-router-dom';
+import LoginPage from '../pages/LoginPage';
+import WorkshopPage from '../pages/WorkshopPage';
+import CustomersPage from '../pages/CustomersPage';
+import CustomersAddPage from '../pages/CustomersAddPage';
+import UsersPage from '../pages/UsersPage';
+import UsersAddPage from '../pages/UsersAddPage';
+import HousesPage from '../pages/HousesPage';
+import HousesAddPage from '../pages/HousesAddPage';
+import NotFoundPage from '../pages/NotFoundPage';
+import CustomerPage from '../pages/CustomerPage';
+import HouseDetailsPage from '../pages/HouseDetailsPage';
+import HouseDefectsPage from '../pages/HouseDefectsPage';
+import HouseDocumentsPage from '../pages/HouseDocumentsPage';
+import HouseChecklistPage from '../pages/HouseCheckListPage';
+import AddHouseDefectPage from '../pages/AddHouseDefectPage';
+import EditDefectPage from '../pages/EditDefectsPage';
+import { routes } from './routes';
 
 const MainRouter = () => {
   return (
@@ -31,12 +36,17 @@ const MainRouter = () => {
         <Route path={routes.usersAddRoute} element={<UsersAddPage />} />
         <Route path={routes.housesRoute} element={<HousesPage />} />
         <Route path={routes.housesAddRoute} element={<HousesAddPage />} />
-        <Route path={routes.houseRoutes} element={<HousePage />} />
+        <Route path={`${routes.houseRoutes}/details`} element={<HouseDetailsPage />} />
+        <Route path={`${routes.houseRoutes}/defects`} element={<HouseDefectsPage />} />
+        <Route path={`${routes.houseRoutes}/defects/add`} element={<AddHouseDefectPage />} />
+        <Route path={`${routes.houseRoutes}/defects/:defectId/edit`} element={<EditDefectPage />} />
+        <Route path={`${routes.houseRoutes}/documents`} element={<HouseDocumentsPage />} />
+        <Route path={`${routes.houseRoutes}/checklist`} element={<HouseChecklistPage />} />
         <Route path={routes.customerRoute} element={<CustomerPage />} />
-        <Route path='*' element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
-  )
-}
+  );
+};
 
-export default MainRouter
+export default MainRouter;

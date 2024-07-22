@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const defectSchema = require('./Defects').schema;
 
 const houseSchema = new mongoose.Schema({
   npl: {
@@ -43,8 +44,12 @@ const houseSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
+  defects: {
+    type: [defectSchema],
+    default: []
+  }
 });
 
-const House = mongoose.model("House", houseSchema);
+const House = mongoose.model('House', houseSchema);
 
 module.exports = House;
