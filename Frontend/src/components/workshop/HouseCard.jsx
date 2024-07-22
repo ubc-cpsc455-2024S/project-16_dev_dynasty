@@ -27,7 +27,7 @@ const HouseCard = ({ house }) => {
       style={style}
       {...listeners}
       {...attributes}
-      onClick={()=>{navigate(`/houses/${houseId}`)}}
+      onClick={()=>{navigate(`/houses/${houseId}/details`)}}
     >
       <p className='bay-card card-onlineDate'>{house.online_date}</p>
       <p className='bay-card card-npl'>{house.npl}</p>
