@@ -1,13 +1,14 @@
 import axios from 'axios'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const getCustomers = async ({ customerNameQuery }) => {
   try {
     let response
     if (customerNameQuery === undefined) {
-      response = await axios.get(`http://localhost:3000/customers`)
+      response = await axios.get(`${BACKEND_URL}/customers`)
     } else {
       const params = new URLSearchParams({ customerNameQuery }).toString()
-      response = await axios.get(`http://localhost:3000/customers?${params}`)
+      response = await axios.get(`${BACKEND_URL}/customers?${params}`)
     }
     return response.data.result
   } catch (error) {
@@ -18,7 +19,7 @@ const getCustomers = async ({ customerNameQuery }) => {
 const getCustomer = async customerId => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/customers/${customerId}`
+      `${BACKEND_URL}/customers/${customerId}`
     )
     return response.data.result
   } catch (error) {
@@ -29,7 +30,7 @@ const getCustomer = async customerId => {
 const addCustomer = async customerData => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/customers`,
+      `${BACKEND_URL}/customers`,
       customerData
     )
     return response.data.result
@@ -40,7 +41,7 @@ const addCustomer = async customerData => {
 
 const deleteCustomer = async customerId => {
   try {
-    await axios.delete(`http://localhost:3000/customers/${customerId}`)
+    await axios.delete(`${BACKEND_URL}/customers/${customerId}`)
     return customerId
   } catch (error) {
     console.error(`Error deleting customer with id ${customerId}:`, error)

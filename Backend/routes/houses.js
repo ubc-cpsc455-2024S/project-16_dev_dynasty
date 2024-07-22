@@ -53,7 +53,6 @@ router.get("/inbay/:bayid", async (req, res) => {
 // GET endpoint to retrieve a specific house
 router.get("/:houseid", async (req, res) => {
   const { houseid } = req.params;
-  console.log("houseid", houseid);
   try {
     const house = await getHouseFromDb(houseid); // Function to fetch a specific house
     if (!house) {
@@ -70,21 +69,10 @@ router.get("/:houseid", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newHouse = await addHouseToDb(req.body); // Function to add a new house
-    res.status(200).json({ result: newHouse });
+    res.status(201).json({ result: newHouse });
   } catch (error) {
-    switch (error.code) {
-      case "BAY_IN_USE":
-        res.status(400).send("Bay in use");
-        break;
-      case "NPL_OR_BAY_NOT_EXIST":
-        res.status(404).send("NPL#/Bay not exist");
-        break;
-      case "FORBIDDEN":
-        res.status(403).send("Forbidden");
-        break;
-      default:
-        res.status(500).send("Server error");
-    }
+    console.log("error", error);
+    res.status(500).send("Server error", error);
   }
 });
 
@@ -120,8 +108,8 @@ router.patch("/:houseid/:bayid", async (req, res) => {
   const { houseid, bayid } = req.params;
   try {
     const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
-    console.log(result);
-    if (result.acknowledged) {
+    console.log("the result returned by toggle is: ", result);
+    if (result._id) {
       res.status(200).json({
         message: `Successfully updated bay for house ${houseid}`,
         house_id: houseid,
@@ -132,7 +120,7 @@ router.patch("/:houseid/:bayid", async (req, res) => {
     }
   } catch (error) {
     if (error.message.includes("Bay in use")) {
-      res.status(400).send(error.message);
+      res.status(400).json({bayInUseError: error.message});
     } else {
       res.status(500).send("Server error");
     }

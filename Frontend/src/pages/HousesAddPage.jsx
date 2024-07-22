@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
+import { useNavigate } from 'react-router-dom'
 
 const HousesAddPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const initialState = {
     npl: '',
-    customer_name: '',
+    customer_id: '',
     house_model: '',
     square_ft: '',
   }
@@ -32,12 +34,13 @@ const HousesAddPage = () => {
   const handleSubmit = e => {
     e.preventDefault()
     dispatch(addHouseAsync(formFields))
-    clearFormFields()
+    // clearFormFields()
+    navigate(-1)
   }
 
-  const clearFormFields = () => {
-    setFormFields(initialState)
-  }
+  // const clearFormFields = () => {
+  //   setFormFields(initialState)
+  // }
 
   return (
     <Navbar>
@@ -56,13 +59,13 @@ const HousesAddPage = () => {
             />
             <TextField
               select={true}
-              name={'customer_name'}
-              label={'Customer name'}
-              value={formFields.customer_name}
+              name={'customer_id'}
+              label={'Customer Name'}
+              value={formFields.customer_id}
               onChange={handleChange}
             >
               {customers.map(customer => (
-                <MenuItem key={customer._id} value={customer.customer_name}>
+                <MenuItem key={customer._id} value={customer._id}>
                   {customer.customer_name}
                 </MenuItem>
               ))}

@@ -1,0 +1,56 @@
+name: CI/CD BayBuild Backend
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Backend/**'
+      - '.github/workflows/cicd-backend.yml'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'Backend/**'
+      - '.github/workflows/cicd-backend.yml'
+
+jobs:
+  build_test_backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Backend Dependencies and Run Tests
+        env: 
+            MONGODB_URI: ${{secrets.MONGODB_URI}}
+            MONGODB_TEST_URI: ${{secrets.MONGODB_TEST_URI}}
+        run: |
+          echo "files in current dir: "
+          ls
+          cd Backend
+          echo "files in backend dir: "
+          ls
+          echo "running npm install"
+          npm install
+          echo "running tests"
+          npm run test
+
+  deploy_backend: 
+    needs: build_test_backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
+        run: |
+          curl "$deploy_url"
+
+     
+          
