@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchDefectsByHouseId, deleteDefectAsync } from '../redux/defects/thunksDefects';
@@ -16,6 +16,10 @@ import {
   TableHead,
   Button,
   IconButton,
+  Modal,
+  Backdrop,
+  Fade,
+  Grid,
 } from '@mui/material';
 import Navbar from '../components/navigation/Navbar';
 import HouseTabs from '../components/navigation/HouseTabs';
@@ -31,6 +35,8 @@ const HouseDefectsPage = () => {
   const defects = useSelector((state) => state.defects.list);
   const loading = useSelector((state) => state.defects.loading);
   const houseInfo = useSelector((state) => state.houses.findHouse || null);
+  const [open, setOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     dispatch(fetchDefectsByHouseId(id));
@@ -39,6 +45,29 @@ const HouseDefectsPage = () => {
   const handleDelete = async (defectId) => {
     await dispatch(deleteDefectAsync({ houseId: id, defectId }));
     dispatch(fetchDefectsByHouseId(id));
+  };
+
+  const handleOpen = (url) => {
+    setSelectedImage(url);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedImage(null);
+  };
+
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case 'incomplete':
+        return 'red';
+      case 'in progress':
+        return 'orange';
+      case 'resolved':
+        return 'green';
+      default:
+        return 'black';
+    }
   };
 
   if (loading) return <CircularProgress />;
@@ -73,12 +102,29 @@ const HouseDefectsPage = () => {
                     <TableRow key={defect._id}>
                       <TableCell>{defect.title}</TableCell>
                       <TableCell>{defect.description}</TableCell>
-                      <TableCell>{defect.status}</TableCell>
+                      <TableCell style={{ color: getStatusColor(defect.status) }}>{defect.status}</TableCell>
                       <TableCell>{defect.bay_id}</TableCell>
                       <TableCell>
-                        {defect.images.map((url, index) => (
-                          <img key={index} src={url} alt={`defect-${index}`} width={50} />
-                        ))}
+                        <div
+                          style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+                            gap: '8px',
+                            maxHeight: '150px',
+                            overflowY: 'auto',
+                          }}
+                        >
+                          {defect.images.map((url, index) => (
+                            <img
+                              key={index}
+                              src={url}
+                              alt={`defect-${index}`}
+                              width={70}
+                              style={{ cursor: 'pointer', margin: '4px', border: '1px solid #ccc', borderRadius: '4px' }}
+                              onClick={() => handleOpen(url)}
+                            />
+                          ))}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <IconButton onClick={() => navigate(`/houses/${id}/defects/${defect._id}/edit`)}>
@@ -95,6 +141,30 @@ const HouseDefectsPage = () => {
             </TableContainer>
           </Paper>
         </Box>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: '#fff',
+              border: '2px solid #000',
+              boxShadow: 24,
+              padding: '16px',
+            }}>
+              <img src={selectedImage} alt="Selected" style={{ width: '100%', height: 'auto' }} />
+            </div>
+          </Fade>
+        </Modal>
       </Container>
     </Navbar>
   );
