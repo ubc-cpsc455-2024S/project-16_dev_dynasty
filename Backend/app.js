@@ -9,7 +9,7 @@ const housesRouter = require('./routes/houses');
 const baysRouter = require('./routes/bays');
 const customersRouter = require('./routes/customers');
 const defectsRouter = require('./routes/defects');
-
+const authRouter = require('./routes/users');
 const app = express();
 
 
@@ -33,6 +33,7 @@ app.use('/houses', housesRouter);
 app.use('/bays', baysRouter);
 app.use('/customers', customersRouter);
 app.use('/defects', defectsRouter);
+app.use('/users', authRouter);
 
 
 
