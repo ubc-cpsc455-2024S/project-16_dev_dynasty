@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -11,10 +10,14 @@ import { toggleSidebar } from '../../redux/sidebar/sidebarSlice'
 import Sidebar from './Sidebar'
 import { useNavigate } from 'react-router-dom'
 import { routes } from '../../router/routes'
+import { useSelector, useDispatch } from 'react-redux'
+import { userLoginAsync, userLogoutAsync } from '../../redux/auth/thunkAuth'
 
 const Navbar = ({ children }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const isSignedIn = useSelector(state => state.auth.isSignedIn || false)
+  const user = useSelector(state => state.auth.user || null)
 
   const handleMenuClick = () => {
     dispatch(toggleSidebar())
@@ -43,12 +46,27 @@ const Navbar = ({ children }) => {
           <Typography variant='h6' style={{ flexGrow: 1 }}></Typography>
 
 
-          <Button
-            color='inherit'
-            onClick={() => navigate(routes.loginRoute)}
-          >
-            Log In
-          </Button>
+          {isSignedIn ? (
+            <>
+              <Typography variant='body1' style={{ marginRight: '20px' }}>
+                {user.name}
+              </Typography>
+              <Button
+                color='inherit'
+                onClick={()=>{dispatch(userLogoutAsync())}}
+              >
+                Log Out
+              </Button>
+            </>
+          ) : (
+            <Button
+              color='inherit'
+              onClick={() => navigate(routes.loginRoute)}
+            >
+              Log In
+            </Button>
+          )}
+
         </Toolbar>
         <Sidebar />
       </AppBar>

@@ -18,23 +18,28 @@ router.post("/signup", async (req, res, next) => {
         res.status(201).json({ result: newUser });
     } catch (error) {
         console.log(error);
-        res.status(500).json({serverError: error});
+        res.status(500).json({ serverError: error });
     }
 });
 
 
 router.post("/signin", async (req, res, next) => {
-    const {name, password} = req.body;
+    const { name, password } = req.body;
     try {
         const user = await User.login(name, password);
         user.password = undefined;
-        const token = jwt.sign(user.toObject(),secret, {expiresIn: 1000});
-        res.cookie('jwt', token, {httpOnly: true, maxAge: 1000*1000});
+        const token = jwt.sign(user.toObject(), secret, { expiresIn: 1000 });
+        res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000 });
         res.status(201).json({ result: user });
     } catch (error) {
-        console.log("the error caught was: ",error);
-        res.status(500).json({serverError: error.message});
+        console.log("the error caught was: ", error);
+        res.status(500).json({ serverError: error.message });
     }
+});
+
+router.get("/logout", async (req, res, next) => {
+    res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
+    res.status(200).json({ message: 'user is logged out' });
 });
 
 module.exports = router;

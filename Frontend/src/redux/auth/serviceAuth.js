@@ -3,10 +3,25 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const login = async (signInData) => {
     try {
-        const response = await axios.post(`${BACKEND_URL}/users/signin`, signInData);
+        const response = await axios.post(`${BACKEND_URL}/users/signin`, signInData,{
+            withCredentials: true,
+        });
         return response.data.result;
     } catch (error) {
         console.error('Error fetching bays:', error);
+        throw error;
+    }
+}
+
+const logout = async () => {
+    try {
+        const response = await axios.get(`${BACKEND_URL}/users/logout`,{
+            withCredentials: true,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching bays:', error);
+        throw error;
     }
 }
 
@@ -14,4 +29,5 @@ const login = async (signInData) => {
 
 export default {
     login,
+    logout
 }

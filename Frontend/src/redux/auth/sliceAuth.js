@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { userLoginAsync } from './thunkAuth'
+import { userLoginAsync, userLogoutAsync } from './thunkAuth'
 
 const INITIAL_BAY_STATE = {
   isSignedIn: false,
   user: null,
   status: {
-    signIn: 'idle'
+    signIn: 'idle',
+    logOut: 'idle'
   },
   error: null
 }
@@ -16,7 +17,7 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      // Handle all bays fetching
+    // handle login
       .addCase(userLoginAsync.pending, (state) => {
         state.status.signIn = 'pending';
       })
@@ -27,6 +28,19 @@ const authSlice = createSlice({
       })
       .addCase(userLoginAsync.rejected, (state, action) => {
         state.status.signIn = 'rejected';
+        state.error = action.error.message;
+      })
+      // handle logout
+      .addCase(userLogoutAsync.pending, (state) => {
+        state.status.logOut = 'pending';
+      })
+      .addCase(userLogoutAsync.fulfilled, (state) => {
+        state.status.logOut = 'fulfilled';
+        state.isSignedIn = false;
+        state.user = null;
+      })
+      .addCase(userLogoutAsync.rejected, (state, action) => {
+        state.status.logOut = 'rejected';
         state.error = action.error.message;
       })
   },

@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
-import Navbar from '../components/navigation/Navbar';
-import Header1 from '../components/headers/Header1';
-import { Button, TextField, Container, Box, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { routes } from '../router/routes';
+import React, { useState } from 'react'
+import Navbar from '../components/navigation/Navbar'
+import Header1 from '../components/headers/Header1'
+import { Button, TextField, Container, Box, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { routes } from '../router/routes'
+import { useSelector, useDispatch } from 'react-redux'
+import { userLoginAsync, userLogoutAsync } from '../redux/auth/thunkAuth'
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const isSignedIn = useSelector(state => state.auth.isSignedIn || false)
+  const user = useSelector(state => state.auth.user || null)
 
-  const handleLogin = () => {
-    // Implement login logic here
-    // For example: call an API to authenticate the user
-    console.log('Logging in with:', username, password);
-    navigate(routes.dashboardRoute); // Redirect to dashboard or appropriate route on success
-  };
+  const handleSubmit = e => {
+    e.preventDefault()
+    const name = e.target.name.value
+    const password = e.target.password.value   
+    const logInData = {
+      name: name,
+      password: password
+    } 
+    dispatch(userLoginAsync(logInData));
+    navigate(-1);
+  }
 
   return (
     <Navbar>
@@ -26,42 +34,29 @@ const LoginPage = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              mt: 8
+              mt: 8,
             }}
           >
             <Typography variant='h4' gutterBottom>
               Log In
             </Typography>
-            <TextField
-              label='Username'
-              variant='outlined'
-              fullWidth
-              margin='normal'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
-              label='Password'
-              type='password'
-              variant='outlined'
-              fullWidth
-              margin='normal'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={handleLogin}
-              sx={{ mt: 2 }}
-            >
-              Log In
-            </Button>
+            <form onSubmit={handleSubmit}>
+              <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
+                
+                <TextField name={'name'} label={'name'} />
+                
+                <TextField name={'password'} label={'password'} />
+                
+                <Button variant='contained' type='submit'>
+                  Login
+                </Button>
+              </Box>
+            </form>
           </Box>
         </Container>
       </Header1>
     </Navbar>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

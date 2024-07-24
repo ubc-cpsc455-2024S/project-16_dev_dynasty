@@ -12,14 +12,15 @@ const defectsRouter = require('./routes/defects');
 const authRouter = require('./routes/users');
 const app = express();
 
-
+require("dotenv").config();
+const frontend_url = process.env.FRONTEND_URL;
 
 // Middleware setup
 app.set('trust proxy', 1);
 app.use(
   cors({
-    // origin: "http://localhost:5173",
-    // credentials: true,
+    origin: frontend_url,
+    credentials: true,
   })
 );
 app.use(logger('dev'));
