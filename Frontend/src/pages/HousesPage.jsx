@@ -89,7 +89,7 @@ const HousesPage = () => {
     <Navbar>
       <Container>
         <Header1
-          title={'House Page'}
+          title={'Houses'}
           button={
             <Button
               variant='contained'

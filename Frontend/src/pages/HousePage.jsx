@@ -125,7 +125,7 @@ const HousePage = () => {
                 </Typography>
               </Link>
               <Typography variant='h6' component='span' color='textPrimary'>
-                {' > NPL# ' + houseInfo.npl}
+                {' > NPL #' + houseInfo.npl}
               </Typography>
             </Box>
           }

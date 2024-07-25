@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import BuildIcon from '@mui/icons-material/Build'
@@ -11,17 +10,25 @@ import PersonIcon from '@mui/icons-material/Person'
 import GroupIcon from '@mui/icons-material/Group'
 import { closeSidebar } from '../../redux/sidebar/sidebarSlice'
 import CompanyLogo from '../../assets/logo.png'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { routes } from '../../router/routes'
 
 const Sidebar = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isOpen = useSelector(state => state.sidebar.isOpen)
 
   const handleClose = () => {
     dispatch(closeSidebar())
   }
+
+  const linkStyle = ({ isActive }) => ({
+    textDecoration: 'none',
+    color: isActive ? 'grey' : 'white',
+    background: isActive ? 'lightgrey' : 'grey',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px 16px',
+  })
 
   return (
     <Drawer anchor='left' open={isOpen} onClose={handleClose}>
@@ -44,30 +51,30 @@ const Sidebar = () => {
           />
         </div>
         <List>
-          <ListItem onClick={() => navigate(routes.workshopRoute)}>
+          <NavLink to={routes.workshopRoute} style={linkStyle}>
             <ListItemIcon>
               <BuildIcon style={{ color: 'white' }} />
             </ListItemIcon>
             <ListItemText primary='Workshop' />
-          </ListItem>
-          <ListItem onClick={() => navigate(routes.housesRoute)}>
+          </NavLink>
+          <NavLink to={routes.housesRoute} style={linkStyle}>
             <ListItemIcon>
               <HomeWorkIcon style={{ color: 'white' }} />
             </ListItemIcon>
             <ListItemText primary='Houses' />
-          </ListItem>
-          <ListItem onClick={() => navigate(routes.usersRoute)}>
+          </NavLink>
+          <NavLink to={routes.usersRoute} style={linkStyle}>
             <ListItemIcon>
               <PersonIcon style={{ color: 'white' }} />
             </ListItemIcon>
             <ListItemText primary='Users' />
-          </ListItem>
-          <ListItem onClick={() => navigate(routes.customersRoute)}>
+          </NavLink>
+          <NavLink to={routes.customersRoute} style={linkStyle}>
             <ListItemIcon>
               <GroupIcon style={{ color: 'white' }} />
             </ListItemIcon>
             <ListItemText primary='Customers' />
-          </ListItem>
+          </NavLink>
         </List>
       </div>
     </Drawer>

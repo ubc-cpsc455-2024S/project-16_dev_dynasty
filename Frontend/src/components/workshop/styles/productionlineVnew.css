@@ -177,12 +177,6 @@ allow walls and doors to take 1 col or 1 row
   --bay20\.5-row-end: var(--bay20-row-end);
 }
 
-.layout-label {
-  width: 100%;
-  background-color: #ffa726;
-  text-align: center;
-}
-
 .production-line-layout {
   display: flex;
   justify-content: center;
@@ -195,8 +189,8 @@ allow walls and doors to take 1 col or 1 row
   display: grid;
   grid-template-columns: repeat(var(--total-col), 1fr);
   grid-template-rows: repeat(var(--total-row), 1fr);
-  width: 60vw;
-  height: 150vh;
+  width: 1000px;
+  height: 1200px;
   overflow-y: auto;
 }
 
@@ -207,52 +201,45 @@ allow walls and doors to take 1 col or 1 row
   padding: 0;
   width: 100%;
   height: 100%;
-  border: 2px solid #000;
+  border: 2px solid #6a6868;
   text-align: center;
-}
-
-.grid-card-items:hover {
-  background-color: white;
-  transform: scale(
-    1.5
-  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .topwall {
   background-color: rgb(0, 0, 0);
   grid-row: 1/1;
-  grid-column: 1/calc(var(--total-col) + 1);
+  grid-column: 1 / calc(var(--total-col) + 1);
 }
 .botwall {
   background-color: black;
   grid-row: var(--total-row);
-  grid-column: var(--bay13b-col-end)/var(--bay10-col-strt);
+  grid-column: var(--bay13b-col-end) / var(--bay10-col-strt);
 }
 .rightwall1 {
   background-color: black;
-  grid-row: 1/calc(var(--bay10-row-end) + 1);
+  grid-row: 1 / calc(var(--bay10-row-end) + 1);
   grid-column: var(--total-col);
 }
 .rightwall2 {
   background-color: black;
-  grid-row: calc(var(--bay10-row-end) + 1)/calc(var(--total-row) + 1);
+  grid-row: calc(var(--bay10-row-end) + 1) / calc(var(--total-row) + 1);
   grid-column: var(--bay10-col-strt);
 }
 .leftwall1 {
   background-color: black;
-  grid-row: 1/calc(var(--bay10-row-end) + 1);
+  grid-row: 1 / calc(var(--bay10-row-end) + 1);
   grid-column: 1/1;
 }
 .leftwall2 {
   background-color: black;
-  grid-row: calc(var(--bay13b-row-end) + 1)/calc(var(--total-row) + 1);
+  grid-row: calc(var(--bay13b-row-end) + 1) / calc(var(--total-row) + 1);
   grid-column: calc(var(--bay13b-col-end) - 1);
 }
 
 .middlewall1 {
   background-color: black;
   grid-row: calc(var(--bay10-row-end) + 1);
-  grid-column: 1/var(--bay13b-col-end);
+  grid-column: 1 / var(--bay13b-col-end);
 }
 .middlewall2 {
   background-color: black;
@@ -411,7 +398,7 @@ allow walls and doors to take 1 col or 1 row
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-column: var(--bay1-col-strt)/var(--bay1-col-end);
+  grid-column: var(--bay1-col-strt) / var(--bay1-col-end);
   grid-row: 1/1;
   background-color: lightgray;
 }
@@ -420,7 +407,7 @@ allow walls and doors to take 1 col or 1 row
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-column: var(--bay4-col-strt)/var(--bay4-col-end);
+  grid-column: var(--bay4-col-strt) / var(--bay4-col-end);
   grid-row: 1/1;
   background-color: lightgray;
 }
@@ -429,7 +416,7 @@ allow walls and doors to take 1 col or 1 row
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-column: var(--bay8-col-strt)/var(--bay8-col-end);
+  grid-column: var(--bay8-col-strt) / var(--bay8-col-end);
   grid-row: 1/1;
   background-color: lightgray;
 }

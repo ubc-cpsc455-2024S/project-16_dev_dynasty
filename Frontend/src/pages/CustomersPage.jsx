@@ -61,7 +61,7 @@ const CustomersPage = () => {
     <Navbar>
       <Container>
         <Header1
-          title={'Customer Page'}
+          title={'Customers'}
           button={
             <Button
               variant='contained'

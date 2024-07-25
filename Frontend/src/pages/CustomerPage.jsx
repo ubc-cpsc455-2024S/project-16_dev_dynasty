@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@mui/material'
 import { styled } from '@mui/system'
-import CustomersTable from '../components/tables/CustomersTable.jsx'
 import CustomerTable from '../components/tables/CustomerTable.jsx'
 
 const LoadingContainer = styled(Box)({
@@ -60,7 +59,7 @@ const CustomerPage = () => {
               }
             ></Header1>
             <Box mt={3}>
-              <div>{<CustomerTable customer={customer} />}</div>
+              <CustomerTable customer={customer} />
             </Box>
           </>
         )}

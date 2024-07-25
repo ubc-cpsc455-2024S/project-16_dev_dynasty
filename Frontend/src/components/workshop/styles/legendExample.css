@@ -1,46 +1,51 @@
 .legend-example {
-    display: grid;
-    text-align: center;
-    grid-template-columns: 5fr 1fr 5fr;
-    grid-template-rows: repeat(20, 1fr);
-    grid-column: 37/48;
-    grid-row: 23/43;
-    border: 2px solid #000;
-  }
-  .legend {
-    grid-column: 1/2;
-    grid-row: 1/1;
-    font-weight: bold;
-    color: red;
-  }
-  .example {
-    grid-column: 3/3;
-    grid-row: 1/1;
-    font-weight: bold;
-    color: #ffa726;
-  }
-  .legend-card {
-    grid-column: 1/2;
-    grid-row: 2/10;
-    border-top: 1px solid #000;
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
-  }
-  .example-card {
-    grid-column: 3/3;
-    grid-row: 2/10;
-    border-top: 1px solid #000;
-    border-left: 1px solid #000;
-    border-bottom: 1px solid #000;
-  }
+  display: grid;
+  text-align: center;
+  grid-template-columns: 5fr 1fr 5fr;
+  grid-template-rows: repeat(20, 1fr);
+  grid-column: 37/48;
+  grid-row: 22/40;
+  border: 2px solid #000;
+}
 
-  .color-legend {
-    grid-column: 1/11;
-    grid-row: 12/21;
-    font-weight: bold;
-  }
+.legend-container {
+  grid-column: 1/12;
+  grid-row: 1/18;
+}
 
-  .color-legend > * {
-    margin: 4px;
-    font-weight: normal;
-  }
+.legend-title {
+  background-color: grey;
+  color: white;
+}
+
+.legend-content-container {
+  padding: 10px;
+}
+
+.legend-example-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.legend-card {
+  border: #726b6b 2px solid;
+  width: 90px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 2px;
+}
+
+.legend-item-text {
+  font-size: 14px !important;
+}
+
+.legend-item-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+}
