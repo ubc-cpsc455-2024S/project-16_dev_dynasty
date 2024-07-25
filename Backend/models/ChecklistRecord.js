@@ -21,7 +21,7 @@ const checklistRecordSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  repairedBy: {
+  repaired_by: {
     type: String,
     default: "",
   },

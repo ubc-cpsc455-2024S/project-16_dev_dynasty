@@ -13,12 +13,15 @@ import Navbar from '../components/navigation/Navbar'
 import HouseTabs from '../components/navigation/HouseTabs'
 import HouseHeader from '../components/headers/HouseHeader'
 import Header1 from '../components/headers/Header1'
-import UnitExteriorChecklistTable from '../components/tables/checklists/UnitExteriorChecklistTable'
+import ChecklistTable from '../components/tables/ChecklistTable.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getHouseAsync } from '../redux/houses/thunksHouses.js'
 import { styled } from '@mui/system'
-import { getChecklistAsync } from '../redux/checklists/thunksChecklists.js'
+import {
+  getChecklistAsync,
+  putChecklistAsync,
+} from '../redux/checklists/thunksChecklists.js'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -27,35 +30,64 @@ const LoadingContainer = styled(Box)({
 })
 
 const checklists = [
-  { label: 'Unit Exterior', value: 'unitExterior' },
-  { label: 'Kitchen / Dining Room', value: 'kitchenDining' },
+  { label: 'Unit Exterior', value: 'unit_exterior' },
+  { label: 'Kitchen / Dining Room', value: 'kitchen_dining' },
 ]
 
 const HouseChecklistPage = () => {
   const { id: houseId } = useParams()
   const dispatch = useDispatch()
   const houseState = useSelector(state => state.houses.findHouse)
-  const checklistState = useSelector(state => state.checklists.checklistData)
-  const [checklistName, setChecklistName] = useState('unitExterior')
-  const [checklistData, setChecklistData] = useState(checklistState)
+  const checklistState = useSelector(state => state.checklists.data)
+  const [checklistName, setChecklistName] = useState('unit_exterior')
+  const [checklistData, setChecklistData] = useState(null)
 
   useEffect(() => {
     fetchData()
-  }, [houseId, checklistName, checklistData])
+  }, [houseId, checklistName])
 
   const fetchData = async () => {
-    await dispatch(getHouseAsync(houseId)).unwrap()
-    await dispatch(getChecklistAsync({ houseId, checklistName }))
+    await dispatch(getHouseAsync(houseId))
+    await dispatch(getChecklistAsync(houseId))
   }
 
-  const handleClick = () => {
-    // todo
+  useEffect(() => {
+    setChecklistData(checklistState)
+  }, [checklistState])
+
+  const handleRecordChange = (e, id) => {
+    const { name, value, type, checked } = e.target
+    setChecklistData(prevChecklistData => {
+      const newRecords = prevChecklistData[checklistName].records.map(
+        record => {
+          if (record._id === id && type === 'text') {
+            return { ...record, [name]: value }
+          }
+          if (record._id === id && type === 'checkbox') {
+            return { ...record, [name]: checked }
+          }
+          return record
+        }
+      )
+      return {
+        ...prevChecklistData,
+        [checklistName]: {
+          ...prevChecklistData[checklistName],
+          records: newRecords,
+        },
+      }
+    })
+  }
+
+  const handleClick = e => {
+    e.preventDefault()
+    dispatch(putChecklistAsync({ houseId, checklistData }))
   }
 
   return (
     <Navbar>
       <Container>
-        {!houseState ? (
+        {!houseState || !checklistData ? (
           <LoadingContainer>
             <CircularProgress />
           </LoadingContainer>
@@ -93,8 +125,10 @@ const HouseChecklistPage = () => {
                   Save
                 </Button>
               </Box>
-
-              <UnitExteriorChecklistTable />
+              <ChecklistTable
+                records={checklistData[checklistName].records}
+                handleRecordChange={handleRecordChange}
+              />
             </Box>
           </>
         )}

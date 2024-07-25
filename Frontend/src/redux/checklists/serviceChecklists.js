@@ -1,20 +1,28 @@
 import axios from 'axios'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
-export const getChecklist = async (houseId, checklistName) => {
+export const getChecklist = async houseId => {
   try {
-    const response = await axios.get(
-      `${BACKEND_URL}/checklists/${houseId}/${checklistName}`
+    const response = await axios.get(`${BACKEND_URL}/checklists/${houseId}`)
+    return response.data.result
+  } catch (error) {
+    console.error(`Error fetching checklist from house ${houseId}:`, error)
+  }
+}
+
+export const putChecklist = async (houseId, checklistData) => {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/checklists/${houseId}`,
+      checklistData
     )
     return response.data.result
   } catch (error) {
-    console.error(
-      `Error fetching ${checklistName} checklist with houseId ${houseId}:`,
-      error
-    )
+    console.error(`Error adding checklist to house ${houseId}:`, error)
   }
 }
 
 export default {
   getChecklist,
+  putChecklist,
 }

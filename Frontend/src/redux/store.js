@@ -4,7 +4,7 @@ import baySlice from './bays/sliceBays'
 import customerSlice from './customers/sliceCustomers'
 import sidebarSlice from './sidebar/sidebarSlice'
 import defectsReducer from './defects/sliceDefects'
-import checklistsReducer from './checklists/sliceChecklists'
+import checklistsSlice from './checklists/sliceChecklists'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
     customers: customerSlice,
     sidebar: sidebarSlice,
     defects: defectsReducer,
-    checklists: checklistsReducer,
+    checklists: checklistsSlice,
   },
 })
 
