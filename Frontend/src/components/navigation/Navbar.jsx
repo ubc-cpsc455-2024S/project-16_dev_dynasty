@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import CompanyLogo from '../../assets/logo.png'
 import { toggleSidebar } from '../../redux/sidebar/sidebarSlice'
 import Sidebar from './Sidebar'
+import { colors } from '../../styles/colors'
 
 const Navbar = ({ children }) => {
   const dispatch = useDispatch()
@@ -18,7 +19,13 @@ const Navbar = ({ children }) => {
 
   return (
     <>
-      <AppBar position='static' style={{ background: 'white', color: 'black' }}>
+      <AppBar
+        position='static'
+        style={{
+          background: colors.appBarBackground,
+          color: colors.appBarColor,
+        }}
+      >
         <Toolbar>
           <IconButton
             edge='start'

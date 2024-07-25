@@ -14,7 +14,7 @@ import { MdAdd } from 'react-icons/md'
 import { routes } from '../router/routes'
 import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/system'
-import CustomersTable from '../components/tables/CustomersTable.jsx'
+import CustomersTable from '../components/tables/CustomersTable'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
 
 const LoadingContainer = styled(Box)({

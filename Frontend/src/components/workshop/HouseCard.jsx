@@ -34,19 +34,21 @@ const HouseCard = ({ house }) => {
       {...listeners}
       {...attributes}
     >
-      <Typography className='bay-card card-onlineDate'>
+      <Typography className='bay-card-text card-onlineDate'>
         {house.online_date}
       </Typography>
-      <NavLink to={`/houses/${houseId}`} className='bay-card card-npl'>
+      <NavLink to={`/houses/${houseId}`} className='bay-card-text card-npl'>
         {house.npl}
       </NavLink>
-      <Typography className='bay-card card-modelNumber'>
+      <Typography className='bay-card-text card-modelNumber'>
         {house.house_model}{' '}
       </Typography>
-      <Typography className='bay-card card-customer'>
+      <Typography className='bay-card-text card-customer'>
         {house.customer_name}
       </Typography>
-      <Typography className='bay-card card-size'>{house.square_ft}</Typography>
+      <Typography className='bay-card-text card-size'>
+        {house.square_ft}
+      </Typography>
     </div>
   )
 }

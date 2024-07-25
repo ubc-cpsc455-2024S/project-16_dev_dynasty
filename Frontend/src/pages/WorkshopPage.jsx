@@ -5,6 +5,7 @@ import Productionline from '../components/workshop/Productionline'
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { IoLocationSharp } from 'react-icons/io5'
 import { ButtonPointerWrapper } from '../components/buttons/ButtonPointerWrapper'
+import { colors } from '../styles/colors'
 
 const WorkshopPage = () => {
   const [value, setValue] = React.useState(0)
@@ -31,7 +32,7 @@ const WorkshopPage = () => {
           </Typography>
           <ButtonPointerWrapper>
             <IoLocationSharp
-              color='#FF4C4C'
+              color={colors.locationIconColor}
               fontSize={'18px'}
               onClick={handleOpenLocation}
             />
@@ -43,21 +44,6 @@ const WorkshopPage = () => {
       </Header1>
     </Navbar>
   )
-}
-
-{
-  /* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-  
-</Box>
-<CustomTabPanel value={value} index={0}>
-  Item One
-</CustomTabPanel>
-<CustomTabPanel value={value} index={1}>
-  Item Two
-</CustomTabPanel>
-<CustomTabPanel value={value} index={2}>
-  Item Three
-</CustomTabPanel> */
 }
 
 export default WorkshopPage

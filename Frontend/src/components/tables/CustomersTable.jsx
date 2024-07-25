@@ -19,15 +19,16 @@ import {
   getCustomersAsync,
 } from '../../redux/customers/thunksCustomers.js'
 import { useNavigate } from 'react-router-dom'
+import { colors } from '../../styles/colors'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: colors.tableHeadCellBackground,
 })
 
 const TableRowStyled = styled(TableRow)({
   '&:nth-of-type(odd)': {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: colors.tableRowOddBackground,
   },
   cursor: 'pointer',
 })

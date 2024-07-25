@@ -2,6 +2,7 @@ import React from 'react'
 import './styles/legendExample.css'
 import { Box, Typography } from '@mui/material'
 import { ImArrowRight } from 'react-icons/im'
+import { colors } from '../../styles/colors'
 
 const LengendExample = () => {
   return (
@@ -32,37 +33,44 @@ const LengendExample = () => {
           <br />
           <div className='legend-example-container'>
             <div className={'house-card legend-card'}>
-              <Typography className='bay-card card-bayName'>Bay #</Typography>
-              <Typography className='bay-card card-onlineDate'>
+              <Typography className='bay-card-text card-bayName'>
+                Bay #
+              </Typography>
+              <Typography className='bay-card-text card-onlineDate'>
                 Online Date
               </Typography>
-              <Typography className='bay-card card-npl'>NPL #</Typography>
-              <Typography className='bay-card card-modelNumber'>
+              <Typography className='bay-card-text card-npl'>NPL #</Typography>
+              <Typography className='bay-card-text card-modelNumber'>
                 Model #
               </Typography>
-              <Typography className='bay-card card-customer'>
+              <Typography className='bay-card-text card-customer'>
                 Client Name
               </Typography>
-              <Typography className='bay-card card-size'>Square Ft.</Typography>
+              <Typography className='bay-card-text card-size'>
+                Square Ft.
+              </Typography>
             </div>
             <div>
-              <ImArrowRight fontSize={'18px'} style={{ color: 'grey' }} />
+              <ImArrowRight
+                fontSize={'18px'}
+                style={{ color: colors.arrowIconForLegendColor }}
+              />
             </div>
             <div className='house-card legend-card'>
-              <Typography className='bay-card card-bayName'>10</Typography>
-              <Typography className='bay-card card-onlineDate'>
+              <Typography className='bay-card-text card-bayName'>10</Typography>
+              <Typography className='bay-card-text card-onlineDate'>
                 18-Jan-24
               </Typography>
-              <Typography className='bay-card card-nTypographyl'>
+              <Typography className='bay-card-text card-nTypographyl'>
                 1453
               </Typography>
-              <Typography className='bay-card card-modelNumber'>
+              <Typography className='bay-card-text card-modelNumber'>
                 023-002
               </Typography>
-              <Typography className='bay-card card-customer'>
+              <Typography className='bay-card-text card-customer'>
                 Conklin
               </Typography>
-              <Typography className='bay-card card-size'>999</Typography>
+              <Typography className='bay-card-text card-size'>999</Typography>
             </div>
           </div>
         </div>

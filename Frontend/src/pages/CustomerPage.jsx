@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import CustomerTable from '../components/tables/CustomerTable.jsx'
+import { colors } from '../styles/colors'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -21,7 +22,7 @@ const LoadingContainer = styled(Box)({
 })
 
 const ErrorText = styled(Typography)({
-  color: 'red',
+  color: colors.errorTextColor,
   textAlign: 'center',
   marginTop: '50px',
 })

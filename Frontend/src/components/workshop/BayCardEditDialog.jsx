@@ -17,6 +17,7 @@ import { updateHouseAsync } from '../../redux/houses/thunksHouses'
 import { useDispatch } from 'react-redux'
 import { houseStatusEnum } from '../../constants/contants'
 import SelectCustom from '../inputs/SelectCustom'
+import { colors } from '../../styles/colors'
 
 const BayCardEditDialog = ({ isOpen, houseInfo, handleClose }) => {
   const [houseStatus, setHouseStatus] = useState(houseInfo.status)
@@ -58,7 +59,10 @@ const BayCardEditDialog = ({ isOpen, houseInfo, handleClose }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} sx={{ color: 'grey' }}>
+        <Button
+          onClick={handleClose}
+          sx={{ color: colors.dialogSecondaryButtonColor }}
+        >
           Close
         </Button>
         <Button onClick={handleSubmit}>Submit</Button>

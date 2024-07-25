@@ -12,6 +12,7 @@ import { closeSidebar } from '../../redux/sidebar/sidebarSlice'
 import CompanyLogo from '../../assets/logo.png'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { routes } from '../../router/routes'
+import { colors } from '../../styles/colors'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
@@ -23,8 +24,12 @@ const Sidebar = () => {
 
   const linkStyle = ({ isActive }) => ({
     textDecoration: 'none',
-    color: isActive ? 'grey' : 'white',
-    background: isActive ? 'lightgrey' : 'grey',
+    color: isActive
+      ? colors.sideBarLinkActiveColor
+      : colors.sideBarLinkInactiveColor,
+    background: isActive
+      ? colors.sideBarLinkActiveBackground
+      : colors.sideBarLinkInactiveBackground,
     display: 'flex',
     alignItems: 'center',
     padding: '10px 16px',
@@ -38,8 +43,8 @@ const Sidebar = () => {
         onKeyDown={handleClose}
         style={{
           width: '250px',
-          background: 'grey',
-          color: 'white',
+          background: colors.sideBarBackground,
+          color: colors.sideBarColor,
           height: '100%',
         }}
       >
@@ -53,25 +58,25 @@ const Sidebar = () => {
         <List>
           <NavLink to={routes.workshopRoute} style={linkStyle}>
             <ListItemIcon>
-              <BuildIcon style={{ color: 'white' }} />
+              <BuildIcon style={{ color: colors.sideBarActiveIconColor }} />
             </ListItemIcon>
             <ListItemText primary='Workshop' />
           </NavLink>
           <NavLink to={routes.housesRoute} style={linkStyle}>
             <ListItemIcon>
-              <HomeWorkIcon style={{ color: 'white' }} />
+              <HomeWorkIcon style={{ color: colors.sideBarActiveIconColor }} />
             </ListItemIcon>
             <ListItemText primary='Houses' />
           </NavLink>
           <NavLink to={routes.usersRoute} style={linkStyle}>
             <ListItemIcon>
-              <PersonIcon style={{ color: 'white' }} />
+              <PersonIcon style={{ color: colors.sideBarActiveIconColor }} />
             </ListItemIcon>
             <ListItemText primary='Users' />
           </NavLink>
           <NavLink to={routes.customersRoute} style={linkStyle}>
             <ListItemIcon>
-              <GroupIcon style={{ color: 'white' }} />
+              <GroupIcon style={{ color: colors.sideBarActiveIconColor }} />
             </ListItemIcon>
             <ListItemText primary='Customers' />
           </NavLink>

@@ -22,7 +22,7 @@ export default function BayCard({
 
   return (
     <div className={`grid-card-items bay-${bayIdQuery}`} ref={setNodeRef}>
-      <div className='bay-card card-bayName'>
+      <div className='bay-card-text card-bayName'>
         <div>{bay.bay_id}</div>
         {theHouse?.bay_id && String(theHouse.bay_id) === bayIdQuery && (
           <ButtonPointerWrapper>
