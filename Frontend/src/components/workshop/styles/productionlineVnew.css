@@ -203,6 +203,9 @@ allow walls and doors to take 1 col or 1 row
   height: 100%;
   border: 2px solid #6a6868;
   text-align: center;
+  z-index: 1;
+  background-color: #b2aaaa;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .topwall,
@@ -213,7 +216,24 @@ allow walls and doors to take 1 col or 1 row
 .leftwall2,
 .middlewall1,
 .middlewall2 {
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(13, 13, 13, 0.819);
+  border-radius: 100px;
+}
+
+.interior-production-line-top {
+  grid-row: 2/19;
+  grid-column: 2/48;
+  background-color: #798f8f;
+  background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+  z-index: 0;
+}
+
+.interior-production-line-bottom {
+  grid-row: 18/75;
+  grid-column: 12/33;
+  background-color: #798f8f;
+  background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+  z-index: 0;
 }
 
 .topwall {
@@ -222,10 +242,10 @@ allow walls and doors to take 1 col or 1 row
 }
 .botwall {
   grid-row: var(--total-row);
-  grid-column: var(--bay13b-col-end) / var(--bay10-col-strt);
+  grid-column: calc(var(--bay13b-col-end) - 1) / calc(var(--bay10-col-strt) + 1);
 }
 .rightwall1 {
-  grid-row: 1 / calc(var(--bay10-row-end) + 1);
+  grid-row: 1 / calc(var(--bay10-row-end) + 2);
   grid-column: var(--total-col);
 }
 .rightwall2 {
@@ -233,7 +253,7 @@ allow walls and doors to take 1 col or 1 row
   grid-column: var(--bay10-col-strt);
 }
 .leftwall1 {
-  grid-row: 1 / calc(var(--bay10-row-end) + 1);
+  grid-row: 1 / calc(var(--bay10-row-end) + 2);
   grid-column: 1/1;
 }
 .leftwall2 {
@@ -401,6 +421,7 @@ allow walls and doors to take 1 col or 1 row
   justify-content: center;
   align-items: center;
   background-color: lightgray;
+  color: black;
 }
 
 .door1 {

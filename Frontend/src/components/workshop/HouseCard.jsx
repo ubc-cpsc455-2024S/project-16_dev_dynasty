@@ -21,7 +21,7 @@ const HouseCard = ({ house }) => {
 
   const style = {
     transform: CSS.Translate.toString(transform),
-    zIndex: isDragging ? 2 : 1,
+    // zIndex: isDragging ? '10 !important' : 3,
     border: isDragging ? '1px solid #726b6b' : '',
     cursor: houseStatus === 4 ? 'grab' : 'not-allowed',
   }

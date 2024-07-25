@@ -10,7 +10,8 @@
 
 .legend-container {
   grid-column: 1/12;
-  grid-row: 1/18;
+  grid-row: 1/21;
+  background-color: rgb(51, 49, 49);
 }
 
 .legend-title {

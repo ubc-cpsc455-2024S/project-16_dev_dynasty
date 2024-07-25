@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/system'
 import CustomersTable from '../components/tables/CustomersTable'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
+import { colors } from '../styles/colors'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -24,7 +25,7 @@ const LoadingContainer = styled(Box)({
 })
 
 const ErrorText = styled(Typography)({
-  color: 'red',
+  color: colors.errorTextColor,
   textAlign: 'center',
   marginTop: '50px',
 })

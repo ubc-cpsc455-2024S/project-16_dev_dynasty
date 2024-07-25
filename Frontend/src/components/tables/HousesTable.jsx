@@ -11,6 +11,7 @@ import {
   Typography,
   TablePagination,
   IconButton,
+  Chip,
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { useDispatch } from 'react-redux'
@@ -34,28 +35,6 @@ const TableRowStyled = styled(TableRow)({
   },
   cursor: 'pointer',
 })
-
-const StatusCell = styled(TableCell)(({ status }) => ({
-  color: getStatusColor(status),
-  fontWeight: 'bold',
-}))
-
-const getStatusColor = status => {
-  switch (status) {
-    case 0:
-      return 'red'
-    case 1:
-      return 'grey'
-    case 2:
-      return 'orange'
-    case 3:
-      return 'blue'
-    case 4:
-      return 'green'
-    default:
-      return 'black'
-  }
-}
 
 const HousesTable = ({
   houses,
@@ -110,7 +89,7 @@ const HousesTable = ({
               <Typography variant='h6'>Bay Name</Typography>
             </TableHeadCell>
             <TableHeadCell>
-              <Typography variant='h6'>Actions</Typography>
+              <Typography variant='h6'></Typography>
             </TableHeadCell>
           </TableRow>
         </TableHead>
@@ -126,9 +105,12 @@ const HousesTable = ({
                 <TableCell>{house.customer_name}</TableCell>
                 <TableCell>{house.house_model}</TableCell>
                 <TableCell>{house.square_ft}</TableCell>
-                <StatusCell status={house.status}>
-                  {houseStatusEnum[house.status]}
-                </StatusCell>
+                <TableCell>
+                  <Chip
+                    className={'status' + house.status}
+                    label={houseStatusEnum[house.status]}
+                  />
+                </TableCell>
                 <TableCell>{house.bay_id}</TableCell>
                 <TableCell>{house.bay_name}</TableCell>
                 <TableCell onClick={e => e.stopPropagation()}>

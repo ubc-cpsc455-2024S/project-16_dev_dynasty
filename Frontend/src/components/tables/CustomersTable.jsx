@@ -65,7 +65,7 @@ const CustomersTable = ({
               <Typography variant='h6'>Email</Typography>
             </TableHeadCell>
             <TableHeadCell>
-              <Typography variant='h6'>Actions</Typography>
+              <Typography variant='h6'></Typography>
             </TableHeadCell>
           </TableRow>
         </TableHead>

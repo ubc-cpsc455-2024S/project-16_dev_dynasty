@@ -15,6 +15,7 @@ import {
   TableRow,
   TableHead,
   Link,
+  Chip,
 } from '@mui/material'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,34 +28,12 @@ import { houseStatusEnum } from '../constants/contants'
 import SelectCustom from '../components/inputs/SelectCustom'
 import { getAllBaysAsync } from '../redux/bays/thunksBays'
 import { styled } from '@mui/system'
+import { colors } from '../styles/colors'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: colors.tableHeadCellBackground,
 })
-
-const StatusCell = styled(TableCell)(({ status }) => ({
-  color: getStatusColor(status),
-  fontWeight: 'bold',
-  width: '100px',
-}))
-
-const getStatusColor = status => {
-  switch (status) {
-    case 0:
-      return 'red'
-    case 1:
-      return 'grey'
-    case 2:
-      return 'orange'
-    case 3:
-      return 'blue'
-    case 4:
-      return 'green'
-    default:
-      return 'black'
-  }
-}
 
 const HousePage = () => {
   const { id } = useParams()
@@ -178,9 +157,12 @@ const HousePage = () => {
                       </TableRow>
                       <TableRow>
                         <TableCell>Status</TableCell>
-                        <StatusCell status={houseInfo.status}>
-                          {houseStatusEnum[houseInfo.status]}
-                        </StatusCell>
+                        <TableCell>
+                          <Chip
+                            className={'status' + houseInfo.status}
+                            label={houseStatusEnum[houseInfo.status]}
+                          />
+                        </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Square Footage</TableCell>

@@ -1,23 +1,28 @@
 .status1 {
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255) !important;
+  color: black !important;
 }
 
 .status2 {
-  background-color: #f8d7da;
+  background-color: #f9cbcf !important;
+  color: black !important;
 }
 
 .status3 {
-  background-color: #fff3cd;
+  background-color: #fbebb5 !important;
+  color: black !important;
 }
 
 .status4 {
-  background-color: #d4edda;
+  background-color: #c3f0cd !important;
+  color: black !important;
 }
 
 .bay-card-text {
   margin: 0;
   padding: 0;
   font-size: 12px !important;
+  color: black;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -41,6 +46,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.house-card.dragging {
+  z-index: 10 !important; /* Higher z-index when dragging */
 }
 
 .card-onlineDate,

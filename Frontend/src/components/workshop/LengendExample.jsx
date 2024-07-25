@@ -32,7 +32,7 @@ const LengendExample = () => {
           </div>
           <br />
           <div className='legend-example-container'>
-            <div className={'house-card legend-card'}>
+            <div className={'house-card legend-card status1'}>
               <Typography className='bay-card-text card-bayName'>
                 Bay #
               </Typography>
@@ -56,7 +56,7 @@ const LengendExample = () => {
                 style={{ color: colors.arrowIconForLegendColor }}
               />
             </div>
-            <div className='house-card legend-card'>
+            <div className='house-card legend-card status1'>
               <Typography className='bay-card-text card-bayName'>10</Typography>
               <Typography className='bay-card-text card-onlineDate'>
                 18-Jan-24

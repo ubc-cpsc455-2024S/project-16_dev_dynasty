@@ -4,6 +4,8 @@ import { theme } from './styles/theme'
 import { ThemeProvider } from '@emotion/react'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import './styles/baseStyling.css'
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
