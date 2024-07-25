@@ -8,7 +8,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Typography,
 } from '@mui/material'
 import Navbar from '../components/navigation/Navbar'
 import HouseTabs from '../components/navigation/HouseTabs'
@@ -19,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getHouseAsync } from '../redux/houses/thunksHouses.js'
 import { styled } from '@mui/system'
+import { getChecklistAsync } from '../redux/checklists/thunksChecklists.js'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -32,17 +32,21 @@ const checklists = [
 ]
 
 const HouseChecklistPage = () => {
-  const { id } = useParams()
+  const { id: houseId } = useParams()
   const dispatch = useDispatch()
-  const houseInfo = useSelector(state => state.houses.findHouse)
-  const [checklist, setChecklist] = useState('unitExterior')
+  const houseState = useSelector(state => state.houses.findHouse)
+  const checklistState = useSelector(state => state.checklists.checklistData)
+  const [checklistName, setChecklistName] = useState('unitExterior')
+  const [checklistData, setChecklistData] = useState(checklistState)
 
   useEffect(() => {
-    dispatch(getHouseAsync(id))
-  }, [id])
+    fetchData()
+  }, [houseId, checklistName, checklistData])
 
-  console.log(id)
-  console.log(checklist)
+  const fetchData = async () => {
+    await dispatch(getHouseAsync(houseId)).unwrap()
+    await dispatch(getChecklistAsync({ houseId, checklistName }))
+  }
 
   const handleClick = () => {
     // todo
@@ -51,13 +55,13 @@ const HouseChecklistPage = () => {
   return (
     <Navbar>
       <Container>
-        {!houseInfo ? (
+        {!houseState ? (
           <LoadingContainer>
             <CircularProgress />
           </LoadingContainer>
         ) : (
           <>
-            <Header1 title={<HouseHeader npl={houseInfo.npl} />} />
+            <Header1 title={<HouseHeader npl={houseState.npl} />} />
             <HouseTabs />
             <Box mt={3}>
               <Box mb={3} display='flex' justifyContent='space-between'>
@@ -70,9 +74,9 @@ const HouseChecklistPage = () => {
                   <Select
                     labelId='checklist-select-label'
                     id='checklist-select'
-                    value={checklist}
+                    value={checklistName}
                     label='Checklist'
-                    onChange={e => setChecklist(e.target.value)}
+                    onChange={e => setChecklistName(e.target.value)}
                   >
                     {checklists.map(checklist => (
                       <MenuItem key={checklist.value} value={checklist.value}>

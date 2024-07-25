@@ -7,10 +7,6 @@ const {
   getCustomerFromDb,
   updateCustomerInDb,
 } = require("../services/customerServices");
-const {
-  deleteHouseFromDb,
-  updateHouseInDb,
-} = require("../services/houseServices");
 
 // GET endpoint to retrieve all customers
 router.get("/", async (req, res, next) => {

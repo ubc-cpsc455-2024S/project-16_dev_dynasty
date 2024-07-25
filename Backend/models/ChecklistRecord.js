@@ -35,9 +35,4 @@ const checklistRecordSchema = new mongoose.Schema({
   },
 });
 
-const ChecklistRecord = mongoose.model(
-  "ChecklistRecord",
-  checklistRecordSchema,
-);
-
-module.exports = ChecklistRecord;
+module.exports = checklistRecordSchema;

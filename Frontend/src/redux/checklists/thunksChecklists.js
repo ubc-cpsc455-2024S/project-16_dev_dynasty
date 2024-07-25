@@ -2,12 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import ChecklistService from './serviceChecklists'
 
 const actionTypes = {
-  GET_CHECKLIST: 'checklists/houseId/checklist',
+  GET_CHECKLIST: 'checklists/houseId/checklistName',
 }
 
-export const getCustomerAsync = createAsyncThunk(
+export const getChecklistAsync = createAsyncThunk(
   actionTypes.GET_CHECKLIST,
-  async ({ houseId, checklist }) => {
-    return await ChecklistService.getCustomer(houseId, checklist)
+  async ({ houseId, checklistName }) => {
+    return await ChecklistService.getChecklist(houseId, checklistName)
   }
 )
