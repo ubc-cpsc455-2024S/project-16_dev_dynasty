@@ -83,15 +83,6 @@ const deleteHouseFromDb = async (houseid) => {
 
 // Function to update house details, DO NOT use this endpoint to update bay!!
 const updateHouseInDb = async (houseid, houseInfo) => {
-  const currentHouse = (await House.find({ _id: houseid }))[0];
-  // Moved from "Not Started" -> "In Progress" === update online date
-  if (
-    !currentHouse.online_date &&
-    currentHouse.status === 1 &&
-    houseInfo.status > 1
-  ) {
-    houseInfo.online_date = formatDate(new Date());
-  }
   await House.updateOne({ _id: houseid }, { $set: houseInfo });
   return (await House_View({ _id: new ObjectId(houseid) }))[0];
 };
@@ -105,25 +96,16 @@ const toggleBayAssignment = async (houseid, bayid) => {
         `Bay in use: ${bayid} is already assigned to another house.`
       );
     }
-    console.log('houseid is: ',houseid);
-    const house = await House.findById(houseid);
-    console.log('the house found is:', house);
-    if (!house.online_date) {
-      house.online_date = formatDate(new Date());
+    const currentHouse = await House.findById(houseid);
+    // Moved from "Not Started" -> "In Progress" === update online date
+    if (!currentHouse.online_date) {
+      currentHouse.online_date = formatDate(new Date());
     }
-    house.bay_id = bayid;
-    house.bay_name = `Bay ${bayid}`;
-    house.status = 1;
-    await house.save();
-
-    // const result = await House.updateOne(
-    //   { _id: houseid },
-    //   { $set: { bay_id: bayid, bay_name: `Bay ${bayid}`, status: 1 } }
-    // );
-
-
-    return house;
-
+    currentHouse.bay_id = bayid;
+    currentHouse.bay_name = `Bay ${bayid}`;
+    currentHouse.status = 1;
+    await currentHouse.save();
+    return (await House_View({ _id: new ObjectId(houseid) }))[0];
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
     throw error;

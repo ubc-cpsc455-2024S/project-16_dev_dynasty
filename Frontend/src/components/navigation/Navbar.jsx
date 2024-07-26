@@ -1,13 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
+import { AppBar, Toolbar, Typography, IconButton, Paper } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import CompanyLogo from '../../assets/logo.png'
 import { toggleSidebar } from '../../redux/sidebar/sidebarSlice'
 import Sidebar from './Sidebar'
+import { colors } from '../../styles/colors'
 
 const Navbar = ({ children }) => {
   const dispatch = useDispatch()
@@ -18,7 +16,7 @@ const Navbar = ({ children }) => {
 
   return (
     <>
-      <AppBar position='static' style={{ background: 'white', color: 'black' }}>
+      <AppBar position='static' sx={{ minWidth: 1050 }}>
         <Toolbar>
           <IconButton
             edge='start'
@@ -37,7 +35,15 @@ const Navbar = ({ children }) => {
         </Toolbar>
         <Sidebar />
       </AppBar>
-      {children}
+      <Paper
+        sx={{
+          borderRadius: 0,
+          minHeight: '100vh',
+          minWidth: 1050,
+        }}
+      >
+        {children}
+      </Paper>
     </>
   )
 }

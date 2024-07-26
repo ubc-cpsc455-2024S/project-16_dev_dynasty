@@ -21,6 +21,7 @@ import HousesTable from '../components/tables/HousesTable'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import { houseStatusEnum } from '../constants/contants'
+import { colors } from '../styles/colors'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -29,7 +30,7 @@ const LoadingContainer = styled(Box)({
 })
 
 const ErrorText = styled(Typography)({
-  color: 'red',
+  color: colors.errorTextColor,
   textAlign: 'center',
   marginTop: '50px',
 })
@@ -89,7 +90,7 @@ const HousesPage = () => {
     <Navbar>
       <Container>
         <Header1
-          title={'House Page'}
+          title={'Houses'}
           button={
             <Button
               variant='contained'
