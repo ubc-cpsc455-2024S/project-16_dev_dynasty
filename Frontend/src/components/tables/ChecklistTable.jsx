@@ -11,10 +11,11 @@ import {
   TextField,
 } from '@mui/material'
 import { styled } from '@mui/system'
+import { colors } from '../../styles/colors'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: colors.tableHeadCellBackground,
 })
 
 const TightTableCell = styled(TableCell)({

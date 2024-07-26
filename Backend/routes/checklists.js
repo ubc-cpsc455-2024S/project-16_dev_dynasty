@@ -3,6 +3,7 @@ var router = express.Router();
 const {
   getChecklistFromDb,
   initializeChecklist,
+  deleteChecklistFromDb,
 } = require("../services/checklistServices");
 
 // PUT endpoint to add/replace checklist by house id
@@ -35,6 +36,21 @@ router.get("/:houseId", async (req, res) => {
       res.status(404).send("Checklist not found");
     }
   } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+// DELETE endpoint to delete a checklist by house id
+router.delete("/:houseId", async (req, res) => {
+  const houseId = req.params.houseId;
+  try {
+    const result = await deleteChecklistFromDb(houseId);
+    if (result.success) {
+      res.status(204).send();
+    } else {
+      res.status(404).send("Checklist with house id not found");
+    }
+  } catch (error) {
     res.status(500).send("Server error");
   }
 });

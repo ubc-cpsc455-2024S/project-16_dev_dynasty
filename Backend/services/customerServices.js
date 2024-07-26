@@ -19,7 +19,6 @@ const addCustomerToDb = async (customerData) => {
 
 const deleteCustomerFromDb = async (customerId) => {
   const customer = await Customer.findByIdAndDelete(customerId);
-  console.log(customer);
   if (customer) {
     return { success: true };
   } else {
