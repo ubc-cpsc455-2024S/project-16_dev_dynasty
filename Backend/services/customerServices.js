@@ -1,5 +1,4 @@
 const Customer = require("../models/Customer");
-const housesJson = require("../data/houses.json");
 
 const getCustomersFromDb = async ({ customerNameQuery }) => {
   const filter = customerNameQuery
@@ -20,6 +19,7 @@ const addCustomerToDb = async (customerData) => {
 
 const deleteCustomerFromDb = async (customerId) => {
   const customer = await Customer.findByIdAndDelete(customerId);
+  console.log(customer);
   if (customer) {
     return { success: true };
   } else {
