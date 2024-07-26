@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import HouseService from './serviceHouses'
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import HouseService from './serviceHouses';
 
 const actionTypes = {
   GET_HOUSES: 'houses',
@@ -10,7 +10,7 @@ const actionTypes = {
   DELETE_HOUSE: 'houses/delete',
   UPDATE_HOUSE: 'houses/update',
   BAY_HOUSE: 'houses/housebay',
-}
+};
 
 // prettier-ignore
 export const getAllHousesAsync = createAsyncThunk(

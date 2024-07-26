@@ -13,7 +13,7 @@ import {
 import { DndContext, useSensor, useSensors, MouseSensor } from '@dnd-kit/core'
 import BayCardEditDialog from './BayCardEditDialog.jsx'
 import { houseStatusEnum } from '../../constants/contants.js'
-
+import { toast } from 'react-toastify'
 const Productionline = () => {
   const dispatch = useDispatch()
   const bayArray = useSelector(state => state.bays.list || [])
@@ -40,24 +40,20 @@ const Productionline = () => {
 
   const handleDragEnd = event => {
     const { active, over } = event
-    console.log(over)
-    console.log(active)
-    const houseStatus = active.data.current.status
-    console.log(houseStatus)
+    const house = active.data.current
+    const houseStatus = house.status
+    const houseId = house._id
 
     if (houseStatus !== 4) {
-      alert('house not ready to be moved to the next bay')
+      toast.error('House Status need to be complete before moving')
       return
     }
     if (houseStatus === 0) {
-      alert('cancelled house, should be out of bay')
+      toast.error('Cancelled Houses should not be in a bay')
       return
     }
 
-    const houseId = active.id
-    console.log('houseid: ', houseId)
     const newBayId = parseFloat(over.id)
-    console.log('bayid: ', newBayId)
     const oldBay = active.data.current.oldBay
     if (oldBay === newBayId) {
       return

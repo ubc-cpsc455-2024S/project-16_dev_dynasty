@@ -48,10 +48,6 @@
   white-space: nowrap;
 }
 
-.house-card.dragging {
-  z-index: 10 !important; /* Higher z-index when dragging */
-}
-
 .card-onlineDate,
 .card-npl,
 .card-modelNumber,

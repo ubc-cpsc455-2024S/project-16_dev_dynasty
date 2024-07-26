@@ -162,23 +162,17 @@ const houseSlice = createSlice({
       })
       .addCase(bayToHouseAsync.fulfilled, (state, action) => {
         state.status.bayToHouse = 'fulfilled'
-        console.log('action payload', action.payload)
-        console.log('printing state.inbaylist', state.inBayList)
-        const inBayListCopy = [...state.inBayList]
+        const modifiedHouse = action.payload
 
+        const inBayListCopy = [...state.inBayList]
         const index = inBayListCopy.findIndex(house => {
-          return house._id === action.payload.house_id
+          return house._id === modifiedHouse._id
         })
-        console.log('index for found is', index)
 
         if (index !== -1) {
-          inBayListCopy[index] = {
-            ...inBayListCopy[index],
-            bay_id: action.payload.bay_id,
-            bay_name: `Bay ${action.payload.bay_id}`,
-            status: 1,
-          }
+          inBayListCopy[index] = modifiedHouse
           state.inBayList = inBayListCopy
+        } else if (inBayListCopy.length === 0) {
         } else {
           console.error(
             'bayToHouse action fullfilled by house not found in list'
@@ -187,14 +181,9 @@ const houseSlice = createSlice({
         // Update Find house
         if (
           state.findHouse != null &&
-          state.findHouse._id === action.payload.house_id
+          state.findHouse._id === modifiedHouse._id
         ) {
-          state.findHouse = {
-            ...state.findHouse,
-            bay_id: action.payload.bay_id,
-            bay_name: `Bay ${action.payload.bay_id}`,
-            status: 1,
-          }
+          state.findHouse = modifiedHouse
         }
       })
       .addCase(bayToHouseAsync.rejected, (state, action) => {

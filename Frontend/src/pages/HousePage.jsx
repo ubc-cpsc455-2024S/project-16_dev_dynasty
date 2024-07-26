@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import {
@@ -6,7 +6,7 @@ import {
   CircularProgress,
   Container,
   Typography,
-  Grid,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -14,20 +14,19 @@ import {
   TableContainer,
   TableRow,
   TableHead,
-  Link,
   Chip,
 } from '@mui/material'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  bayToHouseAsync,
-  getHouseAsync,
-  updateHouseAsync,
-} from '../redux/houses/thunksHouses'
+import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses'
 import { houseStatusEnum } from '../constants/contants'
 import SelectCustom from '../components/inputs/SelectCustom'
 import { getAllBaysAsync } from '../redux/bays/thunksBays'
+import HouseTabs from '../components/navigation/HouseTabs'
 import { styled } from '@mui/system'
+import HouseDefects from '../components/HouseDefects'
+import HouseDocuments from '../components/HouseDocuments'
+import HouseChecklist from '../components/HouseChecklist'
 import { colors } from '../styles/colors'
 
 const TableHeadCell = styled(TableCell)({
@@ -35,13 +34,93 @@ const TableHeadCell = styled(TableCell)({
   backgroundColor: colors.tableHeadCellBackground,
 })
 
+const HouseDetails = ({ houseInfo }) => {
+  if (!houseInfo) {
+    return (
+      <Paper elevation={3} style={{ padding: '16px' }}>
+        <Typography variant='h6' gutterBottom>
+          House Details
+        </Typography>
+        <Typography variant='body1'>No house information available.</Typography>
+      </Paper>
+    )
+  }
+
+  return (
+    <Paper elevation={3} style={{ padding: '16px' }}>
+      <Typography variant='h6' gutterBottom>
+        House Details
+      </Typography>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeadCell>Attribute</TableHeadCell>
+              <TableHeadCell>Value</TableHeadCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>Project #</TableCell>
+              <TableCell>{houseInfo.npl}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Model #</TableCell>
+              <TableCell>{houseInfo.house_model}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Customer</TableCell>
+              <TableCell>{houseInfo.customer_name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Status</TableCell>
+              <TableCell>
+                <Chip
+                  className={'status' + houseInfo.status}
+                  label={houseStatusEnum[houseInfo.status]}
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Square Footage</TableCell>
+              <TableCell>{houseInfo.square_ft} sqft</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Online Date</TableCell>
+              <TableCell>{houseInfo.online_date}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Created On</TableCell>
+              <TableCell>{houseInfo.created_on}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bay ID</TableCell>
+              <TableCell>{houseInfo.bay_id}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bay Name</TableCell>
+              <TableCell>{houseInfo.bay_name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bay Description</TableCell>
+              <TableCell>{houseInfo.bay_description}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  )
+}
+
 const HousePage = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
-  const { findHouse: houseInfo, status } = useSelector(state => state.houses)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const houseInfo = useSelector(state => state.houses.findHouse || null)
   const bays = useSelector(state => state.bays.list || [])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(getHouseAsync(id))
     dispatch(getAllBaysAsync())
   }, [dispatch, id])
@@ -62,9 +141,9 @@ const HousePage = () => {
     }
     const houseData = {
       houseId: houseInfo._id,
-      bayId: bay_id,
+      houseData: { ...houseInfo, bay_id: bay_id },
     }
-    dispatch(bayToHouseAsync(houseData))
+    dispatch(updateHouseAsync(houseData))
   }
 
   const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
@@ -76,21 +155,24 @@ const HousePage = () => {
     value: bay_id,
     label: bay_id,
   }))
-  if (!houseInfo || status.getOne === 'pending')
-    return (
-      <Navbar>
-        <Container>
-          <Box
-            height={'80vh'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
-            <CircularProgress size={'large'} />
-          </Box>
-        </Container>
-      </Navbar>
-    )
+
+  const renderContent = () => {
+    switch (location.pathname) {
+      case `/houses/${id}/details`:
+        return <HouseDetails houseInfo={houseInfo} />
+      case `/houses/${id}/defects`:
+        return <HouseDefects houseInfo={houseInfo} />
+      case `/houses/${id}/documents`:
+        return <HouseDocuments houseInfo={houseInfo} />
+      case `/houses/${id}/checklist`:
+        return <HouseChecklist houseInfo={houseInfo} />
+      default:
+        return <HouseDetails houseInfo={houseInfo} />
+    }
+  }
+
+  if (!houseInfo) return <CircularProgress />
+  console.log(houseInfo)
 
   return (
     <Navbar>
@@ -104,7 +186,7 @@ const HousePage = () => {
                 </Typography>
               </Link>
               <Typography variant='h6' component='span' color='textPrimary'>
-                {' > NPL #' + houseInfo.npl}
+                {' > House ' + houseInfo.npl}
               </Typography>
             </Box>
           }
@@ -128,72 +210,8 @@ const HousePage = () => {
           }
         />
         <Box mt={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Paper elevation={3} style={{ padding: '16px' }}>
-                <Typography variant='h6' gutterBottom>
-                  House Details
-                </Typography>
-                <TableContainer>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableHeadCell>Attribute</TableHeadCell>
-                        <TableHeadCell>Value</TableHeadCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>Project #</TableCell>
-                        <TableCell>{houseInfo.npl}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Model #</TableCell>
-                        <TableCell>{houseInfo.house_model}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Customer</TableCell>
-                        <TableCell>{houseInfo.customer_name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Status</TableCell>
-                        <TableCell>
-                          <Chip
-                            className={'status' + houseInfo.status}
-                            label={houseStatusEnum[houseInfo.status]}
-                          />
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Square Footage</TableCell>
-                        <TableCell>{houseInfo.square_ft} sqft</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Online Date</TableCell>
-                        <TableCell>{houseInfo.online_date}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Created On</TableCell>
-                        <TableCell>{houseInfo.created_on}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Bay ID</TableCell>
-                        <TableCell>{houseInfo.bay_id}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Bay Name</TableCell>
-                        <TableCell>{houseInfo.bay_name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell width={'100px'}>Bay Description</TableCell>
-                        <TableCell>{houseInfo.bay_description}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </Grid>
-          </Grid>
+          <HouseTabs />
+          <Box mt={3}>{renderContent()}</Box>
         </Box>
       </Container>
     </Navbar>

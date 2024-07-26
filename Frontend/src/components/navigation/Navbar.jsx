@@ -40,7 +40,6 @@ const Navbar = ({ children }) => {
           borderRadius: 0,
           minHeight: '100vh',
           minWidth: 1050,
-          zIndex: -5,
         }}
       >
         {children}

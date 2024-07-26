@@ -1,3 +1,7 @@
+![workflow](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/actions/workflows/cicd-backend.yml/badge.svg)
+
+![workflow](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/actions/workflows/cicd-frontend.yml/badge.svg)
+
 # Group 16 DevDynasty - BayBuild
 
 ## BayBuild
