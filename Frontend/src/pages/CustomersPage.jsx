@@ -14,8 +14,9 @@ import { MdAdd } from 'react-icons/md'
 import { routes } from '../router/routes'
 import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/system'
-import CustomersTable from '../components/tables/CustomersTable.jsx'
+import CustomersTable from '../components/tables/CustomersTable'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
+import { colors } from '../styles/colors'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -24,7 +25,7 @@ const LoadingContainer = styled(Box)({
 })
 
 const ErrorText = styled(Typography)({
-  color: 'red',
+  color: colors.errorTextColor,
   textAlign: 'center',
   marginTop: '50px',
 })
@@ -61,7 +62,7 @@ const CustomersPage = () => {
     <Navbar>
       <Container>
         <Header1
-          title={'Customer Page'}
+          title={'Customers'}
           button={
             <Button
               variant='contained'

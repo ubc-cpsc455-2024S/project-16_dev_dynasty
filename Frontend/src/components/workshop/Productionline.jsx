@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BayCard from './BayCard.jsx'
 import Walls from './Walls.jsx'
 import Doors from './Doors.jsx'
@@ -11,11 +11,17 @@ import {
   bayToHouseAsync,
 } from '../../redux/houses/thunksHouses'
 import { DndContext, useSensor, useSensors, MouseSensor } from '@dnd-kit/core'
-
+import BayCardEditDialog from './BayCardEditDialog.jsx'
+import { houseStatusEnum } from '../../constants/contants.js'
+import { toast } from 'react-toastify'
 const Productionline = () => {
   const dispatch = useDispatch()
   const bayArray = useSelector(state => state.bays.list || [])
   const allInBayHouses = useSelector(state => state.houses.inBayList || [])
+  const [editHouseStatusDialog, setEditHouseStatusDialog] = useState({
+    houseInfo: null,
+    isOpen: false,
+  })
 
   const lastUpdated = new Date().toLocaleString()
 
@@ -34,24 +40,20 @@ const Productionline = () => {
 
   const handleDragEnd = event => {
     const { active, over } = event
-    console.log(over)
-    console.log(active)
-    const houseStatus = active.data.current.status
-    console.log(houseStatus)
+    const house = active.data.current
+    const houseStatus = house.status
+    const houseId = house._id
 
     if (houseStatus !== 4) {
-      alert('house not ready to be moved to the next bay')
+      toast.error('House Status need to be complete before moving')
       return
     }
     if (houseStatus === 0) {
-      alert('cancelled house, should be out of bay')
+      toast.error('Cancelled Houses should not be in a bay')
       return
     }
 
-    const houseId = active.id
-    console.log('houseid: ', houseId)
     const newBayId = parseFloat(over.id)
-    console.log('bayid: ', newBayId)
     const oldBay = active.data.current.oldBay
     if (oldBay === newBayId) {
       return
@@ -59,32 +61,48 @@ const Productionline = () => {
     dispatch(bayToHouseAsync({ houseId: houseId, bayId: newBayId }))
   }
 
+  const handleOpenEditHouseStatusDialog = houseInfo => {
+    console.log('house info opne', houseInfo)
+    setEditHouseStatusDialog({ houseInfo, isOpen: true })
+  }
+
+  const handleCloseEditHouseStatusDialog = houseInfo => {
+    setEditHouseStatusDialog({ houseInfo: null, isOpen: false })
+  }
+
   return (
-    <div>
-      <div className='layout-label'>
-        Production Line last update on {lastUpdated}
-      </div>
-      {/* <button onClick={log}>log</button>
-      <button onClick={send}>send</button> */}
-      <div className='production-line-layout'>
-        <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-          <div className='production-line-grid'>
-            {bayArray.map(bay => {
-              return (
-                <BayCard
-                  bay={bay}
-                  houses={allInBayHouses}
-                  key={bay.bay_id}
-                ></BayCard>
-              )
-            })}
-            <LengendExample></LengendExample>
-            <Walls></Walls>
-            <Doors></Doors>
-          </div>
-        </DndContext>
-      </div>
-    </div>
+    <>
+      <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
+        <div className='production-line-grid'>
+          {bayArray.map(bay => {
+            return (
+              <BayCard
+                bay={bay}
+                houses={allInBayHouses}
+                key={bay.bay_id}
+                handleOpenEditHouseStatusDialog={
+                  handleOpenEditHouseStatusDialog
+                }
+              />
+            )
+          })}
+          <LengendExample />
+          <Walls />
+          <Doors />
+        </div>
+        {editHouseStatusDialog.isOpen && (
+          <BayCardEditDialog
+            isOpen={editHouseStatusDialog.isOpen}
+            handleClose={handleCloseEditHouseStatusDialog}
+            houseInfo={editHouseStatusDialog.houseInfo}
+          />
+        )}
+      </DndContext>
+      <br />
+      <br />
+      <br />
+      <br />
+    </>
   )
 }
 

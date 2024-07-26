@@ -40,10 +40,6 @@ const HousesAddPage = () => {
     navigate(-1)
   }
 
-  // const clearFormFields = () => {
-  //   setFormFields(initialState)
-  // }
-
   return (
     <Navbar>
       <Header1 title={'Add House'}>

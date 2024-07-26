@@ -1,39 +1,41 @@
 import React from 'react'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'
+import { Typography } from '@mui/material'
+import { routes } from '../../router/routes'
 
 const HouseCard = ({ house }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const houseId = house._id
   const houseStatus = house.status
   const bayId = parseInt(house.bay_id)
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: houseId, 
-    data: {
-      status: houseStatus,
-      oldBay: bayId
-    },
-    disabled: houseStatus !== 4,
-  })
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  }
   return (
     <div
       className={`house-card status${house.status}`}
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      onClick={()=>{navigate(`/houses/${houseId}/details`)}}
+      onClick={() => {
+        navigate(`/houses/${houseId}/details`)
+      }}
     >
-      <p className='bay-card card-onlineDate'>{house.online_date}</p>
-      <p className='bay-card card-npl'>{house.npl}</p>
-      <p className='bay-card card-modelNumber'>{house.house_model}</p>
-      <p className='bay-card card-customer'>{house.customer_name}</p>
-      <p className='bay-card card-size'>{house.square_ft}</p>
+      <Typography className='bay-card-text card-onlineDate'>
+        {house.online_date}
+      </Typography>
+      <NavLink
+        to={`${routes.housesRoute} +{houseId}`}
+        className='bay-card-text card-npl'
+      >
+        {house.npl}
+      </NavLink>
+      <Typography className='bay-card-text card-modelNumber'>
+        {house.house_model}{' '}
+      </Typography>
+      <Typography className='bay-card-text card-customer'>
+        {house.customer_name}
+      </Typography>
+      <Typography className='bay-card-text card-size'>
+        {house.square_ft}
+      </Typography>
     </div>
   )
 }

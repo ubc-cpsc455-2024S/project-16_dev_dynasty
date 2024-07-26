@@ -18,13 +18,16 @@ const SelectCustom = props => {
     width = '200px',
   } = props
   return (
-    <FormControl size='small' sx={{ width: 200, ...style }}>
-      <InputLabel sx={{ background: 'white' }} id='demo-simple-select-label'>
-        {label}
-      </InputLabel>
+    <FormControl
+      variant={'outlined'}
+      size='small'
+      sx={{ width: 200, ...style }}
+    >
+      <InputLabel id='demo-simple-select-label'>{label}</InputLabel>
       <Select
         name={name}
         value={value}
+        label={label}
         sx={{ width: width }}
         onChange={onChange}
       >
