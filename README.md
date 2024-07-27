@@ -34,15 +34,15 @@ BayBuild is a project management web application specifically designed for a mod
 
 ### Standard Requirements
 
-❗ **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. 
+❗ **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. **Will be completed prior to final presentation.** 
 
 ✔️ Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
 
 ✔️ **Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").
 
-❗ **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage.
+❗ **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage. **Will be completed prior to final presentation.**
  
-❗ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. 
+❗ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. **Will be completed prior to final presentation.**
 
 ✔️ **Customer Record Management** -  allow users to add, edit, and delete a customer record and link each home with a customer.
 
