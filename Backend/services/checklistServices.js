@@ -1,4 +1,5 @@
 const Checklist = require("../models/Checklist");
+const Customer = require("../models/Customer");
 
 const getChecklistFromDb = async (houseId) => {
   return Checklist.findOne({
@@ -14,7 +15,19 @@ const initializeChecklist = (houseId, checklistName) => {
   return checklist;
 };
 
+const deleteChecklistFromDb = async (houseId) => {
+  const checklist = await Checklist.findOneAndDelete({
+    house_id: houseId,
+  });
+  if (checklist) {
+    return { success: true };
+  } else {
+    return { success: false };
+  }
+};
+
 module.exports = {
   initializeChecklist,
   getChecklistFromDb,
+  deleteChecklistFromDb,
 };
