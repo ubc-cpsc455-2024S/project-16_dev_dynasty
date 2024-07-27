@@ -93,7 +93,7 @@ const toggleBayAssignment = async (houseid, bayid) => {
     const newBay = await Bay_View({ bay_id: bayid });
     if (newBay[0].house_id) {
       throw new Error(
-        `Bay in use: ${bayid} is already assigned to another house.`
+        `Bay in use: ${bayid} is already assigned to another house.`,
       );
     }
     const currentHouse = await House.findById(houseid);
@@ -106,6 +106,7 @@ const toggleBayAssignment = async (houseid, bayid) => {
     currentHouse.status = 1;
     await currentHouse.save();
     return (await House_View({ _id: new ObjectId(houseid) }))[0];
+    // return currentHouse;
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
     throw error;
