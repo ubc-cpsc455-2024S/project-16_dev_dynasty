@@ -18,6 +18,10 @@ BayBuild is a project management web application specifically designed for a mod
 --------------------------------------------------------------------------------------------------
 ## Project Requirements
 
+✔️ - Complete
+❗ - In progress
+❌ - Not started
+
 ### Minimal requirements
 
 ✔️ **Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.
