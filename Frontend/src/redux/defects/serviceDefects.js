@@ -1,16 +1,15 @@
 import axios from 'axios';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-// Fetch all defects for a specific house
 export const getDefectsByHouseId = async (houseId) => {
   try {
-    const response = await axios.get(`http://localhost:3000/defects/${houseId}`);
+    const response = await axios.get(`${BACKEND_URL}/defects/${houseId}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching defects for house with id ${houseId}:`, error);
   }
 };
 
-// Add a new defect to a specific house
 export const addDefect = async (houseId, defectData) => {
   try {
     const formData = new FormData();
@@ -24,7 +23,9 @@ export const addDefect = async (houseId, defectData) => {
       }
     }
 
-    const response = await axios.post(`http://localhost:3000/defects/${houseId}`, formData, {
+    console.log('FormData:', formData); 
+
+    const response = await axios.post(`${BACKEND_URL}/defects/${houseId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -32,10 +33,10 @@ export const addDefect = async (houseId, defectData) => {
     return response.data;
   } catch (error) {
     console.error(`Error adding defect to house with id ${houseId}:`, error);
+    throw error; 
   }
 };
 
-// Update an existing defect
 export const updateDefect = async (houseId, defectId, defectData) => {
   try {
     const formData = new FormData();
@@ -49,7 +50,7 @@ export const updateDefect = async (houseId, defectId, defectData) => {
       }
     }
 
-    const response = await axios.put(`http://localhost:3000/defects/${houseId}/${defectId}`, formData, {
+    const response = await axios.put(`${BACKEND_URL}/defects/${houseId}/${defectId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -60,10 +61,9 @@ export const updateDefect = async (houseId, defectId, defectData) => {
   }
 };
 
-// Delete a defect
 export const deleteDefect = async (houseId, defectId) => {
   try {
-    const response = await axios.delete(`http://localhost:3000/defects/${houseId}/${defectId}`);
+    const response = await axios.delete(`${BACKEND_URL}/defects/${houseId}/${defectId}`);
     return response.data;
   } catch (error) {
     console.error(`Error deleting defect with id ${defectId}:`, error);

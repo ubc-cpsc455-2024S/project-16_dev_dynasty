@@ -28,6 +28,7 @@ import { Delete as DeleteIcon } from '@mui/icons-material';
 import Navbar from '../components/navigation/Navbar';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
+import '../styles/addHousePage.css';
 
 const AddHouseDefectPage = () => {
   const { id } = useParams();
@@ -41,6 +42,7 @@ const AddHouseDefectPage = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     dispatch(getAllBaysAsync());
@@ -51,26 +53,49 @@ const AddHouseDefectPage = () => {
     });
   }, [dispatch, id]);
 
+  useEffect(() => {
+    const handleDragEnter = () => setDragging(true);
+    const handleDragLeave = () => setDragging(false);
+    const handleDrop = () => setDragging(false);
+
+    window.addEventListener('dragenter', handleDragEnter);
+    window.addEventListener('dragleave', handleDragLeave);
+    window.addEventListener('drop', handleDrop);
+
+    return () => {
+      window.removeEventListener('dragenter', handleDragEnter);
+      window.removeEventListener('dragleave', handleDragLeave);
+      window.removeEventListener('drop', handleDrop);
+    };
+  }, []);
+
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    const validFiles = files.filter((file) => file.type.startsWith('image/'));
+    const validFiles = files.filter((file) => file.type.startsWith('image/') || file.type === 'application/pdf');
     if (validFiles.length !== files.length) {
-      setError('Some files were not valid images and were not added.');
+      setError('Some files were not valid images or PDFs and were not added.');
     }
     setImages((prevImages) => [...prevImages, ...validFiles]);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
-    const validFiles = acceptedFiles.filter((file) => file.type.startsWith('image/'));
+    const validFiles = acceptedFiles.filter((file) => file.type.startsWith('image/') || file.type === 'application/pdf');
     if (validFiles.length !== acceptedFiles.length) {
-      setError('Some files were not valid images and were not added.');
+      setError('Some files were not valid images or PDFs and were not added.');
     }
     setImages((prevImages) => [...prevImages, ...validFiles]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: {
+      'image/jpeg': ['.jpeg', '.jpg'],
+      'image/png': ['.png'],
+      'image/gif': ['.gif'],
+      'image/bmp': ['.bmp'],
+      'image/webp': ['.webp'],
+      'application/pdf': ['.pdf'],
+    },
     multiple: true,
   });
 
@@ -94,7 +119,7 @@ const AddHouseDefectPage = () => {
 
     try {
       const response = await dispatch(addDefectAsync({ houseId: id, defectData })).unwrap();
-      if(!response) throw new error;
+      if (!response) throw new Error('Failed to add defect.');
       setLoading(false);
       dispatch(fetchDefectsByHouseId(id)); // Update the defects list
       navigate(`/houses/${id}/defects`);
@@ -118,6 +143,9 @@ const AddHouseDefectPage = () => {
         <Paper elevation={3} style={{ padding: '16px', marginTop: '20px' }}>
           <Typography variant="h6" gutterBottom>
             Add House Defect
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            You can submit images by either dragging and dropping them into the area below or by clicking to select files.
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -155,29 +183,27 @@ const AddHouseDefectPage = () => {
             </FormControl>
             <div
               {...getRootProps()}
-              style={{
-                border: '2px dashed #ccc',
-                padding: '20px',
-                marginTop: '20px',
-                backgroundColor: isDragActive ? '#e0e0e0' : '#fafafa',
-                textAlign: 'center'
-              }}
+              className={`dropzone ${isDragActive || dragging ? 'active' : ''}`}
             >
               <input {...getInputProps()} />
-              <Typography align="center">
+              <Typography align="center" className="dropzone-text">
                 {isDragActive ? 'Drop the files here ...' : 'Drag & drop files here, or click to select files'}
               </Typography>
             </div>
             <Grid container spacing={2} style={{ marginTop: '20px' }}>
-              {images.map((image, index) => (
+              {images.map((file, index) => (
                 <Grid item xs={4} key={index}>
                   <Card style={{ position: 'relative' }}>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={URL.createObjectURL(image)}
-                      alt={`defect-image-${index}`}
-                    />
+                    {file.type === 'application/pdf' ? (
+                      <Typography>{file.name}</Typography>
+                    ) : (
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={URL.createObjectURL(file)}
+                        alt={`defect-file-${index}`}
+                      />
+                    )}
                     <IconButton
                       style={{ position: 'absolute', top: '5px', right: '5px' }}
                       onClick={() => handleDeleteImage(index)}

@@ -1,0 +1,23 @@
+.dropzone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fafafa;
+    text-align: center;
+    transition: background-color 0.3s, border-color 0.3s;
+    color: #333; 
+  }
+  
+  .dropzone.active {
+    background-color: #e0e0e0;
+    border-color: #2196f3;
+  }
+  
+  .dropzone input {
+    display: none;
+  }
+  
+  .dropzone-text {
+    color: #333;
+  }
+  

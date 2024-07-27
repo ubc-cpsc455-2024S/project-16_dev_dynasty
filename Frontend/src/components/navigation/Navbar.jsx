@@ -8,11 +8,11 @@ import Sidebar from './Sidebar'
 import { colors } from '../../styles/colors'
 
 const Navbar = ({ children }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleMenuClick = () => {
-    dispatch(toggleSidebar())
-  }
+    dispatch(toggleSidebar());
+  };
 
   return (
     <>
@@ -45,7 +45,7 @@ const Navbar = ({ children }) => {
         {children}
       </Paper>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -97,19 +97,20 @@ const EditDefectPage = () => {
     setLoading(true);
     setError('');
 
+    const existingImages = images.filter(img => typeof img === 'string');
     const defectData = {
       title,
       description,
       status,
       bay_id: bayId,
-      images: [...images, ...newImages],
+      images: existingImages,
     };
 
-    console.log("Defect Data:", defectData);
+    console.log("Defect Data:", defectData, newImages);
 
     try {
-      const response = await dispatch(updateDefectAsync({ houseId: id, defectId, defectData })).unwrap();
-      if(!response) throw new error;
+      const response = await dispatch(updateDefectAsync({ houseId: id, defectId, defectData, newImages })).unwrap();
+      if (!response) throw new Error('Failed to update defect.');
       setLoading(false);
       dispatch(fetchDefectsByHouseId(id)); // Update the defects list
       navigate(`/houses/${id}/defects`);
