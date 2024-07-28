@@ -8,6 +8,7 @@ const checklistRecordSchema = new mongoose.Schema({
   level: {
     type: String,
     required: true,
+    enum: ["header", "sub"],
   },
   fillable: {
     type: Boolean,
