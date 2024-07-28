@@ -1,5 +1,4 @@
 const Checklist = require("../models/Checklist");
-const Customer = require("../models/Customer");
 
 const getChecklistFromDb = async (houseId) => {
   return Checklist.findOne({
@@ -7,12 +6,10 @@ const getChecklistFromDb = async (houseId) => {
   });
 };
 
-const initializeChecklist = (houseId, checklistName) => {
-  const checklist = new Checklist({
+const initializeChecklist = (houseId) => {
+  return new Checklist({
     house_id: houseId,
   });
-
-  return checklist;
 };
 
 const deleteChecklistFromDb = async (houseId) => {
