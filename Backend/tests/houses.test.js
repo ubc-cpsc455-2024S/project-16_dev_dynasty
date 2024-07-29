@@ -251,8 +251,6 @@ describe("PATCH /houses/:houseid/:bayid", () => {
             .set('Cookie', token);
 
     expect(response.statusCode).toBe(200);
-    //
-    console.log(response.body);
     expect(response.body.result._id).toEqual(houseId.toString());
 
     expect(response.body.result.bay_id).toEqual("1");

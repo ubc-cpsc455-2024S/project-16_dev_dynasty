@@ -28,7 +28,6 @@ const getHousesFromDb = async ({
   }
   try {
     if (Object.keys(queryObj).length > 0) {
-      console.log("queryObj", queryObj);
       filteredHouses = await House_View(queryObj);
     } else {
       filteredHouses = await House_View();
@@ -77,7 +76,6 @@ const addHouseToDb = async (houseData) => {
 
 // Function to delete a house
 const deleteHouseFromDb = async (houseid) => {
-  console.log("house delete id", houseid);
   return await House.findByIdAndDelete(houseid);
 };
 
@@ -91,7 +89,6 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 const toggleBayAssignment = async (houseid, bayid) => {
   try {
     const newBay = await Bay_View({ bay_id: bayid });
-    console.log ('new bay is: ', newBay);
     if (newBay[0].house_id) {
       throw new Error(
         `Bay in use: ${bayid} is already assigned to another house.`,

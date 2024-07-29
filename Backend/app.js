@@ -22,7 +22,8 @@ app.set("trust proxy", 1);
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'https://project-16-dev-dynasty-frontend.onrender.com'
 ];
 
 app.use(
