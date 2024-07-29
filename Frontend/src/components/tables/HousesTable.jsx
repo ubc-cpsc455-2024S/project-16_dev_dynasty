@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Table,
   TableBody,
@@ -48,8 +46,6 @@ const HousesTable = ({
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const handleDelete = async houseId => {
     await dispatch(deleteHouseAsync(houseId))
@@ -64,9 +60,6 @@ const HousesTable = ({
     )
   }
 
-  const handleRowClick = houseId => {
-    navigate(`/houses/${houseId}/details`)
-  }
   const handleRowClick = houseId => {
     navigate(`/houses/${houseId}/details`)
   }
