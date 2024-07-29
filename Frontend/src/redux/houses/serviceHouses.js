@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 import { errorHandler } from '../errorHandler';
 
 const getAllHouses = async ({
@@ -120,13 +120,13 @@ const bayToHouse = async (houseId, bayId) => {
         withCredentials: true 
       }
     )
-    return response.data
+    return response.data.result
   } catch (error) {
     console.error(
       `Error updating house with id  ${houseId} to bay ${bayId}:`,
       error
     )
-    throw error;
+    throw error
   }
 }
 

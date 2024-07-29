@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getHouseAsync, updateHouseAsync, deleteHouseAsync } from '../redux/houses/thunksHouses';
-import { getAllBaysAsync } from '../redux/bays/thunksBays';
-import { houseStatusEnum } from '../constants/contants';
-import Navbar from '../components/navigation/Navbar';
-import Header1 from '../components/headers/Header1';
-import SelectCustom from '../components/inputs/SelectCustom';
-import HouseTabs from '../components/navigation/HouseTabs';
-import HouseHeader from '../components/headers/HouseHeader';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams, useNavigate } from 'react-router-dom'
 import {
+  getHouseAsync,
+  updateHouseAsync,
+  deleteHouseAsync,
+  bayToHouseAsync,
+} from '../redux/houses/thunksHouses'
+import { getAllBaysAsync } from '../redux/bays/thunksBays'
+import { houseStatusEnum } from '../constants/contants'
+import Navbar from '../components/navigation/Navbar'
+import Header1 from '../components/headers/Header1'
+import SelectCustom from '../components/inputs/SelectCustom'
+import HouseTabs from '../components/navigation/HouseTabs'
+import HouseHeader from '../components/headers/HouseHeader'
+import {
+  Chip,
   Box,
   CircularProgress,
   Container,
@@ -27,105 +33,102 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
-} from '@mui/material';
-import { styled } from '@mui/system';
+  DialogTitle,
+} from '@mui/material'
+import { styled } from '@mui/system'
+import { routes } from '../router/routes'
+import { deleteChecklist } from '../redux/checklists/serviceChecklists.js'
+import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists.js'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
   backgroundColor: '#f5f5f5',
-});
+})
 
 const StatusCell = styled(TableCell)(({ status }) => ({
   color: getStatusColor(status),
   fontWeight: 'bold',
-}));
+}))
 
-const getStatusColor = (status) => {
+const getStatusColor = status => {
   switch (status) {
     case 0:
-      return 'red';
+      return 'red'
     case 1:
-      return 'grey';
+      return 'grey'
     case 2:
-      return 'orange';
+      return 'orange'
     case 3:
-      return 'blue';
+      return 'blue'
     case 4:
-      return 'green';
+      return 'green'
     default:
-      return 'black';
+      return 'black'
   }
-};
+}
 
 const HouseDetailsPage = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const houseInfoFromState = useSelector((state) => state.houses.findHouse || null);
-  const bays = useSelector((state) => state.bays.list || []);
-  const [houseInfo, setHouseInfo] = useState(houseInfoFromState);
-  const [open, setOpen] = useState(false);
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const houseInfo = useSelector(state => state.houses.findHouse || null)
+  const bays = useSelector(state => state.bays.list || [])
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    dispatch(getHouseAsync(id));
-    dispatch(getAllBaysAsync());
-  }, [dispatch, id]);
+    dispatch(getHouseAsync(id))
+    dispatch(getAllBaysAsync())
+  }, [dispatch, id])
 
-  useEffect(() => {
-    setHouseInfo(houseInfoFromState);
-  }, [houseInfoFromState]);
-
-  const handleChangeStatus = (event) => {
-    const status = Number(event.target.value);
-    const updatedHouseInfo = { ...houseInfo, status: status };
-    setHouseInfo(updatedHouseInfo);
+  const handleChangeStatus = async event => {
+    const status = Number(event.target.value)
+    const updatedHouseInfo = { ...houseInfo, status: status }
     const houseData = {
       houseId: houseInfo._id,
       houseData: updatedHouseInfo,
-    };
-    dispatch(updateHouseAsync(houseData));
-  };
-
-  const handleChangeBay = (event) => {
-    let bay_id = event.target.value;
-    if (bay_id === 'No Bay') {
-      bay_id = null;
     }
-    const updatedHouseInfo = { ...houseInfo, bay_id: bay_id };
-    setHouseInfo(updatedHouseInfo);
+    await dispatch(updateHouseAsync(houseData))
+  }
+
+  const handleChangeBay = async event => {
+    let bayId = event.target.value
+    if (bayId === 'No Bay') {
+      bayId = null
+    }
     const houseData = {
       houseId: houseInfo._id,
-      houseData: updatedHouseInfo,
-    };
-    dispatch(updateHouseAsync(houseData));
-  };
+      houseData: houseInfo,
+    }
+    const data = await dispatch(
+      bayToHouseAsync({ houseId: houseInfo._id, bayId })
+    )
+  }
 
-  const handleDeleteHouse = () => {
-    dispatch(deleteHouseAsync(houseInfo._id));
-    navigate('/houses');
-  };
+  const handleDeleteHouse = async () => {
+    await dispatch(deleteHouseAsync(houseInfo._id))
+    await dispatch(deleteChecklistAsync(houseInfo._id))
+    navigate(routes.housesRoute)
+  }
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  const houseStatusOptions = Object.keys(houseStatusEnum).map((key) => ({
+  const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
     value: key,
     label: houseStatusEnum[key],
-  }));
+  }))
 
   const bayOptions = bays.map(({ bay_id }) => ({
     value: bay_id,
     label: bay_id,
-  }));
+  }))
 
-  if (!houseInfo) return <CircularProgress />;
-  console.log(houseInfo);
+  if (!houseInfo) return <CircularProgress />
 
   return (
     <Navbar>
@@ -148,7 +151,12 @@ const HouseDetailsPage = () => {
                 value={houseInfo.bay_id || 'No Bay'}
                 onChange={handleChangeBay}
               />
-              <Button variant="outlined" color="secondary" onClick={handleClickOpen} style={{ marginLeft: '10px' }}>
+              <Button
+                variant='outlined'
+                color='secondary'
+                onClick={handleClickOpen}
+                style={{ marginLeft: '10px' }}
+              >
                 Delete House
               </Button>
             </Box>
@@ -158,14 +166,15 @@ const HouseDetailsPage = () => {
           <DialogTitle>Delete House</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this house? This action cannot be undone.
+              Are you sure you want to delete this house? This action cannot be
+              undone.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={handleDeleteHouse} color="secondary">
+            <Button onClick={handleDeleteHouse} color='secondary'>
               Delete
             </Button>
           </DialogActions>
@@ -175,17 +184,11 @@ const HouseDetailsPage = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper elevation={3} style={{ padding: '16px' }}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant='h6' gutterBottom>
                   House Details
                 </Typography>
                 <TableContainer>
                   <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableHeadCell>Attribute</TableHeadCell>
-                        <TableHeadCell>Value</TableHeadCell>
-                      </TableRow>
-                    </TableHead>
                     <TableBody>
                       <TableRow>
                         <TableCell>Project #</TableCell>
@@ -201,9 +204,12 @@ const HouseDetailsPage = () => {
                       </TableRow>
                       <TableRow>
                         <TableCell>Status</TableCell>
-                        <StatusCell status={houseInfo.status}>
-                          {houseStatusEnum[houseInfo.status]}
-                        </StatusCell>
+                        <TableCell>
+                          <Chip
+                            className={'status' + houseInfo.status}
+                            label={houseStatusEnum[houseInfo.status]}
+                          />
+                        </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Square Footage</TableCell>
@@ -238,7 +244,7 @@ const HouseDetailsPage = () => {
         </Box>
       </Container>
     </Navbar>
-  );
-};
+  )
+}
 
-export default HouseDetailsPage;
+export default HouseDetailsPage

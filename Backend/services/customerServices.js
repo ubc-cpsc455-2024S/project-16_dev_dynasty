@@ -1,5 +1,4 @@
 const Customer = require("../models/Customer");
-const housesJson = require("../data/houses.json");
 
 const getCustomersFromDb = async ({ customerNameQuery }) => {
   const filter = customerNameQuery

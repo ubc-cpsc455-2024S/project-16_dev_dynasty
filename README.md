@@ -18,38 +18,42 @@ BayBuild is a project management web application specifically designed for a mod
 --------------------------------------------------------------------------------------------------
 ## Project Requirements
 
+✔️ - Complete
+❗ - In progress
+❌ - Not started
+
 ### Minimal requirements
 
-1. ~~**Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.~~
+✔️ **Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.
 
-2. ~~**View Production Line Status Board** - allow users to view the production line status board and see the position of each home in the 20 stages of production.~~
+✔️ **View Production Line Status Board** - allow users to view the production line status board and see the position of each home in the 20 stages of production.
 
-3. ~~**Find Home Record** - allow users to find a particular home in the system via a search and view the record specific to that home.~~
+✔️ **Find Home Record** - allow users to find a particular home in the system via a search and view the record specific to that home.
 
-4. ~~**Modify Home Record (Update Home Status)** - allow users to modify a home record and update the position of a home in the 20 stage production line (e.g., a home that has completed all work at the electrical stage and can be moved forward to the next stage, plumbing).~~
+✔️ **Modify Home Record (Update Home Status)** - allow users to modify a home record and update the position of a home in the 20 stage production line (e.g., a home that has completed all work at the electrical stage and can be moved forward to the next stage, plumbing).
 
 ### Standard Requirements
 
-1. **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. 
+❗ **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. **Will be completed prior to final presentation.** 
 
-2. **Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
+✔️ Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
 
-3. ~~**Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").~~
+✔️ **Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").
 
-4. **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage.
+❗ **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage. **Will be completed prior to final presentation.**
  
-5. **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. 
+❗ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. **Will be completed prior to final presentation.**
 
-6. **Customer Record Management** -  allow users to add, edit, and delete a customer record and link each home with a customer.
+✔️ **Customer Record Management** -  allow users to add, edit, and delete a customer record and link each home with a customer.
 
 
 ### Strech Requirements
 
-1. ~~**Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board.~~
+✔️ **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board.
 
-2. **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
+❌ **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
 
-3. **Business Analytics** - allow users to access business analytics such as average time spent per production line stage and average square ft. of home production per day.
+❌ **Business Analytics** - allow users to access business analytics such as average time spent per production line stage and average square ft. of home production per day.
 
 --------------------------------------------------------------------------------------------------
 

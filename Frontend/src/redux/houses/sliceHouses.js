@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 import {
   getAllHousesAsync,
   getHousesInbayAsync,
@@ -126,15 +127,25 @@ const houseSlice = createSlice({
       .addCase(updateHouseAsync.fulfilled, (state, action) => {
         state.status.update = 'fulfilled'
         // Update house list
-        const index = state.list.findIndex(
+        const indexList = state.list.findIndex(
           house => house._id === action.payload._id
         )
-        if (index !== -1) {
-          state.list[index] = action.payload
+        if (indexList !== -1) {
+          state.list[indexList] = action.payload
         } else {
-          // prettier-ignore
-          console.error('updateHouse action fullfilled by house not found in list')
+          console.error('slice - house not found in list')
         }
+
+        // Update in Bay List
+        const indexInBayList = state.inBayList.findIndex(
+          house => house._id === action.payload._id
+        )
+        if (indexInBayList !== -1) {
+          state.inBayList[indexInBayList] = action.payload
+        } else {
+          console.error('slice - house not found inBayList')
+        }
+
         // Update Find house
         if (state.findHouse && state.findHouse._id === action.payload._id) {
           state.findHouse = action.payload
@@ -150,43 +161,34 @@ const houseSlice = createSlice({
       })
       .addCase(bayToHouseAsync.fulfilled, (state, action) => {
         state.status.bayToHouse = 'fulfilled'
-        console.log('action payload', action.payload)
-        console.log('printing state.inbaylist', state.inBayList)
-        const inBayListCopy = [...state.inBayList]
+        const modifiedHouse = action.payload
 
+        const inBayListCopy = [...state.inBayList]
         const index = inBayListCopy.findIndex(house => {
-          console.log('in findIndex')
-          return house._id === action.payload.house_id
+          return house._id === modifiedHouse._id
         })
-        console.log('index for found is', index)
 
         if (index !== -1) {
-          inBayListCopy[index] = {
-            ...inBayListCopy[index],
-            bay_id: action.payload.bay_id,
-            bay_name: `Bay ${action.payload.bay_id}`,
-            status: 1,
-          }
+          inBayListCopy[index] = modifiedHouse
           state.inBayList = inBayListCopy
+        } else if (inBayListCopy.length === 0) {
         } else {
           console.error(
             'bayToHouse action fullfilled by house not found in list'
           )
         }
         // Update Find house
-        if (state.findHouse._id === action.payload.house_id) {
-          state.findHouse = {
-            ...state.findHouse,
-            bay_id: action.payload.bay_id,
-            bay_name: `Bay ${action.payload.bay_id}`,
-            status: 1,
-          }
+        if (
+          state.findHouse != null &&
+          state.findHouse._id === modifiedHouse._id
+        ) {
+          state.findHouse = modifiedHouse
         }
       })
       .addCase(bayToHouseAsync.rejected, (state, action) => {
         state.status.bayToHouse = 'rejected'
         state.error = action.error.message
-        alert('The new bay currently occupied and unavailable for a new house to move in')
+        toast.error('This bay is currently occupied, try another bay')
       })
   },
 })

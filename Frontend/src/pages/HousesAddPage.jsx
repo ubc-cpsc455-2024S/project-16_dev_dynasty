@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { addHouseAsync } from '../redux/houses/thunksHouses.js'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
 import { useNavigate } from 'react-router-dom'
+import { putChecklistAsync } from '../redux/checklists/thunksChecklists.js'
 
 const HousesAddPage = () => {
   const dispatch = useDispatch()
@@ -31,16 +32,13 @@ const HousesAddPage = () => {
     setFormFields({ ...formFields, [name]: value })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    dispatch(addHouseAsync(formFields))
+    const result = await dispatch(addHouseAsync(formFields)).unwrap()
+    await dispatch(putChecklistAsync({ houseId: result._id }))
     // clearFormFields()
     navigate(-1)
   }
-
-  // const clearFormFields = () => {
-  //   setFormFields(initialState)
-  // }
 
   return (
     <Navbar>

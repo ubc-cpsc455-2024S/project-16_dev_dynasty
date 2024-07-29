@@ -1,65 +1,62 @@
-.bay-card {
-  box-sizing: border-box;
+.status1 {
+  background-color: rgb(255, 255, 255) !important;
+  color: black !important;
+}
+
+.status2 {
+  background-color: #f9cbcf !important;
+  color: black !important;
+}
+
+.status3 {
+  background-color: #fbebb5 !important;
+  color: black !important;
+}
+
+.status4 {
+  background-color: #c3f0cd !important;
+  color: black !important;
+}
+
+.bay-card-text {
   margin: 0;
   padding: 0;
-  font-size: min(2vh, 1vw);
+  font-size: 12px !important;
+  color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-bayName {
   font-weight: bold;
-  background-color: #DCE6F1;
+  background-color: #726b6b;
+  color: white;
   grid-row: 1/1;
   grid-column: 1/1;
-  /* border: 2px solid #000; */
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding-inline: 5px;
 }
+
 .house-card {
-  /* Other styles */
-
-  cursor: pointer; /* Change cursor to a pointer */
-}
-
-.card-onlineDate {
-  grid-row: 2/2;
+  grid-row: 2/10;
   grid-column: 1/1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.status1 {
-  background-color: rgb(255, 255, 255);
-}
-
-.status2 {
-  background-color: rgb(242, 155, 155);
-}
-
-.status3 {
-  background-color: rgb(250, 234, 10);
-}
-
-.status4 {
-  background-color: rgb(10, 250, 62);
-}
-
-.card-npl {
-  grid-row: 3/3;
-  grid-column: 1/1;
-  font-weight: bold;
-  /* font-size: 2.2vh; */
-}
-
-.card-modelNumber {
-  grid-row: 4/4;
-  grid-column: 1/1;
-}
-
-.card-customer {
-  grid-row: 5/5;
-  grid-column: 1/1;
-  height: 2.2vh;
+.card-onlineDate,
+.card-npl,
+.card-modelNumber,
+.card-customer,
+.card-size {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.card-size {
-  grid-row: 6/6;
-  grid-column: 1/1;
+.card-npl {
+  font-weight: bold;
 }

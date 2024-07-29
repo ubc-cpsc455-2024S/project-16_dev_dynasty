@@ -7,10 +7,6 @@ const {
   getCustomerFromDb,
   updateCustomerInDb,
 } = require("../services/customerServices");
-const {
-  deleteHouseFromDb,
-  updateHouseInDb,
-} = require("../services/houseServices");
 
 // GET endpoint to retrieve all customers
 router.get("/", async (req, res, next) => {
@@ -52,7 +48,7 @@ router.get("/:customerId", async (req, res) => {
 router.delete("/:customerId", async (req, res) => {
   const customerId = req.params.customerId;
   try {
-    const result = await deleteCustomerFromDb(customerId); // Function to delete a house
+    const result = await deleteCustomerFromDb(customerId);
     if (result.success) {
       res.status(204).send();
     } else {

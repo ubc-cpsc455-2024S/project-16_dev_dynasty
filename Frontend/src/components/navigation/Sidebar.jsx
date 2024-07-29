@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import BuildIcon from '@mui/icons-material/Build'
@@ -11,16 +10,35 @@ import PersonIcon from '@mui/icons-material/Person'
 import GroupIcon from '@mui/icons-material/Group'
 import { closeSidebar } from '../../redux/sidebar/sidebarSlice'
 import CompanyLogo from '../../assets/logo.png'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { routes } from '../../router/routes'
+import { colors } from '../../styles/colors'
 
 const Sidebar = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const isOpen = useSelector(state => state.sidebar.isOpen)
 
   const handleClose = () => {
     dispatch(closeSidebar())
+  }
+
+  const linkStyle = ({ isActive }) => ({
+    textDecoration: 'none',
+    color: isActive
+      ? colors.sideBarLinkActiveColor
+      : colors.sideBarLinkInactiveColor,
+    background: isActive
+      ? colors.sideBarLinkActiveBackground
+      : colors.sideBarLinkInactiveBackground,
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px 16px',
+  })
+  const getIconColor = isActive => {
+    console.log('isActive', isActive)
+    return isActive
+      ? colors.sideBarActiveIconColor
+      : colors.sideBarInactiveIconColor
   }
 
   return (
@@ -31,8 +49,8 @@ const Sidebar = () => {
         onKeyDown={handleClose}
         style={{
           width: '250px',
-          background: 'grey',
-          color: 'white',
+          background: colors.sideBarBackground,
+          color: colors.sideBarColor,
           height: '100%',
         }}
       >
@@ -44,30 +62,46 @@ const Sidebar = () => {
           />
         </div>
         <List>
-          <ListItem onClick={() => navigate(routes.workshopRoute)}>
-            <ListItemIcon>
-              <BuildIcon style={{ color: 'white' }} />
-            </ListItemIcon>
-            <ListItemText primary='Workshop' />
-          </ListItem>
-          <ListItem onClick={() => navigate(routes.housesRoute)}>
-            <ListItemIcon>
-              <HomeWorkIcon style={{ color: 'white' }} />
-            </ListItemIcon>
-            <ListItemText primary='Houses' />
-          </ListItem>
-          <ListItem onClick={() => navigate(routes.usersRoute)}>
-            <ListItemIcon>
-              <PersonIcon style={{ color: 'white' }} />
-            </ListItemIcon>
-            <ListItemText primary='Users' />
-          </ListItem>
-          <ListItem onClick={() => navigate(routes.customersRoute)}>
-            <ListItemIcon>
-              <GroupIcon style={{ color: 'white' }} />
-            </ListItemIcon>
-            <ListItemText primary='Customers' />
-          </ListItem>
+          <NavLink to={routes.workshopRoute} style={linkStyle}>
+            {({ isActive }) => (
+              <>
+                <ListItemIcon>
+                  <BuildIcon style={{ color: getIconColor(isActive) }} />
+                </ListItemIcon>
+                <ListItemText primary='Workshop' />
+              </>
+            )}
+          </NavLink>
+          <NavLink to={routes.housesRoute} style={linkStyle}>
+            {({ isActive }) => (
+              <>
+                <ListItemIcon>
+                  <HomeWorkIcon style={{ color: getIconColor(isActive) }} />
+                </ListItemIcon>
+                <ListItemText primary='Houses' />
+              </>
+            )}
+          </NavLink>
+          <NavLink to={routes.usersRoute} style={linkStyle}>
+            {({ isActive }) => (
+              <>
+                <ListItemIcon>
+                  <PersonIcon style={{ color: getIconColor(isActive) }} />
+                </ListItemIcon>
+                <ListItemText primary='Users' />
+              </>
+            )}
+          </NavLink>
+          <NavLink to={routes.customersRoute} style={linkStyle}>
+            {({ isActive }) => (
+              <>
+                <ListItemIcon>
+                  <GroupIcon style={{ color: getIconColor(isActive) }} />
+                </ListItemIcon>
+                <ListItemText primary='Customers' />
+              </>
+            )}
+          </NavLink>
         </List>
       </div>
     </Drawer>

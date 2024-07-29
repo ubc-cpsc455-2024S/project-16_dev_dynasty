@@ -109,19 +109,15 @@ router.put("/:houseid", async (req, res) => {
 router.patch("/:houseid/:bayid", async (req, res) => {
   const { houseid, bayid } = req.params;
   try {
-    const result = await toggleBayAssignment(houseid, bayid);
-    if (result._id) {
-      res.status(200).json({
-        message: `Successfully updated bay for house ${houseid}`,
-        house_id: houseid,
-        bay_id: bayid,
-      });
+    const updatedHouse = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
+    if (updatedHouse) {
+      res.status(200).json({ result: updatedHouse });
     } else {
       res.status(404).send("House not found");
     }
   } catch (error) {
     if (error.message.includes("Bay in use")) {
-      res.status(400).json({bayInUseError: error.message});
+      res.status(400).json({ bayInUseError: error.message });
     } else {
       res.status(500).send("Server error");
     }

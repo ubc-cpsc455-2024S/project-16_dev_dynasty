@@ -1,8 +1,5 @@
 import React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
+import { AppBar, Toolbar, Typography, IconButton, Paper } from '@mui/material'
 import Button from '@mui/material/Button'
 import MenuIcon from '@mui/icons-material/Menu'
 import CompanyLogo from '../../assets/logo.png'
@@ -12,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { routes } from '../../router/routes'
 import { useSelector, useDispatch } from 'react-redux'
 import { userLoginAsync, userLogoutAsync } from '../../redux/auth/thunkAuth'
+import { colors } from '../../styles/colors'
 
 const Navbar = ({ children }) => {
   const navigate = useNavigate()
@@ -25,7 +23,7 @@ const Navbar = ({ children }) => {
 
   return (
     <>
-      <AppBar position='static' style={{ background: 'white', color: 'black' }}>
+      <AppBar position='static' sx={{ minWidth: 1050 }}>
         <Toolbar>
           <IconButton
             edge='start'
@@ -70,7 +68,15 @@ const Navbar = ({ children }) => {
         </Toolbar>
         <Sidebar />
       </AppBar>
-      {children}
+      <Paper
+        sx={{
+          borderRadius: 0,
+          minHeight: '100vh',
+          minWidth: 1050,
+        }}
+      >
+        {children}
+      </Paper>
     </>
   )
 }

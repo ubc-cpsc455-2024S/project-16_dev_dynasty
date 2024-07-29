@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import Navbar from '../components/navigation/Navbar';
-import Header1 from '../components/headers/Header1';
+import React, { useEffect } from 'react'
+import Navbar from '../components/navigation/Navbar'
+import Header1 from '../components/headers/Header1'
 import {
   Box,
   CircularProgress,
@@ -14,61 +14,41 @@ import {
   TableContainer,
   TableRow,
   TableHead,
-} from '@mui/material';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses';
-import { houseStatusEnum } from '../constants/contants';
-import SelectCustom from '../components/inputs/SelectCustom';
-import { getAllBaysAsync } from '../redux/bays/thunksBays';
-import HouseTabs from '../components/navigation/HouseTabs';
-import { styled } from '@mui/system';
-import HouseDefects from '../components/HouseDefects';
-import HouseDocuments from '../components/HouseDocuments';
-import HouseChecklist from '../components/HouseChecklist';
+  Chip,
+} from '@mui/material'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses'
+import { houseStatusEnum } from '../constants/contants'
+import SelectCustom from '../components/inputs/SelectCustom'
+import { getAllBaysAsync } from '../redux/bays/thunksBays'
+import HouseTabs from '../components/navigation/HouseTabs'
+import { styled } from '@mui/system'
+import HouseDefects from '../components/HouseDefects'
+import HouseDocuments from '../components/HouseDocuments'
+import HouseChecklist from '../components/HouseChecklist'
+import { colors } from '../styles/colors'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
-  backgroundColor: '#f5f5f5',
-});
-
-const StatusCell = styled(TableCell)(({ status }) => ({
-  color: getStatusColor(status),
-  fontWeight: 'bold',
-}));
-
-const getStatusColor = (status) => {
-  switch (status) {
-    case 0:
-      return 'red';
-    case 1:
-      return 'grey';
-    case 2:
-      return 'orange';
-    case 3:
-      return 'blue';
-    case 4:
-      return 'green';
-    default:
-      return 'black';
-  }
-};
+  backgroundColor: colors.tableHeadCellBackground,
+})
 
 const HouseDetails = ({ houseInfo }) => {
   if (!houseInfo) {
     return (
       <Paper elevation={3} style={{ padding: '16px' }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant='h6' gutterBottom>
           House Details
         </Typography>
-        <Typography variant="body1">No house information available.</Typography>
+        <Typography variant='body1'>No house information available.</Typography>
       </Paper>
-    );
+    )
   }
 
   return (
     <Paper elevation={3} style={{ padding: '16px' }}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant='h6' gutterBottom>
         House Details
       </Typography>
       <TableContainer>
@@ -94,9 +74,12 @@ const HouseDetails = ({ houseInfo }) => {
             </TableRow>
             <TableRow>
               <TableCell>Status</TableCell>
-              <StatusCell status={houseInfo.status}>
-                {houseStatusEnum[houseInfo.status]}
-              </StatusCell>
+              <TableCell>
+                <Chip
+                  className={'status' + houseInfo.status}
+                  label={houseStatusEnum[houseInfo.status]}
+                />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Square Footage</TableCell>
@@ -126,70 +109,70 @@ const HouseDetails = ({ houseInfo }) => {
         </Table>
       </TableContainer>
     </Paper>
-  );
-};
+  )
+}
 
 const HousePage = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const houseInfo = useSelector((state) => state.houses.findHouse || null);
-  const bays = useSelector((state) => state.bays.list || []);
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const houseInfo = useSelector(state => state.houses.findHouse || null)
+  const bays = useSelector(state => state.bays.list || [])
 
   useEffect(() => {
-    dispatch(getHouseAsync(id));
-    dispatch(getAllBaysAsync());
-  }, [dispatch, id]);
+    dispatch(getHouseAsync(id))
+    dispatch(getAllBaysAsync())
+  }, [dispatch, id])
 
-  const handleChangeStatus = (event) => {
-    const status = Number(event.target.value);
+  const handleChangeStatus = event => {
+    const status = Number(event.target.value)
     const houseData = {
       houseId: houseInfo._id,
       houseData: { ...houseInfo, status: status },
-    };
-    dispatch(updateHouseAsync(houseData));
-  };
+    }
+    dispatch(updateHouseAsync(houseData))
+  }
 
-  const handleChangeBay = (event) => {
-    let bay_id = event.target.value;
+  const handleChangeBay = event => {
+    let bay_id = event.target.value
     if (bay_id === 'No Bay') {
-      bay_id = null;
+      bay_id = null
     }
     const houseData = {
       houseId: houseInfo._id,
       houseData: { ...houseInfo, bay_id: bay_id },
-    };
-    dispatch(updateHouseAsync(houseData));
-  };
+    }
+    dispatch(updateHouseAsync(houseData))
+  }
 
-  const houseStatusOptions = Object.keys(houseStatusEnum).map((key) => ({
+  const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
     value: key,
     label: houseStatusEnum[key],
-  }));
+  }))
 
   const bayOptions = bays.map(({ bay_id }) => ({
     value: bay_id,
     label: bay_id,
-  }));
+  }))
 
   const renderContent = () => {
     switch (location.pathname) {
       case `/houses/${id}/details`:
-        return <HouseDetails houseInfo={houseInfo} />;
+        return <HouseDetails houseInfo={houseInfo} />
       case `/houses/${id}/defects`:
-        return <HouseDefects houseInfo={houseInfo} />;
+        return <HouseDefects houseInfo={houseInfo} />
       case `/houses/${id}/documents`:
-        return <HouseDocuments houseInfo={houseInfo} />;
+        return <HouseDocuments houseInfo={houseInfo} />
       case `/houses/${id}/checklist`:
-        return <HouseChecklist houseInfo={houseInfo} />;
+        return <HouseChecklist houseInfo={houseInfo} />
       default:
-        return <HouseDetails houseInfo={houseInfo} />;
+        return <HouseDetails houseInfo={houseInfo} />
     }
-  };
+  }
 
-  if (!houseInfo) return <CircularProgress />;
-  console.log(houseInfo);
+  if (!houseInfo) return <CircularProgress />
+  console.log(houseInfo)
 
   return (
     <Navbar>
@@ -197,12 +180,12 @@ const HousePage = () => {
         <Header1
           title={
             <Box>
-              <Link href="/houses" underline="none">
-                <Typography variant="h6" component="span" color="primary">
+              <Link href='/houses' underline='none'>
+                <Typography variant='h6' component='span' color='primary'>
                   Houses
                 </Typography>
               </Link>
-              <Typography variant="h6" component="span" color="textPrimary">
+              <Typography variant='h6' component='span' color='textPrimary'>
                 {' > House ' + houseInfo.npl}
               </Typography>
             </Box>
@@ -228,13 +211,11 @@ const HousePage = () => {
         />
         <Box mt={3}>
           <HouseTabs />
-          <Box mt={3}>
-            {renderContent()}
-          </Box>
+          <Box mt={3}>{renderContent()}</Box>
         </Box>
       </Container>
     </Navbar>
-  );
-};
+  )
+}
 
-export default HousePage;
+export default HousePage
