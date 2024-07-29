@@ -58,8 +58,8 @@ router.get("/verify-token", (req, res) => {
   });
   const pastDate = new Date(0).toUTCString();
 router.get("/logout", async (req, res, next) => {
-    // res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
-    res.cookie('jwt', '', { httpOnly: true, expires: pastDate });
+    res.cookie('jwt', '', { httpOnly: true, maxAge: 2 });
+    // res.cookie('jwt', '', { httpOnly: true, expires: pastDate });
     res.status(200).json({ message: 'user is logged out' });
 });
 
