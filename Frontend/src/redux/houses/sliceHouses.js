@@ -66,6 +66,7 @@ const houseSlice = createSlice({
       })
       .addCase(getAllHousesAsync.rejected, (state, action) => {
         state.status.getAll = 'rejected'
+        // console.log('action: ', action);
         state.error = action.error.message
       })
       // Handle getHouseAsync
@@ -87,8 +88,6 @@ const houseSlice = createSlice({
       .addCase(getHousesInbayAsync.fulfilled, (state, action) => {
         state.status.getInBay = 'fulfilled'
         state.inBayList = action.payload
-        console.log('State print in get all inbayhouses', state)
-        console.log('printing state.inbaylist', state.inBayList)
       })
       .addCase(getHousesInbayAsync.rejected, (state, action) => {
         state.status.getInBay = 'rejected'

@@ -10,16 +10,26 @@ const baysRouter = require("./routes/bays");
 const customersRouter = require("./routes/customers");
 const defectsRouter = require("./routes/defects");
 const checklistsRouter = require("./routes/checklists");
-
+const authRouter = require('./routes/users');
 const app = express();
+
+require("dotenv").config();
+const frontend_url = process.env.FRONTEND_URL;
 
 // Middleware setup
 app.set("trust proxy", 1);
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
 app.use(
   cors({
-    // origin: "http://localhost:5173",
-    // credentials: true,
-  }),
+    origin: allowedOrigins,
+    credentials: true,
+  })
 );
 app.use(logger("dev"));
 app.use(express.json());
@@ -32,6 +42,7 @@ app.use("/houses", housesRouter);
 app.use("/bays", baysRouter);
 app.use("/customers", customersRouter);
 app.use("/defects", defectsRouter);
+app.use('/users', authRouter);
 app.use("/checklists", checklistsRouter);
 
 module.exports = app;

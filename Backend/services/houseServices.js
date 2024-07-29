@@ -91,6 +91,7 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 const toggleBayAssignment = async (houseid, bayid) => {
   try {
     const newBay = await Bay_View({ bay_id: bayid });
+    console.log ('new bay is: ', newBay);
     if (newBay[0].house_id) {
       throw new Error(
         `Bay in use: ${bayid} is already assigned to another house.`,

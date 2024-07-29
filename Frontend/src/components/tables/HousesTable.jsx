@@ -138,7 +138,7 @@ const HousesTable = ({
 }
 
 HousesTable.propTypes = {
-  houses: PropTypes.array.isRequired,
+  houses: PropTypes.array,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,
