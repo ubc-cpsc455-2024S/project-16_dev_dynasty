@@ -13,7 +13,7 @@ const LoginPage = () => {
   const isSignedIn = useSelector(state => state.auth.isSignedIn || false)
   const user = useSelector(state => state.auth.user || null)
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const name = e.target.name.value
     const password = e.target.password.value   
@@ -21,7 +21,7 @@ const LoginPage = () => {
       name: name,
       password: password
     } 
-    dispatch(userLoginAsync(logInData));
+    await dispatch(userLoginAsync(logInData));
     navigate(-1);
   }
 

@@ -1,12 +1,13 @@
 import axios from 'axios'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import { errorHandler } from '../errorHandler';
 
 const getAllHouses = async ({
   query,
   nplQuery,
   customerNameQuery,
   houseModelQuery,
-}) => {
+}, rejectWithValue) => {
   try {
     const params = new URLSearchParams({
       query,
@@ -14,16 +15,25 @@ const getAllHouses = async ({
       customerNameQuery,
       houseModelQuery,
     }).toString()
-    const response = await axios.get(`${BACKEND_URL}/houses?${params}`)
+    const response = await axios.get(`${BACKEND_URL}/houses?${params}`,{
+      withCredentials: true 
+    })
     return response.data.result
   } catch (error) {
-    console.error('Error fetching houses:', error)
+    // console.error('Error fetching houses:', error);
+    // if (error.response && error.response.data) {
+    //   return rejectWithValue(error.response.data);
+    // }
+    errorHandler(error, getAllHouses.name);
+    throw error;
   }
 }
 
 const getHouse = async houseid => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/houses/${houseid}`)
+    const response = await axios.get(`${BACKEND_URL}/houses/${houseid}`,{
+      withCredentials: true 
+    })
     return response.data.result
   } catch (error) {
     console.error(`Error fetching house with id ${houseid}:`, error)
@@ -32,7 +42,9 @@ const getHouse = async houseid => {
 
 const getHousesInbays = async () => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/houses/inbay`)
+    const response = await axios.get(`${BACKEND_URL}/houses/inbay`,{
+      withCredentials: true 
+    })
     return response.data.result
   } catch (error) {
     console.error(`Error fetching houses that are in production:`, error)
@@ -42,7 +54,10 @@ const getHousesInbays = async () => {
 const getHouseInABay = async bayId => {
   try {
     const response = await axios.get(
-      `${BACKEND_URL}/houses/inbay/${bayId}`
+      `${BACKEND_URL}/houses/inbay/${bayId}`,
+      {
+        withCredentials: true 
+      }
     )
     return response.data.result
   } catch (error) {
@@ -59,6 +74,7 @@ const addHouse = async houseData => {
         headers: {
           'Content-Type': 'application/json',
         },
+        withCredentials: true
       }
     )
     return response.data.result
@@ -70,7 +86,10 @@ const addHouse = async houseData => {
 const deleteHouse = async houseId => {
   try {
     const response = await axios.delete(
-      `${BACKEND_URL}/houses/${houseId}`
+      `${BACKEND_URL}/houses/${houseId}`,
+      {
+        withCredentials: true 
+      }
     )
     return response.data.result
   } catch (error) {
@@ -82,7 +101,10 @@ const updateHouse = async (houseId, houseData) => {
   try {
     const response = await axios.put(
       `${BACKEND_URL}/houses/${houseId}`,
-      houseData
+      houseData,
+      {
+        withCredentials: true 
+      }
     )
     return response.data.result
   } catch (error) {
@@ -93,7 +115,10 @@ const updateHouse = async (houseId, houseData) => {
 const bayToHouse = async (houseId, bayId) => {
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}/houses/${houseId}/${bayId}`
+      `${BACKEND_URL}/houses/${houseId}/${bayId}`,
+      {
+        withCredentials: true 
+      }
     )
     return response.data
   } catch (error) {

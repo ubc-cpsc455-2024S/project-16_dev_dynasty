@@ -14,7 +14,7 @@ const {
 const {requireLoggin, requirePermission} = require('../middleware/authMiddleware')
 
 // GET endpoint to retrieve all houses
-router.get("/", async (req, res) => {
+router.get("/", requireLoggin, async (req, res) => {
   try {
     const { query, nplQuery, customerNameQuery, houseModelQuery } = req.query;
     const houses = await getHousesFromDb({
@@ -53,7 +53,7 @@ router.get("/inbay/:bayid", async (req, res) => {
 });
 
 // GET endpoint to retrieve a specific house
-router.get("/:houseid", async (req, res) => {
+router.get("/:houseid",  async (req, res) => {
   const { houseid } = req.params;
   try {
     const house = await getHouseFromDb(houseid); // Function to fetch a specific house
@@ -109,8 +109,7 @@ router.put("/:houseid", async (req, res) => {
 router.patch("/:houseid/:bayid", async (req, res) => {
   const { houseid, bayid } = req.params;
   try {
-    const result = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
-    console.log("the result returned by toggle is: ", result);
+    const result = await toggleBayAssignment(houseid, bayid);
     if (result._id) {
       res.status(200).json({
         message: `Successfully updated bay for house ${houseid}`,

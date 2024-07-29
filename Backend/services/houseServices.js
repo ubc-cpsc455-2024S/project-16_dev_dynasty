@@ -100,14 +100,13 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 const toggleBayAssignment = async (houseid, bayid) => {
   try {
     const newBay = await Bay_View({ bay_id: bayid });
+    console.log ('new bay is: ', newBay);
     if (newBay[0].house_id) {
       throw new Error(
         `Bay in use: ${bayid} is already assigned to another house.`
       );
     }
-    console.log('houseid is: ',houseid);
     const house = await House.findById(houseid);
-    console.log('the house found is:', house);
     if (!house.online_date) {
       house.online_date = formatDate(new Date());
     }
@@ -115,15 +114,7 @@ const toggleBayAssignment = async (houseid, bayid) => {
     house.bay_name = `Bay ${bayid}`;
     house.status = 1;
     await house.save();
-
-    // const result = await House.updateOne(
-    //   { _id: houseid },
-    //   { $set: { bay_id: bayid, bay_name: `Bay ${bayid}`, status: 1 } }
-    // );
-
-
     return house;
-
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);
     throw error;

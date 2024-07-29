@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { userLoginAsync, userLogoutAsync } from './thunkAuth'
+import { userLoginAsync, verifyTokenAsync, userLogoutAsync } from './thunkAuth'
 
-const INITIAL_BAY_STATE = {
+const INITIAL_AUTH_STATE = {
   isSignedIn: false,
   user: null,
   status: {
     signIn: 'idle',
+    verifyAuth: 'idle',
     logOut: 'idle'
   },
   error: null
@@ -13,11 +14,16 @@ const INITIAL_BAY_STATE = {
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: INITIAL_BAY_STATE,
-  reducers: {},
+  initialState: INITIAL_AUTH_STATE,
+  reducers: {
+    // setUserFromToken(state, action) {
+    //   state.isSignedIn = true;
+    //   state.user = action.payload;
+    // }
+  },
   extraReducers: builder => {
     builder
-    // handle login
+      // handle login
       .addCase(userLoginAsync.pending, (state) => {
         state.status.signIn = 'pending';
       })
@@ -28,6 +34,19 @@ const authSlice = createSlice({
       })
       .addCase(userLoginAsync.rejected, (state, action) => {
         state.status.signIn = 'rejected';
+        state.error = action.error.message;
+      })
+      // handle verify jtw
+      .addCase(verifyTokenAsync.pending, (state) => {
+        state.status.verifyAuth = 'pending';
+      })
+      .addCase(verifyTokenAsync.fulfilled, (state, action) => {
+        state.status.verifyAuth = 'fulfilled';
+        state.isSignedIn = true;
+        state.user = action.payload;
+      })
+      .addCase(verifyTokenAsync.rejected, (state, action) => {
+        state.status.verifyAuth = 'rejected';
         state.error = action.error.message;
       })
       // handle logout
@@ -46,5 +65,5 @@ const authSlice = createSlice({
   },
 })
 
-
+// export const { setUserFromToken } = authSlice.actions;
 export default authSlice.reducer

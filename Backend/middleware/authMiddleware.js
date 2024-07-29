@@ -9,14 +9,13 @@ const requireLoggin = (req, res, next) => {
             if (err) {
                 res.status(400).json({ Error: 'incorrect login, please login a gain' });
             } else {
-                console.log('decoded token is: ', decodedToken);
                 req.user = decodedToken;
                 next();
             }
         })
 
     } else {
-        res.status(400).json({ Error: 'please login for this action' });
+        res.status(401).json({ Error: 'please login for this action' });
     }
 };
 
@@ -24,7 +23,7 @@ const requireLoggin = (req, res, next) => {
 const requirePermission = (permission) => {
     return (req, res, next) => {
         if (req.user.role !== permission) {
-            res.status(400).json({ Error: 'you dont have the authorization for this action' });
+            res.status(401).json({ Error: 'you dont have the authorization for this action' });
         } else {
             next();
         }

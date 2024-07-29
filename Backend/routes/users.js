@@ -33,9 +33,29 @@ router.post("/signin", async (req, res, next) => {
         res.status(201).json({ result: user });
     } catch (error) {
         console.log("the error caught was: ", error);
+        if (error.message.includes('user does not exist')) {
+            return res.status(404).json({ loginError: error.message });
+        } else if (error.message.includes('incorrect password')) {
+            return res.status(401).json({ loginError: error.message });
+        }
         res.status(500).json({ serverError: error.message });
     }
 });
+
+
+// endpoint to verify JWT
+router.get("/verify-token", (req, res) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+    try {
+      const decoded = jwt.verify(token, secret);
+      res.status(200).json({ user: decoded });
+    } catch (error) {
+      res.status(401).json({ message: "Invalid token" });
+    }
+  });
 
 router.get("/logout", async (req, res, next) => {
     res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });

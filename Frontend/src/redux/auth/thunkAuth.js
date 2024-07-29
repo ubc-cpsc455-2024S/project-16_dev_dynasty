@@ -5,6 +5,7 @@ import AuthService from './serviceAuth';
 const actionTypes = {
     LOGIN: 'user/login',
     SIGNUP: 'user/signup',
+    VERIFY: 'auth/verifyToken',
     LOGOUT: 'user/logout'
 }
 
@@ -20,3 +21,10 @@ export const userLogoutAsync = createAsyncThunk(
     async () => {
         return await AuthService.logout();
     }); 
+
+
+
+export const verifyTokenAsync = createAsyncThunk(actionTypes.VERIFY, 
+    async () => {
+        return await AuthService.verifyAuth();
+  });
