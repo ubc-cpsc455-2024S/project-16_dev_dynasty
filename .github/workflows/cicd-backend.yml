@@ -36,6 +36,8 @@ jobs:
             AWS_REGION: ${{ secrets.AWS_REGION }}
             S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
             JWT_SECRET_STR: ${{secrets.JWT_SECRET_STR}}
+            ADMIN_USERNAME: ${{secrets.ADMIN_USERNAME}}
+            ADMIN_PASSWORD: ${{secrets.ADMIN_PASSWORD}}
         run: |
           echo "files in current dir: "
           ls
