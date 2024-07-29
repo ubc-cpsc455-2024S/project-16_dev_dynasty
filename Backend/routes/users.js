@@ -29,7 +29,7 @@ router.post("/signin", async (req, res, next) => {
         const user = await User.login(name, password);
         user.password = undefined;
         const token = jwt.sign(user.toObject(), secret, { expiresIn: 1000 });
-        res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000, sameSite: 'None' });
+        res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000});
         res.status(201).json({ result: user });
     } catch (error) {
         console.log("the error caught was: ", error);
