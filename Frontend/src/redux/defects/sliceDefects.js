@@ -1,4 +1,3 @@
-// src/redux/defects/sliceDefects.js
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchDefectsByHouseId, addDefectAsync, updateDefectAsync, deleteDefectAsync } from './thunksDefects';
 

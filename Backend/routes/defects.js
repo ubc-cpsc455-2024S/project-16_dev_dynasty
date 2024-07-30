@@ -35,6 +35,7 @@ const upload = multer({
 router.get('/:houseId', async (req, res) => {
   try {
     const house = await House.findById(req.params.houseId).populate('defects');
+    console.log("House:", house);
     if (!house) return res.status(404).json({ message: 'House not found' });
     res.status(200).json(house.defects);
   } catch (err) {
@@ -122,11 +123,11 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
     if (description) defect.description = description;
     if (bay_id) defect.bay_id = bay_id;
 
-    // Handle images
     if (req.files.length > 0) {
-      defect.images = req.files.map((file) => file.location);
+      defect.images = defect.images.concat(req.files.map((file) => file.location));
     } else if (req.body.images) {
-      defect.images = req.body.images;
+      const parsedImages = typeof req.body.images === 'string' ? JSON.parse(req.body.images) : req.body.images;
+      defect.images = defect.images.concat(parsedImages);
     }
 
     await house.save();

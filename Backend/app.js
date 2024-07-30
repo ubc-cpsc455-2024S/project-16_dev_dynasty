@@ -10,6 +10,8 @@ const baysRouter = require("./routes/bays");
 const customersRouter = require("./routes/customers");
 const defectsRouter = require("./routes/defects");
 const checklistsRouter = require("./routes/checklists");
+const documentsRouter = require("./routes/documents");
+
 const authRouter = require('./routes/users');
 const app = express();
 
@@ -42,6 +44,7 @@ app.use("/", indexRouter);
 app.use("/houses", housesRouter);
 app.use("/bays", baysRouter);
 app.use("/customers", customersRouter);
+app.use("/documents", documentsRouter);
 app.use("/defects", defectsRouter);
 app.use('/users', authRouter);
 app.use("/checklists", checklistsRouter);

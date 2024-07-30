@@ -46,4 +46,4 @@ const WorkshopPage = () => {
   )
 }
 
-export default WorkshopPage
+export default WorkshopPage;

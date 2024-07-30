@@ -21,13 +21,15 @@ import HouseDocumentsPage from '../pages/HouseDocumentsPage'
 import HouseChecklistPage from '../pages/HouseChecklistPage.jsx'
 import AddHouseDefectPage from '../pages/AddHouseDefectPage'
 import EditDefectPage from '../pages/EditDefectsPage'
+import AddHouseDocumentPage from '../pages/AddHouseDocumentPage'
+import EditHouseDocumentPage from '../pages/EditDocumentsPage'
 import { routes } from './routes'
 
 const MainRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path={'/'} element={<WorkshopPage />} />
+        <Route path='/' element={<WorkshopPage />} />
         <Route path={routes.loginRoute} element={<LoginPage />} />
         <Route path={routes.workshopRoute} element={<WorkshopPage />} />
         <Route path={routes.customersRoute} element={<CustomersPage />} />
@@ -36,30 +38,14 @@ const MainRouter = () => {
         <Route path={routes.usersAddRoute} element={<UsersAddPage />} />
         <Route path={routes.housesRoute} element={<HousesPage />} />
         <Route path={routes.housesAddRoute} element={<HousesAddPage />} />
-        <Route
-          path={`${routes.houseRoutes}/details`}
-          element={<HouseDetailsPage />}
-        />
-        <Route
-          path={`${routes.houseRoutes}/defects`}
-          element={<HouseDefectsPage />}
-        />
-        <Route
-          path={`${routes.houseRoutes}/defects/add`}
-          element={<AddHouseDefectPage />}
-        />
-        <Route
-          path={`${routes.houseRoutes}/defects/:defectId/edit`}
-          element={<EditDefectPage />}
-        />
-        <Route
-          path={`${routes.houseRoutes}/documents`}
-          element={<HouseDocumentsPage />}
-        />
-        <Route
-          path={`${routes.houseRoutes}/checklist`}
-          element={<HouseChecklistPage />}
-        />
+        <Route path={routes.houseDetailsRoute} element={<HouseDetailsPage />} />
+        <Route path={routes.houseDefectsRoute} element={<HouseDefectsPage />} />
+        <Route path={routes.houseAddDefectRoute} element={<AddHouseDefectPage />} />
+        <Route path={routes.houseEditDefectRoute} element={<EditDefectPage />} />
+        <Route path={routes.houseDocumentsRoute} element={<HouseDocumentsPage />} />
+        <Route path={routes.houseAddDocumentRoute} element={<AddHouseDocumentPage />} />
+        <Route path={routes.houseEditDocumentRoute} element={<EditHouseDocumentPage />} />
+        <Route path={routes.houseChecklistRoute} element={<HouseChecklistPage />} />
         <Route path={routes.customerRoute} element={<CustomerPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

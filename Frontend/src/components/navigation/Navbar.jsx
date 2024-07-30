@@ -12,14 +12,14 @@ import { userLoginAsync, userLogoutAsync } from '../../redux/auth/thunkAuth'
 import { colors } from '../../styles/colors'
 
 const Navbar = ({ children }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const isSignedIn = useSelector(state => state.auth.isSignedIn || false)
   const user = useSelector(state => state.auth.user || null)
 
   const handleMenuClick = () => {
-    dispatch(toggleSidebar())
-  }
+    dispatch(toggleSidebar());
+  };
 
   return (
     <>
@@ -78,7 +78,7 @@ const Navbar = ({ children }) => {
         {children}
       </Paper>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
