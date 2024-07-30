@@ -22,7 +22,17 @@ export const putChecklist = async (houseId, checklistData) => {
   }
 }
 
+export const deleteChecklist = async houseId => {
+  try {
+    await axios.delete(`${BACKEND_URL}/checklists/${houseId}`)
+    return houseId
+  } catch (error) {
+    console.error(`Error deleting checklist from house ${houseId}:`, error)
+  }
+}
+
 export default {
   getChecklist,
   putChecklist,
+  deleteChecklist,
 }

@@ -11,10 +11,11 @@ import {
   TextField,
 } from '@mui/material'
 import { styled } from '@mui/system'
+import { colors } from '../../styles/colors'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
-  backgroundColor: '#f5f5f5',
+  backgroundColor: colors.tableHeadCellBackground,
 })
 
 const TightTableCell = styled(TableCell)({
@@ -33,9 +34,9 @@ const ChecklistTable = ({ records, handleRecordChange }) => {
               <TableHeadCell></TableHeadCell>
               <TableHeadCell align='center'>Accept</TableHeadCell>
               <TableHeadCell align='center'>Deficient</TableHeadCell>
-              <TableHeadCell align='center'>Repaired By</TableHeadCell>
+              <TableHeadCell align='left'>Repaired By</TableHeadCell>
               <TableHeadCell align='center'>QC Checked</TableHeadCell>
-              <TableHeadCell align='right'>Remarks</TableHeadCell>
+              <TableHeadCell align='left'>Remarks</TableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -68,7 +69,7 @@ const ChecklistTable = ({ records, handleRecordChange }) => {
                     />
                   )}
                 </TightTableCell>
-                <TightTableCell align='center'>
+                <TightTableCell align='left'>
                   {record.fillable && (
                     <TextField
                       name='repaired_by'
@@ -88,7 +89,7 @@ const ChecklistTable = ({ records, handleRecordChange }) => {
                     />
                   )}
                 </TightTableCell>
-                <TightTableCell align='right'>
+                <TightTableCell align='left'>
                   {record.fillable && (
                     <TextField
                       name='remarks'

@@ -11,6 +11,8 @@ const {
   toggleBayAssignment,
 } = require("../services/houseServices");
 
+const {requireLoggin, requirePermission} = require('../middleware/authMiddleware')
+
 // GET endpoint to retrieve all houses
 router.get("/", async (req, res) => {
   try {
@@ -51,7 +53,7 @@ router.get("/inbay/:bayid", async (req, res) => {
 });
 
 // GET endpoint to retrieve a specific house
-router.get("/:houseid", async (req, res) => {
+router.get("/:houseid",  async (req, res) => {
   const { houseid } = req.params;
   try {
     const house = await getHouseFromDb(houseid); // Function to fetch a specific house

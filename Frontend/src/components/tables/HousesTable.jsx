@@ -23,6 +23,7 @@ import {
 import { houseStatusEnum } from '../../constants/contants'
 import { useNavigate } from 'react-router-dom'
 import { colors } from '../../styles/colors'
+import { deleteChecklistAsync } from '../../redux/checklists/thunksChecklists.js'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -48,6 +49,7 @@ const HousesTable = ({
 
   const handleDelete = async houseId => {
     await dispatch(deleteHouseAsync(houseId))
+    await dispatch(deleteChecklistAsync(houseId))
     dispatch(
       getAllHousesAsync({
         query: '',
@@ -136,7 +138,7 @@ const HousesTable = ({
 }
 
 HousesTable.propTypes = {
-  houses: PropTypes.array.isRequired,
+  houses: PropTypes.array,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,

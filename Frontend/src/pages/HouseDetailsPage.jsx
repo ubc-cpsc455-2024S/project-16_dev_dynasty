@@ -37,6 +37,8 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { routes } from '../router/routes'
+import { deleteChecklist } from '../redux/checklists/serviceChecklists.js'
+import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists.js'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -102,8 +104,9 @@ const HouseDetailsPage = () => {
     )
   }
 
-  const handleDeleteHouse = () => {
-    dispatch(deleteHouseAsync(houseInfo._id))
+  const handleDeleteHouse = async () => {
+    await dispatch(deleteHouseAsync(houseInfo._id))
+    await dispatch(deleteChecklistAsync(houseInfo._id))
     navigate(routes.housesRoute)
   }
 

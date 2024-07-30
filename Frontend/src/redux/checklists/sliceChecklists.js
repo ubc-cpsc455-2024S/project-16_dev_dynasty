@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getChecklistAsync, putChecklistAsync } from './thunksChecklists.js'
+import {
+  deleteChecklistAsync,
+  getChecklistAsync,
+  putChecklistAsync,
+} from './thunksChecklists.js'
 
 const INITIAL_STATE = {
   data: null,
   status: {
     getOne: 'idle',
     putOne: 'idle',
+    delete: 'idle',
   },
   error: null,
 }
@@ -38,6 +43,18 @@ const checklistSlice = createSlice({
       })
       .addCase(putChecklistAsync.rejected, (state, action) => {
         state.status.putOne = 'rejected'
+        state.error = action.error.message
+      })
+      // Handle deleteChecklistAsync
+      .addCase(deleteChecklistAsync.pending, state => {
+        state.status.delete = 'pending'
+      })
+      .addCase(deleteChecklistAsync.fulfilled, state => {
+        state.status.delete = 'fulfilled'
+        state.data = null
+      })
+      .addCase(deleteChecklistAsync.rejected, (state, action) => {
+        state.status.delete = 'rejected'
         state.error = action.error.message
       })
   },

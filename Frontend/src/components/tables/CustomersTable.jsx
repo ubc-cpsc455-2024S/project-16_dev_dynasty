@@ -70,7 +70,7 @@ const CustomersTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {customers
+          {Array.isArray(customers) && customers
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map(customer => (
               <TableRowStyled
@@ -88,7 +88,8 @@ const CustomersTable = ({
             ))}
         </TableBody>
       </Table>
-      <TablePagination
+
+      {Array.isArray(customers) && <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component='div'
         count={customers.length}
@@ -96,7 +97,8 @@ const CustomersTable = ({
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      />}
+      
     </TableContainer>
   )
 }

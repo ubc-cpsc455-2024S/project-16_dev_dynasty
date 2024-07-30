@@ -10,7 +10,7 @@ export const colors = {
   sideBarLinkInactiveBackground: 'grey',
   sideBarActiveIconColor: 'grey',
   sideBarInactiveIconColor: 'white',
-  tableHeadCellBackground: '#171717bc',
+  tableHeadCellBackground: '#171717',
   tableRowOddBackground: '#272626cb',
   dialogSecondaryButtonColor: 'grey',
   locationIconColor: '#FF4C4C',

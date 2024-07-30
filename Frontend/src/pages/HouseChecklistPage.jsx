@@ -26,12 +26,12 @@ import {
 const LoadingContainer = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '50px',
 })
 
 const checklists = [
   { label: 'Unit Exterior', value: 'unit_exterior' },
   { label: 'Kitchen / Dining Room', value: 'kitchen_dining' },
+  { label: 'Living Room', value: 'living_room' },
 ]
 
 const HouseChecklistPage = () => {
@@ -86,53 +86,48 @@ const HouseChecklistPage = () => {
 
   return (
     <Navbar>
-      <Container>
-        {!houseState || !checklistData ? (
-          <LoadingContainer>
-            <CircularProgress />
-          </LoadingContainer>
-        ) : (
-          <>
-            <Header1 title={<HouseHeader npl={houseState.npl} />} />
-            <HouseTabs />
-            <Box mt={3}>
-              <Box mb={3} display='flex' justifyContent='space-between'>
-                <FormControl
-                  variant='outlined'
-                  size='small'
-                  style={{ minWidth: 200 }}
+      {!houseState || !checklistData ? (
+        <LoadingContainer>
+          <CircularProgress />
+        </LoadingContainer>
+      ) : (
+        <Container>
+          <Header1 title={<HouseHeader npl={houseState.npl} />} />
+          <HouseTabs />
+          <Box mt={3}>
+            <Box mb={3} display='flex' justifyContent='space-between'>
+              <FormControl
+                variant='outlined'
+                size='small'
+                style={{ minWidth: 200 }}
+              >
+                <InputLabel id='checklist-select-label'>Checklist</InputLabel>
+                <Select
+                  labelId='checklist-select-label'
+                  id='checklist-select'
+                  value={checklistName}
+                  label='Checklist'
+                  onChange={e => setChecklistName(e.target.value)}
                 >
-                  <InputLabel id='checklist-select-label'>Checklist</InputLabel>
-                  <Select
-                    labelId='checklist-select-label'
-                    id='checklist-select'
-                    value={checklistName}
-                    label='Checklist'
-                    onChange={e => setChecklistName(e.target.value)}
-                  >
-                    {checklists.map(checklist => (
-                      <MenuItem key={checklist.value} value={checklist.value}>
-                        {checklist.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleClick}
-                >
-                  Save
-                </Button>
-              </Box>
-              <ChecklistTable
-                records={checklistData[checklistName].records}
-                handleRecordChange={handleRecordChange}
-              />
+                  {checklists.map(checklist => (
+                    <MenuItem key={checklist.value} value={checklist.value}>
+                      {checklist.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button variant='contained' color='primary' onClick={handleClick}>
+                Save
+              </Button>
             </Box>
-          </>
-        )}
-      </Container>
+            <ChecklistTable
+              records={checklistData[checklistName].records}
+              handleRecordChange={handleRecordChange}
+            />
+          </Box>
+        </Container>
+      )}
+      {/*</Container>*/}
     </Navbar>
   )
 }
