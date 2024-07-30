@@ -1,5 +1,6 @@
 import axios from 'axios'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import { toast } from 'react-toastify'
 
 const getCustomers = async ({ customerNameQuery }) => {
   try {
@@ -49,6 +50,9 @@ const addCustomer = async customerData => {
     return response.data.result
   } catch (error) {
     console.error('Error adding customer:', error)
+    if(error.response.status === 401) {
+      toast.error('You are not authorized to add customer');
+  }
   }
 }
 

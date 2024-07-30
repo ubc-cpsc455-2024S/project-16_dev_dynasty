@@ -23,9 +23,9 @@ const CustomersAddPage = () => {
     setFormFields({ ...formFields, [name]: value })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {yi
     e.preventDefault()
-    dispatch(addCustomerAsync(formFields))
+    await dispatch(addCustomerAsync(formFields))
     // clearFormFields()
     navigate(-1)
   }
