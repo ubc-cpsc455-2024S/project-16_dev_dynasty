@@ -31,7 +31,7 @@ router.get("/", requireLoggin, async (req, res) => {
 });
 
 // GET endpoint to retrieve all houses that has bay
-router.get("/inbay", async (req, res) => {
+router.get("/inbay", requireLoggin, async (req, res) => {
   try {
     const houses = await getHousesInBays();
     res.json({ result: houses });
@@ -40,8 +40,8 @@ router.get("/inbay", async (req, res) => {
   }
 });
 
-// GET endpoint to retrieve all houses that has bay
-router.get("/inbay/:bayid", async (req, res) => {
+// GET endpoint to retrieve the house that is in a specific bay
+router.get("/inbay/:bayid", requireLoggin, async (req, res) => {
   const { bayid } = req.params;
   console.log("bayid", bayid);
   try {
@@ -53,7 +53,7 @@ router.get("/inbay/:bayid", async (req, res) => {
 });
 
 // GET endpoint to retrieve a specific house
-router.get("/:houseid",  async (req, res) => {
+router.get("/:houseid", requireLoggin,  async (req, res) => {
   const { houseid } = req.params;
   try {
     const house = await getHouseFromDb(houseid); // Function to fetch a specific house
@@ -68,7 +68,7 @@ router.get("/:houseid",  async (req, res) => {
 });
 
 // POST endpoint to add a new house
-router.post("/", async (req, res) => {
+router.post("/", requireLoggin, requirePermission('admin'), async (req, res) => {
   try {
     const newHouse = await addHouseToDb(req.body); // Function to add a new house
     res.status(201).json({ result: newHouse });
@@ -79,7 +79,7 @@ router.post("/", async (req, res) => {
 });
 
 // DELETE endpoint to remove a house
-router.delete("/:houseid", async (req, res) => {
+router.delete("/:houseid",requireLoggin, requirePermission('admin'),  async (req, res) => {
   const { houseid } = req.params;
   try {
     const houseDeleted = await deleteHouseFromDb(houseid); // Function to delete a house
@@ -91,7 +91,7 @@ router.delete("/:houseid", async (req, res) => {
 });
 
 // PUT endpoint to update house information
-router.put("/:houseid", async (req, res) => {
+router.put("/:houseid", requireLoggin, async (req, res) => {
   const { houseid } = req.params;
   try {
     const updatedHouse = await updateHouseInDb(houseid, req.body); // Function to update house details
@@ -106,7 +106,7 @@ router.put("/:houseid", async (req, res) => {
 });
 
 // PATCH endpoint to attach or detach a house to a bay
-router.patch("/:houseid/:bayid", async (req, res) => {
+router.patch("/:houseid/:bayid", requireLoggin, async (req, res) => {
   const { houseid, bayid } = req.params;
   try {
     const updatedHouse = await toggleBayAssignment(houseid, bayid); // Function to attach/detach a bay
