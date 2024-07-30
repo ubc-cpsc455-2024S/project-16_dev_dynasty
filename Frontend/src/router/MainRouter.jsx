@@ -61,7 +61,7 @@ const MainRouter = () => {
         <Route path={routes.usersRoute} element={<PrivateRoute element={UsersPage} />} />
         <Route path={routes.usersAddRoute} element={<PrivateRoute element={UsersAddPage} />} />
         <Route path={routes.housesRoute} element={<PrivateRoute element={HousesPage} />} />
-        <Route path={routes.housesAddRoute} element={<PrivateRoute element={HousesAddPage} />} />
+        <Route path={routes.housesAddRoute} element={<PrivateRoute requiredRole= 'admin' element={HousesAddPage} />} />
         <Route path={routes.houseDetailsRoute} element={<PrivateRoute element={HouseDetailsPage} />} />
         <Route path={routes.houseDefectsRoute} element={<PrivateRoute element={HouseDefectsPage} />} />
         <Route path={routes.houseAddDefectRoute} element={<PrivateRoute element={AddHouseDefectPage} />} />
