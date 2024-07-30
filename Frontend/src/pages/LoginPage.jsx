@@ -22,7 +22,7 @@ const LoginPage = () => {
       password: password
     } 
     await dispatch(userLoginAsync(logInData));
-    navigate(-1);
+    navigate(routes.workshopRoute);
   }
 
   return (
