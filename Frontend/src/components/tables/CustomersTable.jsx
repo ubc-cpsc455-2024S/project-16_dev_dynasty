@@ -12,7 +12,7 @@ import {
   IconButton,
 } from '@mui/material'
 import { styled } from '@mui/system'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {
   deleteCustomerAsync,
@@ -20,6 +20,7 @@ import {
 } from '../../redux/customers/thunksCustomers.js'
 import { useNavigate } from 'react-router-dom'
 import { colors } from '../../styles/colors'
+import { toast } from 'react-toastify'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -43,10 +44,17 @@ const CustomersTable = ({
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const currentUser = useSelector(state => state.auth.user)
 
   const handleDelete = async customerId => {
-    await dispatch(deleteCustomerAsync(customerId))
-    dispatch(getCustomersAsync({ customerNameQuery }))
+    console.log('the current user is: ', currentUser)
+    if (currentUser.role !== 'admin') {
+      toast.error('Only admin user authorized for this action')
+    } else {
+      await dispatch(deleteCustomerAsync(customerId))
+      dispatch(getCustomersAsync({ customerNameQuery }))
+    }
+    
   }
 
   const handleRowClick = customerId => {

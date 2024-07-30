@@ -39,6 +39,7 @@ import { styled } from '@mui/system'
 import { routes } from '../router/routes'
 import { deleteChecklist } from '../redux/checklists/serviceChecklists.js'
 import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists.js'
+import { toast } from 'react-toastify'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -73,6 +74,7 @@ const HouseDetailsPage = () => {
   const navigate = useNavigate()
   const houseInfo = useSelector(state => state.houses.findHouse || null)
   const bays = useSelector(state => state.bays.list || [])
+  const currentUser = useSelector(state => state.auth.user)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -111,7 +113,12 @@ const HouseDetailsPage = () => {
   }
 
   const handleClickOpen = () => {
-    setOpen(true)
+    console.log ('the current user is: ', currentUser);
+    if (currentUser.role !== 'admin') {
+      toast.error('Only admin user authorized for this action');
+    } else {
+      setOpen(true)
+    }
   }
 
   const handleClose = () => {

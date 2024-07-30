@@ -17,6 +17,7 @@ import { styled } from '@mui/system'
 import CustomersTable from '../components/tables/CustomersTable'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
 import { colors } from '../styles/colors'
+import { toast } from 'react-toastify'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -34,6 +35,8 @@ const CustomersPage = () => {
   const customers = useSelector(state => state.customers.list)
   const status = useSelector(state => state.customers.status)
   const error = useSelector(state => state.customers.error)
+  const currentUser = useSelector(state => state.auth.user)
+
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -56,6 +59,16 @@ const CustomersPage = () => {
     setPage(0)
   }
 
+
+  const handleAddCustomerButtonClick =() => {
+    console.log ('the current user is: ', currentUser);
+    if (currentUser.role !== 'admin') {
+      toast.error('Only admin user authorized for this action');
+    } else {
+      navigate(routes.customersAddRoute);
+    }
+  }
+
   return (
     <Navbar>
       <Container>
@@ -64,7 +77,7 @@ const CustomersPage = () => {
           button={
             <Button
               variant='contained'
-              onClick={() => navigate(routes.customersAddRoute)}
+              onClick={handleAddCustomerButtonClick}
               startIcon={<MdAdd />}
             >
               Add Customer

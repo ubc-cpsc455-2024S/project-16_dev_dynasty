@@ -1,5 +1,6 @@
 import axios from 'axios';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import { toast } from 'react-toastify'
 
 const login = async (signInData) => {
     try {
@@ -8,7 +9,13 @@ const login = async (signInData) => {
         });
         return response.data.result;
     } catch (error) {
-        console.error('Error fetching bays:', error);
+        console.error('Error loging in:', error);
+        if(error.response.status === 401) {
+            toast.error('Incorrect password');
+        }
+        if(error.response.status === 404) {
+            toast.error('Incorrect username');
+        }
         throw error;
     }
 }
