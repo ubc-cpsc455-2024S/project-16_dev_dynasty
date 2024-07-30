@@ -14,7 +14,7 @@ const {
 const {requireLoggin, requirePermission} = require('../middleware/authMiddleware')
 
 // GET endpoint to retrieve all houses
-router.get("/", requireLoggin, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const { query, nplQuery, customerNameQuery, houseModelQuery } = req.query;
     const houses = await getHousesFromDb({

@@ -4,6 +4,7 @@ const secret = process.env.JWT_SECRET_STR;
 
 const requireLoggin = (req, res, next) => {
     const token = req.cookies.jwt;
+    console.log('verifying logining and token is: ', token);
     if (token) {
         jwt.verify(token, secret, (err, decodedToken) => {
             if (err) {
