@@ -35,14 +35,15 @@ router.post("/signin", async (req, res, next) => {
         // const cookieOptions = {
         //     httpOnly: true,
         //     maxAge: 1000 * 60 * 60, // 1 hour (adjust as needed)
-        //     sameSite: 'none', // Adjust as needed based on your setup
+        //     path: '/',
+        //     // sameSite: 'none', 
         //     // secure: true 
         // };
 
         // res.setHeader('Set-Cookie', cookie.serialize('jwt', token, cookieOptions));
 
 
-        res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000});
+        res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000, path: '/'});
         res.status(201).json({ result: user });
     } catch (error) {
         console.log("the error caught was: ", error);
@@ -81,7 +82,7 @@ router.get("/logout", async (req, res, next) => {
     // };
 
     // res.setHeader('Set-Cookie', cookie.serialize('jwt', '', cookieOptions));
-    res.cookie('jwt', '', { httpOnly: true, maxAge: 2});
+    res.cookie('jwt', '', { httpOnly: true, maxAge: 2, path: '/'});
     res.status(200).json({ message: 'user is logged out' });
 });
 

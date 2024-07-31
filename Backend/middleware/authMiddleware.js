@@ -1,9 +1,13 @@
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
+const cookie = require('cookie');
 const secret = process.env.JWT_SECRET_STR;
 
 const requireLoggin = (req, res, next) => {
     const token = req.cookies.jwt;
+    // const cookies = cookie.parse(req.headers.cookie || '');
+    // console.log('verifying logining and cookies are: ', cookies);
+    // const token = cookies.jwt;
     console.log('verifying logining and token is: ', token);
     if (token) {
         jwt.verify(token, secret, (err, decodedToken) => {
@@ -30,7 +34,7 @@ const requirePermission = (permission) => {
         }
     }
 
-    
+
 
 };
 
