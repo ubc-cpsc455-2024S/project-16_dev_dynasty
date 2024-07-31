@@ -26,13 +26,8 @@ const CustomersAddPage = () => {
   const handleSubmit = e => {
     e.preventDefault()
     dispatch(addCustomerAsync(formFields))
-    // clearFormFields()
     navigate(-1)
   }
-
-  // const clearFormFields = () => {
-  //   setFormFields(initialState)
-  // }
 
   return (
     <Navbar>
@@ -51,6 +46,7 @@ const CustomersAddPage = () => {
             <TextField
               name={'customer_email'}
               label={'Email'}
+              type={'email'}
               value={formFields.customer_email}
               onChange={handleChange}
             />

@@ -7,7 +7,7 @@ const getCustomersFromDb = async ({ customerNameQuery }) => {
       }
     : {};
 
-  return Customer.find(filter);
+  return Customer.find(filter).sort({ customer_name: 1 });
 };
 
 const addCustomerToDb = async (customerData) => {
