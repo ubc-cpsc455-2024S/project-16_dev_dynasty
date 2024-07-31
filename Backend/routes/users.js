@@ -31,19 +31,19 @@ router.post("/signin", async (req, res, next) => {
         user.password = undefined;
         const token = jwt.sign(user.toObject(), secret, { expiresIn: 1000 });
 
-        // // Serialize the cookie
-        // const cookieOptions = {
-        //     httpOnly: true,
-        //     maxAge: 1000 * 60 * 60, // 1 hour (adjust as needed)
-        //     path: '/',
-        //     // sameSite: 'none', 
-        //     // secure: true 
-        // };
+        // Serialize the cookie
+        const cookieOptions = {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60, // 1 hour (adjust as needed)
+            path: '/',
+            sameSite: 'none', 
+            secure: true 
+        };
 
-        // res.setHeader('Set-Cookie', cookie.serialize('jwt', token, cookieOptions));
+        res.setHeader('Set-Cookie', cookie.serialize('jwt', token, cookieOptions));
 
 
-        res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000, path: '/'});
+        // res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000, path: '/'});
         res.status(201).json({ result: user });
     } catch (error) {
         console.log("the error caught was: ", error);
@@ -74,15 +74,16 @@ router.get("/verify-token", (req, res) => {
 const pastDate = new Date(0).toUTCString();
 router.get("/logout", async (req, res, next) => {
 
-    // const cookieOptions = {
-    //     httpOnly: true,
-    //     // expires: pastDate, // Set expiration to a past date
-    //     maxAge: 1,
-    //     sameSite: 'none'
-    // };
+    const cookieOptions = {
+        httpOnly: true,
+        // expires: pastDate, 
+        path: '/',
+        maxAge: 1,
+        // sameSite: 'none'
+    };
 
-    // res.setHeader('Set-Cookie', cookie.serialize('jwt', '', cookieOptions));
-    res.cookie('jwt', '', { httpOnly: true, maxAge: 2, path: '/'});
+    res.setHeader('Set-Cookie', cookie.serialize('jwt', '', cookieOptions));
+    // res.cookie('jwt', '', { httpOnly: true, maxAge: 2, path: '/'});
     res.status(200).json({ message: 'user is logged out' });
 });
 
