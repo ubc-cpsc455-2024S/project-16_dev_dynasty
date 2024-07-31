@@ -79,7 +79,8 @@ router.get("/logout", async (req, res, next) => {
         // expires: pastDate, 
         path: '/',
         maxAge: 1,
-        // sameSite: 'none'
+        sameSite: 'none',
+        secure: true
     };
 
     res.setHeader('Set-Cookie', cookie.serialize('jwt', '', cookieOptions));
