@@ -36,7 +36,6 @@ const HousesAddPage = () => {
     e.preventDefault()
     const result = await dispatch(addHouseAsync(formFields)).unwrap()
     await dispatch(putChecklistAsync({ houseId: result._id }))
-    // clearFormFields()
     navigate(-1)
   }
 
@@ -49,13 +48,15 @@ const HousesAddPage = () => {
               Fill in the form below to add a new house
             </Typography>
             <TextField
+              required
               name={'npl'}
-              label={'Project #'}
+              label={'NPL #'}
               type={'number'}
               value={formFields.npl}
               onChange={handleChange}
             />
             <TextField
+              required
               select={true}
               name={'customer_id'}
               label={'Customer Name'}
@@ -69,21 +70,20 @@ const HousesAddPage = () => {
               ))}
             </TextField>
             <TextField
+              required
               name={'house_model'}
               label={'Model #'}
               value={formFields.house_model}
               onChange={handleChange}
             />
             <TextField
+              required
               name={'square_ft'}
-              label={
-                <span>
-                  Floor area (ft<sup>2</sup>)
-                </span>
-              }
+              label={'Floor area (sq ft)'}
               type={'number'}
               value={formFields.square_ft}
               onChange={handleChange}
+              helperText='* Indicates required field'
             />
             <Button variant='contained' type='submit'>
               Submit
