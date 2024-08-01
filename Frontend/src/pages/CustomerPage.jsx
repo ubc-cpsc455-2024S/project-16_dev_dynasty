@@ -18,13 +18,6 @@ import { colors } from '../styles/colors'
 const LoadingContainer = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '50px',
-})
-
-const ErrorText = styled(Typography)({
-  color: colors.errorTextColor,
-  textAlign: 'center',
-  marginTop: '50px',
 })
 
 const CustomerPage = () => {
