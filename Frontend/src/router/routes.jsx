@@ -16,4 +16,5 @@ export const routes = {
   houseEditDocumentRoute: '/houses/:id/documents/:documentId/edit',
   houseChecklistRoute: '/houses/:id/checklist',
   customerRoute: '/customers/:id',
+  eventLogsRoute: '/logs',
 }
