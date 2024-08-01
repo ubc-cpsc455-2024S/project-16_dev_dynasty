@@ -7,9 +7,10 @@ const {
   getCustomerFromDb,
   updateCustomerInDb,
 } = require("../services/customerServices");
+const {requireLoggin, requirePermission} = require('../middleware/authMiddleware')
 
 // GET endpoint to retrieve all customers
-router.get("/", async (req, res, next) => {
+router.get("/", requireLoggin, async (req, res, next) => {
   try {
     const { customerNameQuery } = req.query;
     const customers = await getCustomersFromDb({ customerNameQuery });
@@ -20,7 +21,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // POST endpoint to add a new customer
-router.post("/", async (req, res) => {
+router.post("/", requireLoggin, requirePermission('admin'), async (req, res) => {
   try {
     const newCustomer = await addCustomerToDb(req.body);
     res.status(201).json({ result: newCustomer });
@@ -30,7 +31,7 @@ router.post("/", async (req, res) => {
 });
 
 // GET endpoint to retrieve a specific customer by id
-router.get("/:customerId", async (req, res) => {
+router.get("/:customerId", requireLoggin, async (req, res) => {
   const customerId = req.params.customerId;
   try {
     const customer = await getCustomerFromDb(customerId);
@@ -45,7 +46,7 @@ router.get("/:customerId", async (req, res) => {
 });
 
 // DELETE endpoint to delete a specific customer by id
-router.delete("/:customerId", async (req, res) => {
+router.delete("/:customerId", requireLoggin, requirePermission('admin'), async (req, res) => {
   const customerId = req.params.customerId;
   try {
     const result = await deleteCustomerFromDb(customerId);
@@ -60,7 +61,7 @@ router.delete("/:customerId", async (req, res) => {
 });
 
 // PUT endpoint to update a specific customer
-router.put("/:customerId", async (req, res) => {
+router.put("/:customerId", requireLoggin, async (req, res) => {
   const customerId = req.params.customerId;
   try {
     const updatedCustomer = await updateCustomerInDb(customerId, req.body); // Function to update customer details

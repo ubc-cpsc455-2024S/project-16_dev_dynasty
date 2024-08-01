@@ -22,6 +22,7 @@ import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import { houseStatusEnum } from '../constants/contants'
 import { colors } from '../styles/colors'
+import { toast } from 'react-toastify'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -50,6 +51,7 @@ const HousesPage = () => {
   const houses = useSelector(state => state.houses.list)
   const status = useSelector(state => state.houses.status)
   const error = useSelector(state => state.houses.error)
+  const currentUser = useSelector(state => state.auth.user);
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -86,6 +88,15 @@ const HousesPage = () => {
     fetchData()
   }
 
+  const handleAddHouseButtonClick =() => {
+    console.log ('the current user is: ', currentUser);
+    if (currentUser.role !== 'admin') {
+      toast.error('Only admin user authorized for this action');
+    } else {
+      navigate(routes.housesAddRoute);
+    }
+  }
+
   return (
     <Navbar>
       <Container>
@@ -94,7 +105,7 @@ const HousesPage = () => {
           button={
             <Button
               variant='contained'
-              onClick={() => navigate(routes.housesAddRoute)}
+              onClick={handleAddHouseButtonClick}
               startIcon={<MdAdd />}
             >
               Add House

@@ -3,7 +3,11 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const getDocumentsByHouseId = async (houseId) => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/documents/${houseId}/documents`);
+    const response = await axios.get(`${BACKEND_URL}/documents/${houseId}/documents`,
+      {
+        withCredentials: true 
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(`Error fetching documents for house with id ${houseId}:`, error);
@@ -26,6 +30,7 @@ export const addDocument = async (houseId, documentData) => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true
     });
     return response.data;
   } catch (error) {
@@ -49,6 +54,7 @@ export const updateDocument = async (houseId, documentId, documentData) => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true
     });
     return response.data;
   } catch (error) {
@@ -59,7 +65,11 @@ export const updateDocument = async (houseId, documentId, documentData) => {
 
 export const deleteDocument = async (houseId, documentId) => {
   try {
-    const response = await axios.delete(`${BACKEND_URL}/documents/${houseId}/documents/${documentId}`);
+    const response = await axios.delete(`${BACKEND_URL}/documents/${houseId}/documents/${documentId}`,
+      {
+        withCredentials: true 
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(`Error deleting document with id ${documentId}:`, error);

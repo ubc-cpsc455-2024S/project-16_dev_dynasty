@@ -14,7 +14,7 @@ import {
   Chip,
 } from '@mui/material'
 import { styled } from '@mui/system'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {
   deleteHouseAsync,
@@ -24,6 +24,7 @@ import { houseStatusEnum } from '../../constants/contants'
 import { useNavigate } from 'react-router-dom'
 import { colors } from '../../styles/colors'
 import { deleteChecklistAsync } from '../../redux/checklists/thunksChecklists.js'
+import { toast } from 'react-toastify'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -46,18 +47,24 @@ const HousesTable = ({
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const currentUser = useSelector(state => state.auth.user)
 
   const handleDelete = async houseId => {
-    await dispatch(deleteHouseAsync(houseId))
-    await dispatch(deleteChecklistAsync(houseId))
-    dispatch(
-      getAllHousesAsync({
-        query: '',
-        nplQuery: '',
-        customerNameQuery: '',
-        houseModelQuery: '',
-      })
-    )
+    console.log('the current user is: ', currentUser)
+    if (currentUser.role !== 'admin') {
+      toast.error('Only admin user authorized for this action')
+    } else {
+      await dispatch(deleteHouseAsync(houseId))
+      await dispatch(deleteChecklistAsync(houseId))
+      dispatch(
+        getAllHousesAsync({
+          query: '',
+          nplQuery: '',
+          customerNameQuery: '',
+          houseModelQuery: '',
+        })
+      )
+    }
   }
 
   const handleRowClick = houseId => {

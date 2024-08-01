@@ -3,7 +3,9 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const getDefectsByHouseId = async (houseId) => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/defects/${houseId}`);
+    const response = await axios.get(`${BACKEND_URL}/defects/${houseId}`,{
+      withCredentials: true 
+    });
     return response.data;
   } catch (error) {
     console.error(`Error fetching defects for house with id ${houseId}:`, error);
@@ -29,6 +31,7 @@ export const addDefect = async (houseId, defectData) => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true 
     });
     return response.data;
   } catch (error) {
@@ -54,6 +57,7 @@ export const updateDefect = async (houseId, defectId, defectData) => {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      withCredentials: true 
     });
     return response.data;
   } catch (error) {
@@ -63,7 +67,11 @@ export const updateDefect = async (houseId, defectId, defectData) => {
 
 export const deleteDefect = async (houseId, defectId) => {
   try {
-    const response = await axios.delete(`${BACKEND_URL}/defects/${houseId}/${defectId}`);
+    const response = await axios.delete(`${BACKEND_URL}/defects/${houseId}/${defectId}`,
+      {
+        withCredentials: true 
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(`Error deleting defect with id ${defectId}:`, error);

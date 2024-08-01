@@ -14,13 +14,13 @@ import {
 import { styled } from '@mui/system'
 import { useDispatch, useSelector } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete'
-import {
-  deleteCustomerAsync,
-  getCustomersAsync,
-} from '../../redux/customers/thunksCustomers.js'
 import { useNavigate } from 'react-router-dom'
 import { colors } from '../../styles/colors'
 import { toast } from 'react-toastify'
+import {
+    deleteUserAsync,
+    getUsersAsync,
+  } from '../../redux/auth/thunkAuth'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -34,9 +34,8 @@ const TableRowStyled = styled(TableRow)({
   cursor: 'pointer',
 })
 
-const CustomersTable = ({
-  customers,
-  customerNameQuery,
+const UsersTable = ({
+  users,
   page,
   rowsPerPage,
   handleChangePage,
@@ -46,20 +45,17 @@ const CustomersTable = ({
   const navigate = useNavigate()
   const currentUser = useSelector(state => state.auth.user)
 
-  const handleDelete = async customerId => {
+  const handleDelete = async userId => {
     console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
       toast.error('Only admin user authorized for this action')
     } else {
-      await dispatch(deleteCustomerAsync(customerId))
-      dispatch(getCustomersAsync({ customerNameQuery }))
-    }
-    
+      await dispatch(deleteUserAsync(userId))
+      await dispatch(getUsersAsync())
+    } 
   }
 
-  const handleRowClick = customerId => {
-    navigate(`/customers/${customerId}`)
-  }
+ 
 
   return (
     <TableContainer component={Paper} elevation={3}>
@@ -67,10 +63,13 @@ const CustomersTable = ({
         <TableHead>
           <TableRow>
             <TableHeadCell>
-              <Typography variant='h6'>Customer Name</Typography>
+              <Typography variant='h6'>User Name</Typography>
             </TableHeadCell>
             <TableHeadCell>
               <Typography variant='h6'>Email</Typography>
+            </TableHeadCell>
+            <TableHeadCell>
+              <Typography variant='h6'>Role</Typography>
             </TableHeadCell>
             <TableHeadCell>
               <Typography variant='h6'></Typography>
@@ -78,17 +77,17 @@ const CustomersTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.isArray(customers) && customers
+          {Array.isArray(users) && users
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map(customer => (
+            .map(user => (
               <TableRowStyled
-                key={customer._id}
-                onClick={() => handleRowClick(customer._id)}
+                key={user._id}
               >
-                <TableCell>{customer.customer_name}</TableCell>
-                <TableCell>{customer.customer_email}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
                 <TableCell onClick={e => e.stopPropagation()}>
-                  <IconButton onClick={() => handleDelete(customer._id)}>
+                  <IconButton onClick={() => handleDelete(user._id)}>
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -97,10 +96,10 @@ const CustomersTable = ({
         </TableBody>
       </Table>
 
-      {Array.isArray(customers) && <TablePagination
+      {Array.isArray(users) && <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component='div'
-        count={customers.length}
+        count={users.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -111,4 +110,4 @@ const CustomersTable = ({
   )
 }
 
-export default CustomersTable
+export default UsersTable

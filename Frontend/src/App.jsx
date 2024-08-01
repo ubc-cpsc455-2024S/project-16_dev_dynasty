@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainRouter from './router/MainRouter'
 import { theme } from './styles/theme'
 import { ThemeProvider } from '@emotion/react'
@@ -11,10 +11,21 @@ import { verifyTokenAsync } from './redux/auth/thunkAuth';
 
 function App() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(verifyTokenAsync());
+    const verifyToken = async () => {
+      await dispatch(verifyTokenAsync());
+      setIsLoading(false);
+    };
+
+    verifyToken();
   }, [dispatch]);
+
+
+  if (isLoading) {
+    return <div>Loading...</div>; 
+  }
 
   return (
     <ThemeProvider theme={theme}>
