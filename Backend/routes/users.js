@@ -37,12 +37,12 @@ router.post("/signin", async (req, res, next) => {
     try {
         const user = await User.login(name, password);
         user.password = undefined;
-        const token = jwt.sign(user.toObject(), secret, { expiresIn: 1000 });
+        const token = jwt.sign(user.toObject(), secret, { expiresIn: 2002 });
 
         // Serialize the cookie
         const cookieOptions = {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60, // 1 hour (adjust as needed)
+            maxAge: 1000 * 2000, 
             path: '/',
             sameSite: 'none',
             secure: true
