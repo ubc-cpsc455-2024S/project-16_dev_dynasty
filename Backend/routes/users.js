@@ -42,7 +42,7 @@ router.post("/signin", async (req, res, next) => {
         // Serialize the cookie
         const cookieOptions = {
             httpOnly: true,
-            maxAge: 1000 * 2000, 
+            maxAge: 2000, 
             path: '/',
             sameSite: 'none',
             secure: true
