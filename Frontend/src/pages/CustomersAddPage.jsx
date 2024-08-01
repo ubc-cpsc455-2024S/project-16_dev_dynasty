@@ -67,11 +67,11 @@ const CustomersAddPage = () => {
     setFormErrors({ ...formErrors, [name]: isError })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     if (isFormValid()) {
       toast.success('Form is valid! Submitting the form...')
-      dispatch(addCustomerAsync(formFields))
+      await dispatch(addCustomerAsync(formFields))
       navigate(-1)
     } else {
       toast.error('Form is invalid! Please check the fields...')
