@@ -1,12 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Navbar from '../components/navigation/Navbar.jsx'
 import Header1 from '../components/headers/Header1'
-import { TextField, Button, Box, Typography } from '@mui/material'
+import { TextField, Button, Box, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import {userSignupAsync} from '../redux/auth/thunkAuth.js'
 
 const UsersAddPage = () => {
   const navigate = useNavigate();
-  const handleSubmit = e => {
+  const dispatch = useDispatch();
+  const [role, setRole] = useState('');
+
+
+
+
+  const handleSubmit = async e => {
     e.preventDefault()
     const name = e.target.name.value
     const confirmPassword = e.target.confirmPassword.value
@@ -22,12 +30,16 @@ const UsersAddPage = () => {
       confirmPassword:confirmPassword,
       role: role
     }
-    
-    console.log(
-      'Form submitted',
-      userSignupForm
-    )
-    navigate(-1);
+
+    try {
+      const result = await dispatch(userSignupAsync(userSignupForm)).unwrap();
+      if (result) {
+        console.log ('result returned by signup async dispatch is: ', result);
+        navigate(-1);
+      }
+    } catch (err) {
+      console.log('error when signup async dispatch')
+    }
   }
 
   return (
@@ -42,7 +54,20 @@ const UsersAddPage = () => {
             <TextField name={'email'} label={'email'} />
             <TextField name={'password'} label={'password'} />
             <TextField name={'confirmPassword'} label={'confirmPassword'} />
-            <TextField name={'role'} label={'role'} />
+            {/* <TextField name={'role'} label={'role'} /> */}
+            <FormControl>
+              <InputLabel id="role-label">role</InputLabel>
+              <Select
+                labelId="role-label"
+                name="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                label="Role"
+              >
+                <MenuItem value="user">user</MenuItem>
+                <MenuItem value="admin">admin</MenuItem>
+              </Select>
+            </FormControl>
             <Button variant='contained' type='submit'>
               Submit
             </Button>
