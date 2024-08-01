@@ -163,14 +163,14 @@ const EventLogPage = () => {
   }
 
   const filteredLogs = eventLogs.filter(log => {
-    const logDate = new Date(log.time)
+    const logDate = new Date(log.eventTime)
     const logYear = logDate.getFullYear()
     const logMonth = logDate.getMonth() + 1
 
     return (
       (!year || logYear === parseInt(year)) &&
       (!month || logMonth === parseInt(month)) &&
-      (!type || log.type === type)
+      (!type || log.eventType.toLowerCase() === type.toLowerCase())
     )
   })
 
@@ -207,6 +207,7 @@ const EventLogPage = () => {
 
   const LogsBox = styled(Box)({
     maxHeight: '75vh',
+    // minHeight: '30vh',
     overflow: 'auto',
     border: '1px solid #ccc',
     borderRadius: '8px',
@@ -291,12 +292,12 @@ const EventLogPage = () => {
               <em>All Types</em>
             </MenuItem>
             {[
-              'new customer',
-              'new house',
-              'house started',
-              'house completed',
-              'defect created',
-              'defect fixed',
+              'New customer',
+              'New house',
+              'House started',
+              'House completed',
+              'Defect created',
+              'Defect fixed',
             ].map(t => (
               <MenuItem key={t} value={t}>
                 {t}
@@ -327,11 +328,11 @@ const EventLogPage = () => {
           ) : (
             filteredLogs.map((log, index) => (
               <LogContainer key={index}>
-                <TimeTypography variant='body1'>{log.time}</TimeTypography>
+                <TimeTypography variant='body1'>{log.eventTime}</TimeTypography>
                 <ContentTypography variant='body1'>
-                  {log.content}
+                  {log.logContent}
                 </ContentTypography>
-                <TypeTypography variant='body1'>{log.type}</TypeTypography>
+                <TypeTypography variant='body1'>{log.eventType}</TypeTypography>
               </LogContainer>
             ))
           )}

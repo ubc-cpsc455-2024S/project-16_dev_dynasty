@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         validate: {
             validator: validator.isEmail,
             message: 'Please enter a valid email.'
-          }
+        }
     },
     role: {
         type: String,
@@ -48,16 +48,16 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.statics.login = async function (name, password) {
-    const user = await this.findOne ({name});
+    const user = await this.findOne({ name });
     if (user) {
         const auth = await bcrypt.compare(password, user.password);
         if (auth) {
             return user;
         } else {
-            throw new Error ('incorrect password');
+            throw new Error('incorrect password');
         }
     } else {
-        throw new Error ('user does not exist');
+        throw new Error('user does not exist');
     }
 }
 

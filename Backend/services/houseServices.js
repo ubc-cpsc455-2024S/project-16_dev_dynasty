@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const House_View = require("../models/House_View");
 const Bay_View = require("../models/Bay_View");
 const { ObjectId } = require("mongodb");
+const { addLogToDb} = require('./logServices')
 
 // Function to fetch all houses
 const getHousesFromDb = async ({
@@ -71,6 +72,11 @@ const addHouseToDb = async (houseData) => {
     // status: 1,
   };
   const newHouseMade = await House.create(newHouse);
+  const logParams = {customerName: houseData.customer_id,
+    npl: houseData.npl, model: houseData.house_model
+  }
+  await addLogToDb('New house', logParams);
+
   return newHouseMade;
 };
 
