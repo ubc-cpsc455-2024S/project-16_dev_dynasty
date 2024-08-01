@@ -9,7 +9,6 @@ const houseSchema = new mongoose.Schema({
   },
   customer_id: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     default: null,
   },
   online_date: {
