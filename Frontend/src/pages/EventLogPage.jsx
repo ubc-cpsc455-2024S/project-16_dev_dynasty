@@ -189,6 +189,7 @@ const EventLogPage = () => {
 
   const TypeTypography = styled(Typography)({
     flex: '0 0 15%', // 15% width
+    textAlign: 'right'
   })
 
   const ContentTypography = styled(Typography)({
