@@ -22,6 +22,8 @@ import {
   getChecklistAsync,
   putChecklistAsync,
 } from '../redux/checklists/thunksChecklists.js'
+import ChecklistDownloadButton from '../components/buttons/ChecklistDownloadButton.jsx'
+import { MdFileDownload, MdSave } from 'react-icons/md'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -116,9 +118,17 @@ const HouseChecklistPage = () => {
                   ))}
                 </Select>
               </FormControl>
-              <Button variant='contained' color='primary' onClick={handleClick}>
-                Save
-              </Button>
+              <Box display='flex' justifyContent='space-between' gap={1}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={handleClick}
+                  startIcon={<MdSave />}
+                >
+                  Save
+                </Button>
+                <ChecklistDownloadButton houseId={houseId} />
+              </Box>
             </Box>
             <ChecklistTable
               records={checklistData[checklistName].records}

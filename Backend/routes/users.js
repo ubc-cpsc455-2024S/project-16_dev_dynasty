@@ -94,6 +94,8 @@ router.get("/logout", async (req, res, next) => {
 
     res.setHeader('Set-Cookie', cookie.serialize('jwt', '', cookieOptions));
     // res.cookie('jwt', '', { httpOnly: true, maxAge: 2, path: '/'});
+    res.setHeader('Set-Cookie', cookie.serialize('jwt', '', cookieOptions));
+    // res.cookie('jwt', '', { httpOnly: true, maxAge: 2, path: '/'});
     res.status(200).json({ message: 'user is logged out' });
 });
 

@@ -25,6 +25,9 @@ app.set("trust proxy", 1);
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
+  'https://project-16-dev-dynasty.vercel.app',
+  'https://project-16-dev-dynasty-git-main-andyhus-projects.vercel.app',
+  'https://project-16-dev-dynasty-q3q9y5yne-andyhus-projects.vercel.app',
   'https://project-16-dev-dynasty-frontend.onrender.com'
 ];
 
