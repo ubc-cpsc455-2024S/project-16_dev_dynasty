@@ -11,8 +11,7 @@ const getCustomersFromDb = async ({ customerNameQuery }) => {
 };
 
 const addCustomerToDb = async (customerData) => {
-  const { customer_name, customer_email } = customerData;
-  const customer = new Customer({ customer_name, customer_email });
+  const customer = new Customer(customerData);
   await customer.save();
   return customer;
 };

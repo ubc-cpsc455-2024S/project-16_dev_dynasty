@@ -119,9 +119,6 @@ const CustomersAddPage = () => {
             gap={'10px'}
             sx={{ mt: '10px' }}
           >
-            {/*<Typography sx={{ pt: '50px' }} variant='label'>*/}
-            {/*  Fill in the form below to add a new customer*/}
-            {/*</Typography>*/}
             <TextField
               required
               inputRef={fieldRefs.customer_name}

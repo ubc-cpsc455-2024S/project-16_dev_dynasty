@@ -27,7 +27,6 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  TableHead,
   Button,
   Dialog,
   DialogActions,
@@ -37,15 +36,14 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { routes } from '../router/routes'
-import { deleteChecklist } from '../redux/checklists/serviceChecklists.js'
 import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists.js'
 
-const TableHeadCell = styled(TableCell)({
+styled(TableCell)({
   fontWeight: 'bold',
   backgroundColor: '#f5f5f5',
 })
 
-const StatusCell = styled(TableCell)(({ status }) => ({
+styled(TableCell)(({ status }) => ({
   color: getStatusColor(status),
   fontWeight: 'bold',
 }))
