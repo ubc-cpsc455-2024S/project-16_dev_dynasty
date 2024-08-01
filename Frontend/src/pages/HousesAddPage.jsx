@@ -44,16 +44,14 @@ const HousesAddPage = () => {
 
   const handleChange = e => {
     const { name, value } = e.target
-    let newError = {}
+    let isError
     setFormFields({ ...formFields, [name]: value.trim() })
     if (name === 'customer_id') {
-      value ? (newError[name] = false) : (newError[name] = true)
+      value ? (isError = false) : (isError = true)
     } else {
-      e.target.validity.valid
-        ? (newError[name] = false)
-        : (newError[name] = true)
+      e.target.validity.valid ? (isError = false) : (isError = true)
     }
-    setFormErrors({ ...formErrors, ...newError })
+    setFormErrors({ ...formErrors, [name]: isError })
   }
 
   const handleSubmit = async e => {
@@ -90,10 +88,15 @@ const HousesAddPage = () => {
     <Navbar>
       <Header1 title={'Add House'}>
         <form onSubmit={handleSubmit} noValidate>
-          <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
-            <Typography sx={{ pt: '50px' }} variant='label'>
-              Fill in the form below to add a new house
-            </Typography>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'10px'}
+            sx={{ mt: '10px' }}
+          >
+            {/*<Typography sx={{ pt: '50px' }} variant='label'>*/}
+            {/*  Fill in the form below to add a new house*/}
+            {/*</Typography>*/}
             <TextField
               required
               inputRef={fieldRefs.npl}

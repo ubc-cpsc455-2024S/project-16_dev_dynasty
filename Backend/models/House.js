@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const defectSchema = require('./Defects').schema;
-const documentSchema = require('./Documents').schema;
+const mongoose = require("mongoose");
+const defectSchema = require("./Defects").schema;
+const documentSchema = require("./Documents").schema;
 
 const houseSchema = new mongoose.Schema({
   npl: {
@@ -9,7 +9,7 @@ const houseSchema = new mongoose.Schema({
   },
   customer_id: {
     type: mongoose.Schema.Types.ObjectId,
-    // required: true,
+    required: true,
     default: null,
   },
   online_date: {
@@ -47,7 +47,7 @@ const houseSchema = new mongoose.Schema({
   },
   defects: {
     type: [defectSchema],
-    default: []
+    default: [],
   },
   documents: {
     type: [documentSchema],
@@ -55,6 +55,6 @@ const houseSchema = new mongoose.Schema({
   },
 });
 
-const House = mongoose.model('House', houseSchema);
+const House = mongoose.model("House", houseSchema);
 
 module.exports = House;
