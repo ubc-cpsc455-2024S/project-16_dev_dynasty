@@ -1,4 +1,6 @@
 const Customer = require("../models/Customer");
+const Log = require ('../models/Log')
+const { addLogToDb} = require('./logServices')
 
 const getCustomersFromDb = async ({ customerNameQuery }) => {
   const filter = customerNameQuery
@@ -7,13 +9,15 @@ const getCustomersFromDb = async ({ customerNameQuery }) => {
       }
     : {};
 
-  return Customer.find(filter);
+  return await Customer.find(filter);
 };
 
 const addCustomerToDb = async (customerData) => {
   const { customer_name, customer_email } = customerData;
   const customer = new Customer({ customer_name, customer_email });
   await customer.save();
+  const logParams = {customerName: customer_name}
+  await addLogToDb('New customer', logParams)
   return customer;
 };
 

@@ -104,6 +104,10 @@ const toggleBayAssignment = async (houseid, bayid) => {
     // Moved from "Not Started" -> "In Progress" === update online date
     if (!currentHouse.online_date) {
       currentHouse.online_date = formatDate(new Date());
+      const logParams = {customerName: currentHouse.customer_id,
+        npl: currentHouse.npl, model: currentHouse.house_model
+      }
+      await addLogToDb('House started', logParams);
     }
     currentHouse.bay_id = bayid;
     currentHouse.bay_name = `Bay ${bayid}`;
