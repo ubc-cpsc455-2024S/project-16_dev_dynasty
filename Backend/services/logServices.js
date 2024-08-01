@@ -31,10 +31,10 @@ const addLogToDb = async (type, logParams) => {
                 logContent = `House with NPL ${logParams.npl} was completed for customer ${logParams.customerName}. The model No. is  ${logParams.model}`;
                 break;
             case 'Defect created':
-                logContent = `Defect ${logParams.defectTitle} created for house ${logParams.houseId} in Bay ${logParams.bayId}`;
+                logContent = `Defect ${logParams.defectTitle} created for house with NPL ${logParams.houseNpl} in Bay ${logParams.bayId}, and the house model is ${logParams.model}`;
                 break;
             case 'Defect fixed':
-                logContent = `Defect ${logParams.defectTitle} fixed for house ${logParams.houseId} in Bay ${logParams.bayId}`;
+                logContent = `Defect ${logParams.defectTitle} fixed for house with NPL ${logParams.houseNpl} in Bay ${logParams.bayId}, and the house model is ${logParams.model}`;
                 break;
             default:
                 throw new Error('Invalid event type');

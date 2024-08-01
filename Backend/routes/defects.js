@@ -6,6 +6,8 @@ const multerS3 = require('multer-s3');
 const House = require('../models/House');
 const Defect = require('../models/Defects');
 require('dotenv').config();
+const { addLogToDb } = require('../services/logServices');
+const { model } = require('mongoose');
 
 // Configure AWS SDK
 AWS.config.update({
@@ -97,6 +99,12 @@ router.post('/:houseId', upload.array('images', 10), async (req, res) => {
 
     house.defects.push(newDefect);
     await house.save();
+
+    const logParams = {
+      defectTitle: title,
+      houseNpl: house.npl, bayId: bay_id, model: house.house_model
+    }
+    await addLogToDb('Defect created', logParams);
     console.log("Defect added to house and house saved");
 
     res.status(201).json({ message: 'Defect created successfully', defect: newDefect });
@@ -117,7 +125,7 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
 
     const defect = house.defects[defectIndex];
     const { title, status, description, bay_id } = req.body;
-    
+
     if (title) defect.title = title;
     if (status) defect.status = status;
     if (description) defect.description = description;
@@ -131,6 +139,14 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
     }
 
     await house.save();
+    if (status === 'resolved') {
+      const logParams = {
+        defectTitle: title,
+        houseNpl: house.npl, bayId: bay_id, model: house.house_model
+      }
+      await addLogToDb('Defect fixed', logParams);
+      console.log("Defect added to house and house saved");
+    }
 
     res.status(200).json({ message: 'Defect updated successfully', defect });
   } catch (err) {
