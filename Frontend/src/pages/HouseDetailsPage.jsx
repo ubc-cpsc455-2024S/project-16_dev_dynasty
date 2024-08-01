@@ -7,7 +7,7 @@ import {
   deleteHouseAsync,
   bayToHouseAsync,
 } from '../redux/houses/thunksHouses'
-import { getAllBaysAsync } from '../redux/bays/thunksBays'
+import { getAllBaysAsync, getAvailableBaysAsync } from '../redux/bays/thunksBays'
 import { houseStatusEnum } from '../constants/contants'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
@@ -73,13 +73,14 @@ const HouseDetailsPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const houseInfo = useSelector(state => state.houses.findHouse || null)
-  const bays = useSelector(state => state.bays.list || [])
+  // const bays = useSelector(state => state.bays.list || [])
+  const emptyBays = useSelector(state => state.bays.emptyBays || [])
   const currentUser = useSelector(state => state.auth.user)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
     dispatch(getHouseAsync(id))
-    dispatch(getAllBaysAsync())
+    dispatch(getAvailableBaysAsync())
   }, [dispatch, id])
 
   const handleChangeStatus = async event => {
@@ -130,10 +131,18 @@ const HouseDetailsPage = () => {
     label: houseStatusEnum[key],
   }))
 
-  const bayOptions = bays.map(({ bay_id }) => ({
+  const bayOptions = emptyBays.map(({ bay_id }) => ({
     value: bay_id,
     label: bay_id,
   }))
+  // const bayOptions = [
+  //   ...emptyBays.map(({ bay_id }) => ({
+  //     value: bay_id,
+  //     label: bay_id,
+  //   })),
+  //   { value: 'null', label: 'Null' }
+  // ];
+  
 
   if (!houseInfo) return <CircularProgress />
 

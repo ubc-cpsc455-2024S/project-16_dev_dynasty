@@ -1,12 +1,23 @@
 var express = require("express");
 var router = express.Router();
-const { getBaysFromDb, getBayFromDb } = require("../services/bayServices");
+const { getBaysFromDb, getBayFromDb, getAvailableBaysFromDb } = require("../services/bayServices");
 
 // GET endpoint to retrieve all bays
 router.get("/", async (req, res) => {
   try {
     const bays = await getBaysFromDb();
     res.json({ result: bays });
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
+
+// GET available bays
+router.get("/empty", async (req, res) => {
+  try {
+    const emptyBays = await getAvailableBaysFromDb();
+    console.log('empty bays are: ', emptyBays);
+    res.json({ result: emptyBays });
   } catch (error) {
     res.status(500).send("Server error");
   }
