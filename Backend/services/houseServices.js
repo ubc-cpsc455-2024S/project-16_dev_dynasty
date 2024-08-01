@@ -1,4 +1,3 @@
-var housesJson = require("../data/houses.json");
 const House = require("../models/House");
 const mongoose = require("mongoose");
 const House_View = require("../models/House_View");

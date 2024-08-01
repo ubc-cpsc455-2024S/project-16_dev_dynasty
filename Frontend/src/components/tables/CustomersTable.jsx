@@ -70,6 +70,15 @@ const CustomersTable = ({
               <Typography variant='h6'>Customer Name</Typography>
             </TableHeadCell>
             <TableHeadCell>
+              <Typography variant='h6'>City</Typography>
+            </TableHeadCell>
+            <TableHeadCell>
+              <Typography variant='h6'>Province</Typography>
+            </TableHeadCell>
+            <TableHeadCell>
+              <Typography variant='h6'>Phone</Typography>
+            </TableHeadCell>
+            <TableHeadCell>
               <Typography variant='h6'>Email</Typography>
             </TableHeadCell>
             <TableHeadCell>
@@ -78,35 +87,40 @@ const CustomersTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.isArray(customers) && customers
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map(customer => (
-              <TableRowStyled
-                key={customer._id}
-                onClick={() => handleRowClick(customer._id)}
-              >
-                <TableCell>{customer.customer_name}</TableCell>
-                <TableCell>{customer.customer_email}</TableCell>
-                <TableCell onClick={e => e.stopPropagation()}>
-                  <IconButton onClick={() => handleDelete(customer._id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRowStyled>
-            ))}
+          {Array.isArray(customers) &&
+            customers
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map(customer => (
+                <TableRowStyled
+                  key={customer._id}
+                  onClick={() => handleRowClick(customer._id)}
+                >
+                  <TableCell>{customer.customer_name}</TableCell>
+                  <TableCell>{customer.city}</TableCell>
+                  <TableCell>{customer.region}</TableCell>
+                  <TableCell>{customer.phone}</TableCell>
+                  <TableCell>{customer.customer_email}</TableCell>
+                  <TableCell onClick={e => e.stopPropagation()}>
+                    <IconButton onClick={() => handleDelete(customer._id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRowStyled>
+              ))}
         </TableBody>
       </Table>
 
-      {Array.isArray(customers) && <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component='div'
-        count={customers.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />}
-      
+      {Array.isArray(customers) && (
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={customers.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
     </TableContainer>
   )
 }
