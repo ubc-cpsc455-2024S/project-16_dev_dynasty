@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const House_View = require("../models/House_View");
 const Bay_View = require("../models/Bay_View");
 const { ObjectId } = require("mongodb");
-const { addLogToDb} = require('./logServices')
+const { addLogToDb } = require('./logServices')
 
 // Function to fetch all houses
 const getHousesFromDb = async ({
@@ -72,7 +72,8 @@ const addHouseToDb = async (houseData) => {
     // status: 1,
   };
   const newHouseMade = await House.create(newHouse);
-  const logParams = {customerName: houseData.customer_id,
+  const logParams = {
+    customerName: houseData.customer_id,
     npl: houseData.npl, model: houseData.house_model
   }
   await addLogToDb('New house', logParams);
@@ -94,26 +95,46 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 // Function to attach/detach a bay. Checks bay availability, updates bay name and status at the same time!!
 const toggleBayAssignment = async (houseid, bayid) => {
   try {
-    const newBay = await Bay_View({ bay_id: bayid });
-    if (newBay[0].house_id) {
-      throw new Error(
-        `Bay in use: ${bayid} is already assigned to another house.`,
-      );
+    // bay availability check if bay is not null
+    if (bayid !== 'null') {
+      const newBay = await Bay_View({ bay_id: bayid });
+      if (newBay[0].house_id) {
+        throw new Error(
+          `Bay in use: ${bayid} is already assigned to another house.`,
+        );
+      }
     }
+    // find the house
     const currentHouse = await House.findById(houseid);
-    // Moved from "Not Started" -> "In Progress" === update online date
+    // update online date if house was not started, and log the house started event
     if (!currentHouse.online_date) {
       currentHouse.online_date = formatDate(new Date());
-      const logParams = {customerName: currentHouse.customer_id,
+      const logParams = {
+        customerName: currentHouse.customer_id,
         npl: currentHouse.npl, model: currentHouse.house_model
       }
       await addLogToDb('House started', logParams);
     }
-    currentHouse.bay_id = bayid;
-    currentHouse.bay_name = `Bay ${bayid}`;
-    currentHouse.status = 1;
-    await currentHouse.save();
-    return (await House_View({ _id: new ObjectId(houseid) }))[0];
+    if (bayid == 'null') {
+      currentHouse.bay_id = null;
+      currentHouse.bay_name = null;
+      currentHouse.status = 1;
+      await currentHouse.save();
+      const logParams = {
+        customerName: currentHouse.customer_id,
+        npl: currentHouse.npl, model: currentHouse.house_model
+      }
+      await addLogToDb('House completed', logParams);
+      return (await House_View({ _id: new ObjectId(houseid) }))[0];
+    } else {
+      currentHouse.bay_id = bayid;
+      currentHouse.bay_name = `Bay ${bayid}`;
+      currentHouse.status = 1;
+      await currentHouse.save();
+      return (await House_View({ _id: new ObjectId(houseid) }))[0];
+
+    }
+
     // return currentHouse;
   } catch (error) {
     console.error(`Error updating house ${houseid} with bay ${bayid}:`, error);

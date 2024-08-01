@@ -28,7 +28,7 @@ const addLogToDb = async (type, logParams) => {
                 logContent = `House with NPL ${logParams.npl} started for customer ${logParams.customerName}. The model No. is  ${logParams.model}`;
                 break;
             case 'House completed':
-                logContent = `House with NPL ${logParams.npl} started for customer ${logParams.customerName}. The model No. is  ${logParams.model}`;
+                logContent = `House with NPL ${logParams.npl} was completed for customer ${logParams.customerName}. The model No. is  ${logParams.model}`;
                 break;
             case 'Defect created':
                 logContent = `Defect ${logParams.defectTitle} created for house ${logParams.houseId} in Bay ${logParams.bayId}`;
