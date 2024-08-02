@@ -15,6 +15,8 @@ const logSchema = new mongoose.Schema({
         enum: ['New customer',
             'New house',
             'House started',
+            'Bay work begin',
+            'Bay work complete',
             'House completed',
             'Defect created',
             'Defect fixed',],
