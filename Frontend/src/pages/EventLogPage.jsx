@@ -125,6 +125,9 @@ import {
   Select,
   MenuItem,
   Button,
+  TextField,
+  FormControl,
+  InputLabel,
 } from '@mui/material'
 import { getEventLogsAsync } from '../redux/logs/thunkLog'
 import { styled } from '@mui/system'
@@ -139,6 +142,9 @@ const EventLogPage = () => {
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
   const [type, setType] = useState('')
+  const [bay, setBay] = useState('')
+  const [npl, setNpl] = useState('')
+  const [model, setModel] = useState('')
 
   useEffect(() => {
     dispatch(getEventLogsAsync())
@@ -152,14 +158,29 @@ const EventLogPage = () => {
     setMonth(event.target.value)
   }
 
+  const handleBayChange = event => {
+    setBay(event.target.value)
+  }
+
   const handleTypeChange = event => {
     setType(event.target.value)
+  }
+
+  const handleNplChange = event => {
+    setNpl(event.target.value)
+  }
+
+  const handleModelChange = event => {
+    setModel(event.target.value)
   }
 
   const handleResetFilters = () => {
     setYear('')
     setMonth('')
     setType('')
+    setBay('')
+    setModel('')
+    setNpl('')
   }
 
   const filteredLogs = eventLogs.filter(log => {
@@ -170,7 +191,10 @@ const EventLogPage = () => {
     return (
       (!year || logYear === parseInt(year)) &&
       (!month || logMonth === parseInt(month)) &&
-      (!type || log.eventType.toLowerCase() === type.toLowerCase())
+      (!type || log.eventType.toLowerCase().includes(type.toLowerCase())) &&
+      (!bay || log.logContent.toLowerCase().includes(bay.toLowerCase()))&&
+      (!npl || log.logContent.toLowerCase().includes(npl.toLowerCase()))&&
+      (!model || log.logContent.toLowerCase().includes(model.toLowerCase()))
     )
   })
 
@@ -189,7 +213,7 @@ const EventLogPage = () => {
 
   const TypeTypography = styled(Typography)({
     flex: '0 0 15%', // 15% width
-    textAlign: 'right'
+    textAlign: 'right',
   })
 
   const ContentTypography = styled(Typography)({
@@ -288,6 +312,67 @@ const EventLogPage = () => {
               </MenuItem>
             ))}
           </Select>
+
+          <Select value={bay} onChange={handleBayChange} displayEmpty>
+            <MenuItem value=''>
+              <em>Bays</em>
+            </MenuItem>
+            {[
+              'Bay 1',
+              'Bay 2',
+              'Bay 3',
+              'Bay 4',
+              'Bay 5',
+              'Bay 6',
+              'Bay 7',
+              'Bay 8',
+              'Bay 9',
+              'Bay 10',
+              'Bay 11',
+              'Bay 12',
+              'Bay 13',
+              'Bay 14',
+              'Bay 15',
+              'Bay 16',
+              'Bay 17',
+              'Bay 18',
+              'Bay 19',
+              'Bay 20',
+              'Bay 8.5',
+              'Bay 13a',
+              'Bay 13b',
+              'Bay 14.5',
+              'Bay 15.5',
+              'Bay 16.5',
+              'Bay 17.5',
+              'Bay 18.5',
+              'Bay 19.5',
+              'Bay 20.5',
+            ].map(b => (
+              <MenuItem key={b} value={b}>
+                {b}
+              </MenuItem>
+            ))}
+          </Select>
+
+
+          <TextField
+            id='npl'
+            value={npl}
+            onChange={handleNplChange}
+            variant='outlined'
+            label='NPL'
+           
+          />
+
+          <TextField
+            id='model'
+            value={model}
+            onChange={handleModelChange}
+            variant='outlined'
+            label='Model'
+          />
+
           <Select value={type} onChange={handleTypeChange} displayEmpty>
             <MenuItem value=''>
               <em>All Types</em>
@@ -297,6 +382,9 @@ const EventLogPage = () => {
               'New house',
               'House started',
               'House completed',
+              'Bay work begin',
+              'Bay work complete',
+              'Bay work',
               'Defect created',
               'Defect fixed',
             ].map(t => (
