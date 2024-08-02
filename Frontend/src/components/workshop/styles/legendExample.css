@@ -4,7 +4,7 @@
   grid-template-columns: 5fr 1fr 5fr;
   grid-template-rows: repeat(20, 1fr);
   grid-column: 37/48;
-  grid-row: 22/40;
+  grid-row: 22/44;
   border: 2px solid #000;
 }
 

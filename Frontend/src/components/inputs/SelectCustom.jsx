@@ -36,8 +36,8 @@ const SelectCustom = props => {
             {extraOption.label}
           </MenuItem>
         )}
-        {options.map(({ value, label }) => (
-          <MenuItem key={value} value={value}>
+        {options.map(({ value, label, disabled }) => (
+          <MenuItem key={value} value={value} disabled={disabled}>
             {label}
           </MenuItem>
         ))}

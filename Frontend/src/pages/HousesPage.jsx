@@ -22,7 +22,7 @@ import { getAllHousesAsync } from '../redux/houses/thunksHouses'
 import HousesTable from '../components/tables/HousesTable'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
-import { houseStatusEnum } from '../constants/contants'
+import { houseStatusEnumAll } from '../constants/contants'
 import { colors } from '../styles/colors'
 import { toast } from 'react-toastify'
 import TextFieldLabelWrapper from '../components/labels/TextFieldLabelWrapper'
@@ -43,8 +43,8 @@ const ErrorText = styled(Typography)({
 const commonQueries = [
   { label: 'None', value: '' },
   { label: 'In-Bay Houses', value: 'inBay' },
-  ...Object.keys(houseStatusEnum).map(key => ({
-    label: houseStatusEnum[key],
+  ...Object.keys(houseStatusEnumAll).map(key => ({
+    label: houseStatusEnumAll[key],
     value: key,
   })),
 ]
@@ -164,7 +164,6 @@ const HousesPage = () => {
               variant='outlined'
               onClick={handleClear}
               color='secondary'
-              // style={{ backgroundColor: 'grey', color: 'white' }}
             >
               Clear
             </Button>

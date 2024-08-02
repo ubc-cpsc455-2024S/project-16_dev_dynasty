@@ -19,7 +19,10 @@ import {
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses'
-import { houseStatusEnum } from '../constants/contants'
+import {
+  houseStatusEnumAll,
+  houseStatusEnumSelectable,
+} from '../constants/contants'
 import SelectCustom from '../components/inputs/SelectCustom'
 import { getAvailableBaysAsync } from '../redux/bays/thunksBays'
 import HouseTabs from '../components/navigation/HouseTabs'
@@ -76,9 +79,12 @@ const HouseDetails = ({ houseInfo }) => {
               <TableCell>Status</TableCell>
               <TableCell>
                 <Chip
+                  sx={{ width: '180px' }}
                   className={'status' + houseInfo.status}
-                  label={houseStatusEnum[houseInfo.status]}
-                />
+                  label={houseStatusEnumAll[houseInfo.status]}
+                >
+                  <EditIcon />
+                </Chip>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -123,7 +129,7 @@ const HousePage = () => {
   useEffect(() => {
     dispatch(getHouseAsync(id))
     dispatch(getAvailableBaysAsync())
-    console.log('empty', emptyBays);
+    console.log('empty', emptyBays)
   }, [dispatch, id])
 
   const handleChangeStatus = event => {
@@ -147,10 +153,12 @@ const HousePage = () => {
     dispatch(updateHouseAsync(houseData))
   }
 
-  const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
-    value: key,
-    label: houseStatusEnum[key],
-  }))
+  const houseStatusOptions = Object.keys(houseStatusEnumSelectable).map(
+    key => ({
+      value: key,
+      label: houseStatusEnumSelectable[key],
+    })
+  )
 
   const bayOptions = emptyBays.map(({ bay_id }) => ({
     value: bay_id,

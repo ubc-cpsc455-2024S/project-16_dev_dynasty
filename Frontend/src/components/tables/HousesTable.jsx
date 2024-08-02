@@ -20,7 +20,7 @@ import {
   deleteHouseAsync,
   getAllHousesAsync,
 } from '../../redux/houses/thunksHouses'
-import { houseStatusEnum } from '../../constants/contants'
+import { houseStatusEnumAll } from '../../constants/contants'
 import { useNavigate } from 'react-router-dom'
 import { colors } from '../../styles/colors'
 import { deleteChecklistAsync } from '../../redux/checklists/thunksChecklists.js'
@@ -116,8 +116,9 @@ const HousesTable = ({
                 <TableCell>{house.square_ft}</TableCell>
                 <TableCell>
                   <Chip
+                    sx={{ width: '180px' }}
                     className={'status' + house.status}
-                    label={houseStatusEnum[house.status]}
+                    label={houseStatusEnumAll[house.status]}
                   />
                 </TableCell>
                 <TableCell>{house.bay_id}</TableCell>

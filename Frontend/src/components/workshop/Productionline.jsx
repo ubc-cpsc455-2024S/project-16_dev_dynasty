@@ -11,8 +11,8 @@ import {
   bayToHouseAsync,
 } from '../../redux/houses/thunksHouses'
 import { DndContext, useSensor, useSensors, MouseSensor } from '@dnd-kit/core'
-import BayCardEditDialog from './BayCardEditDialog.jsx'
-import { houseStatusEnum } from '../../constants/contants.js'
+import StatusEditDialog from './StatusEditDialog.jsx'
+import { houseStatusEnumSelectable } from '../../constants/contants.js'
 import { toast } from 'react-toastify'
 const Productionline = () => {
   const dispatch = useDispatch()
@@ -91,7 +91,7 @@ const Productionline = () => {
           <Doors />
         </div>
         {editHouseStatusDialog.isOpen && (
-          <BayCardEditDialog
+          <StatusEditDialog
             isOpen={editHouseStatusDialog.isOpen}
             handleClose={handleCloseEditHouseStatusDialog}
             houseInfo={editHouseStatusDialog.houseInfo}
