@@ -87,6 +87,21 @@ const deleteHouseFromDb = async (houseid) => {
 
 // Function to update house details, DO NOT use this endpoint to update bay!!
 const updateHouseInDb = async (houseid, houseInfo) => {
+  const theHouse = await House.findById(houseid);
+  if (theHouse.status !== 2 && houseInfo.status === 2) {
+    const logParams = {
+      bayId: theHouse.bay_id,
+      npl: theHouse.npl
+    }
+    await addLogToDb('Bay work begin', logParams);
+  }
+  if (theHouse.status !== 4 && houseInfo.status === 4) {
+    const logParams = {
+      bayId: theHouse.bay_id,
+      npl: theHouse.npl
+    }
+    await addLogToDb('Bay work complete', logParams);
+  }
   await House.updateOne({ _id: houseid }, { $set: houseInfo });
   return (await House_View({ _id: new ObjectId(houseid) }))[0];
 };

@@ -1,119 +1,4 @@
-// import React, { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
-// import Navbar from '../components/navigation/Navbar'
-// import Header1 from '../components/headers/Header1'
-// import { Box, CircularProgress, Container, Typography } from '@mui/material'
-// import { getEventLogsAsync } from '../redux/logs/thunkLog'
-// import { styled } from '@mui/system'
-// import { colors } from '../styles/colors'
-
-// const EventLogPage = () => {
-//   const eventLogs = useSelector(state => state.logs.eventLogs)
-//   const status = useSelector(state => state.logs.status)
-//   const error = useSelector(state => state.logs.error)
-//   const dispatch = useDispatch()
-
-//   useEffect(() => {
-//     dispatch(getEventLogsAsync())
-//   }, [dispatch])
-
-//   const ErrorText = styled(Typography)({
-//     color: colors.errorTextColor,
-//     textAlign: 'center',
-//   })
-//   const LoadingContainer = styled(Box)({
-//     display: 'flex',
-//     justifyContent: 'center',
-//   })
-
-//   const TimeTypography = styled(Typography)({
-//     flex: '0 0 15%', // 15% width
-//   })
-
-//   const TypeTypography = styled(Typography)({
-//     flex: '0 0 15%', // 15% width
-//   })
-
-//   const ContentTypography = styled(Typography)({
-//     flex: '0 0 70%', // 70% width
-//   })
-
-//   const LogContainer = styled(Box)({
-//     display: 'flex',
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     padding: '8px 16px',
-//     background: "#616161",
-//     borderBottom: '1px solid #ccc',
-//   })
-
-//   const LogsBox = styled(Box)({
-//     maxHeight: '75vh',
-//     // width: '80vw',
-//     overflow: 'auto',
-//     border: '1px solid #ccc',
-//     borderRadius: '8px',
-//     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-//     '&::-webkit-scrollbar': {
-//       width: '10px',
-//     },
-//     '&::-webkit-scrollbar-thumb': {
-//       background: '#888',
-//       borderRadius: '10px',
-//     },
-//     '&::-webkit-scrollbar-thumb:hover': {
-//       background: '#555',
-//     },
-//   })
-
-//   const HeaderContainer = styled(Box)({
-//     display: 'flex',
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     padding: '8px 16px',
-//     background: "#9e9e9e",
-//     borderBottom: '1px solid #ccc',
-//     position: 'sticky',
-//     top: 0,
-//     zIndex: 1,
-//   })
-
-//   return (
-//     <Navbar>
-//       <Container>
-//         <Header1 title={'Event Logs'} />
-//         <LogsBox mt={3}>
-//           <HeaderContainer>
-//             <TimeTypography variant="h6">Event Time</TimeTypography>
-//             <ContentTypography variant="h6">Log Content</ContentTypography>
-//             <TypeTypography variant="h6">Event Type</TypeTypography>
-//           </HeaderContainer>
-//           {status === 'pending' ? (
-//             <LoadingContainer>
-//               <CircularProgress />
-//             </LoadingContainer>
-//           ) : error ? (
-//             <ErrorText>Error: {error}</ErrorText>
-//           ) : (
-//             eventLogs.map((log, index) => (
-//               <LogContainer key={index}>
-//                 <TimeTypography variant="body1">{log.time}</TimeTypography>
-//                 <ContentTypography variant="body1">{log.content}</ContentTypography>
-//                 <TypeTypography variant="body1">{log.type}</TypeTypography>
-//               </LogContainer>
-//             ))
-//           )}
-//         </LogsBox>
-//       </Container>
-//     </Navbar>
-//   )
-// }
-
-// export default EventLogPage
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
@@ -125,6 +10,9 @@ import {
   Select,
   MenuItem,
   Button,
+  TextField,
+  FormControl,
+  InputLabel,
 } from '@mui/material'
 import { getEventLogsAsync } from '../redux/logs/thunkLog'
 import { styled } from '@mui/system'
@@ -139,10 +27,14 @@ const EventLogPage = () => {
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
   const [type, setType] = useState('')
+  const [bay, setBay] = useState('')
+  const [npl, setNpl] = useState('')
+  const [model, setModel] = useState('')
+
 
   useEffect(() => {
     dispatch(getEventLogsAsync())
-  }, [dispatch])
+  }, [])
 
   const handleYearChange = event => {
     setYear(event.target.value)
@@ -152,14 +44,30 @@ const EventLogPage = () => {
     setMonth(event.target.value)
   }
 
+  const handleBayChange = event => {
+    setBay(event.target.value)
+  }
+
   const handleTypeChange = event => {
     setType(event.target.value)
   }
+
+  const handleNplChange = event => {
+    setNpl(event.target.value)
+  }
+
+  const handleModelChange = event => {
+    setModel(event.target.value)
+  }
+
 
   const handleResetFilters = () => {
     setYear('')
     setMonth('')
     setType('')
+    setBay('')
+    setModel('')
+    setNpl('')
   }
 
   const filteredLogs = eventLogs.filter(log => {
@@ -170,9 +78,14 @@ const EventLogPage = () => {
     return (
       (!year || logYear === parseInt(year)) &&
       (!month || logMonth === parseInt(month)) &&
-      (!type || log.eventType.toLowerCase() === type.toLowerCase())
+      (!type || log.eventType.toLowerCase().includes(type.toLowerCase())) &&
+      (!bay || log.logContent.toLowerCase().includes(bay.toLowerCase()))&&
+      (!npl || log.logContent.toLowerCase().includes(npl.toLowerCase()))&&
+      (!model || log.logContent.toLowerCase().includes(model.toLowerCase()))
     )
   })
+
+
 
   const ErrorText = styled(Typography)({
     color: colors.errorTextColor,
@@ -189,7 +102,7 @@ const EventLogPage = () => {
 
   const TypeTypography = styled(Typography)({
     flex: '0 0 15%', // 15% width
-    textAlign: 'right'
+    textAlign: 'right',
   })
 
   const ContentTypography = styled(Typography)({
@@ -238,13 +151,13 @@ const EventLogPage = () => {
     zIndex: 1,
   })
 
-  const FilterContainer = styled(Box)({
-    marginTop: '24px',
-    marginBottom: '16px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  })
+  // const FilterContainer = styled(Box)({
+  //   marginTop: '24px',
+  //   marginBottom: '16px',
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  // })
 
   const TotalLogsContainer = styled(Box)({
     textAlign: 'center',
@@ -254,7 +167,14 @@ const EventLogPage = () => {
     <Navbar>
       <Container>
         <Header1 title={'Event Logs'} />
-        <FilterContainer>
+        <Box
+        sx={{
+          marginTop: '24px',
+          marginBottom: '16px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
           <Select value={year} onChange={handleYearChange} displayEmpty>
             <MenuItem value=''>
               <em>All Years</em>
@@ -288,6 +208,65 @@ const EventLogPage = () => {
               </MenuItem>
             ))}
           </Select>
+
+          <Select value={bay} onChange={handleBayChange} displayEmpty>
+            <MenuItem value=''>
+              <em>Bays</em>
+            </MenuItem>
+            {[
+              'Bay 1',
+              'Bay 2',
+              'Bay 3',
+              'Bay 4',
+              'Bay 5',
+              'Bay 6',
+              'Bay 7',
+              'Bay 8',
+              'Bay 9',
+              'Bay 10',
+              'Bay 11',
+              'Bay 12',
+              'Bay 13',
+              'Bay 14',
+              'Bay 15',
+              'Bay 16',
+              'Bay 17',
+              'Bay 18',
+              'Bay 19',
+              'Bay 20',
+              'Bay 8.5',
+              'Bay 13a',
+              'Bay 13b',
+              'Bay 14.5',
+              'Bay 15.5',
+              'Bay 16.5',
+              'Bay 17.5',
+              'Bay 18.5',
+              'Bay 19.5',
+              'Bay 20.5',
+            ].map(b => (
+              <MenuItem key={b} value={b}>
+                {b}
+              </MenuItem>
+            ))}
+          </Select>
+
+          <TextField
+            id='npl'
+            value={npl}
+            onChange={handleNplChange}
+            variant='outlined'
+            label='NPL'
+          />
+
+          <TextField
+            id='model'
+            value={model}
+            onChange={handleModelChange}
+            variant='outlined'
+            label='Model'
+          />
+
           <Select value={type} onChange={handleTypeChange} displayEmpty>
             <MenuItem value=''>
               <em>All Types</em>
@@ -297,6 +276,9 @@ const EventLogPage = () => {
               'New house',
               'House started',
               'House completed',
+              'Bay work begin',
+              'Bay work complete',
+              'Bay work',
               'Defect created',
               'Defect fixed',
             ].map(t => (
@@ -307,7 +289,7 @@ const EventLogPage = () => {
           </Select>
 
           <Button onClick={handleResetFilters}>Reset Filters</Button>
-        </FilterContainer>
+        </Box>
         <TotalLogsContainer>
           <Typography variant='h6'>
             Number of Logs: {filteredLogs.length}
