@@ -14,6 +14,21 @@ const getAllBays = async () => {
     }
 }
 
+
+const getAvailableBays = async () => {
+    try {
+        const response = await axios.get(`${BACKEND_URL}/bays/empty`, {
+            withCredentials: true 
+          });
+          console.log('hit the get available service')
+        return response.data.result;
+    } catch (error) {
+        console.error('Error fetching bays:', error);
+        errorHandler(error, getAvailableBays.name);
+        throw error;
+    }
+}
+
 const getBay = async (bayid) => {
     try {
         const response = await axios.get(`${BACKEND_URL}/bays/${bayid}`, {
@@ -29,5 +44,6 @@ const getBay = async (bayid) => {
 
 export default {
     getAllBays,
+    getAvailableBays,
     getBay
 }

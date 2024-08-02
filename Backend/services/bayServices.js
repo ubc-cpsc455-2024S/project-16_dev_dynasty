@@ -1,4 +1,6 @@
 const Bay = require("../models/Bay");
+const Bay_View = require("../models/Bay_View");
+
 // Funtion to retrieve all bays
 const getBaysFromDb = async () => {
   try {
@@ -8,6 +10,14 @@ const getBaysFromDb = async () => {
     throw error;
   }
 };
+
+
+const getAvailableBaysFromDb= async () => {
+  const allbayviews = await Bay_View();
+  const filteredData = allbayviews.filter(item => !Object.keys(item).includes('house_id'));
+  console.log('available bays are', filteredData);
+  return filteredData;
+}
 
 const parseBayId = (bayId) => {
   const parts = bayId.match(/^(\d+)(.*)$/);
@@ -37,5 +47,6 @@ const getBayFromDb = async (bayid) => {
 
 module.exports = {
   getBaysFromDb,
+  getAvailableBaysFromDb,
   getBayFromDb,
 };

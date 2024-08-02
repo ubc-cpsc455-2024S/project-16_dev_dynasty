@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import houseSlice from './houses/sliceHouses'
 import baySlice from './bays/sliceBays'
 import authSlice from './auth/sliceAuth'
+import logSlice from './logs/sliceLog'
 import customerSlice from './customers/sliceCustomers'
 import sidebarSlice from './sidebar/sidebarSlice'
 import defectsReducer from './defects/sliceDefects'
@@ -18,6 +19,7 @@ export const store = configureStore({
     defects: defectsReducer,
     documents: documentsReducer,
     checklists: checklistsSlice,
+    logs: logSlice,
   },
 })
 

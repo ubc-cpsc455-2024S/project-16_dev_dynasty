@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses'
 import { houseStatusEnum } from '../constants/contants'
 import SelectCustom from '../components/inputs/SelectCustom'
-import { getAllBaysAsync } from '../redux/bays/thunksBays'
+import { getAvailableBaysAsync } from '../redux/bays/thunksBays'
 import HouseTabs from '../components/navigation/HouseTabs'
 import { styled } from '@mui/system'
 import HouseDefects from '../components/HouseDefects'
@@ -115,14 +115,15 @@ const HouseDetails = ({ houseInfo }) => {
 const HousePage = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const location = useLocation()
   const houseInfo = useSelector(state => state.houses.findHouse || null)
-  const bays = useSelector(state => state.bays.list || [])
+  // const bays = useSelector(state => state.bays.list || [])
+  const emptyBays = useSelector(state => state.bays.emptyBays || [])
 
   useEffect(() => {
     dispatch(getHouseAsync(id))
-    dispatch(getAllBaysAsync())
+    dispatch(getAvailableBaysAsync())
+    console.log('empty', emptyBays);
   }, [dispatch, id])
 
   const handleChangeStatus = event => {
@@ -151,7 +152,7 @@ const HousePage = () => {
     label: houseStatusEnum[key],
   }))
 
-  const bayOptions = bays.map(({ bay_id }) => ({
+  const bayOptions = emptyBays.map(({ bay_id }) => ({
     value: bay_id,
     label: bay_id,
   }))
@@ -201,7 +202,7 @@ const HousePage = () => {
               />
               <SelectCustom
                 label={'Bay #'}
-                extraOption={{ value: 'No Bay', label: 'No bay' }}
+                extraOption={{ value: 'No Bayyy', label: 'No bayyy' }}
                 options={bayOptions}
                 value={houseInfo.bay_id || 'No Bay'}
                 onChange={handleChangeBay}

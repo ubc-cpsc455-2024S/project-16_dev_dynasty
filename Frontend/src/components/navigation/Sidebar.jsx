@@ -102,6 +102,16 @@ const Sidebar = () => {
               </>
             )}
           </NavLink>
+          <NavLink to={routes.eventLogsRoute} style={linkStyle}>
+            {({ isActive }) => (
+              <>
+                <ListItemIcon>
+                  <GroupIcon style={{ color: getIconColor(isActive) }} />
+                </ListItemIcon>
+                <ListItemText primary='Event Logs' />
+              </>
+            )}
+          </NavLink>
         </List>
       </div>
     </Drawer>

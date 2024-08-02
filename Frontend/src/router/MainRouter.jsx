@@ -23,6 +23,7 @@ import AddHouseDefectPage from '../pages/AddHouseDefectPage'
 import EditDefectPage from '../pages/EditDefectsPage'
 import AddHouseDocumentPage from '../pages/AddHouseDocumentPage'
 import EditHouseDocumentPage from '../pages/EditDocumentsPage'
+import EventLogPage from '../pages/EventLogPage.jsx'
 import { routes } from './routes'
 import PrivateRoute from '../components/auth/PrivateRoute.jsx';
 
@@ -71,6 +72,7 @@ const MainRouter = () => {
         <Route path={routes.houseEditDocumentRoute} element={<PrivateRoute element={EditHouseDocumentPage} />} />
         <Route path={routes.houseChecklistRoute} element={<PrivateRoute element={HouseChecklistPage} />} />
         <Route path={routes.customerRoute} element={<PrivateRoute element={CustomerPage} />} />
+        <Route path={routes.eventLogsRoute} element={<PrivateRoute element={EventLogPage} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>

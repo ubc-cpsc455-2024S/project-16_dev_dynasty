@@ -11,6 +11,7 @@ const customersRouter = require("./routes/customers");
 const defectsRouter = require("./routes/defects");
 const checklistsRouter = require("./routes/checklists");
 const documentsRouter = require("./routes/documents");
+const logsRouter = require('./routes/logs')
 
 const authRouter = require('./routes/users');
 const app = express();
@@ -51,5 +52,6 @@ app.use("/documents", documentsRouter);
 app.use("/defects", defectsRouter);
 app.use('/users', authRouter);
 app.use("/checklists", checklistsRouter);
+app.use("/logs", logsRouter);
 
 module.exports = app;

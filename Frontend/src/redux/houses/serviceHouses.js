@@ -115,7 +115,7 @@ const updateHouse = async (houseId, houseData) => {
 const bayToHouse = async (houseId, bayId) => {
   try {
     const response = await axios.patch(
-      `${BACKEND_URL}/houses/${houseId}/${bayId}`,
+      `${BACKEND_URL}/houses/${houseId}/${bayId}`,{},
       {
         withCredentials: true 
       }

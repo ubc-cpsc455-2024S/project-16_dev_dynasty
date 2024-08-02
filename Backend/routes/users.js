@@ -104,7 +104,6 @@ router.get("/logout", async (req, res, next) => {
 router.get("/all", async (req, res, next) => {
     try {
         const allUsers = await User.find({}, '-password');
-        console.log('here are all the users: ', allUsers);
         res.status(200).json({ result: allUsers });
     } catch (e) {
         res.status(500).json({ error: e });
