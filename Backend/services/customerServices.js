@@ -9,12 +9,11 @@ const getCustomersFromDb = async ({ customerNameQuery }) => {
       }
     : {};
 
-  return await Customer.find(filter);
+  return await Customer.find(filter).sort({ customer_name: 1 });
 };
 
 const addCustomerToDb = async (customerData) => {
-  const { customer_name, customer_email } = customerData;
-  const customer = new Customer({ customer_name, customer_email });
+  const customer = new Customer(customerData);
   await customer.save();
   const logParams = {customerName: customer_name}
   await addLogToDb('New customer', logParams)

@@ -24,6 +24,7 @@ import {
 } from '../redux/checklists/thunksChecklists.js'
 import ChecklistDownloadButton from '../components/buttons/ChecklistDownloadButton.jsx'
 import { MdFileDownload, MdSave } from 'react-icons/md'
+import { toast } from 'react-toastify'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -81,9 +82,14 @@ const HouseChecklistPage = () => {
     })
   }
 
-  const handleClick = e => {
+  const handleClick = async e => {
     e.preventDefault()
-    dispatch(putChecklistAsync({ houseId, checklistData }))
+    const response = await dispatch(
+      putChecklistAsync({ houseId, checklistData })
+    ).unwrap()
+    response
+      ? toast.success('Checklist data saved!')
+      : toast.error('Failed to save checklist data!')
   }
 
   return (
