@@ -11,6 +11,8 @@ import {
   Select,
   FormControl,
   InputLabel,
+  FormLabel,
+  InputAdornment,
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
@@ -23,6 +25,8 @@ import Header1 from '../components/headers/Header1'
 import { houseStatusEnum } from '../constants/contants'
 import { colors } from '../styles/colors'
 import { toast } from 'react-toastify'
+import TextFieldLabelWrapper from '../components/labels/TextFieldLabelWrapper'
+import AdornmentSearch from '../components/inputs/adornments/AdornmentSearch'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -51,7 +55,7 @@ const HousesPage = () => {
   const houses = useSelector(state => state.houses.list)
   const status = useSelector(state => state.houses.status)
   const error = useSelector(state => state.houses.error)
-  const currentUser = useSelector(state => state.auth.user);
+  const currentUser = useSelector(state => state.auth.user)
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -88,42 +92,38 @@ const HousesPage = () => {
     fetchData()
   }
 
-  const handleAddHouseButtonClick =() => {
-    console.log ('the current user is: ', currentUser);
+  const handleAddHouseButtonClick = () => {
+    console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
-      toast.error('Only admin user authorized for this action');
+      toast.error('Only admin user authorized for this action')
     } else {
-      navigate(routes.housesAddRoute);
+      navigate(routes.housesAddRoute)
     }
   }
 
   return (
     <Navbar>
+      <Header1
+        title={'Houses'}
+        button={
+          <Button
+            variant='contained'
+            onClick={handleAddHouseButtonClick}
+            startIcon={<MdAdd />}
+          >
+            Add House
+          </Button>
+        }
+      />
       <Container>
-        <Header1
-          title={'Houses'}
-          button={
-            <Button
-              variant='contained'
-              onClick={handleAddHouseButtonClick}
-              startIcon={<MdAdd />}
-            >
-              Add House
-            </Button>
-          }
-        />
         <Box mt={3}>
-          <Box mb={3} display='flex' justifyContent='space-between'>
-            <FormControl
-              variant='outlined'
-              size='small'
-              style={{ minWidth: 200, marginRight: '10px' }}
-            >
-              <InputLabel>Common Queries</InputLabel>
+          <Box mb={3} display='flex' gap={'20px'}>
+            <TextFieldLabelWrapper label={'Common Queries'}>
               <Select
+                sx={{ width: '100%' }}
                 value={query}
+                size='small'
                 onChange={e => setQuery(e.target.value)}
-                label='Common Queries'
               >
                 {commonQueries.map(option => (
                   <MenuItem key={option.value} value={option.value}>
@@ -131,35 +131,40 @@ const HousesPage = () => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
-            <TextField
-              label='NPL'
-              value={nplQuery}
-              onChange={e => setNplQuery(e.target.value)}
-              variant='outlined'
-              size='small'
-              style={{ marginRight: '10px' }}
-            />
-            <TextField
-              label='Customer Name'
-              value={customerNameQuery}
-              onChange={e => setCustomerNameQuery(e.target.value)}
-              variant='outlined'
-              size='small'
-              style={{ marginRight: '10px' }}
-            />
-            <TextField
-              label='House Model'
-              value={houseModelQuery}
-              onChange={e => setHouseModelQuery(e.target.value)}
-              variant='outlined'
-              size='small'
-              style={{ marginRight: '10px' }}
-            />
+            </TextFieldLabelWrapper>
+            <TextFieldLabelWrapper label={'House NPL #'}>
+              <TextField
+                value={nplQuery}
+                onChange={e => setNplQuery(e.target.value)}
+                variant='outlined'
+                size='small'
+                InputProps={AdornmentSearch}
+              />
+            </TextFieldLabelWrapper>
+            <TextFieldLabelWrapper label={'Customer Name'}>
+              <TextField
+                value={customerNameQuery}
+                onChange={e => setCustomerNameQuery(e.target.value)}
+                variant='outlined'
+                size='small'
+                InputProps={AdornmentSearch}
+              />
+            </TextFieldLabelWrapper>
+            <TextFieldLabelWrapper label={'House Model'}>
+              <TextField
+                value={houseModelQuery}
+                onChange={e => setHouseModelQuery(e.target.value)}
+                variant='outlined'
+                size='small'
+                InputProps={AdornmentSearch}
+              />
+            </TextFieldLabelWrapper>
             <Button
-              variant='contained'
+              sx={{ height: '40px', alignSelf: 'flex-end' }}
+              variant='outlined'
               onClick={handleClear}
-              style={{ backgroundColor: 'grey', color: 'white' }}
+              color='secondary'
+              // style={{ backgroundColor: 'grey', color: 'white' }}
             >
               Clear
             </Button>
@@ -183,6 +188,8 @@ const HousesPage = () => {
           )}
         </Box>
       </Container>
+      <br />
+      <br />
     </Navbar>
   )
 }

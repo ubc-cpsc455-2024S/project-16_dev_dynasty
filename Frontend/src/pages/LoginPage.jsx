@@ -71,7 +71,7 @@ const LoginPage = () => {
               <FormLabel>Username</FormLabel>
               <TextField size='small' name={'name'} />
               <FormLabel>Password</FormLabel>
-              <TextField size='small' name={'password'} />
+              <TextField type='password' size='small' name={'password'} />
               <Button variant='contained' type='submit'>
                 Login
               </Button>
