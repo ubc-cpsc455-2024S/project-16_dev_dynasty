@@ -33,12 +33,12 @@ const getAllLogs = async () => {
             },
             {
               eventTime: "2023-03-05 14:22:37",
-              logContent: "Defect created for house 654321 in Bay 2",
+              logContent: "Defect created for house 654321 in Bay 2 , and the house model is 789-123",
               eventType: "Defect created"
             },
             {
               eventTime: "2023-03-18 16:18:12",
-              logContent: "Defect fixed for house with NPL 654321 in Bay 2, and the house model is 789-123",
+              logContent: "Defect fixed for house with NPL 654321 in Bay 2 , and the house model is 789-123",
               eventType: "Defect fixed"
             },
             {
@@ -63,12 +63,12 @@ const getAllLogs = async () => {
             },
             {
               eventTime: "2023-06-01 09:50:21",
-              logContent: "Defect created for house 789123 in Bay 3",
+              logContent: "Defect created for house 789123 in Bay 3 , and the house model is 012-345",
               eventType: "Defect created"
             },
             {
               eventTime: "2023-06-15 17:18:45",
-              logContent: "Defect fixed for house with NPL 789123 in Bay 3, and the house model is 012-345",
+              logContent: "Defect fixed for house with NPL 789123 in Bay 3 , and the house model is 012-345",
               eventType: "Defect fixed"
             },
             {
@@ -123,12 +123,12 @@ const getAllLogs = async () => {
             },
             {
               eventTime: "2023-12-04 14:33:17",
-              logContent: "Defect created for house 852147 in Bay 5",
+              logContent: "Defect created for house 852147 in Bay 5 , and the house model is 963-852",
               eventType: "Defect created"
             },
             {
               eventTime: "2023-12-20 15:45:00",
-              logContent: "Defect fixed for house with NPL 852147 in Bay 5, and the house model is 963-852",
+              logContent: "Defect fixed for house with NPL 852147 in Bay 5 , and the house model is 963-852",
               eventType: "Defect fixed"
             }
           ]          
