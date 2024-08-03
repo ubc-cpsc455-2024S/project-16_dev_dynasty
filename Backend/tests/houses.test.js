@@ -90,76 +90,77 @@ describe("GET /houses/inbay", () => {
   });
 });
 
-// /* Test post a house. */
-// describe("POST /houses", () => {
-//   jest.setTimeout(60000);
-//   it("should add a house to database", async () => {
-//     const loginResponse = await request(app).post("/users/signin").send({
-//       name: process.env.ADMIN_USERNAME,
-//       password: process.env.ADMIN_PASSWORD,
-//     });
-//     const token = loginResponse.headers["set-cookie"];
+/* Test post a house. */
+describe("POST /houses", () => {
+  it("should add a house to database", async () => {
+    const loginResponse = await request(app).post("/users/signin").send({
+      name: process.env.ADMIN_USERNAME,
+      password: process.env.ADMIN_PASSWORD,
+    });
+    const token = loginResponse.headers["set-cookie"];
 
-//     const newHouse1 = {
-//       npl: "1500",
-//       house_model: "023-001",
-//       square_ft: 1600,
-//     };
+    const newHouse1 = {
+      npl: "1500",
+      house_model: "023-001",
+      square_ft: 1600,
+    };
 
-//     const response = await request(app)
-//       .post("/houses")
-//       .send(newHouse1)
-//       .set("Cookie", token)
-//       .set("Accept", "application/json");
-//     expect(response.statusCode).toBe(201);
-//     expect(response.body.result).toHaveProperty("_id");
-//     expect(response.body.result.npl).toBe(newHouse1.npl);
-//     expect(response.body.result.house_model).toBe(newHouse1.house_model);
-//     expect(response.body.result.square_ft).toBe(newHouse1.square_ft);
-//     expect(response.body.result.bay_id).toEqual(null);
-//     expect(response.body.result.bay_name).toEqual(null);
-//     expect(response.body.result.customer_id).toEqual(null);
-//     expect(response.body.result.house_records_id).toEqual(null);
+    const response = await request(app)
+      .post("/houses")
+      .send(newHouse1)
+      .set("Cookie", token)
+      .set("Accept", "application/json");
 
-//     const houseInDb = await House.findById(response.body.result._id);
-//     expect(houseInDb).not.toBeNull();
-//     expect(houseInDb.npl).toBe(newHouse1.npl);
-//     const count = await House.countDocuments();
-//     expect(count).toBe(3);
+    console.log('request for post is sent')
+    expect(response.statusCode).toBe(201);
+    expect(response.body.result).toHaveProperty("_id");
+    expect(response.body.result.npl).toBe(newHouse1.npl);
+    expect(response.body.result.house_model).toBe(newHouse1.house_model);
+    expect(response.body.result.square_ft).toBe(newHouse1.square_ft);
+    expect(response.body.result.bay_id).toEqual(null);
+    expect(response.body.result.bay_name).toEqual(null);
+    expect(response.body.result.customer_id).toEqual(null);
+    expect(response.body.result.house_records_id).toEqual(null);
 
-//     const newHouse2 = {
-//       npl: "1453",
-//       online_date: "18-Jan-24",
-//       created_on: "17-Jan-24",
-//       house_model: "023-002",
-//       square_ft: 999,
-//       bay_id: "15",
-//       bay_name: "Bay 15",
-//       status: 2,
-//     };
+    const houseInDb = await House.findById(response.body.result._id);
+    expect(houseInDb).not.toBeNull();
+    expect(houseInDb.npl).toBe(newHouse1.npl);
+    const count = await House.countDocuments();
+    expect(count).toBe(3);
 
-//     const response2 = await request(app)
-//       .post("/houses")
-//       .send(newHouse2)
-//       .set("Cookie", token)
-//       .set("Accept", "application/json");
-//     expect(response2.statusCode).toBe(201);
-//     expect(response2.body.result).toHaveProperty("_id");
-//     expect(response2.body.result.npl).toBe(newHouse2.npl);
-//     expect(response2.body.result.house_model).toBe(newHouse2.house_model);
-//     expect(response2.body.result.square_ft).toBe(newHouse2.square_ft);
-//     expect(response2.body.result.bay_id).toEqual(newHouse2.bay_id);
-//     expect(response2.body.result.bay_name).toEqual(newHouse2.bay_name);
-//     expect(response2.body.result.customer_id).toEqual(null);
-//     expect(response2.body.result.house_records_id).toEqual(null);
+    const newHouse2 = {
+      npl: "1453",
+      online_date: "18-Jan-24",
+      created_on: "17-Jan-24",
+      house_model: "023-002",
+      square_ft: 999,
+      bay_id: "15",
+      bay_name: "Bay 15",
+      status: 2,
+    };
 
-//     const houseInDb2 = await House.findById(response2.body.result._id);
-//     expect(houseInDb2).not.toBeNull();
-//     expect(houseInDb2.npl).toBe(newHouse2.npl);
-//     const count2 = await House.countDocuments();
-//     expect(count2).toBe(4);
-//   });
-// });
+    const response2 = await request(app)
+      .post("/houses")
+      .send(newHouse2)
+      .set("Cookie", token)
+      .set("Accept", "application/json");
+    expect(response2.statusCode).toBe(201);
+    expect(response2.body.result).toHaveProperty("_id");
+    expect(response2.body.result.npl).toBe(newHouse2.npl);
+    expect(response2.body.result.house_model).toBe(newHouse2.house_model);
+    expect(response2.body.result.square_ft).toBe(newHouse2.square_ft);
+    expect(response2.body.result.bay_id).toEqual(newHouse2.bay_id);
+    expect(response2.body.result.bay_name).toEqual(newHouse2.bay_name);
+    expect(response2.body.result.customer_id).toEqual(null);
+    expect(response2.body.result.house_records_id).toEqual(null);
+
+    const houseInDb2 = await House.findById(response2.body.result._id);
+    expect(houseInDb2).not.toBeNull();
+    expect(houseInDb2.npl).toBe(newHouse2.npl);
+    const count2 = await House.countDocuments();
+    expect(count2).toBe(4);
+  });
+});
 
 /* Test delete a house. */
 describe("DELETE /houses/:houseid", () => {

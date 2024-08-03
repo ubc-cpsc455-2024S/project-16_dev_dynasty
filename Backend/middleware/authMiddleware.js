@@ -8,7 +8,6 @@ const requireLoggin = (req, res, next) => {
     // const cookies = cookie.parse(req.headers.cookie || '');
     // console.log('verifying logining and cookies are: ', cookies);
     // const token = cookies.jwt;
-    console.log('verifying logining and token is: ', token);
     if (token) {
         jwt.verify(token, secret, (err, decodedToken) => {
             if (err) {

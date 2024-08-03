@@ -71,14 +71,16 @@ const addHouseToDb = async (houseData) => {
     // house_records_id: null,
     // status: 1,
   };
-  const theCustomer = await Customer.findById(houseData.customer_id);
+  
   const newHouseMade = await House.create(newHouse);
-  const logParams = {
-    customerName: theCustomer.customer_name,
-    npl: houseData.npl, model: houseData.house_model
+  if (houseData.customer_id) {
+    const theCustomer = await Customer.findById(houseData.customer_id);
+    const logParams = {
+      customerName: theCustomer.customer_name,
+      npl: houseData.npl, model: houseData.house_model
+    }
+    await addLogToDb('New house', logParams);
   }
-  await addLogToDb('New house', logParams);
-
   return newHouseMade;
 };
 
