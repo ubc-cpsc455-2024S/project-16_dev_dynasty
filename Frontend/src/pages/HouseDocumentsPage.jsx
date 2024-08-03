@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, Typography, Button, Grid, Card, CardContent, CardActions, Modal, IconButton } from '@mui/material';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  Modal,
+  IconButton
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,15 +21,18 @@ import Navbar from '../components/navigation/Navbar';
 import HouseTabs from '../components/navigation/HouseTabs';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
+import PdfViewer from '../components/pdf/PdfViewer';
+
 
 const HouseDocumentsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const houseInfo = useSelector(state => state.houses.findHouse);
-  const documents = useSelector(state => state.documents.list);
+  const houseInfo = useSelector((state) => state.houses.findHouse);
+  const documents = useSelector((state) => state.documents.list);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     dispatch(fetchDocumentsByHouseId(id));
@@ -34,7 +48,7 @@ const HouseDocumentsPage = () => {
 
   const handleDeleteDocument = async (documentId) => {
     await dispatch(deleteDocumentAsync({ houseId: id, documentId }));
-    dispatch(fetchDocumentsByHouseId(id)); 
+    dispatch(fetchDocumentsByHouseId(id));
   };
 
   const handleOpen = (document) => {
@@ -71,7 +85,7 @@ const HouseDocumentsPage = () => {
           </Button>
         </Box>
         <Grid container spacing={3} mt={3}>
-          {documents.map(document => (
+          {documents.map((document) => (
             <Grid item xs={12} sm={6} md={4} key={document._id}>
               <Card>
                 <CardContent onClick={() => handleOpen(document)} style={{ cursor: 'pointer' }}>
@@ -89,9 +103,15 @@ const HouseDocumentsPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <IconButton size="small" onClick={() => handleEditDocument(document._id)}><EditIcon /></IconButton>
-                  <IconButton onClick={() => handleDeleteDocument(document._id)}><DeleteIcon color="error" /></IconButton>
-                  <IconButton onClick={() => window.open(document.fileUrl, '_blank')}><DownloadIcon style={{ color: 'blue' }} /></IconButton>
+                  <IconButton size="small" onClick={() => handleEditDocument(document._id)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleDeleteDocument(document._id)}>
+                    <DeleteIcon color="error" />
+                  </IconButton>
+                  <IconButton onClick={() => window.open(document.fileUrl, '_blank')}>
+                    <DownloadIcon style={{ color: 'blue' }} />
+                  </IconButton>
                 </CardActions>
               </Card>
             </Grid>
@@ -99,17 +119,22 @@ const HouseDocumentsPage = () => {
         </Grid>
         {selectedDocument && (
           <Modal open={open} onClose={handleClose}>
-            <Box sx={{ maxWidth: '80%', maxHeight: '80%', margin: 'auto', mt: 5, p: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
+            <Box
+              sx={{
+                maxWidth: '80%',
+                maxHeight: '80%',
+                margin: 'auto',
+                mt: 5,
+                p: 2,
+                bgcolor: 'background.paper',
+                borderRadius: 2
+              }}
+            >
               <Typography variant="h6" gutterBottom>
                 {selectedDocument.title}
               </Typography>
               <Box sx={{ overflow: 'auto', maxHeight: '70vh' }}>
-                {selectedDocument.type === 'application/pdf' ? (
-                  <object data={selectedDocument.fileUrl} type="application/pdf" width="100%" height="500px">
-                  </object>
-                ) : (
-                  <img src={selectedDocument.fileUrl} alt={selectedDocument.title} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                )}
+                <PdfViewer url={selectedDocument.fileUrl} />
               </Box>
               <Box sx={{ mt: 2 }}>
                 <Button variant="contained" color="primary" onClick={() => window.open(selectedDocument.fileUrl, '_blank')}>

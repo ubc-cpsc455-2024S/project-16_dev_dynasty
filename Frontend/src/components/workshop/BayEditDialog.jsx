@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -12,47 +12,42 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from '@mui/material'
-import {
-  bayToHouseAsync,
-  updateHouseAsync,
-} from '../../redux/houses/thunksHouses'
-import { useDispatch, useSelector } from 'react-redux'
-import SelectCustom from '../inputs/SelectCustom'
-import { colors } from '../../styles/colors'
+} from '@mui/material';
+import { bayToHouseAsync, updateHouseAsync } from '../../redux/houses/thunksHouses';
+import { useDispatch, useSelector } from 'react-redux';
+import SelectCustom from '../inputs/SelectCustom';
+import { colors } from '../../styles/colors';
 
 const BayEditDialog = ({ isOpen, houseInfo, handleClose }) => {
-  const emptyBays = useSelector(state => state.bays.emptyBays || [])
-  const [bayId, setBayId] = useState(houseInfo.status)
-  const dispatch = useDispatch()
+  const emptyBays = useSelector((state) => state.bays.emptyBays || []);
+  const [bayId, setBayId] = useState(houseInfo.status);
+  const dispatch = useDispatch();
 
-  const handleChangeStatus = event => {
-    console.log('event.target.value', event.target.value)
-    setBayId(event.target.value)
-  }
+  const handleChangeStatus = (event) => {
+    console.log('event.target.value', event.target.value);
+    setBayId(event.target.value);
+  };
 
   const handleSubmit = async () => {
-    if (bayId === 'No Bay') {
-      bayId = null
-    }
+    const updatedBayId = bayId === 'No Bay' ? null : bayId;
+
     const houseData = {
       houseId: houseInfo._id,
       houseData: houseInfo,
-    }
+    };
+
     try {
-      const data = await dispatch(
-        bayToHouseAsync({ houseId: houseInfo._id, bayId })
-      )
-      handleClose()
+      const data = await dispatch(bayToHouseAsync({ houseId: houseInfo._id, bayId: updatedBayId }));
+      handleClose();
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  };
 
   const bayOptions = emptyBays.map(({ bay_id }) => ({
     value: bay_id,
     label: bay_id,
-  }))
+  }));
 
   return (
     <Dialog maxWidth={'md'} open={isOpen} onClose={handleClose}>
@@ -71,18 +66,15 @@ const BayEditDialog = ({ isOpen, houseInfo, handleClose }) => {
         />
       </DialogContent>
       <DialogActions sx={{ p: '20px' }}>
-        <Button
-          onClick={handleClose}
-          sx={{ color: colors.dialogSecondaryButtonColor }}
-        >
+        <Button onClick={handleClose} sx={{ color: colors.dialogSecondaryButtonColor }}>
           Close
         </Button>
-        <Button variant='contained' onClick={handleSubmit}>
+        <Button variant="contained" onClick={handleSubmit}>
           Submit
         </Button>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default BayEditDialog
+export default BayEditDialog;
