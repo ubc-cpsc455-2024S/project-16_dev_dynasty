@@ -31,7 +31,7 @@ const UsersPage = () => {
 
   useEffect(() => {
     fetchData()
-  }, [ page, rowsPerPage])
+  }, [page, rowsPerPage])
 
   const fetchData = () => {
     dispatch(getUsersAsync())
@@ -45,8 +45,6 @@ const UsersPage = () => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
-
 
   const ErrorText = styled(Typography)({
     color: colors.errorTextColor,
@@ -68,16 +66,16 @@ const UsersPage = () => {
 
   return (
     <Navbar>
+      <Header1
+        title={'Users'}
+        button={
+          <Button variant='contained' onClick={handleAddUserButtonClick}>
+            <MdAdd />
+            Add User
+          </Button>
+        }
+      />
       <Container>
-        <Header1
-          title={'Users Page'}
-          button={
-            <Button variant='contained' onClick={handleAddUserButtonClick}>
-              <MdAdd />
-              Add User
-            </Button>
-          }
-        ></Header1>
         <Box mt={3}>
           <Box mb={3} display='flex' justifyContent='flex-start'>
             {/* <TextField
@@ -96,7 +94,7 @@ const UsersPage = () => {
             <ErrorText>Error: {error}</ErrorText>
           ) : (
             <div>
-            <UsersTable
+              <UsersTable
                 users={allUsers}
                 page={page}
                 rowsPerPage={rowsPerPage}

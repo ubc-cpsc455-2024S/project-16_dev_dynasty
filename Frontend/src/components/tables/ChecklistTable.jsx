@@ -27,11 +27,11 @@ const TightTableCell = styled(TableCell)({
 const ChecklistTable = ({ records, handleRecordChange }) => {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }} elevation={3}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader>
+      <TableContainer sx={{ height: 'calc(100vh - 300px)' }}>
+        <Table stickyHeader sx={{ mb: 6 }}>
           <TableHead>
             <TableRow>
-              <TableHeadCell></TableHeadCell>
+              <TableHeadCell>Type of Inspection</TableHeadCell>
               <TableHeadCell align='center'>Accept</TableHeadCell>
               <TableHeadCell align='center'>Deficient</TableHeadCell>
               <TableHeadCell align='left'>Repaired By</TableHeadCell>

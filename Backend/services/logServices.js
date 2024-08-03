@@ -1,21 +1,21 @@
-const Log = require('../models/Log')
-const mongoose = require('mongoose')
+const Log = require("../models/Log");
+const mongoose = require("mongoose");
 
 const formatDate = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
 const addLogToDb = async (type, logParams) => {
-    try {
-        let logContent = '';
+  try {
+    let logContent = "";
 
         switch (type) {
             case 'New customer':
@@ -47,30 +47,38 @@ const addLogToDb = async (type, logParams) => {
         }
 
 
-        const newLog = new Log({
-            eventTime: formatDate(),
-            logContent,
-            eventType: type
-        });
+    const newLog = new Log({
+      eventTime: formatDate(),
+      logContent,
+      eventType: type,
+    });
 
-        // Save the log entry to the database
-        await newLog.save();
+    // Save the log entry to the database
+    await newLog.save();
 
-        return { success: true, message: 'Log added successfully', log: newLog };
-    } catch (error) {
-        console.error(error);
-        return { success: false, message: 'Error adding log', error };
-    }
+    return { success: true, message: "Log added successfully", log: newLog };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Error adding log", error };
+  }
 };
 
-
 const getAllLogsFromDb = async () => {
-    try {
-        return await Log.find({});
-    } catch (error) {
-        console.error("Error fetching logs:", error);
-        throw error;
-    }
-}
+  try {
+    return await Log.find({});
+  } catch (error) {
+    console.error("Error fetching logs:", error);
+    throw error;
+  }
+};
 
-module.exports = { addLogToDb, getAllLogsFromDb };
+const getLogsByHouseId = async (houseId) => {
+  try {
+    return await Log.find({ houseId });
+  } catch (error) {
+    console.error("Error fetching logs:", error);
+    throw error;
+  }
+};
+
+module.exports = { addLogToDb, getAllLogsFromDb, getLogsByHouseId };

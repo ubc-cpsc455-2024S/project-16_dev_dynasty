@@ -10,16 +10,17 @@ import { routes } from '../../router/routes'
 import { useSelector, useDispatch } from 'react-redux'
 import { userLoginAsync, userLogoutAsync } from '../../redux/auth/thunkAuth'
 import { colors } from '../../styles/colors'
+import { BsFillPersonFill } from 'react-icons/bs'
 
 const Navbar = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const isSignedIn = useSelector(state => state.auth.isSignedIn || false)
   const user = useSelector(state => state.auth.user || null)
 
   const handleMenuClick = () => {
-    dispatch(toggleSidebar());
-  };
+    dispatch(toggleSidebar())
+  }
 
   return (
     <>
@@ -34,37 +35,35 @@ const Navbar = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <IconButton onClick={() => navigate(routes.workshopRoute)}>
-          <img
-            src={CompanyLogo}
-            alt='Company Logo'
-            style={{ height: '40px', marginRight: '20px' }}
-          />
+            <img
+              src={CompanyLogo}
+              alt='Company Logo'
+              style={{ height: '40px', marginRight: '20px' }}
+            />
           </IconButton>
-          
-          <Typography variant='h6' style={{ flexGrow: 1 }}></Typography>
 
+          <Typography variant='h6' style={{ flexGrow: 1 }}></Typography>
 
           {isSignedIn ? (
             <>
-              <Typography variant='body1' style={{ marginRight: '20px' }}>
+              <BsFillPersonFill size={'20px'} />
+              <Typography variant='body1' sx={{ ml: '10px', mr: '30px' }}>
                 {user.name}
               </Typography>
               <Button
                 color='inherit'
-                onClick={()=>{dispatch(userLogoutAsync())}}
+                onClick={() => {
+                  dispatch(userLogoutAsync())
+                }}
               >
                 Log Out
               </Button>
             </>
           ) : (
-            <Button
-              color='inherit'
-              onClick={() => navigate(routes.loginRoute)}
-            >
+            <Button color='inherit' onClick={() => navigate(routes.loginRoute)}>
               Log In
             </Button>
           )}
-
         </Toolbar>
         <Sidebar />
       </AppBar>
@@ -78,7 +77,7 @@ const Navbar = ({ children }) => {
         {children}
       </Paper>
     </>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

@@ -27,7 +27,19 @@ const LengendExample = () => {
             </div>
             <div class='legend-item'>
               <div class='legend-item-box status4'></div>
-              <Typography className='legend-item-text'>Completed</Typography>
+              <Typography className='legend-item-text'>Bay Complete</Typography>
+            </div>
+            <div class='legend-item'>
+              <div class='legend-item-box status5'></div>
+              <Typography className='legend-item-text'>
+                Ready For Shipping
+              </Typography>
+            </div>
+            <div class='legend-item'>
+              <div class='legend-item-box status6'></div>
+              <Typography className='legend-item-text'>
+                Delivered To Customer
+              </Typography>
             </div>
           </div>
           <br />

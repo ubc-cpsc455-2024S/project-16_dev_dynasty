@@ -18,6 +18,8 @@ import CustomersTable from '../components/tables/CustomersTable'
 import { getCustomersAsync } from '../redux/customers/thunksCustomers.js'
 import { colors } from '../styles/colors'
 import { toast } from 'react-toastify'
+import TextFieldLabelWrapper from '../components/labels/TextFieldLabelWrapper'
+import AdornmentSearch from '../components/inputs/adornments/AdornmentSearch'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',
@@ -36,7 +38,6 @@ const CustomersPage = () => {
   const status = useSelector(state => state.customers.status)
   const error = useSelector(state => state.customers.error)
   const currentUser = useSelector(state => state.auth.user)
-
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -59,40 +60,41 @@ const CustomersPage = () => {
     setPage(0)
   }
 
-
-  const handleAddCustomerButtonClick =() => {
-    console.log ('the current user is: ', currentUser);
+  const handleAddCustomerButtonClick = () => {
+    console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
-      toast.error('Only admin user authorized for this action');
+      toast.error('Only admin user authorized for this action')
     } else {
-      navigate(routes.customersAddRoute);
+      navigate(routes.customersAddRoute)
     }
   }
 
   return (
     <Navbar>
+      <Header1
+        title={'Customers'}
+        button={
+          <Button
+            variant='contained'
+            onClick={handleAddCustomerButtonClick}
+            startIcon={<MdAdd />}
+          >
+            Add Customer
+          </Button>
+        }
+      />
       <Container>
-        <Header1
-          title={'Customers'}
-          button={
-            <Button
-              variant='contained'
-              onClick={handleAddCustomerButtonClick}
-              startIcon={<MdAdd />}
-            >
-              Add Customer
-            </Button>
-          }
-        ></Header1>
         <Box mt={3}>
           <Box mb={3} display='flex' justifyContent='flex-start'>
-            <TextField
-              label='Customer Name'
-              value={customerNameQuery}
-              onChange={e => setCustomerNameQuery(e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <TextFieldLabelWrapper label='Customer Name'>
+              <TextField
+                value={customerNameQuery}
+                onChange={e => setCustomerNameQuery(e.target.value)}
+                variant='outlined'
+                size='small'
+                InputProps={AdornmentSearch}
+              />
+            </TextFieldLabelWrapper>
           </Box>
           {status.getAll === 'pending' ? (
             <LoadingContainer>

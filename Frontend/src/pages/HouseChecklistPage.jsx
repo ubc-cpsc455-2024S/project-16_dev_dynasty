@@ -99,49 +99,51 @@ const HouseChecklistPage = () => {
           <CircularProgress />
         </LoadingContainer>
       ) : (
-        <Container>
+        <>
           <Header1 title={<HouseHeader npl={houseState.npl} />} />
-          <HouseTabs />
-          <Box mt={3}>
-            <Box mb={3} display='flex' justifyContent='space-between'>
-              <FormControl
-                variant='outlined'
-                size='small'
-                style={{ minWidth: 200 }}
-              >
-                <InputLabel id='checklist-select-label'>Checklist</InputLabel>
-                <Select
-                  labelId='checklist-select-label'
-                  id='checklist-select'
-                  value={checklistName}
-                  label='Checklist'
-                  onChange={e => setChecklistName(e.target.value)}
+          <Container>
+            <HouseTabs />
+            <Box mt={3}>
+              <Box mb={3} display='flex' justifyContent='space-between'>
+                <FormControl
+                  variant='outlined'
+                  size='small'
+                  style={{ minWidth: 200 }}
                 >
-                  {checklists.map(checklist => (
-                    <MenuItem key={checklist.value} value={checklist.value}>
-                      {checklist.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Box display='flex' justifyContent='space-between' gap={1}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleClick}
-                  startIcon={<MdSave />}
-                >
-                  Save
-                </Button>
-                <ChecklistDownloadButton houseId={houseId} />
+                  <InputLabel id='checklist-select-label'>Checklist</InputLabel>
+                  <Select
+                    labelId='checklist-select-label'
+                    id='checklist-select'
+                    value={checklistName}
+                    label='Checklist'
+                    onChange={e => setChecklistName(e.target.value)}
+                  >
+                    {checklists.map(checklist => (
+                      <MenuItem key={checklist.value} value={checklist.value}>
+                        {checklist.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Box display='flex' justifyContent='space-between' gap={1}>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={handleClick}
+                    startIcon={<MdSave />}
+                  >
+                    Save
+                  </Button>
+                  <ChecklistDownloadButton houseId={houseId} />
+                </Box>
               </Box>
+              <ChecklistTable
+                records={checklistData[checklistName].records}
+                handleRecordChange={handleRecordChange}
+              />
             </Box>
-            <ChecklistTable
-              records={checklistData[checklistName].records}
-              handleRecordChange={handleRecordChange}
-            />
-          </Box>
-        </Container>
+          </Container>
+        </>
       )}
       {/*</Container>*/}
     </Navbar>

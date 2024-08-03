@@ -15,11 +15,11 @@ import {
 } from '@mui/material'
 import { updateHouseAsync } from '../../redux/houses/thunksHouses'
 import { useDispatch } from 'react-redux'
-import { houseStatusEnum } from '../../constants/contants'
+import { houseStatusEnumSelectable } from '../../constants/contants'
 import SelectCustom from '../inputs/SelectCustom'
 import { colors } from '../../styles/colors'
 
-const BayCardEditDialog = ({ isOpen, houseInfo, handleClose }) => {
+const StatusEditDialog = ({ isOpen, houseInfo, handleClose }) => {
   const [houseStatus, setHouseStatus] = useState(houseInfo.status)
   const dispatch = useDispatch()
 
@@ -36,10 +36,13 @@ const BayCardEditDialog = ({ isOpen, houseInfo, handleClose }) => {
     handleClose()
   }
 
-  const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
-    value: key,
-    label: houseStatusEnum[key],
-  }))
+  const houseStatusOptions = Object.keys(houseStatusEnumSelectable).map(
+    (key, index) => ({
+      value: key,
+      label: houseStatusEnumSelectable[key],
+      disabled: index > 4,
+    })
+  )
 
   return (
     <Dialog maxWidth={'xs'} open={isOpen} onClose={handleClose}>
@@ -71,4 +74,4 @@ const BayCardEditDialog = ({ isOpen, houseInfo, handleClose }) => {
   )
 }
 
-export default BayCardEditDialog
+export default StatusEditDialog
