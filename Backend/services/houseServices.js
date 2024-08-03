@@ -1,4 +1,5 @@
 const House = require("../models/House");
+const Customer = require("../models/Customer");
 const mongoose = require("mongoose");
 const House_View = require("../models/House_View");
 const Bay_View = require("../models/Bay_View");
@@ -70,9 +71,11 @@ const addHouseToDb = async (houseData) => {
     // house_records_id: null,
     // status: 1,
   };
+  const theCustomer = await Customer.findById(houseData.customer_id);
+  console.log('the customer : ', theCustomer);
   const newHouseMade = await House.create(newHouse);
   const logParams = {
-    customerName: houseData.customer_id,
+    customerName: theCustomer.customer_name,
     npl: houseData.npl, model: houseData.house_model
   }
   await addLogToDb('New house', logParams);
