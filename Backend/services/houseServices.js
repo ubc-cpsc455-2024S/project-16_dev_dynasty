@@ -72,7 +72,6 @@ const addHouseToDb = async (houseData) => {
     // status: 1,
   };
   const theCustomer = await Customer.findById(houseData.customer_id);
-  console.log('the customer : ', theCustomer);
   const newHouseMade = await House.create(newHouse);
   const logParams = {
     customerName: theCustomer.customer_name,
