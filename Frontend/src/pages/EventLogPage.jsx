@@ -214,8 +214,8 @@ const EventLogPage = () => {
               <em>Bays</em>
             </MenuItem>
             {[
-              'Bay 1',
-              'Bay 2',
+              'Bay 1 ',
+              'Bay 2 ',
               'Bay 3',
               'Bay 4',
               'Bay 5',
