@@ -28,6 +28,22 @@ const formatDateWithTimezone = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${timezone}`;
 };
 
+const formatDateWithUserTimezone = (date) => {
+    const options = { timeZoneName: 'short' };
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const parts = formatter.formatToParts(date);
+    const timezone = parts.find(part => part.type === 'timeZoneName').value;
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${timezone}`;
+};
+
 const addLogToDb = async (type, logParams) => {
     try {
         let logContent = '';
@@ -63,7 +79,7 @@ const addLogToDb = async (type, logParams) => {
 
 
         const newLog = new Log({
-            eventTime: formatDateWithTimezone(),
+            eventTime: formatDateWithUserTimezone(new Date()),
             logContent,
             eventType: type
         });
