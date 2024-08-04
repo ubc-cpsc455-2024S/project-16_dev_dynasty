@@ -43,6 +43,7 @@ const EditDefectPage = () => {
   const [bayId, setBayId] = useState('');
   const [images, setImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]); // New state for deleted images
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -86,6 +87,7 @@ const EditDefectPage = () => {
 
   const handleDeleteImage = (index, isExisting) => {
     if (isExisting) {
+      setDeletedImages((prev) => [...prev, images[index]]);
       setImages((prevImages) => prevImages.filter((_, i) => i !== index));
     } else {
       setNewImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -96,20 +98,23 @@ const EditDefectPage = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
-    const existingImages = images.filter(img => typeof img === 'string');
+  
+    // Kept images that remain after deletion
+    const keptImages = images;
+  
     const defectData = {
       title,
       description,
       status,
       bay_id: bayId,
-      images: existingImages,
+      deleted: deletedImages, // Images to delete
+      kept: keptImages, // Images to keep
+      images: newImages, // Adding newImages here
     };
-
-    console.log("Defect Data:", defectData, newImages);
-
+  
     try {
-      const response = await dispatch(updateDefectAsync({ houseId: id, defectId, defectData, newImages })).unwrap();
+      // Now the defectData itself contains all image info
+      const response = await dispatch(updateDefectAsync({ houseId: id, defectId, defectData })).unwrap();
       if (!response) throw new Error('Failed to update defect.');
       setLoading(false);
       dispatch(fetchDefectsByHouseId(id)); // Update the defects list

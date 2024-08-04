@@ -33,6 +33,29 @@ const upload = multer({
   }),
 });
 
+
+const deleteImagesFromS3 = async (imageUrls) => {
+  const keys = imageUrls.map(imageUrl => {
+    const urlParts = imageUrl.split('/');
+    return urlParts[urlParts.length - 1]; 
+  });
+
+  const deleteParams = {
+    Bucket: process.env.S3_BUCKET_NAME,
+    Delete: {
+      Objects: keys.map(key => ({ Key: key })),
+    },
+  };
+
+  try {
+    await s3.deleteObjects(deleteParams).promise();
+    console.log("Images deleted from S3 successfully");
+  } catch (err) {
+    console.error("Error deleting images from S3:", err);
+    throw err; 
+  }
+};
+
 // Get all defects for a house
 router.get('/:houseId', async (req, res) => {
   try {
@@ -124,32 +147,47 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
     if (defectIndex === -1) return res.status(404).json({ message: 'Defect not found' });
 
     const defect = house.defects[defectIndex];
-    const { title, status, description, bay_id } = req.body;
+    const { title, status, description, bay_id, deleted, kept } = req.body;
 
+    // Update defect fields
     if (title) defect.title = title;
     if (status) defect.status = status;
     if (description) defect.description = description;
     if (bay_id) defect.bay_id = bay_id;
 
-    if (req.files.length > 0) {
-      defect.images = defect.images.concat(req.files.map((file) => file.location));
-    } else if (req.body.images) {
-      const parsedImages = typeof req.body.images === 'string' ? JSON.parse(req.body.images) : req.body.images;
-      defect.images = defect.images.concat(parsedImages);
+    // Handle image deletion
+    const imagesToDelete = deleted ? JSON.parse(deleted) : [];
+    if (imagesToDelete.length > 0) {
+      await deleteImagesFromS3(imagesToDelete);
+      defect.images = defect.images.filter(image => !imagesToDelete.includes(image));
     }
 
+    // Handle new images upload
+    if (req.files.length > 0) {
+      defect.images = defect.images.concat(req.files.map((file) => file.location));
+    }
+
+    // Ensure that kept images are retained
+    const keptImages = kept ? JSON.parse(kept) : [];
+    defect.images = [...new Set([...defect.images, ...keptImages])];
+
     await house.save();
+
+    // Log defect fix if status is resolved
     if (status === 'resolved') {
       const logParams = {
         defectTitle: title,
-        houseNpl: house.npl, bayId: bay_id, model: house.house_model
-      }
+        houseNpl: house.npl,
+        bayId: bay_id,
+        model: house.house_model
+      };
       await addLogToDb('Defect fixed', logParams);
       console.log("Defect added to house and house saved");
     }
 
     res.status(200).json({ message: 'Defect updated successfully', defect });
   } catch (err) {
+    console.error("Error updating defect:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -171,6 +209,11 @@ router.delete('/:houseId/:defectId', async (req, res) => {
     console.log("Defect Index:", defectIndex);
 
     if (defectIndex > -1) {
+      const defect = house.defects[defectIndex];
+      const images = defect.images;
+
+      await deleteImagesFromS3(images);
+
       house.defects.splice(defectIndex, 1);
       await house.save();
       await Defect.findByIdAndDelete(req.params.defectId);
