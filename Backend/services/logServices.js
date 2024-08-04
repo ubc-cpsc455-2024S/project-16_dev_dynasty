@@ -46,8 +46,8 @@ const formatDateWithUserTimezone = (date) => {
 };
 
 const addLogToDb = async (type, logParams) => {
-  try {
-    let logContent = "";
+    try {
+        let logContent = "";
 
         switch (type) {
             case 'New customer':
@@ -86,33 +86,34 @@ const addLogToDb = async (type, logParams) => {
             eventType: type
         });
 
-
-    // Save the log entry to the database
-    await newLog.save();
-
-    return { success: true, message: "Log added successfully", log: newLog };
-  } catch (error) {
-    console.error(error);
-    return { success: false, message: "Error adding log", error };
-  }
+        if (logParams.houseId) {
+            newLog.relevant_house = logParams.houseId;
+        }
+        // Save the log entry to the database
+        await newLog.save();
+        return { success: true, message: "Log added successfully", log: newLog };
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "Error adding log", error };
+    }
 };
 
 const getAllLogsFromDb = async () => {
-  try {
-    return await Log.find({});
-  } catch (error) {
-    console.error("Error fetching logs:", error);
-    throw error;
-  }
+    try {
+        return await Log.find({});
+    } catch (error) {
+        console.error("Error fetching logs:", error);
+        throw error;
+    }
 };
 
 const getLogsByHouseId = async (houseId) => {
-  try {
-    return await Log.find({ houseId });
-  } catch (error) {
-    console.error("Error fetching logs:", error);
-    throw error;
-  }
+    try {
+        return await Log.find({ relevant_house: houseId });
+    } catch (error) {
+        console.error("Error fetching logs for house:", error);
+        throw error;
+    }
 };
 
 module.exports = { addLogToDb, getAllLogsFromDb, getLogsByHouseId };

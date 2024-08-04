@@ -71,13 +71,13 @@ const addHouseToDb = async (houseData) => {
     // house_records_id: null,
     // status: 1,
   };
-  
+
   const newHouseMade = await House.create(newHouse);
   if (houseData.customer_id) {
     const theCustomer = await Customer.findById(houseData.customer_id);
     const logParams = {
       customerName: theCustomer.customer_name,
-      npl: houseData.npl, model: houseData.house_model
+      npl: houseData.npl, model: houseData.house_model, houseId: newHouseMade._id
     }
     await addLogToDb('New house', logParams);
   }
@@ -95,16 +95,31 @@ const updateHouseInDb = async (houseid, houseInfo) => {
   if (theHouse.status !== 2 && houseInfo.status === 2) {
     const logParams = {
       bayId: theHouse.bay_id,
-      npl: theHouse.npl
+      npl: theHouse.npl,
+      houseId: theHouse._id
     }
     await addLogToDb('Bay work begin', logParams);
   }
   if (theHouse.status !== 4 && houseInfo.status === 4) {
     const logParams = {
       bayId: theHouse.bay_id,
-      npl: theHouse.npl
+      npl: theHouse.npl,
+      houseId: theHouse._id
     }
     await addLogToDb('Bay work complete', logParams);
+  }
+  if (theHouse.status !== 5 && houseInfo.status === 5) {
+    if (theHouse.customer_id) {
+      const theCustomer = await Customer.findById(theHouse.customer_id);
+      const logParams = {
+        bayId: theHouse.bay_id,
+        npl: theHouse.npl,
+        houseId: theHouse._id,
+        customerName: theCustomer.customer_name,
+        model: theHouse.house_model
+      }
+      await addLogToDb('House completed', logParams);
+    }
   }
   await House.updateOne({ _id: houseid }, { $set: houseInfo });
   return (await House_View({ _id: new ObjectId(houseid) }))[0];
@@ -127,22 +142,25 @@ const toggleBayAssignment = async (houseid, bayid) => {
     // update online date if house was not started, and log the house started event
     if (!currentHouse.online_date) {
       currentHouse.online_date = formatDate(new Date());
-      const logParams = {
-        customerName: currentHouse.customer_id,
-        npl: currentHouse.npl, model: currentHouse.house_model
+      if (currentHouse.customer_id) {
+        const theCustomer = await Customer.findById(currentHouse.customer_id);
+        const logParams = {
+          customerName: theCustomer.customer_name,
+          npl: currentHouse.npl, model: currentHouse.house_model, houseId: currentHouse._id
+        }
+        await addLogToDb('House started', logParams);
       }
-      await addLogToDb('House started', logParams);
     }
     if (bayid == 'null') {
       currentHouse.bay_id = null;
       currentHouse.bay_name = null;
       currentHouse.status = 1;
       await currentHouse.save();
-      const logParams = {
-        customerName: currentHouse.customer_id,
-        npl: currentHouse.npl, model: currentHouse.house_model
-      }
-      await addLogToDb('House completed', logParams);
+      // const logParams = {
+      //   customerName: currentHouse.customer_id,
+      //   npl: currentHouse.npl, model: currentHouse.house_model
+      // }
+      // await addLogToDb('House completed', logParams);
       return (await House_View({ _id: new ObjectId(houseid) }))[0];
     } else {
       currentHouse.bay_id = bayid;

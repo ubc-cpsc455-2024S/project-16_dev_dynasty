@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 
 const logSchema = new mongoose.Schema({
+    relevant_house: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: null,
+      },
     eventTime: {
         type: String,
         required: true
