@@ -154,7 +154,6 @@ const toggleBayAssignment = async (houseid, bayid) => {
     if (bayid == 'null') {
       currentHouse.bay_id = null;
       currentHouse.bay_name = null;
-      currentHouse.status = 1;
       await currentHouse.save();
       // const logParams = {
       //   customerName: currentHouse.customer_id,
