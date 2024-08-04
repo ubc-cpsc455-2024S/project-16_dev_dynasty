@@ -62,13 +62,12 @@ const StatusEditDialog = ({ isOpen, houseInfo, handleClose }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={handleClose}
-          sx={{ color: colors.dialogSecondaryButtonColor }}
-        >
+        <Button onClick={handleClose} color='secondary'>
           Close
         </Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} variant='contained' color='primary'>
+          Submit
+        </Button>
       </DialogActions>
     </Dialog>
   )

@@ -88,7 +88,7 @@ const HouseChecklistPage = () => {
       putChecklistAsync({ houseId, checklistData })
     ).unwrap()
     response
-      ? toast.success('Checklist data saved!')
+      ? toast.success('Checklist data saved')
       : toast.error('Failed to save checklist data!')
   }
 

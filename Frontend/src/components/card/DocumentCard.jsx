@@ -1,11 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Typography, IconButton, Tooltip, Card, CardActions } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import DownloadIcon from '@mui/icons-material/Download';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import PdfThumbnail from '../pdf/PdfThumbnail';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import {
+  Box,
+  Typography,
+  IconButton,
+  Tooltip,
+  Card,
+  CardActions,
+  Menu,
+  MenuItem,
+} from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import DownloadIcon from '@mui/icons-material/Download'
+import ZoomInIcon from '@mui/icons-material/ZoomIn'
+import PdfThumbnail from '../pdf/PdfThumbnail'
+import { MoreHoriz } from '@mui/icons-material'
 
 const DocumentCard = ({
   document,
@@ -21,14 +31,14 @@ const DocumentCard = ({
   rightSideTitle = 'Date',
   rightSideValue,
   rightSideColor = 'white',
-  backgroundColor =  '#5C4D4D',
+  backgroundColor = '#5C4D4D',
 }) => {
   return (
     <Card
       sx={{
         display: 'flex',
         alignItems: 'center',
-        width: 310,
+        width: 230,
         height: 180,
         borderRadius: 5,
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
@@ -51,115 +61,77 @@ const DocumentCard = ({
           overflow: 'hidden',
           boxShadow: '0 10px 6px rgba(0,0,0,0.3)',
           backgroundColor: 'white',
-          cursor: 'pointer', 
+          cursor: 'pointer',
           '&:hover': {
-            boxShadow: '0 10px 12px rgba(0,0,0,0.5)', 
+            boxShadow: '0 10px 12px rgba(0,0,0,0.5)',
           },
         }}
       >
         <PdfThumbnail url={document.fileUrl} width={125} height={180} />
       </Box>
-      <Box
-        onClick={onView}
-        sx={{
-          flexGrow: 1,
-          paddingLeft: '30%', 
-          paddingRight: '20%',
-          paddingTop: '0%',
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          height: '70%', 
-          maxHeight: '100%',
-          maxWidth: '50%',
-          cursor: 'pointer', 
+
+      <div style={{ paddingLeft: '100px', display: 'flex' }}>
+        <Box
+          onClick={onView}
+          sx={{
+            flexGrow: 1,
+            width: '90px',
+            cursor: 'pointer',
             '&:hover': {
-              textDecoration: 'underline', 
-            }
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{
-            color: titleColor,
-            fontWeight: 'bold',
-            mb: 1,
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
+              textDecoration: 'underline',
+            },
           }}
-          title={document.title} 
         >
-          {document.title}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            color: subtitleColor,
-            fontWeight: '400',
-            mb: 1,
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-          title={document.description} 
-        >
-          {document.description}
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography
+            variant='h6'
+            sx={{
+              color: titleColor,
+              fontWeight: 'bold',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+            title={document.title}
+          >
+            {document.title}
+          </Typography>
+          <Typography
+            variant='body2'
+            sx={{
+              color: subtitleColor,
+              fontWeight: '400',
+              mb: 4,
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+            title={document.description}
+          >
+            {document.description}
+          </Typography>
           <Box>
-            <Typography sx={{ fontSize: 11, color: leftSideColor }}>{leftSideTitle}</Typography>
-            <Typography sx={{ fontSize: 12, marginTop: 1, fontWeight: 'bold', color: leftSideColor }}>
+            <Typography sx={{ fontSize: 11, color: leftSideColor }}>
+              <span style={{ fontWeight: 'bold' }}>{leftSideTitle}:</span>{' '}
               {leftSideValue}
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ width: 1, height: 35, backgroundColor: '#c4c4c4', opacity: 0.5, marginX: 2 }} />
-            <Box>
-              <Typography sx={{ fontSize: 11, color: rightSideColor }}>{rightSideTitle}</Typography>
-              <Typography sx={{ fontSize: 12, marginTop: 1, fontWeight: 'bold', color: rightSideColor }}>
-                {rightSideValue}
-              </Typography>
-            </Box>
+          <Box>
+            <Typography sx={{ fontSize: 11, color: rightSideColor }}>
+              <span style={{ fontWeight: 'bold' }}>{rightSideTitle}:</span>{' '}
+              {rightSideValue}
+            </Typography>
           </Box>
         </Box>
-      </Box>
-      <CardActions
-        sx={{
-          position: 'absolute',
-          bottom: 8,
-          right: 8,
-          zIndex: 3,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-        }}
-      >
-        <Tooltip title="View Document">
-          <IconButton size="small" onClick={onView}>
-            <ZoomInIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Edit Document">
-          <IconButton size="small" onClick={onEdit}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete Document">
-          <IconButton onClick={onDelete}>
-            <DeleteIcon color="error" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Download Document">
-          <IconButton onClick={onDownload}>
-            <DownloadIcon sx={{ color: 'primary.main' }} />
-          </IconButton>
-        </Tooltip>
-      </CardActions>
+        <DocumentActionsDropdown
+          onView={onView}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onDownload={onDownload}
+        />
+      </div>
     </Card>
-  );
-};
+  )
+}
 
 DocumentCard.propTypes = {
   document: PropTypes.object.isRequired,
@@ -176,6 +148,80 @@ DocumentCard.propTypes = {
   rightSideValue: PropTypes.string.isRequired,
   rightSideColor: PropTypes.string,
   backgroundColor: PropTypes.string,
-};
+}
 
-export default DocumentCard;
+const DocumentActionsDropdown = ({ onView, onEdit, onDelete, onDownload }) => {
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  return (
+    <div style={{ marginTop: '-10px' }}>
+      <IconButton onClick={handleClick}>
+        <MoreHoriz />
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <MenuItem
+          onClick={() => {
+            onView()
+            handleClose()
+          }}
+        >
+          <Tooltip title='View Document'>
+            <IconButton size='small'>
+              <ZoomInIcon />
+            </IconButton>
+          </Tooltip>
+          View Document
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onEdit()
+            handleClose()
+          }}
+        >
+          <Tooltip title='Edit Document'>
+            <IconButton size='small'>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          Edit Document
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onDelete()
+            handleClose()
+          }}
+        >
+          <Tooltip title='Delete Document'>
+            <IconButton>
+              <DeleteIcon color='error' />
+            </IconButton>
+          </Tooltip>
+          Delete Document
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onDownload()
+            handleClose()
+          }}
+        >
+          <Tooltip title='Download Document'>
+            <IconButton>
+              <DownloadIcon />
+            </IconButton>
+          </Tooltip>
+          Download Document
+        </MenuItem>
+      </Menu>
+    </div>
+  )
+}
+
+export default DocumentCard

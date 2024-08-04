@@ -13,10 +13,13 @@ import {
   TextField,
   FormControl,
   InputLabel,
+  FormLabel,
 } from '@mui/material'
 import { getEventLogsAsync } from '../redux/logs/thunkLog'
 import { styled } from '@mui/system'
 import { colors } from '../styles/colors'
+import TextFieldLabelWrapper from '../components/labels/TextFieldLabelWrapper'
+import AdornmentSearch from '../components/inputs/adornments/AdornmentSearch'
 
 const EventLogPage = () => {
   const eventLogs = useSelector(state => state.logs.eventLogs)
@@ -30,7 +33,6 @@ const EventLogPage = () => {
   const [bay, setBay] = useState('')
   const [npl, setNpl] = useState('')
   const [model, setModel] = useState('')
-
 
   useEffect(() => {
     dispatch(getEventLogsAsync())
@@ -60,7 +62,6 @@ const EventLogPage = () => {
     setModel(event.target.value)
   }
 
-
   const handleResetFilters = () => {
     setYear('')
     setMonth('')
@@ -79,13 +80,11 @@ const EventLogPage = () => {
       (!year || logYear === parseInt(year)) &&
       (!month || logMonth === parseInt(month)) &&
       (!type || log.eventType.toLowerCase().includes(type.toLowerCase())) &&
-      (!bay || log.logContent.toLowerCase().includes(bay.toLowerCase()))&&
-      (!npl || log.logContent.toLowerCase().includes(npl.toLowerCase()))&&
+      (!bay || log.logContent.toLowerCase().includes(bay.toLowerCase())) &&
+      (!npl || log.logContent.toLowerCase().includes(npl.toLowerCase())) &&
       (!model || log.logContent.toLowerCase().includes(model.toLowerCase()))
     )
   })
-
-
 
   const ErrorText = styled(Typography)({
     color: colors.errorTextColor,
@@ -165,137 +164,176 @@ const EventLogPage = () => {
 
   return (
     <Navbar>
+      <Header1 title={'Event Logs'} />
       <Container>
-        <Header1 title={'Event Logs'} />
+        <br />
+        <FormLabel variant='h6'>Log count: {filteredLogs.length}</FormLabel>
+        <br />
+        <br />
+
         <Box
-        sx={{
-          marginTop: '24px',
-          marginBottom: '16px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-          <Select value={year} onChange={handleYearChange} displayEmpty>
-            <MenuItem value=''>
-              <em>All Years</em>
-            </MenuItem>
-            {[2022, 2023, 2024].map(y => (
-              <MenuItem key={y} value={y}>
-                {y}
+          sx={{
+            marginTop: '24px',
+            marginBottom: '16px',
+            display: 'flex',
+            gap: '10px',
+            alignItems: 'flex-end',
+          }}
+        >
+          <TextFieldLabelWrapper label={'Year'}>
+            <Select
+              size='small'
+              value={year}
+              onChange={handleYearChange}
+              displayEmpty
+            >
+              <MenuItem value=''>
+                <em>All Years</em>
               </MenuItem>
-            ))}
-          </Select>
-          <Select value={month} onChange={handleMonthChange} displayEmpty>
-            <MenuItem value=''>
-              <em>All Months</em>
-            </MenuItem>
-            {[
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec',
-            ].map((monthAbbr, index) => (
-              <MenuItem key={monthAbbr} value={index + 1}>
-                {monthAbbr}
+              {[2022, 2023, 2024].map(y => (
+                <MenuItem key={y} value={y}>
+                  {y}
+                </MenuItem>
+              ))}
+            </Select>
+          </TextFieldLabelWrapper>
+          <TextFieldLabelWrapper label={'Month'}>
+            <Select
+              sx={{ width: '200px' }}
+              size='small'
+              value={month}
+              onChange={handleMonthChange}
+              displayEmpty
+            >
+              <MenuItem value=''>
+                <em>All Months</em>
               </MenuItem>
-            ))}
-          </Select>
-
-          <Select value={bay} onChange={handleBayChange} displayEmpty>
-            <MenuItem value=''>
-              <em>Bays</em>
-            </MenuItem>
-            {[
-              'Bay 1 ',
-              'Bay 2 ',
-              'Bay 3',
-              'Bay 4',
-              'Bay 5',
-              'Bay 6',
-              'Bay 7',
-              'Bay 8',
-              'Bay 9',
-              'Bay 10',
-              'Bay 11',
-              'Bay 12',
-              'Bay 13',
-              'Bay 14',
-              'Bay 15',
-              'Bay 16',
-              'Bay 17',
-              'Bay 18',
-              'Bay 19',
-              'Bay 20',
-              'Bay 8.5',
-              'Bay 13a',
-              'Bay 13b',
-              'Bay 14.5',
-              'Bay 15.5',
-              'Bay 16.5',
-              'Bay 17.5',
-              'Bay 18.5',
-              'Bay 19.5',
-              'Bay 20.5',
-            ].map(b => (
-              <MenuItem key={b} value={b}>
-                {b}
+              {[
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+              ].map((monthAbbr, index) => (
+                <MenuItem key={monthAbbr} value={index + 1}>
+                  {monthAbbr}
+                </MenuItem>
+              ))}
+            </Select>
+          </TextFieldLabelWrapper>
+          <TextFieldLabelWrapper label={'Bays'}>
+            <Select
+              sx={{ width: '200px' }}
+              size='small'
+              value={bay}
+              onChange={handleBayChange}
+              displayEmpty
+            >
+              <MenuItem value=''>
+                <em>All Bays</em>
               </MenuItem>
-            ))}
-          </Select>
-
-          <TextField
-            id='npl'
-            value={npl}
-            onChange={handleNplChange}
-            variant='outlined'
-            label='NPL'
-          />
-
-          <TextField
-            id='model'
-            value={model}
-            onChange={handleModelChange}
-            variant='outlined'
-            label='Model'
-          />
-
-          <Select value={type} onChange={handleTypeChange} displayEmpty>
-            <MenuItem value=''>
-              <em>All Types</em>
-            </MenuItem>
-            {[
-              'New customer',
-              'New house',
-              'House started',
-              'House completed',
-              'Bay work begin',
-              'Bay work complete',
-              'Bay work',
-              'Defect created',
-              'Defect fixed',
-            ].map(t => (
-              <MenuItem key={t} value={t}>
-                {t}
+              {[
+                'Bay 1 ',
+                'Bay 2 ',
+                'Bay 3',
+                'Bay 4',
+                'Bay 5',
+                'Bay 6',
+                'Bay 7',
+                'Bay 8',
+                'Bay 9',
+                'Bay 10',
+                'Bay 11',
+                'Bay 12',
+                'Bay 13',
+                'Bay 14',
+                'Bay 15',
+                'Bay 16',
+                'Bay 17',
+                'Bay 18',
+                'Bay 19',
+                'Bay 20',
+                'Bay 8.5',
+                'Bay 13a',
+                'Bay 13b',
+                'Bay 14.5',
+                'Bay 15.5',
+                'Bay 16.5',
+                'Bay 17.5',
+                'Bay 18.5',
+                'Bay 19.5',
+                'Bay 20.5',
+              ].map(b => (
+                <MenuItem key={b} value={b}>
+                  {b}
+                </MenuItem>
+              ))}
+            </Select>
+          </TextFieldLabelWrapper>
+          <TextFieldLabelWrapper label='House NPL#'>
+            <TextField
+              id='npl'
+              value={npl}
+              onChange={handleNplChange}
+              variant='outlined'
+              size='small'
+              InputProps={AdornmentSearch}
+            />
+          </TextFieldLabelWrapper>
+          <TextFieldLabelWrapper label='House Model'>
+            <TextField
+              id='model'
+              size='small'
+              value={model}
+              onChange={handleModelChange}
+              variant='outlined'
+              label='Model'
+            />
+          </TextFieldLabelWrapper>
+          <TextFieldLabelWrapper label='Event Type'>
+            <Select
+              sx={{ width: '200px' }}
+              size='small'
+              value={type}
+              onChange={handleTypeChange}
+              displayEmpty
+            >
+              <MenuItem value=''>
+                <em>All Types</em>
               </MenuItem>
-            ))}
-          </Select>
+              {[
+                'New customer',
+                'New house',
+                'House started',
+                'House completed',
+                'Bay work begin',
+                'Bay work complete',
+                'Bay work',
+                'Defect created',
+                'Defect fixed',
+              ].map(t => (
+                <MenuItem key={t} value={t}>
+                  {t}
+                </MenuItem>
+              ))}
+            </Select>
+          </TextFieldLabelWrapper>
 
-          <Button onClick={handleResetFilters}>Reset Filters</Button>
+          <Button
+            color={'secondary'}
+            variant={'outlined'}
+            onClick={handleResetFilters}
+          >
+            Clear
+          </Button>
         </Box>
-        <TotalLogsContainer>
-          <Typography variant='h6'>
-            Number of Logs: {filteredLogs.length}
-          </Typography>
-        </TotalLogsContainer>
-
         <LogsBox mt={3}>
           <HeaderContainer>
             <TimeTypography variant='h6'>Event Time</TimeTypography>
@@ -321,6 +359,9 @@ const EventLogPage = () => {
           )}
         </LogsBox>
       </Container>
+      <br />
+      <br />
+      <br />
     </Navbar>
   )
 }

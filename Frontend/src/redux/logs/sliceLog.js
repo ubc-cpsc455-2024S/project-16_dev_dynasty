@@ -6,32 +6,30 @@ const INITIAL_LOG_STATE = {
   status: {
     getAllLogs: 'idle',
   },
-  error: null
+  error: null,
 }
 
 const logSlice = createSlice({
   name: 'logs',
   initialState: INITIAL_LOG_STATE,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       // handle getAll
-      .addCase(getEventLogsAsync.pending, (state) => {
-        state.status.getAllLogs = 'pending';
+      .addCase(getEventLogsAsync.pending, state => {
+        state.status.getAllLogs = 'pending'
       })
       .addCase(getEventLogsAsync.fulfilled, (state, action) => {
-        state.status.getAllLogs = 'fulfilled';
-        console.log('logs are: ', action.payload);
-        state.eventLogs = action.payload;
-        state.error = null;
+        state.status.getAllLogs = 'fulfilled'
+        console.log('logs are: ', action.payload)
+        state.eventLogs = action.payload
+        state.error = null
       })
       .addCase(getEventLogsAsync.rejected, (state, action) => {
-        state.status.getAllLogs = 'rejected';
-        state.error = action.error.message;
+        state.status.getAllLogs = 'rejected'
+        state.error = action.error.message
       })
   },
 })
 
-// export const { setUserFromToken } = authSlice.actions;
 export default logSlice.reducer
