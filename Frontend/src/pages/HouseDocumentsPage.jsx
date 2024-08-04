@@ -1,29 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-  Modal,
-  IconButton,
-  Tooltip
-} from '@mui/material';
+import { Box, Container, Button, Grid, Modal, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import DownloadIcon from '@mui/icons-material/Download';
 import { fetchDocumentsByHouseId, deleteDocumentAsync } from '../redux/documents/thunksDocuments';
 import Navbar from '../components/navigation/Navbar';
 import HouseTabs from '../components/navigation/HouseTabs';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
 import PdfViewer from '../components/pdf/PdfViewer';
-import PdfThumbnail from '../components/pdf/PdfThumbnail';
+import DocumentCard from '../components/card/DocumentCard';
 
 const HouseDocumentsPage = () => {
   const { id } = useParams();
@@ -61,19 +46,6 @@ const HouseDocumentsPage = () => {
     setSelectedDocument(null);
   };
 
-  const getTypeColor = (type) => {
-    switch (type.toLowerCase()) {
-      case 'blueprint':
-        return '#3f51b5';
-      case 'contract':
-        return '#4caf50';
-      case 'inspection report':
-        return '#f44336';
-      default:
-        return '#757575';
-    }
-  };
-
   return (
     <Navbar>
       <Container>
@@ -87,49 +59,14 @@ const HouseDocumentsPage = () => {
         <Grid container spacing={3} mt={3}>
           {documents.map((document) => (
             <Grid item xs={12} sm={6} md={4} key={document._id}>
-              <Card
-                sx={{
-                  boxShadow: 3,
-                  borderRadius: 2,
-                  transition: 'transform 0.2s',
-                  '&:hover': {
-                    transform: 'scale(1.02)',
-                  },
-                }}
-              >
-                <PdfThumbnail url={document.fileUrl} width={150} height={200} />
-                <CardContent onClick={() => handleOpen(document)} sx={{ cursor: 'pointer', paddingBottom: '16px' }}>
-                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
-                    {document.title}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: getTypeColor(document.type), fontWeight: 'bold' }} gutterBottom>
-                    {document.type}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {document.description}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {new Date(document.uploadDate).toLocaleDateString()}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Tooltip title="Edit Document">
-                    <IconButton size="small" onClick={() => handleEditDocument(document._id)}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete Document">
-                    <IconButton onClick={() => handleDeleteDocument(document._id)}>
-                      <DeleteIcon color="error" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Download Document">
-                    <IconButton onClick={() => window.open(document.fileUrl, '_blank')}>
-                      <DownloadIcon sx={{ color: 'primary.main' }} />
-                    </IconButton>
-                  </Tooltip>
-                </CardActions>
-              </Card>
+              <DocumentCard
+                document={document}
+                leftSideValue={document.type}
+                rightSideValue={new Date(document.uploadDate).toLocaleDateString()}
+                onEdit={() => handleEditDocument(document._id)}
+                onDelete={() => handleDeleteDocument(document._id)}
+                onDownload={() => window.open(document.fileUrl, '_blank')}
+              />
             </Grid>
           ))}
         </Grid>
