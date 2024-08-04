@@ -1,5 +1,3 @@
-// src/pages/HouseDocumentsPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -11,7 +9,8 @@ import {
   CardContent,
   CardActions,
   Modal,
-  IconButton
+  IconButton,
+  Tooltip
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -65,13 +64,13 @@ const HouseDocumentsPage = () => {
   const getTypeColor = (type) => {
     switch (type.toLowerCase()) {
       case 'blueprint':
-        return 'blue';
+        return '#3f51b5';
       case 'contract':
-        return 'green';
+        return '#4caf50';
       case 'inspection report':
-        return 'red';
+        return '#f44336';
       default:
-        return 'black';
+        return '#757575';
     }
   };
 
@@ -88,13 +87,22 @@ const HouseDocumentsPage = () => {
         <Grid container spacing={3} mt={3}>
           {documents.map((document) => (
             <Grid item xs={12} sm={6} md={4} key={document._id}>
-              <Card>
-                <CardContent onClick={() => handleOpen(document)} style={{ cursor: 'pointer' }}>
-                  <PdfThumbnail url={document.fileUrl} />
-                  <Typography variant="h6" gutterBottom>
+              <Card
+                sx={{
+                  boxShadow: 3,
+                  borderRadius: 2,
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.02)',
+                  },
+                }}
+              >
+                <PdfThumbnail url={document.fileUrl} width={150} height={200} />
+                <CardContent onClick={() => handleOpen(document)} sx={{ cursor: 'pointer', paddingBottom: '16px' }}>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
                     {document.title}
                   </Typography>
-                  <Typography variant="body2" style={{ color: getTypeColor(document.type) }} gutterBottom>
+                  <Typography variant="body2" sx={{ color: getTypeColor(document.type), fontWeight: 'bold' }} gutterBottom>
                     {document.type}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
@@ -105,15 +113,21 @@ const HouseDocumentsPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <IconButton size="small" onClick={() => handleEditDocument(document._id)}>
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleDeleteDocument(document._id)}>
-                    <DeleteIcon color="error" />
-                  </IconButton>
-                  <IconButton onClick={() => window.open(document.fileUrl, '_blank')}>
-                    <DownloadIcon style={{ color: 'blue' }} />
-                  </IconButton>
+                  <Tooltip title="Edit Document">
+                    <IconButton size="small" onClick={() => handleEditDocument(document._id)}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete Document">
+                    <IconButton onClick={() => handleDeleteDocument(document._id)}>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Download Document">
+                    <IconButton onClick={() => window.open(document.fileUrl, '_blank')}>
+                      <DownloadIcon sx={{ color: 'primary.main' }} />
+                    </IconButton>
+                  </Tooltip>
                 </CardActions>
               </Card>
             </Grid>
@@ -129,13 +143,19 @@ const HouseDocumentsPage = () => {
                 mt: 5,
                 p: 2,
                 bgcolor: 'background.paper',
-                borderRadius: 2
+                borderRadius: 2,
+                boxShadow: 5,
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <Typography variant="h6" gutterBottom>
                 {selectedDocument.title}
               </Typography>
-              <Box sx={{ overflow: 'auto', maxHeight: '70vh' }}>
+              <Box sx={{ overflow: 'auto', maxHeight: '70vh', width: '100%', mt: 1 }}>
                 <PdfViewer url={selectedDocument.fileUrl} />
               </Box>
               <Box sx={{ mt: 2 }}>
