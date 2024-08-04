@@ -4,8 +4,8 @@ export const houseStatusEnumSelectable = {
   2: 'In Progress',
   3: 'QA Reqiured',
   4: 'Bay Complete',
-  5: 'Ready For Shipping',
-  6: 'Delivered To Customer',
+  // 5: 'Ready For Shipping',
+  // 6: 'Delivered To Customer',
 }
 
 export const houseStatusEnumAll = {
