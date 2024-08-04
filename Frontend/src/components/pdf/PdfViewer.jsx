@@ -1,43 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-import WebViewer from '@pdftron/pdfjs-express-viewer';
+import React from 'react';
+import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const PdfViewer = ({ url }) => {
-  const viewerRef = useRef(null);
+    
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
-  useEffect(() => {
-    const viewerElement = viewerRef.current;
-    let instance;
-
-    WebViewer(
-      {
-        licenseKey:'Mob7c75GlLqWUDt55C19',
-        // licenseKey: process.env.PDFTRON_LICENSE_KEY,
-        path: '/webviewer',
-        initialDoc: url, 
-      },
-      viewerElement
-    ).then((inst) => {
-      instance = inst;
-
-      const { documentViewer } = instance.Core; 
-
-      if (documentViewer) {
-        documentViewer.addEventListener('documentLoaded', () => {
-          console.log('Document loaded successfully');
-        });
-      } else {
-        console.error('Document Viewer is undefined');
-      }
-    });
-
-    return () => {
-      if (instance) {
-        instance.dispose();
-      }
-    };
-  }, [url]);
-
-  return <div className="webviewer" ref={viewerRef} style={{ height: '100vh', width: '100%' }} />;
+  return (
+    <div style={{ height: '100vh', width: '100%' }}>
+      <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
+        <Viewer
+          fileUrl={url}
+          plugins={[defaultLayoutPluginInstance]}
+        />
+      </Worker>
+    </div>
+  );
 };
 
 export default PdfViewer;

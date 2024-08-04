@@ -1,3 +1,5 @@
+// src/pages/HouseDocumentsPage.jsx
+
 import React, { useEffect, useState } from 'react';
 import {
   Box,
@@ -22,7 +24,7 @@ import HouseTabs from '../components/navigation/HouseTabs';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
 import PdfViewer from '../components/pdf/PdfViewer';
-
+import PdfThumbnail from '../components/pdf/PdfThumbnail';
 
 const HouseDocumentsPage = () => {
   const { id } = useParams();
@@ -32,7 +34,6 @@ const HouseDocumentsPage = () => {
   const documents = useSelector((state) => state.documents.list);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [open, setOpen] = useState(false);
-
 
   useEffect(() => {
     dispatch(fetchDocumentsByHouseId(id));
@@ -89,6 +90,7 @@ const HouseDocumentsPage = () => {
             <Grid item xs={12} sm={6} md={4} key={document._id}>
               <Card>
                 <CardContent onClick={() => handleOpen(document)} style={{ cursor: 'pointer' }}>
+                  <PdfThumbnail url={document.fileUrl} />
                   <Typography variant="h6" gutterBottom>
                     {document.title}
                   </Typography>
