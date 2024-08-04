@@ -73,6 +73,7 @@ const MainRouter = () => {
         <Route path={routes.houseChecklistRoute} element={<PrivateRoute element={HouseChecklistPage} />} />
         <Route path={routes.customerRoute} element={<PrivateRoute element={CustomerPage} />} />
         <Route path={routes.eventLogsRoute} element={<PrivateRoute element={EventLogPage} />} />
+        <Route path="/webviewer/*" element={<Navigate to="/webviewer" />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
