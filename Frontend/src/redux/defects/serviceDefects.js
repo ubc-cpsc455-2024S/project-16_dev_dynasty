@@ -43,12 +43,27 @@ export const addDefect = async (houseId, defectData) => {
 export const updateDefect = async (houseId, defectId, defectData) => {
   try {
     const formData = new FormData();
+    
+    // Append new images to form data
+    if (defectData.images) {
+      defectData.images.forEach((image) => {
+        formData.append('images', image);
+      });
+    }
+
+    // Append deleted images URLs as a JSON string
+    if (defectData.deleted) {
+      formData.append('deleted', JSON.stringify(defectData.deleted));
+    }
+
+    // Append kept images URLs as a JSON string
+    if (defectData.kept) {
+      formData.append('kept', JSON.stringify(defectData.kept));
+    }
+
+    // Append other defect data fields
     for (const key in defectData) {
-      if (key === 'images') {
-        defectData.images.forEach((image) => {
-          formData.append('images', image);
-        });
-      } else {
+      if (!['images', 'deleted', 'kept'].includes(key)) {
         formData.append(key, defectData[key]);
       }
     }
@@ -59,6 +74,7 @@ export const updateDefect = async (houseId, defectId, defectData) => {
       },
       withCredentials: true 
     });
+    
     return response.data;
   } catch (error) {
     console.error(`Error updating defect with id ${defectId}:`, error);

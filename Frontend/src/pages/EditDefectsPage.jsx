@@ -28,6 +28,7 @@ import { Delete as DeleteIcon } from '@mui/icons-material';
 import Navbar from '../components/navigation/Navbar';
 import Header1 from '../components/headers/Header1';
 import HouseHeader from '../components/headers/HouseHeader';
+import '../styles/addHousePage.css'; // Ensure both components use the same styles
 
 const EditDefectPage = () => {
   const { id, defectId } = useParams();
@@ -43,8 +44,10 @@ const EditDefectPage = () => {
   const [bayId, setBayId] = useState('');
   const [images, setImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     dispatch(getAllBaysAsync());
@@ -60,6 +63,22 @@ const EditDefectPage = () => {
       }
     });
   }, [dispatch, id, defectId]);
+
+  useEffect(() => {
+    const handleDragEnter = () => setDragging(true);
+    const handleDragLeave = () => setDragging(false);
+    const handleDrop = () => setDragging(false);
+
+    window.addEventListener('dragenter', handleDragEnter);
+    window.addEventListener('dragleave', handleDragLeave);
+    window.addEventListener('drop', handleDrop);
+
+    return () => {
+      window.removeEventListener('dragenter', handleDragEnter);
+      window.removeEventListener('dragleave', handleDragLeave);
+      window.removeEventListener('drop', handleDrop);
+    };
+  }, []);
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -80,12 +99,19 @@ const EditDefectPage = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: {
+      'image/jpeg': ['.jpeg', '.jpg'],
+      'image/png': ['.png'],
+      'image/gif': ['.gif'],
+      'image/bmp': ['.bmp'],
+      'image/webp': ['.webp']
+    },
     multiple: true,
   });
 
   const handleDeleteImage = (index, isExisting) => {
     if (isExisting) {
+      setDeletedImages((prev) => [...prev, images[index]]);
       setImages((prevImages) => prevImages.filter((_, i) => i !== index));
     } else {
       setNewImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -97,19 +123,22 @@ const EditDefectPage = () => {
     setLoading(true);
     setError('');
 
-    const existingImages = images.filter(img => typeof img === 'string');
+    // Kept images that remain after deletion
+    const keptImages = images;
+  
     const defectData = {
       title,
       description,
       status,
       bay_id: bayId,
-      images: existingImages,
+      deleted: deletedImages, // Images to delete
+      kept: keptImages, // Images to keep
+      images: newImages, // Adding newImages here
     };
 
-    console.log("Defect Data:", defectData, newImages);
-
     try {
-      const response = await dispatch(updateDefectAsync({ houseId: id, defectId, defectData, newImages })).unwrap();
+      // Now the defectData itself contains all image info
+      const response = await dispatch(updateDefectAsync({ houseId: id, defectId, defectData })).unwrap();
       if (!response) throw new Error('Failed to update defect.');
       setLoading(false);
       dispatch(fetchDefectsByHouseId(id)); // Update the defects list
@@ -163,9 +192,9 @@ const EditDefectPage = () => {
                 onChange={(e) => setStatus(e.target.value)}
                 label="Status"
               >
-                <MenuItem value="incomplete">Incomplete</MenuItem>
-                <MenuItem value="in progress">In Progress</MenuItem>
-                <MenuItem value="resolved">Resolved</MenuItem>
+                <MenuItem value="Incomplete">Incomplete</MenuItem>
+                <MenuItem value="In progress">In Progress</MenuItem>
+                <MenuItem value="Resolved">Resolved</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth margin="normal">
@@ -187,28 +216,22 @@ const EditDefectPage = () => {
             </FormControl>
             <div
               {...getRootProps()}
-              style={{
-                border: '2px dashed #ccc',
-                padding: '20px',
-                marginTop: '20px',
-                backgroundColor: isDragActive ? '#e0e0e0' : '#fafafa',
-                textAlign: 'center'
-              }}
+              className={`dropzone ${isDragActive || dragging ? 'active' : ''}`}
             >
               <input {...getInputProps()} />
-              <Typography align="center">
+              <Typography align="center" className="dropzone-text">
                 {isDragActive ? 'Drop the files here ...' : 'Drag & drop files here, or click to select files'}
               </Typography>
             </div>
             <Grid container spacing={2} style={{ marginTop: '20px' }}>
               {images.map((image, index) => (
-                <Grid item xs={4} key={index}>
+                <Grid item xs={4} key={`existing-${index}`}>
                   <Card style={{ position: 'relative' }}>
                     <CardMedia
                       component="img"
                       height="140"
                       image={image}
-                      alt={`defect-image-${index}`}
+                      alt={`existing-defect-image-${index}`}
                     />
                     <IconButton
                       style={{ position: 'absolute', top: '5px', right: '5px' }}
@@ -222,12 +245,12 @@ const EditDefectPage = () => {
               {newImages.map((image, index) => (
                 <Grid item xs={4} key={index}>
                   <Card style={{ position: 'relative' }}>
-                    <CardMedia
-                      component="img"
-                      height="140"
+                      <CardMedia
+                        component="img"
+                        height="140"
                       image={URL.createObjectURL(image)}
-                      alt={`new-defect-image-${index}`}
-                    />
+                        alt={`new-defect-image-${index}`}
+                      />
                     <IconButton
                       style={{ position: 'absolute', top: '5px', right: '5px' }}
                       onClick={() => handleDeleteImage(index, false)}

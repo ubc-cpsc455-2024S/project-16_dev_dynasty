@@ -73,7 +73,7 @@ const AddHouseDefectPage = () => {
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => file.type.startsWith('image/') || file.type === 'application/pdf');
     if (validFiles.length !== files.length) {
-      setError('Some files were not valid images or PDFs and were not added.');
+      setError('Some files were not valid images and were not added.');
     }
     setImages((prevImages) => [...prevImages, ...validFiles]);
   };
@@ -81,7 +81,7 @@ const AddHouseDefectPage = () => {
   const onDrop = useCallback((acceptedFiles) => {
     const validFiles = acceptedFiles.filter((file) => file.type.startsWith('image/') || file.type === 'application/pdf');
     if (validFiles.length !== acceptedFiles.length) {
-      setError('Some files were not valid images or PDFs and were not added.');
+      setError('Some files were not valid images and were not added.');
     }
     setImages((prevImages) => [...prevImages, ...validFiles]);
   }, []);
@@ -93,8 +93,7 @@ const AddHouseDefectPage = () => {
       'image/png': ['.png'],
       'image/gif': ['.gif'],
       'image/bmp': ['.bmp'],
-      'image/webp': ['.webp'],
-      'application/pdf': ['.pdf'],
+      'image/webp': ['.webp']
     },
     multiple: true,
   });
@@ -121,7 +120,7 @@ const AddHouseDefectPage = () => {
       const response = await dispatch(addDefectAsync({ houseId: id, defectData })).unwrap();
       if (!response) throw new Error('Failed to add defect.');
       setLoading(false);
-      dispatch(fetchDefectsByHouseId(id)); // Update the defects list
+      dispatch(fetchDefectsByHouseId(id));
       navigate(`/houses/${id}/defects`);
     } catch (err) {
       setLoading(false);
@@ -143,9 +142,6 @@ const AddHouseDefectPage = () => {
         <Paper elevation={3} style={{ padding: '16px', marginTop: '20px' }}>
           <Typography variant="h6" gutterBottom>
             Add House Defect
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            You can submit images by either dragging and dropping them into the area below or by clicking to select files.
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField

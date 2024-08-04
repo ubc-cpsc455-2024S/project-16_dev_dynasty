@@ -19,7 +19,12 @@ import {
   Modal,
   Backdrop,
   Fade,
-  Grid,
+  Tooltip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from '@mui/material';
 import Navbar from '../components/navigation/Navbar';
 import HouseTabs from '../components/navigation/HouseTabs';
@@ -37,37 +42,55 @@ const HouseDefectsPage = () => {
   const houseInfo = useSelector((state) => state.houses.findHouse || null);
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedDefectId, setSelectedDefectId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchDefectsByHouseId(id));
   }, [dispatch, id]);
 
-  const handleDelete = async (defectId) => {
-    await dispatch(deleteDefectAsync({ houseId: id, defectId }));
+  const handleDelete = async () => {
+    await dispatch(deleteDefectAsync({ houseId: id, defectId: selectedDefectId }));
+    setDeleteDialogOpen(false);
+    setSelectedDefectId(null);
     dispatch(fetchDefectsByHouseId(id));
   };
 
-  const handleOpen = (url) => {
+  const handleOpenDeleteDialog = (defectId) => {
+    setSelectedDefectId(defectId);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setSelectedDefectId(null);
+  };
+
+  const handleOpenImageModal = (url) => {
     setSelectedImage(url);
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseImageModal = () => {
     setOpen(false);
     setSelectedImage(null);
   };
 
   const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case 'incomplete':
+    switch (status) {
+      case 'Incomplete':
         return 'red';
-      case 'in progress':
+      case 'In progress':
         return 'orange';
-      case 'resolved':
+      case 'Resolved':
         return 'green';
       default:
         return 'black';
     }
+  };
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
   };
 
   if (loading) return <CircularProgress />;
@@ -100,8 +123,16 @@ const HouseDefectsPage = () => {
                 <TableBody>
                   {defects.map((defect) => (
                     <TableRow key={defect._id}>
-                      <TableCell>{defect.title}</TableCell>
-                      <TableCell>{defect.description}</TableCell>
+                      <TableCell>
+                        <Tooltip title={defect.title} arrow>
+                          <span>{truncateText(defect.title, 20)}</span>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip title={defect.description} arrow>
+                          <span>{truncateText(defect.description, 40)}</span>
+                        </Tooltip>
+                      </TableCell>
                       <TableCell style={{ color: getStatusColor(defect.status) }}>{defect.status}</TableCell>
                       <TableCell>{defect.bay_id}</TableCell>
                       <TableCell>
@@ -121,7 +152,7 @@ const HouseDefectsPage = () => {
                               alt={`defect-${index}`}
                               width={70}
                               style={{ cursor: 'pointer', margin: '4px', border: '1px solid #ccc', borderRadius: '4px' }}
-                              onClick={() => handleOpen(url)}
+                              onClick={() => handleOpenImageModal(url)}
                             />
                           ))}
                         </div>
@@ -130,7 +161,7 @@ const HouseDefectsPage = () => {
                         <IconButton onClick={() => navigate(`/houses/${id}/defects/${defect._id}/edit`)}>
                           <EditIcon />
                         </IconButton>
-                        <IconButton onClick={() => handleDelete(defect._id)}>
+                        <IconButton onClick={() => handleOpenDeleteDialog(defect._id)}>
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
@@ -141,9 +172,11 @@ const HouseDefectsPage = () => {
             </TableContainer>
           </Paper>
         </Box>
+
+        {/* Image Modal */}
         <Modal
           open={open}
-          onClose={handleClose}
+          onClose={handleCloseImageModal}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
@@ -165,6 +198,27 @@ const HouseDefectsPage = () => {
             </div>
           </Fade>
         </Modal>
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={handleCloseDeleteDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Confirm Deletion"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this defect? This action cannot be undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDeleteDialog} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="primary" autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container>
     </Navbar>
   );
