@@ -36,7 +36,7 @@ const HouseDocumentsPage = () => {
     dispatch(fetchDocumentsByHouseId(id));
   };
 
-  const handleOpen = (document) => {
+  const handleViewDocument = (document) => {
     setSelectedDocument(document);
     setOpen(true);
   };
@@ -66,6 +66,7 @@ const HouseDocumentsPage = () => {
                 onEdit={() => handleEditDocument(document._id)}
                 onDelete={() => handleDeleteDocument(document._id)}
                 onDownload={() => window.open(document.fileUrl, '_blank')}
+                onView={() => handleViewDocument(document)} // Pass view handler
               />
             </Grid>
           ))}

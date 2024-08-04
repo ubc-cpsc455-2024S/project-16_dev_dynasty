@@ -4,6 +4,7 @@ import { Box, Typography, IconButton, Tooltip, Card, CardActions } from '@mui/ma
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DownloadIcon from '@mui/icons-material/Download';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import PdfThumbnail from '../pdf/PdfThumbnail';
 
 const DocumentCard = ({
@@ -11,6 +12,7 @@ const DocumentCard = ({
   onEdit,
   onDelete,
   onDownload,
+  onView,
   titleColor = 'white',
   subtitleColor = '#dbdbdb',
   leftSideTitle = 'Type',
@@ -19,24 +21,25 @@ const DocumentCard = ({
   rightSideTitle = 'Date',
   rightSideValue,
   rightSideColor = 'white',
-  backgroundColor = '#0a96ea',
+  backgroundColor =  '#5C4D4D',
 }) => {
   return (
     <Card
       sx={{
         display: 'flex',
         alignItems: 'center',
-        width: 300,
+        width: 310,
         height: 180,
         borderRadius: 5,
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
         position: 'relative',
         overflow: 'visible',
         backgroundColor,
-        marginLeft: '80px', // Adjusted for thumbnail overlay
+        marginLeft: '80px',
       }}
     >
       <Box
+        onClick={onView}
         sx={{
           position: 'absolute',
           top: -16,
@@ -48,27 +51,60 @@ const DocumentCard = ({
           overflow: 'hidden',
           boxShadow: '0 10px 6px rgba(0,0,0,0.3)',
           backgroundColor: 'white',
+          cursor: 'pointer', 
+          '&:hover': {
+            boxShadow: '0 10px 12px rgba(0,0,0,0.5)', 
+          },
         }}
       >
         <PdfThumbnail url={document.fileUrl} width={125} height={180} />
       </Box>
       <Box
+        onClick={onView}
         sx={{
           flexGrow: 1,
-          paddingLeft: '80px', 
-          paddingRight: '66px',
-          paddingTop: '40px',
+          paddingLeft: '30%', 
+          paddingRight: '20%',
+          paddingTop: '0%',
           zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'flex-start', 
-          height: '100%',
+          justifyContent: 'flex-start',
+          height: '70%', 
+          maxHeight: '100%',
+          maxWidth: '50%',
+          cursor: 'pointer', 
+            '&:hover': {
+              textDecoration: 'underline', 
+            }
         }}
       >
-        <Typography variant="h6" sx={{ color: titleColor, fontWeight: 'bold', mb: 1 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            color: titleColor,
+            fontWeight: 'bold',
+            mb: 1,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+          }}
+          title={document.title} 
+        >
           {document.title}
         </Typography>
-        <Typography variant="body2" sx={{ color: subtitleColor, fontWeight: '400', mb: 1 }}>
+        <Typography
+          variant="body2"
+          sx={{
+            color: subtitleColor,
+            fontWeight: '400',
+            mb: 1,
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+          }}
+          title={document.description} 
+        >
           {document.description}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -100,6 +136,11 @@ const DocumentCard = ({
           alignItems: 'flex-end',
         }}
       >
+        <Tooltip title="View Document">
+          <IconButton size="small" onClick={onView}>
+            <ZoomInIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Edit Document">
           <IconButton size="small" onClick={onEdit}>
             <EditIcon />
@@ -126,6 +167,7 @@ DocumentCard.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onDownload: PropTypes.func.isRequired,
   titleColor: PropTypes.string,
+  onView: PropTypes.func.isRequired,
   subtitleColor: PropTypes.string,
   leftSideTitle: PropTypes.string,
   leftSideValue: PropTypes.string.isRequired,
