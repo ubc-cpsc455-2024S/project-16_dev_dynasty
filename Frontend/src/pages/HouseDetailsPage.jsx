@@ -7,13 +7,22 @@ import {
   deleteHouseAsync,
   bayToHouseAsync,
 } from '../redux/houses/thunksHouses'
-import { getAllBaysAsync, getAvailableBaysAsync } from '../redux/bays/thunksBays'
-import { houseStatusEnum } from '../constants/contants'
+import {
+  getAllBaysAsync,
+  getAvailableBaysAsync,
+} from '../redux/bays/thunksBays'
+import StatusEditDialog from '../components/workshop/StatusEditDialog'
+import BayEditDialog from '../components/workshop/BayEditDialog'
+import {
+  houseStatusEnumSelectable,
+  houseStatusEnumAll,
+} from '../constants/contants'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import SelectCustom from '../components/inputs/SelectCustom'
 import HouseTabs from '../components/navigation/HouseTabs'
 import HouseHeader from '../components/headers/HouseHeader'
+import { MdEdit } from 'react-icons/md'
 import {
   Chip,
   Box,
@@ -75,34 +84,22 @@ const HouseDetailsPage = () => {
   const emptyBays = useSelector(state => state.bays.emptyBays || [])
   const currentUser = useSelector(state => state.auth.user)
   const [open, setOpen] = useState(false)
+  const [statusDialogOpen, setStatusDialogOpen] = useState(false)
+  const [bayDialogOpen, setBayDialogOpen] = useState(false)
 
   useEffect(() => {
     dispatch(getHouseAsync(id))
     dispatch(getAvailableBaysAsync())
   }, [dispatch, id])
 
-  const handleChangeStatus = async event => {
-    const status = Number(event.target.value)
+  const handleChangeStatus = async status => {
+    console.log('status: ', status)
     const updatedHouseInfo = { ...houseInfo, status: status }
     const houseData = {
       houseId: houseInfo._id,
       houseData: updatedHouseInfo,
     }
     await dispatch(updateHouseAsync(houseData))
-  }
-
-  const handleChangeBay = async event => {
-    let bayId = event.target.value
-    if (bayId === 'No Bay') {
-      bayId = null
-    }
-    const houseData = {
-      houseId: houseInfo._id,
-      houseData: houseInfo,
-    }
-    const data = await dispatch(
-      bayToHouseAsync({ houseId: houseInfo._id, bayId })
-    )
   }
 
   const handleDeleteHouse = async () => {
@@ -112,9 +109,9 @@ const HouseDetailsPage = () => {
   }
 
   const handleClickOpen = () => {
-    console.log ('the current user is: ', currentUser);
+    console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
-      toast.error('Only admin user authorized for this action');
+      toast.error('Only admin user authorized for this action')
     } else {
       setOpen(true)
     }
@@ -124,58 +121,37 @@ const HouseDetailsPage = () => {
     setOpen(false)
   }
 
-  const houseStatusOptions = Object.keys(houseStatusEnum).map(key => ({
-    value: key,
-    label: houseStatusEnum[key],
-  }))
-
-  const bayOptions = emptyBays.map(({ bay_id }) => ({
-    value: bay_id,
-    label: bay_id,
-  }))
-  // const bayOptions = [
-  //   ...emptyBays.map(({ bay_id }) => ({
-  //     value: bay_id,
-  //     label: bay_id,
-  //   })),
-  //   { value: 'null', label: 'Null' }
-  // ];
-  
+  const houseStatusOptions = Object.keys(houseStatusEnumSelectable).map(
+    key => ({
+      value: key,
+      label: houseStatusEnumSelectable[key],
+    })
+  )
 
   if (!houseInfo) return <CircularProgress />
 
+  const isReadyForShipping = houseInfo.status === 4
+  const isDeliveredToCustomer = houseInfo.status === 5
+  console.log({ isReadyForShipping, isDeliveredToCustomer })
   return (
     <Navbar>
+      <Header1
+        title={<HouseHeader npl={houseInfo.npl} />}
+        button={
+          <Box display={'flex'}>
+            <Button
+              variant='outlined'
+              color='secondary'
+              onClick={handleClickOpen}
+              style={{ marginLeft: '10px' }}
+            >
+              Delete House
+            </Button>
+          </Box>
+        }
+      />
+      <br />
       <Container>
-        <Header1
-          title={<HouseHeader npl={houseInfo.npl} />}
-          button={
-            <Box display={'flex'}>
-              <SelectCustom
-                style={{ marginRight: '10px' }}
-                label={'Status'}
-                options={houseStatusOptions}
-                value={houseInfo.status}
-                onChange={handleChangeStatus}
-              />
-              <SelectCustom
-                label={'Bay #'}
-                extraOption={{ value: 'No Bay', label: 'No bay' }}
-                options={bayOptions}
-                value={houseInfo.bay_id || 'No Bay'}
-                onChange={handleChangeBay}
-              />
-              <Button
-                variant='outlined'
-                color='secondary'
-                onClick={handleClickOpen}
-                style={{ marginLeft: '10px' }}
-              >
-                Delete House
-              </Button>
-            </Box>
-          }
-        />
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Delete House</DialogTitle>
           <DialogContent>
@@ -197,66 +173,126 @@ const HouseDetailsPage = () => {
         <Box mt={3}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper elevation={3} style={{ padding: '16px' }}>
-                <Typography variant='h6' gutterBottom>
-                  House Details
-                </Typography>
-                <TableContainer>
-                  <Table>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>Project #</TableCell>
-                        <TableCell>{houseInfo.npl}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Model #</TableCell>
-                        <TableCell>{houseInfo.house_model}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Customer</TableCell>
-                        <TableCell>{houseInfo.customer_name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Status</TableCell>
-                        <TableCell>
-                          <Chip
-                            className={'status' + houseInfo.status}
-                            label={houseStatusEnum[houseInfo.status]}
-                          />
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Square Footage</TableCell>
-                        <TableCell>{houseInfo.square_ft} sqft</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Online Date</TableCell>
-                        <TableCell>{houseInfo.online_date}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Created On</TableCell>
-                        <TableCell>{houseInfo.created_on}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Bay ID</TableCell>
-                        <TableCell>{houseInfo.bay_id}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Bay Name</TableCell>
-                        <TableCell>{houseInfo.bay_name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Bay Description</TableCell>
-                        <TableCell>{houseInfo.bay_description}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
+              <Box display={'flex'} gap={'10px'}>
+                <Button
+                  disabled={!isReadyForShipping}
+                  onClick={() => handleChangeStatus(5)}
+                  variant='contained'
+                >
+                  Ready For Shipping
+                </Button>
+
+                <Button
+                  disabled={!isDeliveredToCustomer}
+                  onClick={() => handleChangeStatus(6)}
+                  variant='contained'
+                >
+                  Received By Customer
+                </Button>
+              </Box>
+              <br />
+              <br />
+              <Box display={'flex'} gap={'20px'}>
+                <Paper elevation={3} style={{ padding: '16px', width: '45%' }}>
+                  <Typography variant='h6' gutterBottom>
+                    House Details
+                  </Typography>
+                  <TableContainer>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>Project #</TableCell>
+                          <TableCell>{houseInfo.npl}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Model #</TableCell>
+                          <TableCell>{houseInfo.house_model}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Customer</TableCell>
+                          <TableCell>{houseInfo.customer_name}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Status</TableCell>
+                          <TableCell>
+                            <Box display={'flex'}>
+                              <Chip
+                                sx={{ width: '180px' }}
+                                className={'status' + houseInfo.status}
+                                label={houseStatusEnumAll[houseInfo.status]}
+                                onDelete={() => setStatusDialogOpen(true)}
+                                deleteIcon={
+                                  <MdEdit
+                                    size={'18px'}
+                                    style={{
+                                      color: 'inherit',
+                                      paddingBottom: 4,
+                                    }}
+                                  />
+                                }
+                              />
+                            </Box>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Square Footage</TableCell>
+                          <TableCell>{houseInfo.square_ft} sqft</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Online Date</TableCell>
+                          <TableCell>{houseInfo.online_date}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Created On</TableCell>
+                          <TableCell>{houseInfo.created_on}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Bay Name</TableCell>
+                          <TableCell>
+                            <Chip
+                              sx={{ width: '170px' }}
+                              label={houseInfo.bay_name}
+                              onDelete={() => setBayDialogOpen(true)}
+                              deleteIcon={
+                                <MdEdit
+                                  size={'18px'}
+                                  style={{
+                                    color: 'inherit',
+                                    paddingBottom: 4,
+                                  }}
+                                />
+                              }
+                            />
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Bay Description</TableCell>
+                          <TableCell>{houseInfo.bay_description}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+                <Paper elevation={3} style={{ padding: '16px', width: '45%' }}>
+                  <Typography variant='h6' gutterBottom>
+                    Recent Events
+                  </Typography>
+                </Paper>
+              </Box>
             </Grid>
           </Grid>
         </Box>
       </Container>
+      <BayEditDialog
+        isOpen={bayDialogOpen}
+        houseInfo={houseInfo}
+        handleClose={() => setBayDialogOpen(false)}
+      />
+      <StatusEditDialog
+        isOpen={statusDialogOpen}
+        houseInfo={houseInfo}
+        handleClose={() => setStatusDialogOpen(false)}
+      />
     </Navbar>
   )
 }

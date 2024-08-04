@@ -14,8 +14,18 @@
 }
 
 .status4 {
-  background-color: #c3f0cd !important;
+  background-color: #9fe8b0 !important;
   color: black !important;
+}
+
+.status5 {
+  background-color: #33d957 !important;
+  color: black !important;
+}
+
+.status6 {
+  background-color: #376b43 !important;
+  color: white !important;
 }
 
 .bay-card-text {

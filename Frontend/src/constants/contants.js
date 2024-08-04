@@ -1,9 +1,21 @@
-export const houseStatusEnum = {
+export const houseStatusEnumSelectable = {
   0: 'Cancelled',
   1: 'Not Started',
   2: 'In Progress',
   3: 'QA Reqiured',
-  4: 'Completed',
+  4: 'Bay Complete',
+  5: 'Ready For Shipping',
+  6: 'Delivered To Customer',
+}
+
+export const houseStatusEnumAll = {
+  0: houseStatusEnumSelectable[0],
+  1: houseStatusEnumSelectable[1],
+  2: houseStatusEnumSelectable[2],
+  3: houseStatusEnumSelectable[3],
+  4: houseStatusEnumSelectable[4],
+  5: 'Ready For Shipping',
+  6: 'Delivered To Customer',
 }
 
 export const regions = [
