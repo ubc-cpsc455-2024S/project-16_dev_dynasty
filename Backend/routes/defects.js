@@ -26,7 +26,6 @@ const upload = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      console.log(file);
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
       cb(null, uniqueSuffix + '-' + file.originalname);
     },
@@ -49,9 +48,7 @@ const deleteImagesFromS3 = async (imageUrls) => {
 
   try {
     await s3.deleteObjects(deleteParams).promise();
-    console.log("Images deleted from S3 successfully");
   } catch (err) {
-    console.error("Error deleting images from S3:", err);
     throw err; 
   }
 };
@@ -60,7 +57,6 @@ const deleteImagesFromS3 = async (imageUrls) => {
 router.get('/:houseId', async (req, res) => {
   try {
     const house = await House.findById(req.params.houseId).populate('defects');
-    console.log("House:", house);
     if (!house) return res.status(404).json({ message: 'House not found' });
     res.status(200).json(house.defects);
   } catch (err) {
@@ -86,13 +82,8 @@ router.get('/:houseId/:defectId', async (req, res) => {
 // Create a new defect for a house
 router.post('/:houseId', upload.array('images', 10), async (req, res) => {
   try {
-    console.log("------------------------------------------------here");
-    console.log("Request Body:", req.body);
-    console.log("Request Files:", req.files);
-
     const house = await House.findById(req.params.houseId);
     if (!house) {
-      console.log("House not found");
       return res.status(404).json({ message: 'House not found' });
     }
 
@@ -100,22 +91,19 @@ router.post('/:houseId', upload.array('images', 10), async (req, res) => {
     const bay_id = house.bay_id || req.body.bay_id; // Default to house's bay_id if not provided
 
     if (!title || !description || !bay_id) {
-      console.log("Missing required fields");
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     if (req.files.length === 0) {
-      console.log("No images uploaded");
       return res.status(400).json({ message: 'No images uploaded' });
     }
 
     const imageUrls = req.files.map((file) => file.location);
-    console.log("Image URLs:", imageUrls);
 
     const newDefect = {
       title,
       images: imageUrls,
-      status: 'incomplete',
+      status: 'Incomplete',
       description,
       bay_id,
     };
@@ -128,11 +116,9 @@ router.post('/:houseId', upload.array('images', 10), async (req, res) => {
       houseNpl: house.npl, bayId: bay_id, model: house.house_model
     }
     await addLogToDb('Defect created', logParams);
-    console.log("Defect added to house and house saved");
 
     res.status(201).json({ message: 'Defect created successfully', defect: newDefect });
   } catch (err) {
-    console.error("Error creating defect:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -182,12 +168,10 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
         model: house.house_model
       };
       await addLogToDb('Defect fixed', logParams);
-      console.log("Defect added to house and house saved");
     }
 
     res.status(200).json({ message: 'Defect updated successfully', defect });
   } catch (err) {
-    console.error("Error updating defect:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -198,15 +182,12 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
 // Delete a defect
 router.delete('/:houseId/:defectId', async (req, res) => {
   try {
-    console.log("Delete Request:", req.params);
 
     const house = await House.findById(req.params.houseId);
     if (!house) return res.status(404).json({ message: 'House not found' });
 
     const defectIdStr = req.params.defectId.toString();
     const defectIndex = house.defects.findIndex(defect => defect._id.toString() === defectIdStr);
-
-    console.log("Defect Index:", defectIndex);
 
     if (defectIndex > -1) {
       const defect = house.defects[defectIndex];
@@ -217,15 +198,11 @@ router.delete('/:houseId/:defectId', async (req, res) => {
       house.defects.splice(defectIndex, 1);
       await house.save();
       await Defect.findByIdAndDelete(req.params.defectId);
-
-      console.log("Defect deleted successfully");
       return res.status(200).json({ message: 'Defect deleted successfully' });
     } else {
-      console.log("Defect not found in house");
       return res.status(404).json({ message: 'Defect not found in house' });
     }
   } catch (err) {
-    console.error("Error deleting defect:", err);
     return res.status(500).json({ error: err.message });
   }
 });

@@ -192,9 +192,9 @@ const EditDefectPage = () => {
                 onChange={(e) => setStatus(e.target.value)}
                 label="Status"
               >
-                <MenuItem value="incomplete">Incomplete</MenuItem>
-                <MenuItem value="in progress">In Progress</MenuItem>
-                <MenuItem value="resolved">Resolved</MenuItem>
+                <MenuItem value="Incomplete">Incomplete</MenuItem>
+                <MenuItem value="In progress">In Progress</MenuItem>
+                <MenuItem value="Resolved">Resolved</MenuItem>
               </Select>
             </FormControl>
             <FormControl fullWidth margin="normal">

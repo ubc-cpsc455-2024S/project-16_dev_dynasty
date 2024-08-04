@@ -77,12 +77,12 @@ const HouseDefectsPage = () => {
   };
 
   const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case 'incomplete':
+    switch (status) {
+      case 'Incomplete':
         return 'red';
-      case 'in progress':
+      case 'In progress':
         return 'orange';
-      case 'resolved':
+      case 'Resolved':
         return 'green';
       default:
         return 'black';

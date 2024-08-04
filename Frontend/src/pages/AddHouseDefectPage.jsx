@@ -120,7 +120,7 @@ const AddHouseDefectPage = () => {
       const response = await dispatch(addDefectAsync({ houseId: id, defectData })).unwrap();
       if (!response) throw new Error('Failed to add defect.');
       setLoading(false);
-      dispatch(fetchDefectsByHouseId(id)); // Update the defects list
+      dispatch(fetchDefectsByHouseId(id));
       navigate(`/houses/${id}/defects`);
     } catch (err) {
       setLoading(false);
