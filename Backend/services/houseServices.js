@@ -109,10 +109,13 @@ const updateHouseInDb = async (houseid, houseInfo) => {
     await addLogToDb('Bay work complete', logParams);
   }
   if (theHouse.status !== 5 && houseInfo.status === 5) {
+    const theCustomer = await Customer.findById(theHouse.customer_id);
     const logParams = {
       bayId: theHouse.bay_id,
       npl: theHouse.npl,
-      houseId: theHouse._id
+      houseId: theHouse._id,
+      customerName: theCustomer.customer_name,
+      model: theHouse.house_model
     }
     await addLogToDb('House completed', logParams);
   }
@@ -137,8 +140,9 @@ const toggleBayAssignment = async (houseid, bayid) => {
     // update online date if house was not started, and log the house started event
     if (!currentHouse.online_date) {
       currentHouse.online_date = formatDate(new Date());
+      const theCustomer = await Customer.findById(theHouse.customer_id);
       const logParams = {
-        customerName: currentHouse.customer_id,
+        customerName: theCustomer.customer_name,
         npl: currentHouse.npl, model: currentHouse.house_model, houseId: currentHouse._id
       }
       await addLogToDb('House started', logParams);
