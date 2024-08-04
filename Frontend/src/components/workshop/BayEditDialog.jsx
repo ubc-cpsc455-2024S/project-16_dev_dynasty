@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -12,42 +12,65 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from '@mui/material';
-import { bayToHouseAsync, updateHouseAsync } from '../../redux/houses/thunksHouses';
-import { useDispatch, useSelector } from 'react-redux';
-import SelectCustom from '../inputs/SelectCustom';
-import { colors } from '../../styles/colors';
+} from '@mui/material'
+import {
+  bayToHouseAsync,
+  updateHouseAsync,
+} from '../../redux/houses/thunksHouses'
+import { useDispatch, useSelector } from 'react-redux'
+import SelectCustom from '../inputs/SelectCustom'
+import { colors } from '../../styles/colors'
 
 const BayEditDialog = ({ isOpen, houseInfo, handleClose }) => {
-  const emptyBays = useSelector((state) => state.bays.emptyBays || []);
-  const [bayId, setBayId] = useState(houseInfo.status);
-  const dispatch = useDispatch();
+  console.log({ houseInfo })
+  const emptyBays = useSelector(state => state.bays.emptyBays || [])
+  const intialBayId = houseInfo.bay_id === null ? '0' : houseInfo.bay_id
+  const [bayId, setBayId] = useState(intialBayId)
+  const dispatch = useDispatch()
 
-  const handleChangeStatus = (event) => {
-    console.log('event.target.value', event.target.value);
-    setBayId(event.target.value);
-  };
+  const handleChangeStatus = event => {
+    setBayId(event.target.value)
+  }
 
   const handleSubmit = async () => {
-    const updatedBayId = bayId === 'No Bay' ? null : bayId;
+    const updatedBayId = bayId === '0' ? null : bayId
 
     const houseData = {
       houseId: houseInfo._id,
       houseData: houseInfo,
-    };
+    }
 
     try {
-      const data = await dispatch(bayToHouseAsync({ houseId: houseInfo._id, bayId: updatedBayId }));
-      handleClose();
+      const data = await dispatch(
+        bayToHouseAsync({ houseId: houseInfo._id, bayId: updatedBayId })
+      )
+      handleClose()
     } catch (error) {
-      console.log('error', error);
+      console.log('error', error)
     }
-  };
+  }
 
-  const bayOptions = emptyBays.map(({ bay_id }) => ({
+  let bayOptions = emptyBays.map(({ bay_id, bay_name }) => ({
     value: bay_id,
-    label: bay_id,
-  }));
+    label: bay_name,
+  }))
+  bayOptions.push({ value: intialBayId, label: houseInfo.bay_name })
+  bayOptions.sort((a, b) => {
+    // Try to parse the values as floats for comparison
+    const aValue = parseFloat(a.value)
+    const bValue = parseFloat(b.value)
+
+    // If both values are numbers, compare them directly
+    if (!isNaN(aValue) && !isNaN(bValue)) {
+      return aValue - bValue
+    }
+
+    // If one value is not a number, handle alphanumeric sorting
+    return a.value.localeCompare(b.value, undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    })
+  })
 
   return (
     <Dialog maxWidth={'md'} open={isOpen} onClose={handleClose}>
@@ -59,22 +82,22 @@ const BayEditDialog = ({ isOpen, houseInfo, handleClose }) => {
 
         <SelectCustom
           label={'Bay #'}
-          extraOption={{ value: 'No Bay', label: 'No bay' }}
+          // extraOption={{ value: null, label: 'No bay' }}
           options={bayOptions}
-          value={bayId || 'No Bay'}
+          value={bayId}
           onChange={handleChangeStatus}
         />
       </DialogContent>
       <DialogActions sx={{ p: '20px' }}>
-        <Button onClick={handleClose} sx={{ color: colors.dialogSecondaryButtonColor }}>
+        <Button onClick={handleClose} variant='secondary'>
           Close
         </Button>
-        <Button variant="contained" onClick={handleSubmit}>
+        <Button variant='contained' onClick={handleSubmit}>
           Submit
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default BayEditDialog;
+export default BayEditDialog

@@ -57,12 +57,12 @@ const HousesAddPage = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     if (isFormValid()) {
-      toast.success('Form is valid! Submitting the form...')
+      toast.success('House Added')
       const result = await dispatch(addHouseAsync(formFields)).unwrap()
       await dispatch(putChecklistAsync({ houseId: result._id }))
       navigate(-1)
     } else {
-      toast.error('Form is invalid! Please check the fields...')
+      toast.error('Unable to Add House. Please Try Again')
     }
   }
 

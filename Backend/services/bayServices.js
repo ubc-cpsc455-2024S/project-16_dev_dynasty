@@ -11,13 +11,19 @@ const getBaysFromDb = async () => {
   }
 };
 
-
-const getAvailableBaysFromDb= async () => {
+const getAvailableBaysFromDb = async () => {
   const allbayviews = await Bay_View();
-  const filteredData = allbayviews.filter(item => !Object.keys(item).includes('house_id'));
-  console.log('available bays are', filteredData);
+  const filteredData = allbayviews.filter(
+    (item) => !Object.keys(item).includes("house_id")
+  );
+  const noBay = {
+    bay_id: "0",
+    bay_name: "No Bay",
+    bay_description: "Not in a bay",
+  };
+  filteredData.unshift(noBay);
   return filteredData;
-}
+};
 
 const parseBayId = (bayId) => {
   const parts = bayId.match(/^(\d+)(.*)$/);

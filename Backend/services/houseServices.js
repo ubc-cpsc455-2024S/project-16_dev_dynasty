@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const House_View = require("../models/House_View");
 const Bay_View = require("../models/Bay_View");
 const { ObjectId } = require("mongodb");
-const { addLogToDb } = require('./logServices')
+const { addLogToDb } = require("./logServices");
 
 // Function to fetch all houses
 const getHousesFromDb = async ({
@@ -77,9 +77,11 @@ const addHouseToDb = async (houseData) => {
     const theCustomer = await Customer.findById(houseData.customer_id);
     const logParams = {
       customerName: theCustomer.customer_name,
-      npl: houseData.npl, model: houseData.house_model, houseId: newHouseMade._id
-    }
-    await addLogToDb('New house', logParams);
+      npl: houseData.npl,
+      model: houseData.house_model,
+      houseId: newHouseMade._id,
+    };
+    await addLogToDb("New house", logParams);
   }
   return newHouseMade;
 };
@@ -96,19 +98,20 @@ const updateHouseInDb = async (houseid, houseInfo) => {
     const logParams = {
       bayId: theHouse.bay_id,
       npl: theHouse.npl,
-      houseId: theHouse._id
-    }
-    await addLogToDb('Bay work begin', logParams);
+      houseId: theHouse._id,
+    };
+    await addLogToDb("Bay work begin", logParams);
   }
   if (theHouse.status !== 4 && houseInfo.status === 4) {
     const logParams = {
       bayId: theHouse.bay_id,
       npl: theHouse.npl,
-      houseId: theHouse._id
-    }
-    await addLogToDb('Bay work complete', logParams);
+      houseId: theHouse._id,
+    };
+    await addLogToDb("Bay work complete", logParams);
   }
   if (theHouse.status !== 5 && houseInfo.status === 5) {
+    houseInfo.bay_id = null;
     if (theHouse.customer_id) {
       const theCustomer = await Customer.findById(theHouse.customer_id);
       const logParams = {
@@ -116,10 +119,13 @@ const updateHouseInDb = async (houseid, houseInfo) => {
         npl: theHouse.npl,
         houseId: theHouse._id,
         customerName: theCustomer.customer_name,
-        model: theHouse.house_model
-      }
-      await addLogToDb('House completed', logParams);
+        model: theHouse.house_model,
+      };
+      await addLogToDb("House completed", logParams);
     }
+  }
+  if (theHouse.status !== 6 && houseInfo.status === 6) {
+    houseInfo.bay_id = null;
   }
   await House.updateOne({ _id: houseid }, { $set: houseInfo });
   return (await House_View({ _id: new ObjectId(houseid) }))[0];
@@ -129,11 +135,11 @@ const updateHouseInDb = async (houseid, houseInfo) => {
 const toggleBayAssignment = async (houseid, bayid) => {
   try {
     // bay availability check if bay is not null
-    if (bayid !== 'null') {
+    if (bayid !== "null") {
       const newBay = await Bay_View({ bay_id: bayid });
       if (newBay[0].house_id) {
         throw new Error(
-          `Bay in use: ${bayid} is already assigned to another house.`,
+          `Bay in use: ${bayid} is already assigned to another house.`
         );
       }
     }
@@ -146,12 +152,14 @@ const toggleBayAssignment = async (houseid, bayid) => {
         const theCustomer = await Customer.findById(currentHouse.customer_id);
         const logParams = {
           customerName: theCustomer.customer_name,
-          npl: currentHouse.npl, model: currentHouse.house_model, houseId: currentHouse._id
-        }
-        await addLogToDb('House started', logParams);
+          npl: currentHouse.npl,
+          model: currentHouse.house_model,
+          houseId: currentHouse._id,
+        };
+        await addLogToDb("House started", logParams);
       }
     }
-    if (bayid == 'null') {
+    if (bayid == "null") {
       currentHouse.bay_id = null;
       currentHouse.bay_name = null;
       await currentHouse.save();
@@ -167,7 +175,6 @@ const toggleBayAssignment = async (houseid, bayid) => {
       currentHouse.status = 1;
       await currentHouse.save();
       return (await House_View({ _id: new ObjectId(houseid) }))[0];
-
     }
 
     // return currentHouse;

@@ -33,6 +33,7 @@ import {
   Paper,
   Table,
   TableBody,
+  TableHead,
   TableCell,
   TableContainer,
   TableRow,
@@ -47,6 +48,8 @@ import { styled } from '@mui/system'
 import { routes } from '../router/routes'
 import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists.js'
 import { toast } from 'react-toastify'
+import { colors } from '../styles/colors'
+import dayjs from 'dayjs'
 
 styled(TableCell)({
   fontWeight: 'bold',
@@ -132,7 +135,7 @@ const HouseDetailsPage = () => {
 
   const isReadyForShipping = houseInfo.status === 4
   const isDeliveredToCustomer = houseInfo.status === 5
-  console.log({ isReadyForShipping, isDeliveredToCustomer })
+
   return (
     <Navbar>
       <Header1
@@ -152,23 +155,6 @@ const HouseDetailsPage = () => {
       />
       <br />
       <Container>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Delete House</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this house? This action cannot be
-              undone.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color='primary'>
-              Cancel
-            </Button>
-            <Button onClick={handleDeleteHouse} color='secondary'>
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
         <HouseTabs />
         <Box mt={3}>
           <Grid container spacing={3}>
@@ -193,91 +179,12 @@ const HouseDetailsPage = () => {
               <br />
               <br />
               <Box display={'flex'} gap={'20px'}>
-                <Paper elevation={3} style={{ padding: '16px', width: '45%' }}>
-                  <Typography variant='h6' gutterBottom>
-                    House Details
-                  </Typography>
-                  <TableContainer>
-                    <Table>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>Project #</TableCell>
-                          <TableCell>{houseInfo.npl}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Model #</TableCell>
-                          <TableCell>{houseInfo.house_model}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Customer</TableCell>
-                          <TableCell>{houseInfo.customer_name}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Status</TableCell>
-                          <TableCell>
-                            <Box display={'flex'}>
-                              <Chip
-                                sx={{ width: '180px' }}
-                                className={'status' + houseInfo.status}
-                                label={houseStatusEnumAll[houseInfo.status]}
-                                onDelete={() => setStatusDialogOpen(true)}
-                                deleteIcon={
-                                  <MdEdit
-                                    size={'18px'}
-                                    style={{
-                                      color: 'inherit',
-                                      paddingBottom: 4,
-                                    }}
-                                  />
-                                }
-                              />
-                            </Box>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Square Footage</TableCell>
-                          <TableCell>{houseInfo.square_ft} sqft</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Online Date</TableCell>
-                          <TableCell>{houseInfo.online_date}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Created On</TableCell>
-                          <TableCell>{houseInfo.created_on}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Bay Name</TableCell>
-                          <TableCell>
-                            <Chip
-                              sx={{ width: '170px' }}
-                              label={houseInfo.bay_name}
-                              onDelete={() => setBayDialogOpen(true)}
-                              deleteIcon={
-                                <MdEdit
-                                  size={'18px'}
-                                  style={{
-                                    color: 'inherit',
-                                    paddingBottom: 4,
-                                  }}
-                                />
-                              }
-                            />
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Bay Description</TableCell>
-                          <TableCell>{houseInfo.bay_description}</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Paper>
-                <Paper elevation={3} style={{ padding: '16px', width: '45%' }}>
-                  <Typography variant='h6' gutterBottom>
-                    Recent Events
-                  </Typography>
-                </Paper>
+                <LeftPanel
+                  houseInfo={houseInfo}
+                  setBayDialogOpen={setBayDialogOpen}
+                  setStatusDialogOpen={setStatusDialogOpen}
+                />
+                <RightPanel houseInfo={houseInfo} />
               </Box>
             </Grid>
           </Grid>
@@ -293,7 +200,177 @@ const HouseDetailsPage = () => {
         houseInfo={houseInfo}
         handleClose={() => setStatusDialogOpen(false)}
       />
+      <DeleteHouseDialog
+        open={open}
+        handleClose={handleClose}
+        handleDeleteHouse={handleDeleteHouse}
+      />
     </Navbar>
+  )
+}
+
+const LeftPanel = ({ houseInfo, setBayDialogOpen, setStatusDialogOpen }) => {
+  return (
+    <Paper elevation={3} style={{ padding: '16px', width: '35%' }}>
+      <Typography variant='h6' gutterBottom>
+        House Details
+      </Typography>
+      <TableContainer>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>Project #</TableCell>
+              <TableCell>{houseInfo.npl}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Model #</TableCell>
+              <TableCell>{houseInfo.house_model}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Customer</TableCell>
+              <TableCell>{houseInfo.customer_name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Status</TableCell>
+              <TableCell>
+                <Box display={'flex'}>
+                  <Chip
+                    sx={{ width: '180px' }}
+                    className={'status' + houseInfo.status}
+                    label={houseStatusEnumAll[houseInfo.status]}
+                    onDelete={() => setStatusDialogOpen(true)}
+                    deleteIcon={
+                      <MdEdit
+                        size={'18px'}
+                        style={{
+                          color: 'inherit',
+                          paddingBottom: 4,
+                        }}
+                      />
+                    }
+                  />
+                </Box>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Square Footage</TableCell>
+              <TableCell>{houseInfo.square_ft} sqft</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Online Date</TableCell>
+              <TableCell>{houseInfo.online_date}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Created On</TableCell>
+              <TableCell>{houseInfo.created_on}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bay Name</TableCell>
+              <TableCell>
+                <Chip
+                  sx={{ width: '170px' }}
+                  label={houseInfo.bay_name || 'No Bay'}
+                  onDelete={() => setBayDialogOpen(true)}
+                  deleteIcon={
+                    <MdEdit
+                      size={'18px'}
+                      style={{
+                        color: 'inherit',
+                        paddingBottom: 4,
+                      }}
+                    />
+                  }
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Bay Description</TableCell>
+              <TableCell>{houseInfo.bay_description}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  )
+}
+
+const TableHeadCell = styled(TableCell)({
+  fontWeight: 'bold',
+  backgroundColor: colors.tableHeadCellBackground,
+})
+
+const TableRowStyled = styled(TableRow)({
+  '&:nth-of-type(odd)': {
+    backgroundColor: colors.tableRowOddBackground,
+  },
+  cursor: 'pointer',
+})
+
+const RightPanel = ({ houseInfo }) => {
+  if (houseInfo?.logs.length === 0) {
+    return (
+      <Paper elevation={3} style={{ padding: '16px', width: '55%' }}>
+        <Typography variant='h6' gutterBottom>
+          Recent Events
+        </Typography>
+        <Box display={'flex'} justifyContent={'center'} sx={{ mt: '50px' }}>
+          <Typography>No Events Available</Typography>
+        </Box>
+      </Paper>
+    )
+  }
+
+  return (
+    <Paper elevation={3} style={{ padding: '16px', width: '55%' }}>
+      <Typography variant='h6' gutterBottom>
+        Recent Events
+      </Typography>
+      <TableContainer sx={{ overflowY: 'scroll', height: '475px' }}>
+        <Table>
+          <TableHead style={{ position: 'sticky', top: 0 }}>
+            <TableRow>
+              <TableHeadCell>Event Time</TableHeadCell>
+              <TableHeadCell>Event Type</TableHeadCell>
+              <TableHeadCell>Event</TableHeadCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {houseInfo?.logs.map(houseLog => {
+              return (
+                <TableRow>
+                  <TableCell style={{ width: 140 }}>
+                    {dayjs(houseLog.eventTime).format('YYYY-MM-DD h:mm A')}
+                  </TableCell>
+                  <TableCell>{houseLog.eventType}</TableCell>
+                  <TableCell>{houseLog.logContent}</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  )
+}
+
+const DeleteHouseDialog = ({ open, handleClose, handleDeleteHouse }) => {
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Delete House</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Are you sure you want to delete this house?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color='secondary'>
+          Cancel
+        </Button>
+        <Button onClick={handleDeleteHouse} color='primary' variant='contained'>
+          Delete
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 
