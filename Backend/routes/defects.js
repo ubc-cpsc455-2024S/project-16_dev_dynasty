@@ -113,7 +113,7 @@ router.post('/:houseId', upload.array('images', 10), async (req, res) => {
 
     const logParams = {
       defectTitle: title,
-      houseNpl: house.npl, bayId: bay_id, model: house.house_model
+      houseNpl: house.npl, bayId: bay_id, model: house.house_model, houseId: house._id
     }
     await addLogToDb('Defect created', logParams);
 
@@ -163,10 +163,8 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
     if (status === 'resolved') {
       const logParams = {
         defectTitle: title,
-        houseNpl: house.npl,
-        bayId: bay_id,
-        model: house.house_model
-      };
+        houseNpl: house.npl, bayId: bay_id, model: house.house_model, houseId: house._id
+      }
       await addLogToDb('Defect fixed', logParams);
     }
 
