@@ -1,4 +1,3 @@
-// models/Document.js
 const mongoose = require('mongoose');
 
 const documentSchema = new mongoose.Schema({
@@ -8,7 +7,7 @@ const documentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    required: true, // e.g., "blueprint", "contract", "inspection report"
+    required: true, 
   },
   description: {
     type: String,
