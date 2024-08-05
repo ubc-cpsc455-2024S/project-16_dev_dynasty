@@ -31,6 +31,13 @@ const upload = multer({
   }),
 });
 
+const deleteS3File = (key) => {
+  return s3.deleteObject({
+    Bucket: process.env.S3_BUCKET_NAME,
+    Key: key,
+  }).promise();
+};
+
 // Get all documents for a house
 router.get('/:houseId/documents', async (req, res) => {
   try {
@@ -86,7 +93,8 @@ router.post('/:houseId/documents', upload.single('file'), async (req, res) => {
   }
 });
 
-// Update a document
+
+
 router.put('/:houseId/documents/:documentId', upload.single('file'), async (req, res) => {
   try {
     const house = await House.findById(req.params.houseId);
@@ -96,11 +104,16 @@ router.put('/:houseId/documents/:documentId', upload.single('file'), async (req,
     if (!document) return res.status(404).json({ message: 'Document not found' });
 
     const { title, type, description } = req.body;
-
+    
+    if (req.file) {
+      const oldFileKey = document.fileUrl.split('/').pop();
+      await deleteS3File(oldFileKey);
+      document.fileUrl = req.file.location;
+    }
+    
     if (title) document.title = title;
     if (type) document.type = type;
     if (description) document.description = description;
-    if (req.file) document.fileUrl = req.file.location;
 
     document.uploadDate = new Date();
 
@@ -108,6 +121,7 @@ router.put('/:houseId/documents/:documentId', upload.single('file'), async (req,
 
     res.status(200).json({ message: 'Document updated successfully', document });
   } catch (err) {
+    console.error("Error updating document:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -115,19 +129,36 @@ router.put('/:houseId/documents/:documentId', upload.single('file'), async (req,
 // Delete a document
 router.delete('/:houseId/documents/:documentId', async (req, res) => {
   try {
+    console.log("Delete Request Received");
+    console.log("House ID:", req.params.houseId);
+    console.log("Document ID:", req.params.documentId);
+
     const house = await House.findById(req.params.houseId);
-    if (!house) return res.status(404).json({ message: 'House not found' });
+    if (!house) {
+      return res.status(404).json({ message: 'House not found' });
+    }
 
-    const document = house.documents.id(req.params.documentId);
-    if (!document) return res.status(404).json({ message: 'Document not found' });
+    const documentIndex = house.documents.findIndex(doc => doc._id.toString() === req.params.documentId);
+    if (documentIndex === -1) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
 
-    document.remove();
+    const document = house.documents[documentIndex];
+    const fileKey = document.fileUrl.split('/').pop(); 
+    await deleteS3File(fileKey); 
+
+    house.documents.splice(documentIndex, 1);
+
     await house.save();
 
     res.status(200).json({ message: 'Document deleted successfully' });
   } catch (err) {
+    console.error("Error deleting document:", err);
     res.status(500).json({ error: err.message });
   }
 });
+
+
+
 
 module.exports = router;

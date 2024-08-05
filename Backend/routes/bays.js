@@ -20,7 +20,6 @@ router.get("/", async (req, res) => {
 router.get("/empty", async (req, res) => {
   try {
     const emptyBays = await getAvailableBaysFromDb();
-    console.log("emptyBays", emptyBays);
     res.json({ result: emptyBays });
   } catch (error) {
     res.status(500).send("Server error");

@@ -1,4 +1,3 @@
-// src/pages/AddHouseDocumentPage.jsx
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -13,6 +12,10 @@ import {
   CircularProgress,
   Snackbar,
   Alert,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from '@mui/material'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
@@ -81,13 +84,20 @@ const AddHouseDocumentPage = () => {
               fullWidth
               margin='normal'
             />
-            <TextField
-              label='Type'
-              value={type}
-              onChange={e => setType(e.target.value)}
-              fullWidth
-              margin='normal'
-            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Type</InputLabel>
+              <Select
+                value={type}
+                onChange={e => setType(e.target.value)}
+                label='Type'
+              >
+                <MenuItem value='QC list'>QC list</MenuItem>
+                <MenuItem value='Report'>Report</MenuItem>
+                <MenuItem value='Contract'>Contract</MenuItem>
+                <MenuItem value='Blueprint'>Blueprint</MenuItem>
+                <MenuItem value='Others'>Others</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               label='Description'
               value={description}
@@ -98,7 +108,7 @@ const AddHouseDocumentPage = () => {
               rows={4}
             />
             <input
-              accept='application/pdf, image/*'
+              accept='application/pdf*'
               type='file'
               onChange={handleFileChange}
               style={{ marginTop: '20px' }}
