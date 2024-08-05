@@ -68,7 +68,7 @@ const HousesTable = ({
   }
 
   const handleRowClick = houseId => {
-    navigate(`/houses/${houseId}/details`)
+    navigate(`/houses/${houseId}`)
   }
 
   return (

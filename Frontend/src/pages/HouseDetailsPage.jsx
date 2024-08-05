@@ -86,8 +86,8 @@ const HouseDetailsPage = () => {
   // const bays = useSelector(state => state.bays.list || [])
   const emptyBays = useSelector(state => state.bays.emptyBays || [])
   const currentUser = useSelector(state => state.auth.user)
-  const [open, setOpen] = useState(false)
   const [statusDialogOpen, setStatusDialogOpen] = useState(false)
+
   const [bayDialogOpen, setBayDialogOpen] = useState(false)
 
   useEffect(() => {
@@ -105,25 +105,6 @@ const HouseDetailsPage = () => {
     await dispatch(updateHouseAsync(houseData))
   }
 
-  const handleDeleteHouse = async () => {
-    await dispatch(deleteHouseAsync(houseInfo._id))
-    await dispatch(deleteChecklistAsync(houseInfo._id))
-    navigate(routes.housesRoute)
-  }
-
-  const handleClickOpen = () => {
-    console.log('the current user is: ', currentUser)
-    if (currentUser.role !== 'admin') {
-      toast.error('Only admin user authorized for this action')
-    } else {
-      setOpen(true)
-    }
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   const houseStatusOptions = Object.keys(houseStatusEnumSelectable).map(
     key => ({
       value: key,
@@ -137,59 +118,40 @@ const HouseDetailsPage = () => {
   const isDeliveredToCustomer = houseInfo.status === 5
 
   return (
-    <Navbar>
-      <Header1
-        title={<HouseHeader npl={houseInfo.npl} />}
-        button={
-          <Box display={'flex'}>
-            <Button
-              variant='outlined'
-              color='secondary'
-              onClick={handleClickOpen}
-              style={{ marginLeft: '10px' }}
-            >
-              Delete House
-            </Button>
-          </Box>
-        }
-      />
-      <br />
-      <Container>
-        <HouseTabs />
-        <Box mt={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Box display={'flex'} gap={'10px'}>
-                <Button
-                  disabled={!isReadyForShipping}
-                  onClick={() => handleChangeStatus(5)}
-                  variant='contained'
-                >
-                  Ready For Shipping
-                </Button>
+    <>
+      <Box mt={3}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Box display={'flex'} gap={'10px'}>
+              <Button
+                disabled={!isReadyForShipping}
+                onClick={() => handleChangeStatus(5)}
+                variant='contained'
+              >
+                Ready For Shipping
+              </Button>
 
-                <Button
-                  disabled={!isDeliveredToCustomer}
-                  onClick={() => handleChangeStatus(6)}
-                  variant='contained'
-                >
-                  Received By Customer
-                </Button>
-              </Box>
-              <br />
-              <br />
-              <Box display={'flex'} gap={'20px'}>
-                <LeftPanel
-                  houseInfo={houseInfo}
-                  setBayDialogOpen={setBayDialogOpen}
-                  setStatusDialogOpen={setStatusDialogOpen}
-                />
-                <RightPanel houseInfo={houseInfo} />
-              </Box>
-            </Grid>
+              <Button
+                disabled={!isDeliveredToCustomer}
+                onClick={() => handleChangeStatus(6)}
+                variant='contained'
+              >
+                Received By Customer
+              </Button>
+            </Box>
+            <br />
+            <br />
+            <Box display={'flex'} gap={'20px'}>
+              <LeftPanel
+                houseInfo={houseInfo}
+                setBayDialogOpen={setBayDialogOpen}
+                setStatusDialogOpen={setStatusDialogOpen}
+              />
+              <RightPanel houseInfo={houseInfo} />
+            </Box>
           </Grid>
-        </Box>
-      </Container>
+        </Grid>
+      </Box>
       <BayEditDialog
         isOpen={bayDialogOpen}
         houseInfo={houseInfo}
@@ -200,12 +162,7 @@ const HouseDetailsPage = () => {
         houseInfo={houseInfo}
         handleClose={() => setStatusDialogOpen(false)}
       />
-      <DeleteHouseDialog
-        open={open}
-        handleClose={handleClose}
-        handleDeleteHouse={handleDeleteHouse}
-      />
-    </Navbar>
+    </>
   )
 }
 
@@ -350,27 +307,6 @@ const RightPanel = ({ houseInfo }) => {
         </Table>
       </TableContainer>
     </Paper>
-  )
-}
-
-const DeleteHouseDialog = ({ open, handleClose, handleDeleteHouse }) => {
-  return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Delete House</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Are you sure you want to delete this house?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color='secondary'>
-          Cancel
-        </Button>
-        <Button onClick={handleDeleteHouse} color='primary' variant='contained'>
-          Delete
-        </Button>
-      </DialogActions>
-    </Dialog>
   )
 }
 

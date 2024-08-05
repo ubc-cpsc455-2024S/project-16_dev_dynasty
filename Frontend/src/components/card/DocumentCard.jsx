@@ -31,7 +31,7 @@ const DocumentCard = ({
   rightSideTitle = 'Date',
   rightSideValue,
   rightSideColor = 'white',
-  backgroundColor = '#5C4D4D',
+  backgroundColor = '#555555', // #5C4D4D
 }) => {
   return (
     <Card
@@ -186,25 +186,10 @@ const DocumentActionsDropdown = ({ onView, onEdit, onDelete, onDownload }) => {
             handleClose()
           }}
         >
-          <Tooltip title='Edit Document'>
-            <IconButton size='small'>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
+          <IconButton size='small'>
+            <EditIcon />
+          </IconButton>
           Edit Document
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            onDelete()
-            handleClose()
-          }}
-        >
-          <Tooltip title='Delete Document'>
-            <IconButton>
-              <DeleteIcon color='error' />
-            </IconButton>
-          </Tooltip>
-          Delete Document
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -212,12 +197,21 @@ const DocumentActionsDropdown = ({ onView, onEdit, onDelete, onDownload }) => {
             handleClose()
           }}
         >
-          <Tooltip title='Download Document'>
-            <IconButton>
-              <DownloadIcon />
-            </IconButton>
-          </Tooltip>
+          <IconButton>
+            <DownloadIcon />
+          </IconButton>
           Download Document
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onDelete()
+            handleClose()
+          }}
+        >
+          <IconButton>
+            <DeleteIcon color='error' />
+          </IconButton>
+          Delete Document
         </MenuItem>
       </Menu>
     </div>

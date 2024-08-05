@@ -25,11 +25,7 @@ import {
 import ChecklistDownloadButton from '../components/buttons/ChecklistDownloadButton.jsx'
 import { MdFileDownload, MdSave } from 'react-icons/md'
 import { toast } from 'react-toastify'
-
-const LoadingContainer = styled(Box)({
-  display: 'flex',
-  justifyContent: 'center',
-})
+import LoadingPage from '../components/housePage/LoadingPage.jsx'
 
 const checklists = [
   { label: 'Unit Exterior', value: 'unit_exterior' },
@@ -92,61 +88,46 @@ const HouseChecklistPage = () => {
       : toast.error('Failed to save checklist data!')
   }
 
+  if (!houseState || !checklistData) {
+    return <LoadingPage />
+  }
+
   return (
-    <Navbar>
-      {!houseState || !checklistData ? (
-        <LoadingContainer>
-          <CircularProgress />
-        </LoadingContainer>
-      ) : (
-        <>
-          <Header1 title={<HouseHeader npl={houseState.npl} />} />
-          <Container>
-            <HouseTabs />
-            <Box mt={3}>
-              <Box mb={3} display='flex' justifyContent='space-between'>
-                <FormControl
-                  variant='outlined'
-                  size='small'
-                  style={{ minWidth: 200 }}
-                >
-                  <InputLabel id='checklist-select-label'>Checklist</InputLabel>
-                  <Select
-                    labelId='checklist-select-label'
-                    id='checklist-select'
-                    value={checklistName}
-                    label='Checklist'
-                    onChange={e => setChecklistName(e.target.value)}
-                  >
-                    {checklists.map(checklist => (
-                      <MenuItem key={checklist.value} value={checklist.value}>
-                        {checklist.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <Box display='flex' justifyContent='space-between' gap={1}>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={handleClick}
-                    startIcon={<MdSave />}
-                  >
-                    Save
-                  </Button>
-                  <ChecklistDownloadButton houseId={houseId} />
-                </Box>
-              </Box>
-              <ChecklistTable
-                records={checklistData[checklistName].records}
-                handleRecordChange={handleRecordChange}
-              />
-            </Box>
-          </Container>
-        </>
-      )}
-      {/*</Container>*/}
-    </Navbar>
+    <>
+      <Box mb={3} display='flex' justifyContent='space-between'>
+        <FormControl variant='outlined' size='small' style={{ minWidth: 200 }}>
+          <InputLabel id='checklist-select-label'>Checklist</InputLabel>
+          <Select
+            labelId='checklist-select-label'
+            id='checklist-select'
+            value={checklistName}
+            label='Checklist'
+            onChange={e => setChecklistName(e.target.value)}
+          >
+            {checklists.map(checklist => (
+              <MenuItem key={checklist.value} value={checklist.value}>
+                {checklist.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Box display='flex' justifyContent='space-between' gap={1}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleClick}
+            startIcon={<MdSave />}
+          >
+            Save
+          </Button>
+          <ChecklistDownloadButton houseId={houseId} />
+        </Box>
+      </Box>
+      <ChecklistTable
+        records={checklistData[checklistName].records}
+        handleRecordChange={handleRecordChange}
+      />
+    </>
   )
 }
 
