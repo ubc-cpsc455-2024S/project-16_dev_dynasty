@@ -12,10 +12,12 @@ import {
   Select,
   MenuItem,
   FormControl,
+  Card,
+  CardMedia,
+  CardContent,
 } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import axios from 'axios';
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
   const [subject, setSubject] = useState(title || '');
@@ -23,6 +25,7 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
   const [emailType, setEmailType] = useState(type || 'defect');
   const [body, setBody] = useState('');
   const [attachment, setAttachment] = useState(null);
+  const [attachmentPreview, setAttachmentPreview] = useState(null);
 
   const handleSendEmail = async () => {
     const formData = new FormData();
@@ -36,19 +39,16 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
     }
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/emails/send-email`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        withCredentials: true,
+      const response = await fetch('/api/emails/send-email', {
+        method: 'POST',
+        body: formData,
       });
-  
-      if (response.status !== 200) {
+
+      if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
 
-      const result = response.data;
+      const result = await response.json();
       if (result.success) {
         alert('Email sent successfully!');
         handleClose();
@@ -63,7 +63,18 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
 
   const handleAttachmentChange = (event) => {
     if (event.target.files.length > 0) {
-      setAttachment(event.target.files[0]);
+      const file = event.target.files[0];
+      setAttachment(file);
+
+      // Create a preview URL for images or PDFs
+      const fileType = file.type;
+      if (fileType.startsWith('image/')) {
+        setAttachmentPreview(URL.createObjectURL(file));
+      } else if (fileType === 'application/pdf') {
+        setAttachmentPreview(URL.createObjectURL(file));
+      } else {
+        setAttachmentPreview(null); // Unsupported type, do not preview
+      }
     }
   };
 
@@ -84,8 +95,9 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 500,
-            bgcolor: 'background.paper',
+            width: '80%', 
+            bgcolor: '#333', 
+            color: '#fff',
             border: '2px solid #000',
             boxShadow: 24,
             p: 4,
@@ -114,7 +126,9 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="type-select-label">Type</InputLabel>
+                <InputLabel id="type-select-label" style={{ color: '#fff' }}>
+                  Type
+                </InputLabel>
                 <Select
                   labelId="type-select-label"
                   value={emailType}
@@ -156,6 +170,40 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
                 </Typography>
               )}
             </Grid>
+            {attachmentPreview && (
+              <Grid item xs={12}>
+                <Card sx={{ bgcolor: '#444', borderRadius: 1, mb: 2 }}>
+                  {attachment.type.startsWith('image/') ? (
+                    <CardMedia
+                      component="img"
+                      image={attachmentPreview}
+                      alt="Attachment Preview"
+                      sx={{ maxHeight: 200 }}
+                    />
+                  ) : attachment.type === 'application/pdf' ? (
+                    <CardContent>
+                      <PictureAsPdfIcon fontSize="large" sx={{ color: '#fff' }} />
+                      <Typography variant="body2" sx={{ color: '#fff' }}>
+                        PDF Preview
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        href={attachmentPreview}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{ mt: 1 }}
+                      >
+                        Open PDF
+                      </Button>
+                    </CardContent>
+                  ) : (
+                    <Typography variant="body2" sx={{ color: '#fff' }}>
+                      No preview available for this file type.
+                    </Typography>
+                  )}
+                </Card>
+              </Grid>
+            )}
             <Grid item xs={12} sx={{ mt: 2 }}>
               <Button
                 variant="contained"
