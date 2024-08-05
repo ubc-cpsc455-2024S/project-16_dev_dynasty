@@ -3,22 +3,22 @@ const Mailgun = require('mailgun.js');
 const formData = require('form-data');
 const multer = require('multer');
 const router = express.Router();
-require('dotenv').config(); 
+require('dotenv').config();
 
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
   username: 'api',
-  key: process.env.MAILGUN_API_KEY, 
+  key: process.env.MAILGUN_API_KEY,
 });
 
-const upload = multer(); 
+const upload = multer();
 
-router.post('/send-email', upload.single('attachment'), async (req, res) => {
+router.post('/send-email', upload.array('attachments'), async (req, res) => {
   const { subject, to, type, body, data } = req.body;
-  const attachment = req.file;
+  const attachments = req.files;
 
   const mailOptions = {
-    from: 'Modsolid <noreply@modsolid.com>', 
+    from: 'Modsolid <noreply@modsolid.com>',
     to,
     subject,
     text: body,
@@ -27,7 +27,7 @@ router.post('/send-email', upload.single('attachment'), async (req, res) => {
       <pre>${JSON.stringify(data, null, 2)}</pre>
       <p>${body}</p>
     `,
-    attachment: attachment ? attachment.buffer : undefined,
+    attachment: attachments.map((file) => file.buffer),
   };
 
   try {

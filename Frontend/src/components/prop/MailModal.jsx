@@ -17,7 +17,7 @@ import {
   CardContent,
 } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import SelectUserMail from '../inputs/SelectUserMail';
 import { getUsersAsync } from '../../redux/auth/thunkAuth';
 import axios from 'axios';
@@ -29,12 +29,23 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
   const [recipients, setRecipients] = useState(recipient ? [recipient] : []);
   const [emailType, setEmailType] = useState(type || 'defect');
   const [body, setBody] = useState('');
+  const [files, setFiles] = useState([]); 
 
   useEffect(() => {
     if (open) {
       dispatch(getUsersAsync());
     }
   }, [open, dispatch]);
+
+  const fetchImageAsBlob = async (url) => {
+    try {
+      const response = await axios.get(url, { responseType: 'blob' });
+      return new File([response.data], url.split('/').pop(), { type: response.data.type });
+    } catch (error) {
+      console.error(`Failed to fetch image at ${url}`, error);
+      return null;
+    }
+  };
 
   const handleSendEmail = async () => {
     const formData = new FormData();
@@ -43,7 +54,15 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
     formData.append('type', emailType);
     formData.append('body', body);
     formData.append('data', JSON.stringify(data));
-    console.log('Sending email:', formData);
+
+    files.forEach((file) => {
+      formData.append('attachments', file);
+    });
+
+    const imageBlobs = await Promise.all(images.map(fetchImageAsBlob));
+    imageBlobs.forEach((blob) => {
+      if (blob) formData.append('attachments', blob);
+    });
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/emails/send-email`, formData, {
@@ -57,7 +76,6 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
         throw new Error('Network response was not ok');
       }
 
-
       const result = response.data;
       if (result.success) {
         alert('Email sent successfully!');
@@ -69,6 +87,10 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
       console.error('Error sending email:', error);
       alert('Error sending email.');
     }
+  };
+
+  const handleFileChange = (e) => {
+    setFiles(Array.from(e.target.files));
   };
 
   return (
@@ -138,6 +160,17 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" component="label">
+                Upload Files
+                <input type="file" multiple hidden onChange={handleFileChange} />
+              </Button>
+              {files.length > 0 && (
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                  {files.length} file(s) selected
+                </Typography>
+              )}
             </Grid>
             {images.length > 0 && (
               <Grid item xs={12}>
