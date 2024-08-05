@@ -125,16 +125,10 @@ const HouseDefectsPage = () => {
           handleOpenImageModal={handleOpenImageModal}
         />
       )}
-
-      {/* Image Modal */}
       <Modal
         open={open}
         onClose={handleCloseImageModal}
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
       >
         <Fade in={open}>
           <div
