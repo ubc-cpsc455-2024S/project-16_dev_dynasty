@@ -49,9 +49,9 @@ const TableRowStyled = styled(TableRow)({
 
 const HouseDefectsPage = () => {
   const { id } = useParams();
-  const dispatch = useDispatch(); // Correctly use useDispatch here
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
-  const defects = useSelector((state) => state.defects.list); // Correctly use useSelector here
+  const defects = useSelector((state) => state.defects.list); 
   const loading = useSelector((state) => state.defects.loading);
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -168,6 +168,7 @@ const HouseDefectsPage = () => {
           handleClose={handleCloseMailModal}
           title={`Defect Report: ${selectedDefect.title}`}
           type="defect"
+          images = {selectedDefect.images}
           data={selectedDefect}
         />
       )}

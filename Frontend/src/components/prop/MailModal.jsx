@@ -16,28 +16,22 @@ import {
   CardMedia,
   CardContent,
 } from '@mui/material';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import SelectUserMail from '../inputs/SelectUserMail'; 
+import SelectUserMail from '../inputs/SelectUserMail';
 
-const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
+const MailModal = ({ open, handleClose, title, recipient, type, data, images }) => {
   const [subject, setSubject] = useState(title || '');
-  const [recipients, setRecipients] = useState(recipient ? [recipient] : []); 
+  const [recipients, setRecipients] = useState(recipient ? [recipient] : []);
   const [emailType, setEmailType] = useState(type || 'defect');
   const [body, setBody] = useState('');
-  const [attachment, setAttachment] = useState(null);
-  const [attachmentPreview, setAttachmentPreview] = useState(null);
 
   const handleSendEmail = async () => {
     const formData = new FormData();
     formData.append('subject', subject);
-    formData.append('to', recipients.join(',')); 
+    formData.append('to', recipients.join(','));
     formData.append('type', emailType);
     formData.append('body', body);
     formData.append('data', JSON.stringify(data));
-    if (attachment) {
-      formData.append('attachment', attachment);
-    }
 
     try {
       const response = await fetch('/api/emails/send-email', {
@@ -62,23 +56,6 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
     }
   };
 
-  const handleAttachmentChange = (event) => {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      setAttachment(file);
-
-      // Create a preview URL for images or PDFs
-      const fileType = file.type;
-      if (fileType.startsWith('image/')) {
-        setAttachmentPreview(URL.createObjectURL(file));
-      } else if (fileType === 'application/pdf') {
-        setAttachmentPreview(URL.createObjectURL(file));
-      } else {
-        setAttachmentPreview(null); // Unsupported type, do not preview
-      }
-    }
-  };
-
   return (
     <Modal
       open={open}
@@ -96,8 +73,8 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '80%', 
-            bgcolor: '#333', 
+            width: '70%',
+            bgcolor: '#333',
             color: '#fff',
             border: '2px solid #000',
             boxShadow: 24,
@@ -118,7 +95,7 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <SelectUserMail recipients={recipients} setRecipients={setRecipients} /> 
+              <SelectUserMail recipients={recipients} setRecipients={setRecipients} />
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
@@ -147,57 +124,49 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
                 onChange={(e) => setBody(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                component="label"
-                startIcon={<AttachFileIcon />}
-              >
-                Upload Attachment
-                <input
-                  type="file"
-                  hidden
-                  onChange={handleAttachmentChange}
-                />
-              </Button>
-              {attachment && (
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  Attached: {attachment.name}
-                </Typography>
-              )}
-            </Grid>
-            {attachmentPreview && (
+            {images.length > 0 && (
               <Grid item xs={12}>
-                <Card sx={{ bgcolor: '#444', borderRadius: 1, mb: 2 }}>
-                  {attachment.type.startsWith('image/') ? (
-                    <CardMedia
-                      component="img"
-                      image={attachmentPreview}
-                      alt="Attachment Preview"
-                      sx={{ maxHeight: 200 }}
-                    />
-                  ) : attachment.type === 'application/pdf' ? (
-                    <CardContent>
-                      <PictureAsPdfIcon fontSize="large" sx={{ color: '#fff' }} />
-                      <Typography variant="body2" sx={{ color: '#fff' }}>
-                        PDF Preview
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        href={attachmentPreview}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        sx={{ mt: 1 }}
-                      >
-                        Open PDF
-                      </Button>
-                    </CardContent>
-                  ) : (
-                    <Typography variant="body2" sx={{ color: '#fff' }}>
-                      No preview available for this file type.
-                    </Typography>
-                  )}
-                </Card>
+                <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                  Attachments Preview
+                </Typography>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+                    gap: '8px',
+                    maxHeight: '150px',
+                    overflowY: 'auto',
+                  }}
+                >
+                  {images.map((url, index) => (
+                    <Card key={index} sx={{ bgcolor: '#444', borderRadius: 1, mb: 2 }}>
+                      {url.endsWith('.pdf') ? (
+                        <CardContent>
+                          <PictureAsPdfIcon fontSize="large" sx={{ color: '#fff' }} />
+                          <Typography variant="body2" sx={{ color: '#fff' }}>
+                            PDF Attachment
+                          </Typography>
+                          <Button
+                            variant="contained"
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{ mt: 1 }}
+                          >
+                            Open PDF
+                          </Button>
+                        </CardContent>
+                      ) : (
+                        <CardMedia
+                          component="img"
+                          image={url}
+                          alt={`attachment-${index}`}
+                          sx={{ maxHeight: 200 }}
+                        />
+                      )}
+                    </Card>
+                  ))}
+                </div>
               </Grid>
             )}
             <Grid item xs={12} sx={{ mt: 2 }}>
