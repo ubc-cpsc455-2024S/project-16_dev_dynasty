@@ -79,7 +79,7 @@ const HouseDocumentsPage = () => {
               onEdit={() => handleEditDocument(document._id)}
               onDelete={() => handleDeleteDocument(document._id)}
               onDownload={() => window.open(document.fileUrl, '_blank')}
-              onView={() => handleViewDocument(document)} // Pass view handler
+              onView={() => handleViewDocument(document)}
             />
           </Grid>
         ))}
@@ -88,38 +88,76 @@ const HouseDocumentsPage = () => {
         <Modal open={open} onClose={handleClose}>
           <Box
             sx={{
-              maxWidth: '80%',
-              maxHeight: '80%',
+              maxWidth: '75%',
+              maxHeight: '90vh', 
               margin: 'auto',
               mt: 5,
               p: 2,
-              bgcolor: 'background.paper',
+              bgcolor: '#555555',
               borderRadius: 2,
               boxShadow: 5,
               overflow: 'hidden',
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              color: 'white',
             }}
           >
-            <Typography variant='h6' gutterBottom>
-              {selectedDocument.title}
-            </Typography>
             <Box
               sx={{
+                flex: '1 1 75%', 
                 overflow: 'auto',
-                maxHeight: '70vh',
+                maxHeight: '85vh',
                 width: '100%',
-                mt: 1,
+                mr: 2,
               }}
             >
               <PdfViewer url={selectedDocument.fileUrl} />
             </Box>
-            <Box sx={{ mt: 2 }}>
+
+            <Box
+              sx={{
+                flex: '1 1 30%', 
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                maxHeight: '85vh',
+                overflow: 'auto',
+                p: 2,
+              }}
+            >
+              <Typography
+                variant='h4' 
+                gutterBottom
+                sx={{
+                  whiteSpace: 'pre-wrap', 
+                  wordBreak: 'break-word', 
+                }}
+              >
+                {selectedDocument.title}
+              </Typography>
+              <Typography
+                variant='body1'
+                gutterBottom
+                sx={{
+                  whiteSpace: 'pre-wrap', 
+                  wordBreak: 'break-word',
+                }}
+              >
+                {selectedDocument.description}
+              </Typography>
+              <Typography variant='body2' color='inherit'>
+                Type: {selectedDocument.type}
+              </Typography>
+              <Typography variant='body2' color='inherit'>
+                Uploaded: {new Date(selectedDocument.uploadDate).toLocaleDateString()}
+              </Typography>
               <Button
                 variant='contained'
                 color='primary'
+                sx={{ mt: 2 }}
                 onClick={() => window.open(selectedDocument.fileUrl, '_blank')}
               >
                 Download
