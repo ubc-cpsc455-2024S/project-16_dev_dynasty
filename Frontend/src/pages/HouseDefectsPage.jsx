@@ -267,7 +267,7 @@ const HouseDefectTable = ({ defects, handleOpenDeleteDialog, handleOpenImageModa
                   <IconButton onClick={() => handleOpenDeleteDialog(defect._id)}>
                     <DeleteIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleOpenMailModal(defect)}> {/* Add Mail Icon */}
+                  <IconButton onClick={() => handleOpenMailModal(defect)}> 
                     <MailIcon />
                   </IconButton>
                 </TableCell>

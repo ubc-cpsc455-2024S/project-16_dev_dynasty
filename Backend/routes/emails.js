@@ -18,7 +18,7 @@ router.post('/send-email', upload.single('attachment'), async (req, res) => {
   const attachment = req.file;
 
   const mailOptions = {
-    from: 'Your Company <noreply@yourdomain.com>', 
+    from: 'Modsolid <noreply@modsolid.com>', 
     to,
     subject,
     text: body,
