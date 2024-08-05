@@ -38,6 +38,8 @@ jobs:
             JWT_SECRET_STR: ${{secrets.JWT_SECRET_STR}}
             ADMIN_USERNAME: ${{secrets.ADMIN_USERNAME}}
             ADMIN_PASSWORD: ${{secrets.ADMIN_PASSWORD}}
+            MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+            MAILGUN_DOMAIN: ${{secrets.MAILGUN_DOMAIN}}
         run: |
           echo "files in current dir: "
           ls
