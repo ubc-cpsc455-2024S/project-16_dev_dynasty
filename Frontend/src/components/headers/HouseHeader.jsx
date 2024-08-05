@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography, Link } from '@mui/material'
 
-const HouseHeader = ({ npl }) => {
+const HouseHeader = ({ npl, secondHeader }) => {
   return (
     <Box>
       <Link href='/houses' underline='none'>
@@ -12,6 +12,11 @@ const HouseHeader = ({ npl }) => {
       <Typography variant='h4' component='span' color='textPrimary'>
         {' > House ' + npl}
       </Typography>
+      {secondHeader !== undefined && (
+        <Typography variant='h4' component='span' color='textPrimary'>
+          {' > ' + secondHeader}
+        </Typography>
+      )}
     </Box>
   )
 }

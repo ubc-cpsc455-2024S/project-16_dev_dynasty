@@ -38,6 +38,7 @@ import HouseHeader from '../components/headers/HouseHeader'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { colors } from '../styles/colors'
+import LoadingPage from '../components/housePage/LoadingPage'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -94,97 +95,96 @@ const HouseDefectsPage = () => {
     setOpen(true)
   }
 
-  if (loading) return <CircularProgress />
+  if (loading) return <LoadingPage />
 
   return (
-    <Navbar>
-      <Container>
-        <Header1 title={<HouseHeader npl={houseInfo?.npl} />} />
-        <HouseTabs />
-        <Box mt={3} display={'flex'} justifyContent={'space-between'}>
-          <Typography variant='h6' gutterBottom></Typography>
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={() => navigate(`/houses/${id}/defects/add`)}
-          >
-            Add Defect
-          </Button>
+    <>
+      <Box mt={3} display={'flex'} justifyContent={'space-between'}>
+        <Typography variant='h6' gutterBottom></Typography>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => navigate(`/houses/${id}/add-defect`)}
+        >
+          Add Defect
+        </Button>
+      </Box>
+      {defects.length == 0 ? (
+        <Box
+          height={'200px'}
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <Typography>No Defects Created</Typography>
         </Box>
-        {defects.length == 0 ? (
-          <Box
-            height={'200px'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
-            <Typography>No Defects Created</Typography>
-          </Box>
-        ) : (
-          <HouseDefectTable
-            defects={defects}
-            handleOpenDeleteDialog={handleOpenDeleteDialog}
-            handleOpenImageModal={handleOpenImageModal}
-          />
-        )}
+      ) : (
+        <HouseDefectTable
+          defects={defects}
+          handleOpenDeleteDialog={handleOpenDeleteDialog}
+          handleOpenImageModal={handleOpenImageModal}
+        />
+      )}
 
-        {/* Image Modal */}
-        <Modal
-          open={open}
-          onClose={handleCloseImageModal}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                backgroundColor: '#fff',
-                border: '2px solid #000',
-                boxShadow: 24,
-                padding: '16px',
-              }}
-            >
-              <img
-                src={selectedImage}
-                alt='Selected'
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </div>
-          </Fade>
-        </Modal>
-        <Dialog
-          open={deleteDialogOpen}
-          onClose={handleCloseDeleteDialog}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-        >
-          <DialogTitle id='alert-dialog-title'>
-            {'Confirm Deletion'}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              Are you sure you want to delete this defect? This action cannot be
-              undone.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDeleteDialog} color='primary'>
-              Cancel
-            </Button>
-            <Button onClick={handleDelete} color='primary' autoFocus>
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Container>
-    </Navbar>
+      {/* Image Modal */}
+      <Modal
+        open={open}
+        onClose={handleCloseImageModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: '#fff',
+              border: '2px solid #000',
+              boxShadow: 24,
+              padding: '16px',
+            }}
+          >
+            <img
+              src={selectedImage}
+              alt='Selected'
+              style={{ width: '100%', height: 'auto' }}
+            />
+          </div>
+        </Fade>
+      </Modal>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleCloseDeleteDialog}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+      >
+        <DialogTitle id='alert-dialog-title'>{'Confirm Deletion'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            Are you sure you want to delete this defect? This action cannot be
+            undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color='secondary'>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDelete}
+            color='primary'
+            variant={'contained'}
+            autoFocus
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
@@ -193,6 +193,8 @@ const HouseDefectTable = ({
   handleOpenDeleteDialog,
   handleOpenImageModal,
 }) => {
+  const { id } = useParams()
+
   const navigate = useNavigate()
 
   const getStatusColor = status => {
@@ -278,7 +280,7 @@ const HouseDefectTable = ({
                 <TableCell>
                   <IconButton
                     onClick={() =>
-                      navigate(`/houses/${id}/defects/${defect._id}/edit`)
+                      navigate(`/houses/${id}/edit-defect/${defect._id}`)
                     }
                   >
                     <EditIcon />

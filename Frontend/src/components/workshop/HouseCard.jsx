@@ -12,19 +12,11 @@ const HouseCard = ({ house }) => {
   const bayId = parseInt(house.bay_id)
 
   return (
-    <div
-      className={`house-card status${house.status}`}
-      onClick={() => {
-        navigate(`/houses/${houseId}/details`)
-      }}
-    >
+    <div className={`house-card status${house.status}`}>
       <Typography className='bay-card-text card-onlineDate'>
         {house.online_date}
       </Typography>
-      <NavLink
-        to={`${routes.housesRoute} +{houseId}`}
-        className='bay-card-text card-npl'
-      >
+      <NavLink to={'/houses/' + houseId} className='bay-card-text card-npl'>
         {house.npl}
       </NavLink>
       <Typography className='bay-card-text card-modelNumber'>

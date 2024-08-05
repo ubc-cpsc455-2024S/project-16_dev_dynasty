@@ -27,11 +27,11 @@ const HouseDocumentsPage = () => {
   }, [dispatch, id])
 
   const handleAddDocument = () => {
-    navigate(`/houses/${id}/documents/add`)
+    navigate(`/houses/${id}/add-documents`)
   }
 
   const handleEditDocument = documentId => {
-    navigate(`/houses/${id}/documents/${documentId}/edit`)
+    navigate(`/houses/${id}/edit-documents/${documentId}`)
   }
 
   const handleDeleteDocument = async documentId => {
@@ -50,95 +50,85 @@ const HouseDocumentsPage = () => {
   }
 
   return (
-    <Navbar>
-      <Header1 title={<HouseHeader npl={houseInfo?.npl} />} />
-      <Container>
-        <HouseTabs />
-        <Box mt={3} display={'flex'} justifyContent={'space-between'}>
-          <div />
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={handleAddDocument}
-          >
-            Add Document
-          </Button>
+    <>
+      <Box mt={3} display={'flex'} justifyContent={'space-between'}>
+        <div />
+        <Button variant='contained' color='primary' onClick={handleAddDocument}>
+          Add Document
+        </Button>
+      </Box>
+      {documents.length === 0 && (
+        <Box
+          height={'200px'}
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <Typography>No Documents Created</Typography>
         </Box>
-        {documents.length === 0 && (
+      )}
+      <Grid container spacing={3} mt={3}>
+        {documents.map(document => (
+          <Grid item xs={12} sm={6} md={4} key={document._id}>
+            <DocumentCard
+              document={document}
+              leftSideValue={document.type}
+              rightSideValue={new Date(
+                document.uploadDate
+              ).toLocaleDateString()}
+              onEdit={() => handleEditDocument(document._id)}
+              onDelete={() => handleDeleteDocument(document._id)}
+              onDownload={() => window.open(document.fileUrl, '_blank')}
+              onView={() => handleViewDocument(document)} // Pass view handler
+            />
+          </Grid>
+        ))}
+      </Grid>
+      {selectedDocument && (
+        <Modal open={open} onClose={handleClose}>
           <Box
-            height={'200px'}
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
+            sx={{
+              maxWidth: '80%',
+              maxHeight: '80%',
+              margin: 'auto',
+              mt: 5,
+              p: 2,
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 5,
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            <Typography>No Documents Created</Typography>
-          </Box>
-        )}
-        <Grid container spacing={3} mt={3}>
-          {documents.map(document => (
-            <Grid item xs={12} sm={6} md={4} key={document._id}>
-              <DocumentCard
-                document={document}
-                leftSideValue={document.type}
-                rightSideValue={new Date(
-                  document.uploadDate
-                ).toLocaleDateString()}
-                onEdit={() => handleEditDocument(document._id)}
-                onDelete={() => handleDeleteDocument(document._id)}
-                onDownload={() => window.open(document.fileUrl, '_blank')}
-                onView={() => handleViewDocument(document)} // Pass view handler
-              />
-            </Grid>
-          ))}
-        </Grid>
-        {selectedDocument && (
-          <Modal open={open} onClose={handleClose}>
+            <Typography variant='h6' gutterBottom>
+              {selectedDocument.title}
+            </Typography>
             <Box
               sx={{
-                maxWidth: '80%',
-                maxHeight: '80%',
-                margin: 'auto',
-                mt: 5,
-                p: 2,
-                bgcolor: 'background.paper',
-                borderRadius: 2,
-                boxShadow: 5,
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
+                overflow: 'auto',
+                maxHeight: '70vh',
+                width: '100%',
+                mt: 1,
               }}
             >
-              <Typography variant='h6' gutterBottom>
-                {selectedDocument.title}
-              </Typography>
-              <Box
-                sx={{
-                  overflow: 'auto',
-                  maxHeight: '70vh',
-                  width: '100%',
-                  mt: 1,
-                }}
-              >
-                <PdfViewer url={selectedDocument.fileUrl} />
-              </Box>
-              <Box sx={{ mt: 2 }}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={() =>
-                    window.open(selectedDocument.fileUrl, '_blank')
-                  }
-                >
-                  Download
-                </Button>
-              </Box>
+              <PdfViewer url={selectedDocument.fileUrl} />
             </Box>
-          </Modal>
-        )}
-      </Container>
-    </Navbar>
+            <Box sx={{ mt: 2 }}>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={() => window.open(selectedDocument.fileUrl, '_blank')}
+              >
+                Download
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
+      )}
+    </>
   )
 }
 
