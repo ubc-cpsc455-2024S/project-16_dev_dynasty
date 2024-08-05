@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'; // Ensure this is imported
+import { useDispatch, useSelector } from 'react-redux'; 
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -167,7 +167,6 @@ const HouseDefectsPage = () => {
           open={mailModalOpen}
           handleClose={handleCloseMailModal}
           title={`Defect Report: ${selectedDefect.title}`}
-          recipient="andrewl02y@gmail.com" // You may want to make this dynamic
           type="defect"
           data={selectedDefect}
         />

@@ -18,10 +18,11 @@ import {
 } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import SelectUserMail from '../inputs/SelectUserMail'; 
 
 const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
   const [subject, setSubject] = useState(title || '');
-  const [to, setTo] = useState(recipient || '');
+  const [recipients, setRecipients] = useState(recipient ? [recipient] : []); 
   const [emailType, setEmailType] = useState(type || 'defect');
   const [body, setBody] = useState('');
   const [attachment, setAttachment] = useState(null);
@@ -30,7 +31,7 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
   const handleSendEmail = async () => {
     const formData = new FormData();
     formData.append('subject', subject);
-    formData.append('to', to);
+    formData.append('to', recipients.join(',')); 
     formData.append('type', emailType);
     formData.append('body', body);
     formData.append('data', JSON.stringify(data));
@@ -117,12 +118,7 @@ const MailModal = ({ open, handleClose, title, recipient, type, data }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Recipient"
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-              />
+              <SelectUserMail recipients={recipients} setRecipients={setRecipients} /> 
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
