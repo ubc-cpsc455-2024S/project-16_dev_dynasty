@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -17,13 +17,24 @@ import {
   CardContent,
 } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { useDispatch, useSelector } from 'react-redux';
 import SelectUserMail from '../inputs/SelectUserMail';
+import { getUsersAsync } from '../../redux/auth/thunkAuth';
+import axios from 'axios';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const MailModal = ({ open, handleClose, title, recipient, type, data, images }) => {
+  const dispatch = useDispatch();
   const [subject, setSubject] = useState(title || '');
   const [recipients, setRecipients] = useState(recipient ? [recipient] : []);
   const [emailType, setEmailType] = useState(type || 'defect');
   const [body, setBody] = useState('');
+
+  useEffect(() => {
+    if (open) {
+      dispatch(getUsersAsync());
+    }
+  }, [open, dispatch]);
 
   const handleSendEmail = async () => {
     const formData = new FormData();
@@ -32,18 +43,22 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
     formData.append('type', emailType);
     formData.append('body', body);
     formData.append('data', JSON.stringify(data));
+    console.log('Sending email:', formData);
 
     try {
-      const response = await fetch('/api/emails/send-email', {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post(`${BACKEND_URL}/api/emails/send-email`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
       });
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error('Network response was not ok');
       }
 
-      const result = await response.json();
+
+      const result = response.data;
       if (result.success) {
         alert('Email sent successfully!');
         handleClose();
