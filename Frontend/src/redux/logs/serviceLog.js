@@ -104,7 +104,7 @@ const getAllLogs = async () => {
       },
       {
         eventTime: '2023-09-09 13:15:42',
-        logContent: 'Defect created for house 369258 in Bay 4',
+        logContent: 'Defect created for house with NPL 369258 in Bay 4, and the house model is 987-654',
         eventType: 'Defect created',
       },
       {
