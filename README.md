@@ -85,6 +85,9 @@ line bay and the average number of houses manufactured per month.
 ### Justin
 
 ### Ryan
+- Found industry contact and managed all communication with client
+- Set up all frontend pages with routing to allow other users to build upon them. Also, configured all initial routing for the Express backend. Established a folder structure and components for the team to expand on in Frontend and Backend.
+- Restyled the entire app, and fixed major asethetic bugs after proof of concept was built
 
 ## Prototype Images
 
