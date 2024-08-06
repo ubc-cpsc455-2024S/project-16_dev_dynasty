@@ -15,7 +15,7 @@ const getCustomersFromDb = async ({ customerNameQuery }) => {
 const addCustomerToDb = async (customerData) => {
   const customer = new Customer(customerData);
   await customer.save();
-  const logParams = {customerName: customer_name}
+  const logParams = {customerName: customerData.customer_name}
   await addLogToDb('New customer', logParams)
   return customer;
 };
