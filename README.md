@@ -34,15 +34,15 @@ BayBuild is a project management web application specifically designed for a mod
 
 ### Standard Requirements
 
-❗ **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. **Will be completed prior to final presentation.** 
+✔️ **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. **Will be completed prior to final presentation.** 
 
 ✔️ Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
 
 ✔️ **Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").
 
-❗ **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage. **Will be completed prior to final presentation.**
+✔️ **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage. **Will be completed prior to final presentation.**
  
-❗ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. **Will be completed prior to final presentation.**
+✔️ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. **Will be completed prior to final presentation.**
 
 ✔️ **Customer Record Management** -  allow users to add, edit, and delete a customer record and link each home with a customer.
 
@@ -51,9 +51,9 @@ BayBuild is a project management web application specifically designed for a mod
 
 ✔️ **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board.
 
-❌ **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
+✔️ **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
 
-❌ **Business Analytics** - allow users to access business analytics such as average time spent per production line stage and average square ft. of home production per day.
+✔️ **Business Analytics** - allow users to access business analytics such as average time spent per production line stage and average square ft. of home production per day.
 
 --------------------------------------------------------------------------------------------------
 
