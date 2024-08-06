@@ -160,7 +160,7 @@ router.put('/:houseId/:defectId', upload.array('images', 10), async (req, res) =
     await house.save();
 
     // Log defect fix if status is resolved
-    if (status === 'resolved') {
+    if (status.toLowerCase() === 'resolved') {
       const logParams = {
         defectTitle: title,
         houseNpl: house.npl, bayId: bay_id, model: house.house_model, houseId: house._id
