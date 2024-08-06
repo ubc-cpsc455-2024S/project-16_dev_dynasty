@@ -47,7 +47,6 @@ const CustomersTable = ({
   const currentUser = useSelector(state => state.auth.user)
 
   const handleDelete = async customerId => {
-    console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
       toast.error('Only admin user authorized for this action')
     } else {

@@ -50,7 +50,6 @@ const HousesTable = ({
   const currentUser = useSelector(state => state.auth.user)
 
   const handleDelete = async houseId => {
-    console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
       toast.error('Only admin user authorized for this action')
     } else {

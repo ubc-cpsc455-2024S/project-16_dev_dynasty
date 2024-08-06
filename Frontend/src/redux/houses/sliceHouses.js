@@ -66,7 +66,6 @@ const houseSlice = createSlice({
       })
       .addCase(getAllHousesAsync.rejected, (state, action) => {
         state.status.getAll = 'rejected'
-        // console.log('action: ', action);
         state.error = action.error.message
       })
       // Handle getHouseAsync

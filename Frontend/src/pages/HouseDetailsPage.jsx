@@ -96,7 +96,6 @@ const HouseDetailsPage = () => {
   }, [dispatch, id])
 
   const handleChangeStatus = async status => {
-    console.log('status: ', status)
     const updatedHouseInfo = { ...houseInfo, status: status }
     const houseData = {
       houseId: houseInfo._id,

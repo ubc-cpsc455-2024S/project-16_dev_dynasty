@@ -25,8 +25,6 @@ export const addDefect = async (houseId, defectData) => {
       }
     }
 
-    console.log('FormData:', formData); 
-
     const response = await axios.post(`${BACKEND_URL}/defects/${houseId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

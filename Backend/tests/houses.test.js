@@ -110,8 +110,6 @@ describe("POST /houses", () => {
       .send(newHouse1)
       .set("Cookie", token)
       .set("Accept", "application/json");
-
-    console.log('request for post is sent')
     expect(response.statusCode).toBe(201);
     expect(response.body.result).toHaveProperty("_id");
     expect(response.body.result.npl).toBe(newHouse1.npl);

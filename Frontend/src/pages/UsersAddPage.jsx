@@ -34,7 +34,6 @@ const UsersAddPage = () => {
     try {
       const result = await dispatch(userSignupAsync(userSignupForm)).unwrap();
       if (result) {
-        console.log ('result returned by signup async dispatch is: ', result);
         navigate(-1);
       }
     } catch (err) {

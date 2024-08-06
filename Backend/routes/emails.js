@@ -31,7 +31,6 @@ router.post('/send-email', upload.array('attachments'), async (req, res) => {
   };
 
   try {
-    console.log('Sending email with Mailgun:', mailOptions); // Debugging line
     await mg.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
     res.status(200).json({ success: true, message: 'Email sent successfully!' });
   } catch (error) {

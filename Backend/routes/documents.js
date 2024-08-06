@@ -130,9 +130,6 @@ router.put('/:houseId/documents/:documentId', upload.single('file'), async (req,
 router.delete('/:houseId/documents/:documentId', async (req, res) => {
   try {
     console.log("Delete Request Received");
-    console.log("House ID:", req.params.houseId);
-    console.log("Document ID:", req.params.documentId);
-
     const house = await House.findById(req.params.houseId);
     if (!house) {
       return res.status(404).json({ message: 'House not found' });

@@ -121,8 +121,6 @@ const AddHouseDefectPage = () => {
       images,
     }
 
-    console.log('Defect Data:', defectData)
-
     try {
       const response = await dispatch(
         addDefectAsync({ houseId: id, defectData })

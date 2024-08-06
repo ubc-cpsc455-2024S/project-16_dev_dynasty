@@ -61,7 +61,6 @@ router.delete("/:houseId", async (req, res) => {
 // GET endpoint to retrieve pdf checklist by house id
 router.get("/download/:houseId", async (req, res) => {
   const houseId = req.params.houseId;
-  console.log(houseId);
   try {
     const checklist = await getChecklistFromDb(houseId);
     const house = await getHouseFromDb(houseId);

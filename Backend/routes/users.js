@@ -62,7 +62,6 @@ router.post("/signin", async (req, res, next) => {
 
     res.setHeader("Set-Cookie", cookie.serialize("jwt", token, cookieOptions));
 
-    // res.cookie('jwt', token, { httpOnly: true, maxAge: 1000 * 1000, path: '/'});
     res.status(201).json({ result: user });
   } catch (error) {
     console.log("the error caught was: ", error);

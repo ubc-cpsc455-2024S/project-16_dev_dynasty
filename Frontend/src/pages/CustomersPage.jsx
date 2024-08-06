@@ -61,7 +61,6 @@ const CustomersPage = () => {
   }
 
   const handleAddCustomerButtonClick = () => {
-    console.log('the current user is: ', currentUser)
     if (currentUser.role !== 'admin') {
       toast.error('Only admin user authorized for this action')
     } else {

@@ -62,7 +62,6 @@ const Productionline = () => {
   }
 
   const handleOpenEditHouseStatusDialog = houseInfo => {
-    console.log('house info opne', houseInfo)
     setEditHouseStatusDialog({ houseInfo, isOpen: true })
   }
 

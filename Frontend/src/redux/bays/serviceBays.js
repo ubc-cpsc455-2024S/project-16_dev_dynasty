@@ -20,7 +20,6 @@ const getAvailableBays = async () => {
         const response = await axios.get(`${BACKEND_URL}/bays/empty`, {
             withCredentials: true 
           });
-          console.log('hit the get available service')
         return response.data.result;
     } catch (error) {
         console.error('Error fetching bays:', error);

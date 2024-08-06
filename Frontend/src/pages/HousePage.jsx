@@ -108,7 +108,6 @@ const HousePage = () => {
           <Tabs
             value={tabValue}
             onChange={(_, newValue) => {
-              console.log('dog', newValue)
               setTabValue(newValue)
             }}
             indicatorColor='primary'

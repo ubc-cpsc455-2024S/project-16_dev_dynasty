@@ -21,7 +21,6 @@ const logSlice = createSlice({
       })
       .addCase(getEventLogsAsync.fulfilled, (state, action) => {
         state.status.getAllLogs = 'fulfilled'
-        console.log('logs are: ', action.payload)
         state.eventLogs = action.payload
         state.error = null
       })
