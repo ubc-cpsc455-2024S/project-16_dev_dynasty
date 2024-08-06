@@ -38,8 +38,9 @@ const DocumentCard = ({
       sx={{
         display: 'flex',
         alignItems: 'center',
-        width: 230,
+        width: 280,
         height: 180,
+        mt: 3,
         borderRadius: 5,
         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
         position: 'relative',
@@ -75,7 +76,7 @@ const DocumentCard = ({
           onClick={onView}
           sx={{
             flexGrow: 1,
-            width: '90px',
+            width: '140px',
             cursor: 'pointer',
             '&:hover': {
               textDecoration: 'underline',

@@ -16,7 +16,11 @@ const getHousesFromDb = async ({
   let filteredHouses;
   const queryObj = {};
   if (query) {
-    queryObj.status = parseInt(query);
+    if (query === "inBay") {
+      queryObj.bay_id = { $ne: null };
+    } else {
+      queryObj.status = parseInt(query);
+    }
   }
   if (nplQuery) {
     queryObj.npl = nplQuery;

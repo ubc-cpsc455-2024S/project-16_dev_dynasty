@@ -67,7 +67,7 @@ const HouseDocumentsPage = () => {
           <Typography>No Documents Created</Typography>
         </Box>
       )}
-      <Grid container spacing={3} mt={3}>
+      <Grid container spacing={3}>
         {documents.map(document => (
           <Grid item xs={12} sm={6} md={4} key={document._id}>
             <DocumentCard
