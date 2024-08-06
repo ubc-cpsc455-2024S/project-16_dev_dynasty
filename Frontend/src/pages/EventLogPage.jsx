@@ -114,7 +114,7 @@ const EventLogPage = () => {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '8px 16px',
-    background: '#616161',
+    background: '#272626cb',
     borderBottom: '1px solid #ccc',
   })
 
@@ -143,7 +143,7 @@ const EventLogPage = () => {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '8px 16px',
-    background: '#9e9e9e',
+    background: '#171717',
     borderBottom: '1px solid #ccc',
     position: 'sticky',
     top: 0,
