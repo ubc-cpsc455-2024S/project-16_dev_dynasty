@@ -2,76 +2,91 @@
 
 ![workflow](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/actions/workflows/cicd-frontend.yml/badge.svg)
 
-# Group 16 DevDynasty - BayBuild
+# BayBuild
 
-## BayBuild
+BayBuild is a proof-of-concept project management web application designed for a modular home manufacturing
+company to improve its organization and productivity. The company manufactures an average of eight houses per week in a factory
+environment and relies primarily on manual planning and record-keeping systems. BayBuild  allows the
+company to track its house manufacturing progress through a 20-bay production line, and automate the creation, modification,
+and retrieval of house information including customer details, quality checks, defect records, and documents. The consistent and 
+centralized storage of house information is critical for the construction team to ensure a controlled handoff between
+production stages. An event logging feature in BayBuild allows managers to access metrics such as the average time spent per production 
+line bay and the average number of houses manufactured per month.     
 
-BayBuild is a project management web application specifically designed for a modular home construction company to streamline their business processes. The company constructs up to 25 homes daily and currently depends on a manual planning and record-keeping system. BayBuild enables the company to track homes through a 20 stage production line and automates the creation, modification, and retrieval of quality check and approval documents, ensuring a controlled handoff between construction stages. Additional functionalities, such as business analytics, inventory management and automated email status updates, may be implemented based on time constraints.
-
-## Team Members
-
-- Yelin (Andy) Hu: Passionate about building exciting products!
-- Andrew Liu: Passionate about web dev with AI integration!
-- Justin Burden: Former geotechnical engineer and aspiring software developer!
-- Ryan Dick: Former Civil Engineer - passionate about fullstack development
-
---------------------------------------------------------------------------------------------------
-## Project Requirements
-
-✔️ - Complete
-❗ - In progress
-❌ - Not started
+## Project Goals
 
 ### Minimal requirements
 
-✔️ **Add Home Record** - allow users to add a home record to the system (i.e., a home to be constructed) and add details including home number, price, size, and model number and status.
+✔️ **Add House Record** - allow users to add a house record to the system (i.e., a house to be constructed) with information
+including project number, model number, customer name, size, bay location, and status. 
 
-✔️ **View Production Line Status Board** - allow users to view the production line status board and see the position of each home in the 20 stages of production.
+✔️ **View Production Line Status Board** - allow users to view the production line status board and see the position of
+each house in the 20 bays of production.
 
-✔️ **Find Home Record** - allow users to find a particular home in the system via a search and view the record specific to that home.
+✔️ **Find House Record** - allow users to find a particular house in the system via a search and view details specific
+to that house.
 
-✔️ **Modify Home Record (Update Home Status)** - allow users to modify a home record and update the position of a home in the 20 stage production line (e.g., a home that has completed all work at the electrical stage and can be moved forward to the next stage, plumbing).
+✔️ **Update House Status** - allow users to modify the status of a house and update its position in the 20-bay production 
+line (e.g., a house that has completed all work in Bay 11 - "Electrical Rough In" can proceed to Bay 10 - "Insulation/Sheathing").
 
 ### Standard Requirements
 
-✔️ **User Account Setup and Management** - allow administrators to create accounts with different permission levels and allow them to login and logout. **Will be completed prior to final presentation.** 
+✔️ **User Account Setup and Management** - allow administrators to create user accounts with different permission levels and
+allow users to login and logout. 
 
-✔️ Create Fillable Quality Control Forms** - allow users to fill out a standardized quality control form/checklist specific to each of the 20 production stages.
+✔️ **Create Fillable Quality Control Forms** - allow users to fill out standardized quality control checklists specific to
+different areas of a house and flag defects. 
 
-✔️ **Track Home Progress on Production Line Status Board** - allow users to visualize the current status of each home on the production line status board (e.g., red = "work in progress", yellow = "pending quality control check and approval", green = "complete").
+✔️ **Track House Progress on Production Line Status Board** - allow users to visualize the current status of each house on the production line status board (e.g., red = "work in progress", yellow = "QA required",
+green = "work complete").
 
-✔️ **Create, Modify, and Retrieve Defects** -  allow users to create, modify, and retrieve defect records (including images) specific to a home and production stage. **Will be completed prior to final presentation.**
- 
-✔️ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract documents, construction drawings, etc.) to a home record. **Will be completed prior to final presentation.**
+✔️ **Create, Modify, and Retrieve Defects** - allow users to create, modify, and retrieve defect records (including
+images) specific to a house and production bay. 
 
-✔️ **Customer Record Management** -  allow users to add, edit, and delete a customer record and link each home with a customer.
+✔️ **Attach External Documents to House Record** - allow users to attach external documents (e.g., images, contract
+documents, construction drawings, etc.) to a house record. 
 
+✔️ **Add Customer** - allow users to add a customer to the system  with information including customer name and contact details, and link each house with a
+customer.
 
 ### Strech Requirements
 
-✔️ **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line stages on the production line status board.
+✔️ **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line bays on the production line status board.
 
-✔️ **Automated Email Status Updates** - allow users to receive automated daily updates on the status of homes on the production line status board.
+✔️ **Email Updates** - allow users to receive email updates detailing important information about a house's status.
 
-✔️ **Business Analytics** - allow users to access business analytics such as average time spent per production line stage and average square ft. of home production per day.
+✔️ **Business Metrics** - allow users to track metrics such as the average time spent per production 
+line bay and the average number of houses manufactured per month. 
 
---------------------------------------------------------------------------------------------------
+## Technologies Used
 
-## Breakdown of Two Minimal Requirements
+### Module 1: Front-End UI (HTML/CSS/Javascript)
 
-1. **Add Home Record** 
-- Design the database schema to store the required information.
-- Deploy the database and connect it to our application.
-- Create a button and form to allow information submission. 
+### Module 2: Front-End Framework (React & Redux)
 
-2. **View Production Line Status Board** 
-- Allow users to view the production line status board and see the position of each home in the 20 stages of production.
-- Once a new home is added to the system, allow users to see the new home represented on the status board at the beginning production stage.
-- Once the stage of a house is updated, the production stage board should reflect the change and move the home accordingly to the next production stage.
-  
---------------------------------------------------------------------------------------------------
+### Module 3: Database (MongoDB)
 
-## Images
+### Module 4: Release Engineering (GitHub Actions & Render)
+
+## Above and Beyond Functionality
+
+## Next Steps
+
+- Business metrics
+- Inventory management
+- Automated email status updates
+
+## Team Member Contributions
+
+### Andrew
+
+### Andy
+
+### Justin
+
+### Ryan
+
+## Prototype Images
 
 ![image](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/assets/62073529/b9d9575b-04bc-42a3-a2b6-9bf81a74fb0d)
 ![image](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/assets/62073529/0401c1ef-a4f3-45f3-b53e-6e5887913ea9)
@@ -83,13 +98,3 @@ BayBuild is a project management web application specifically designed for a mod
 ![image](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/assets/62073529/f8e03eaf-9638-4932-9052-7646dcd6fe6c)
 ![image](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/assets/62073529/38717b3d-e95d-494f-b034-bfc8a40581f6)
 ![image](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/assets/62073529/a7983813-704d-409d-b03c-68d34e87257a)
-
-
---------------------------------------------------------------------------------------------------
-
-## References
-
-{Add your stuff here}
-
-
-
