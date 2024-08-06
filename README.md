@@ -61,14 +61,22 @@ line bay and the average number of houses manufactured per month.
 ## Technologies Used
 
 ### Module 1: Front-End UI (HTML/CSS/Javascript)
+Used HTML and CSS to style website
 
 ### Module 2: Front-End Framework (React & Redux)
+Utilized React for frontend and Redux for state managment to store information queried from the backend which included house, user, customer, and bay information.
 
 ### Module 3: Database (MongoDB)
+MongoDB database used on the backend to store all information for the application
 
 ### Module 4: Release Engineering (GitHub Actions & Render)
+Implemented a GitHub Action to deploy the frontend and backend to Render upon merging changes to the main branch. An additional GitHub Action was set up to run tests on all pull requests to ensure that a broken version of the application is not merged.
 
 ## Above and Beyond Functionality
+- Partnered with a real client to develop the project, ensuring that the application meets real-world needs and requirements.
+- Integrated email sending functionality to send notification to users with SendGrid
+- Implemented a system for storing pictures and documents using AWS S3 buckets
+- Developed a PDF previewer on the React frontend, allowing users to view PDF documents directly within the application from AWS S3 buckes. This feature provides a smooth and user-friendly experience by eliminating the need to download files for viewing.
 
 ## Next Steps
 
