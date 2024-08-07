@@ -36,7 +36,6 @@ const Sidebar = () => {
     padding: '10px 16px',
   })
   const getIconColor = isActive => {
-    console.log('isActive', isActive)
     return isActive
       ? colors.sideBarActiveIconColor
       : colors.sideBarInactiveIconColor

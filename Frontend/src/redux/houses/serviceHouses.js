@@ -20,10 +20,6 @@ const getAllHouses = async ({
     })
     return response.data.result
   } catch (error) {
-    // console.error('Error fetching houses:', error);
-    // if (error.response && error.response.data) {
-    //   return rejectWithValue(error.response.data);
-    // }
     errorHandler(error, getAllHouses.name);
     throw error;
   }

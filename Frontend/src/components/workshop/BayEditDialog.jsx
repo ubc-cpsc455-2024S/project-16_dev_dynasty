@@ -22,7 +22,6 @@ import SelectCustom from '../inputs/SelectCustom'
 import { colors } from '../../styles/colors'
 
 const BayEditDialog = ({ isOpen, houseInfo, handleClose }) => {
-  console.log({ houseInfo })
   const emptyBays = useSelector(state => state.bays.emptyBays || [])
   const intialBayId = houseInfo.bay_id === null ? '0' : houseInfo.bay_id
   const [bayId, setBayId] = useState(intialBayId)
