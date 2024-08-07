@@ -2,7 +2,7 @@ export const houseStatusEnumSelectable = {
   0: 'Cancelled',
   1: 'Not Started',
   2: 'In Progress',
-  3: 'QA Reqiured',
+  3: 'QA Required',
   4: 'Bay Complete',
   // 5: 'Ready For Shipping',
   // 6: 'Delivered To Customer',
