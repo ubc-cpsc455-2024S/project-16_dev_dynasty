@@ -44,7 +44,7 @@ const createPdfChecklist = async (checklist, house, res) => {
       { label: "", property: "name", width: 130, renderer: null },
       {
         label: "Accept",
-        property: "accept",
+        property: "accepted",
         width: 50,
         align: "center",
         renderer: null,
@@ -84,7 +84,7 @@ const createPdfChecklist = async (checklist, house, res) => {
         record.level === "header"
           ? `bold:${record.name}`
           : "     " + `${record.name}`;
-      const accept = record.fillable ? (record.accept ? "X" : "") : "*";
+      const accepted = record.fillable ? (record.accepted ? "X" : "") : "*";
       const deficient = record.fillable ? (record.deficient ? "X" : "") : "*";
       const repaired_by = record.fillable ? record.repaired_by : "*";
       const checked = record.fillable ? (record.checked ? "X" : "") : "*";
@@ -92,7 +92,7 @@ const createPdfChecklist = async (checklist, house, res) => {
 
       return {
         name: name,
-        accept: accept,
+        accepted: accepted,
         deficient: deficient,
         repaired_by: repaired_by,
         checked: checked,
