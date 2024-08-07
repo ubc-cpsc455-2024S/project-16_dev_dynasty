@@ -164,7 +164,7 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 - PDF Management: Developed PDF preview and thumbnail functionalities to enable document viewing within the application, enhancing user experience with easy access to document previews.
 - Automailing Service: Implemented an automailing service using Mailgun to automate user communications, ensuring timely delivery of updates and reports via email notifications.
 - Refactored the House Page into distinct sections for House Detail, Defects, and Documents, providing specific functionalities and improving organization and user experience.
-- Developed the House Defects Page to log and manage defects, featuring options for reporting new defects, updating statuses, deleting resolved issues, and incorporating search and filter functionalities for better navigation.
+- Developed the House Defects Page to log and manage defects, featuring options for reporting new defects, updating statuses, deleting resolved issues.
 - Created the Documents Page with components for handling various house documents, designing backend logic for document operations, and structuring data models for efficient document management.
 
 ### Andy
