@@ -74,8 +74,7 @@ Node.js was used as the runtime environment to execute JavaScript code on the ba
 MongoDB database used on the backend to store all information for the application
 
 ### Module 5: GitHub Actions & Render
-Implemented a GitHub Action to deploy the frontend and backend to Render upon merging changes to the main branch. An additional GitHub Action was set up to run tests on all pull requests to ensure that a broken version of the application is not merged.
-
+Setup CI/CD pipeline using github actions for backend and frontend. The workflow ensures backend tests are ran, frontend build is ran on push to main and on pr before deploying our project on Render. This ensures there's no failing tests and our frontend successfully builds before it is sent to production. Branch protection was also setup so that pr with failing workflow not being able to be merged to main.
 ## Above and Beyond Functionality
 
 ### Industry Partnership
@@ -104,6 +103,12 @@ Implemented a GitHub Action to deploy the frontend and backend to Render upon me
 ### Andrew
 
 ### Andy
+- Reproduced the production line layout for the company using css grid and implemented drag and drop functionalities for house cards to update their bays in the frontend.
+- Set up MongoDB for the project and created Models for bays, houses, event logs, and users.
+- Setup frontend Redux thunks and slices for houses, bays, event logs and users for react state management.
+- Implemented user authentication and authorization system on the backend using jwt in cookies and setup frontend user management page and route protection based on user permissions.
+- Setup CI/CD pipeline using github actions for backend and frontend and deployed our project on Render. Wrote tests for backend that runs during the workflow to ensure continuous integration before sending it to production. 
+- Implemented the event log system functionality on backend and frontend. 
 
 ### Justin
 
