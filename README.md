@@ -124,7 +124,7 @@ To perform joins on multiple collections in the backend, two joined "Views" were
 
 ### Module 5: GitHub Actions & Render
 
-Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workflows ensure that the backend tests are run, and the frontend build is run on both a push to main and a pull request before deploying  the project on Render. This ensures that there are no failing tests and that our frontend successfully builds before it is deployed to production. Branch protection was also setup so that pull requests with failing workflow are not able to be merged to main.
+Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workflows ensure that the backend tests are run, and the frontend build is run on both a push to main and a pull request before deploying  the project on Render. Branch protection was also setup so that pull requests with failing workflow are not able to be merged to main.
 
 ## Above and Beyond Functionality
 
