@@ -34,8 +34,26 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
   useEffect(() => {
     if (open) {
       dispatch(getUsersAsync());
+      if (type === 'defect') {
+        setBody(`Hello Team,
+
+   The QA team has identified some defects in the project that require your attention. Please review the attached defect checklist and the included image for more details.
+
+**Summary of Defects:**
+- [Brief description of defects]
+- [Additional details or observations]
+
+**Action Required:**
+Please investigate the issues and take the necessary steps to resolve them as soon as possible. If you have any questions or need further clarification, feel free to reach out.
+
+Thank you for your cooperation.
+
+Best regards,
+QA Team`);
+
+      }
     }
-  }, [open, dispatch]);
+  }, [open, dispatch, type]);
 
   const fetchImageAsBlob = async (url) => {
     try {
@@ -59,10 +77,6 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
       formData.append('attachments', file);
     });
 
-    const imageBlobs = await Promise.all(images.map(fetchImageAsBlob));
-    imageBlobs.forEach((blob) => {
-      if (blob) formData.append('attachments', blob);
-    });
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/emails/send-email`, formData, {
@@ -172,51 +186,8 @@ const MailModal = ({ open, handleClose, title, recipient, type, data, images }) 
                 </Typography>
               )}
             </Grid>
-            {images.length > 0 && (
-              <Grid item xs={12}>
-                <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                  Attachments Preview
-                </Typography>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
-                    gap: '8px',
-                    maxHeight: '150px',
-                    overflowY: 'auto',
-                  }}
-                >
-                  {images.map((url, index) => (
-                    <Card key={index} sx={{ bgcolor: '#444', borderRadius: 1, mb: 2 }}>
-                      {url.endsWith('.pdf') ? (
-                        <CardContent>
-                          <PictureAsPdfIcon fontSize="large" sx={{ color: '#fff' }} />
-                          <Typography variant="body2" sx={{ color: '#fff' }}>
-                            PDF Attachment
-                          </Typography>
-                          <Button
-                            variant="contained"
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            sx={{ mt: 1 }}
-                          >
-                            Open PDF
-                          </Button>
-                        </CardContent>
-                      ) : (
-                        <CardMedia
-                          component="img"
-                          image={url}
-                          alt={`attachment-${index}`}
-                          sx={{ maxHeight: 200 }}
-                        />
-                      )}
-                    </Card>
-                  ))}
-                </div>
-              </Grid>
-            )}
+           
+            
             <Grid item xs={12} sx={{ mt: 2 }}>
               <Button
                 variant="contained"
