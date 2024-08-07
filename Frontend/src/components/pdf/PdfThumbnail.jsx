@@ -45,7 +45,6 @@ const PdfThumbnail = ({ url, width = 150, height = 200 }) => {
         if (error.name === 'RenderingCancelledException') {
           // Handle the rendering cancellation gracefully this can be ingored as rendering multiple thumbnails will cancel the previous render task
           // can be resolved by using a separate worker for each render task but this will increase the memory usage and slower compared to using a single worker
-          // console.log('Rendering cancelled')
         } else {
           console.error('Error loading PDF:', error)
         }

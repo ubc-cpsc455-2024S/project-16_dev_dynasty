@@ -31,7 +31,7 @@ const DocumentCard = ({
   rightSideTitle = 'Date',
   rightSideValue,
   rightSideColor = 'white',
-  backgroundColor = '#555555', // #5C4D4D
+  backgroundColor = '#555555',
 }) => {
   return (
     <Card
