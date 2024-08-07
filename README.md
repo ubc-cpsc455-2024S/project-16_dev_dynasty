@@ -158,7 +158,19 @@ A CI/CD pipeline was set up using GitHub Actions for both the backend and fronte
 
 ### User Authentication and Authorization with Role based access control 
 - Implemented user authentication and authorization using JWT in httpOnly and secure cookies and bcrypt.
-- Achieved role based access control on both frontend and backend. 
+- Achieved role based access control on both frontend and backend.
+
+
+### User Authentication and Authorization with Role-Based Access Control:
+
+- **Secure Authentication:** Implemented user authentication using JSON Web Tokens (JWT) stored in httpOnly and secure cookies to prevent XSS and CSRF attacks. Utilized bcrypt for hashing and securely storing user passwords.
+
+- **Role-Based Access Control:** Established role-based access control to manage permissions effectively. 
+  
+- **Backend Implementation:** Integrated role-based access control within the backend API using middleware to verify JWTs and enforce role permissions on protected routes. This ensures that only authorized users can perform specific actions, such as creating, updating, or deleting data.
+  
+- **Frontend Implementation:** Implemented role-based access control and route protection on the frontend to conditionally render components and features based on the user's role. This provides a tailored user experience and restricts unauthorized access to certain parts of the application.
+
 
 ### PDF Previewer
 
