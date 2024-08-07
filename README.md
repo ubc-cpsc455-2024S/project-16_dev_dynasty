@@ -156,11 +156,6 @@ A CI/CD pipeline was set up using GitHub Actions for both the backend and fronte
   
 - **Integration with Multer**: To facilitate seamless file uploads, we integrated Multer, a middleware for handling multipart/form-data. This integration streamlined the process of uploading files to S3 directly from the application.
 
-### User Authentication and Authorization with Role based access control 
-- Implemented user authentication and authorization using JWT in httpOnly and secure cookies and bcrypt.
-- Achieved role based access control on both frontend and backend.
-
-
 ### User Authentication and Authorization with Role-Based Access Control:
 
 - **Secure Authentication:** Implemented user authentication using JSON Web Tokens (JWT) stored in httpOnly and secure cookies to prevent XSS and CSRF attacks. Utilized bcrypt for hashing and securely storing user passwords.
