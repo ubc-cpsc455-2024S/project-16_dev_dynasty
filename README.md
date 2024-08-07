@@ -145,6 +145,10 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 
 - Implemented a system for storing pictures and documents using AWS S3 buckets
 
+### User Authentication and Authorization with Role based access control 
+- Implemented user authentication and authorization using jwt in httpOnly and secure cookies and bcrypt
+- Achieved role based access control on both frontend and backend 
+
 ### PDF Previewer
 
 - Challenge of PDF Rendering: As a developer, I've frequently faced the challenge of providing a seamless PDF viewing experience on the web. While it might seem straightforward, rendering PDFs effectively across various devices and browsers can be complex. Simply opening PDFs in a new tab disrupts user experience by forcing them to switch contexts, while using iframes often leads to compatibility issues and security restrictions, especially in older browsers.
