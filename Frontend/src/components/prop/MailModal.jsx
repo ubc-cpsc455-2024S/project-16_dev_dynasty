@@ -88,8 +88,6 @@ Please investigate the issues and take the necessary steps to resolve them as so
       }
 
       const result = response.data;
-      console.log(result);
-      console.log(response);
       if (response.status === 200) {
         toast.success("Email sent successfully!");
         setTimeout(() => {
