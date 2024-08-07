@@ -68,7 +68,7 @@ HTML, CSS, and JavaScript were used extensively throughout the project, playing 
 
 The React JavaScript library and MaterialUI component library were integrated to develop a dynamic, responsive, and visually appealing user interface composed of reusable JSX components. React's component-based architecture allowed for modular development, promoting code reusability, consistent styling, easier collaboration, and simplified revisions. Redux was used to manage and update the global application state, ensuring data consistency across components and enabling efficient state transitions.
 
-In the frontend we broke down out our code into the following folders each with the following utility:
+In the frontend we organized our code into the following folders each with the following utility:
 
 ```
 Frontend/
@@ -90,7 +90,7 @@ Frontend/
 
 Node.js was used as the runtime environment to execute JavaScript code on the backend server. The Express.js framework was used with Node.js to handle routing and build RESTful API endpoints to serve responses to the HTTP requests generated from the frontend.
 
-We have organized our Express app into a detailed set of folders to make it easier to locate specific information. Each folder contains files that pertain to a particular area of functionality. For example, the routes folder includes a houses.js file that handles the routes for houses, while the services folder contains a houseService.js file with all the database queries related to houses.
+We have organized our Express.js backend code into a detailed set of folders to make it easier to locate specific information. Each folder contains files that pertain to a particular area of functionality. For example, the routes folder includes a "houses.js" file that handles the routes for houses, while the services folder contains a "houseService.js" file with all the database queries related to houses.
 
 ```
 Backend/
@@ -110,32 +110,32 @@ Backend/
 └── tests/ -> [Test files for the application]
 ```
 
-### Module 4 : MongoDB
+### Module 4: MongoDB
 
-MongoDB document database was used on the backend to store all information for the application. The Mongoose ODM was used to simplify database querying. All database related files were stored were the following folders in the express api:
+A MongoDB document database with eight unique collections was used on the backend to store all information for the application. The Mongoose ODM was used to simplify database querying. All database related files were organized into the following folders in the Express.js backend code:
 
 - `models` folder - All data models / types
 - `services` folder - All database queries
 
-To perform joins on multiple collections in the backend, two joined "Views" were created in the models folder. These models combined data from multiple MongoDB collections. They could be queried like regular MongoDB collections. These views were called:
+To perform complex queries involving multiple collections in the backend, two aggregation pipelines, referred to as "Views", were created in the models folder. They could be queried like regular MongoDB collections. These views were called:
 
 - `Bay_View`
 - `House_View`
 
 ### Module 5: GitHub Actions & Render
 
-Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workflows ensure that the backend tests are run, and the frontend build is run on both a push to main and a pull request before deploying  the project on Render. Branch protection was also setup so that pull requests with failing workflow are not able to be merged to main.
+A CI/CD pipeline was set up using GitHub Actions for both the backend and frontend code. The workflows ensured that backend tests were executed and the frontend build was performed on every push to the main branch and on every pull request targeting the main branch. Additionally, the project was deployed on Render following these checks. Branch protection was also configured to prevent merging pull requests with failing workflows into the main branch.
 
 ## Above and Beyond Functionality
 
 ### Industry Partnership
 
-- **Description:** Partnered with a real client to develop the project
+- **Description:** Partnered with a real industry contact to develop the project.
 - **Above and Beyond:**
-  - Held an initial kickoff meeting with client
-  - Defined client requirements and clarified additional requirements while building over email
-  - Shared the deployed app with client to test and provide feedback
-  - The client intends to continue using this app after the completion of the class.
+  - Held an initial kickoff meeting early in the design process to discuss the company's operations and gather requirements.
+  - Communicated via email to clarify current requirements and define additional requirements.
+  - Late in the development process we shared the deployed URL with our contact so that they could test the application and provide feedback.
+  - There may be opportunities to continue developing the application on behalf of the company following completion of this class.
 
 ### Automated Emails
 
@@ -145,17 +145,18 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 
 - **Transition to Mailgun:** To overcome these limitations, we switched to Mailgun, a dedicated email delivery service that supports automated emailing and offers advanced features like email analysis. By leveraging Mailgun, we not only enabled automatic mailing but also provided valuable email analytics that could benefit our customers by offering insights into email delivery and engagement.
 
-- **Creating a Seamless Workflow:** To streamline the email process, we created a template that pre-fills much of the information needed for sending emails. By embedding the mailing service directly into the application, we ensured that the workflow remained smooth and efficient. This approach allow user to access the info in the app so it minimized manual input and reduced the potential for errors, enabling users to focus on more critical tasks while ensuring that communication remains prompt and accurate.
+- **Creating a Seamless Workflow:** To streamline the email process, we created a template that pre-fills much of the information needed for sending emails. By embedding the mailing service directly into the application, we ensured that the workflow remained smooth and efficient. This approach allows users to access the info in the app so it minimizes manual input and reduces the potential for errors, enabling users to focus on more critical tasks while ensuring that communication remains prompt and accurate.
 
 
 ### File Storage and Retrieval 
 
 - **Implementation of AWS S3 for Storage**: We implemented a robust system for storing pictures and documents using AWS S3 buckets, enabling secure and scalable file management. This setup allows us to efficiently handle large volumes of data while ensuring high availability and durability.
+  
 - **Integration with Multer**: To facilitate seamless file uploads, we integrated Multer, a middleware for handling multipart/form-data. This integration streamlined the process of uploading files to S3 directly from the application, ensuring a smooth and user-friendly experience.
 
 ### User Authentication and Authorization with Role based access control 
-- Implemented user authentication and authorization using jwt in httpOnly and secure cookies and bcrypt
-- Achieved role based access control on both frontend and backend 
+- Implemented user authentication and authorization using JWT in httpOnly and secure cookies and bcrypt.
+- Achieved role based access control on both frontend and backend. 
 
 ### PDF Previewer
 
@@ -173,14 +174,20 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 
 ### Checklist PDF Generation and Download
 
+- **Workflow**: The House Checklist page features fillable forms for users to input quality control information. To facilitate easy dissemination of this information to stakeholders, we needed to convert it into PDF format. This process involved sending an HTTP request to the backend to query the checklist data from the MongoDB database, generating a PDF file on the backend, and then sending this PDF to the frontend for download. Handling PDF generation on the backend ensured the PDFs could be generated efficiently without negatively impacting the user experience on the frontend.
+  
+- **PDF Generation**: The main challenge in implementing the checklist PDF feature was finding a JavaScript library that could easily convert JSON data into a tabular format. We researched and tested multiple libraries, including pdfmake, jsPDF, and PDFKit. Ultimately, we identified PDFKit-table, a JavaScript wrapper for the PDFKit library, as the best choice. Checklist data retrieved from the MongoDB document database was converted into a format compatible with the PDFKit-table API. The API handled the data on the backend, generating the PDF. The resulting PDF was then sent in an HTTP response to the frontend for download.   
+
 ## Next Steps
 
-- Furthur develop on the Business analytics functionality (cost per square feet)
-- Inventory management
-- Timesheet management (employee management & payroll)
-- Add refresh token functionality to jwt auths for better user experience
-- Deploy frontend and backend to the same domain so that the jwt cookies could be set with the sameSite property to strict to help better prevent Cross-Site Request Forgery (CSRF) attacks and make our application more secure
-
+- **User Authentication Improvements:** Implement refresh token functionality in JWT authentication to enhance the user experience by allowing seamless token renewal without requiring frequent logins.
+  
+- **Deployment Improvements:** Deploy the frontend and backend to the same domain so that the JWT cookies can be set with the 'SameSite' attribute set to 'Strict', enhancing security by better preventing Cross-Site Request Forgery (CSRF) attacks.
+  
+- **Business Analytics Integration:** The event logging feature in our application captures the essential data needed to perform advanced business analytics, offering valuable insights to the management team for optimizing business processes. For example, data on the time and cost of constructing each home such as bay construction times, labor productivity, and material usage, could reveal process improvement and cost reduction opportunities. An intuitive dashboard could be integrated into the existing UI to effectively report and visualize these data. 
+  
+- **Inventory Management Integration:** An inventory management system would allow the company to efficiently track and manage materials throughout the home building process, helping to minimize excess stock and prevent shortages. Integration with the current application would involve capturing real-time inventory levels in the database and allowing users to record material usage as house construction progresses through each bay on the production line. This integration would enable real-time updates and alerts on material levels, optimizing procurement and reducing project delays.
+  
 ## Team Member Contributions
 
 ### Andrew
@@ -190,15 +197,14 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 
 ### Andy
 - Reproduced the Production Line Status Board layout for the company using CSS grid and implemented drag and drop functionalities for house cards to update their bays in the frontend.
-- Implemented user authentication and authorization system on the backend using jwt in cookies and setup frontend user management page and route protection based on user permissions. Also implemented the event log system functionality on backend and frontend. 
+- Implemented user authentication and authorization system on the backend using JWT in cookies and setup frontend user management page and route protection based on user permissions. Also implemented the event log system functionality on backend and frontend. 
 - Setup CI/CD pipeline using GitHub actions for backend and frontend and deployed our project on Render. Wrote tests for backend that runs during the workflow to ensure continuous integration before sending it to production. 
 
 
 ### Justin
-- Created the initial BayCard component in React to represent houses on the Production Line Status Board.
-- Developed the "Add House" page, including designing a form to capture and validate user input, creating a backend API endpoint to handle POST requests for adding new houses to the MongoDB collection, and implementing an Async Thunk to update the Redux store.
-- Developed "Customers" functionality, including designing a form element to capture and validate user input, creating backend API endpoints to handle POST, GET, PUT, PATCH, and DELETE requests for manipulating the MongoDB customers collection, and connecting React and Redux frontend components to the backend APIs.
-- Developed the "House Checklist" page featuring fillable form elements to capture user input. Designed a MongoDB schema to model the checklist document collection and created GET, PUT, and DELETE API endpoints for data manipulation. Additionally, implemented PDF generation and download functionality.      
+- Add House page: designed a form to capture and validate user input, created a backend API endpoint to handle POST requests for adding new houses to the MongoDB collection, and implemented an Async Thunk to update the Redux store.
+- Customers functionality: designed a form element to capture and validate user input, created backend API endpoints to handle POST, GET, PUT, PATCH, and DELETE requests for manipulating the MongoDB customers collection, and connected React and Redux frontend components to the backend APIs.
+- House Checklist page: created fillable form elements to capture user input, designed a MongoDB schema to model the checklist document collection, created GET, PUT, and DELETE API endpoints for data manipulation, and implemented PDF generation and download functionality.      
 
 ### Ryan
 
