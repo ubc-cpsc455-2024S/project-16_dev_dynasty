@@ -8,8 +8,6 @@ require("dotenv").config();
 
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGODB_TEST_URI);
-  // await Bay.deleteMany({});
-  // await Bay.insertMany(bayData);
 
   const userAdmin = {
     name: "admin",

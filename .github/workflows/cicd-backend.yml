@@ -4,15 +4,15 @@ on:
     branches:
       - main
     paths:
-      - 'Backend/**'
-      - '.github/workflows/cicd-backend.yml'
+      - "Backend/**"
+      - ".github/workflows/cicd-backend.yml"
 
   pull_request:
     branches:
       - main
     paths:
-      - 'Backend/**'
-      - '.github/workflows/cicd-backend.yml'
+      - "Backend/**"
+      - ".github/workflows/cicd-backend.yml"
 
 jobs:
   build_test_backend:
@@ -21,25 +21,25 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Install Backend Dependencies and Run Tests
-        env: 
-            MONGODB_URI: ${{secrets.MONGODB_URI}}
-            MONGODB_TEST_URI: ${{secrets.MONGODB_TEST_URI}}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: ${{ secrets.AWS_REGION }}
-            S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-            JWT_SECRET_STR: ${{secrets.JWT_SECRET_STR}}
-            ADMIN_USERNAME: ${{secrets.ADMIN_USERNAME}}
-            ADMIN_PASSWORD: ${{secrets.ADMIN_PASSWORD}}
-            MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
-            MAILGUN_DOMAIN: ${{secrets.MAILGUN_DOMAIN}}
+        env:
+          MONGODB_URI: ${{secrets.MONGODB_URI}}
+          MONGODB_TEST_URI: ${{secrets.MONGODB_TEST_URI}}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          JWT_SECRET_STR: ${{secrets.JWT_SECRET_STR}}
+          ADMIN_USERNAME: ${{secrets.ADMIN_USERNAME}}
+          ADMIN_PASSWORD: ${{secrets.ADMIN_PASSWORD}}
+          MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+          MAILGUN_DOMAIN: ${{secrets.MAILGUN_DOMAIN}}
         run: |
           echo "files in current dir: "
           ls
@@ -51,7 +51,7 @@ jobs:
           echo "running tests"
           npm run test
 
-  deploy_backend: 
+  deploy_backend:
     needs: build_test_backend
     runs-on: ubuntu-latest
     steps:
@@ -60,6 +60,3 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
         run: |
           curl "$deploy_url"
-
-     
-          

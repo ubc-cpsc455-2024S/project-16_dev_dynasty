@@ -88,7 +88,7 @@ router.post(
       console.log("error", error);
       res.status(500).send("Server error", error);
     }
-  }
+  },
 );
 
 // DELETE endpoint to remove a house
@@ -105,7 +105,7 @@ router.delete(
       console.log("error", error);
       res.status(500).send("Server error", error);
     }
-  }
+  },
 );
 
 // PUT endpoint to update house information

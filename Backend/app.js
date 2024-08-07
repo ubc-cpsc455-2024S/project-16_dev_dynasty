@@ -11,10 +11,10 @@ const customersRouter = require("./routes/customers");
 const defectsRouter = require("./routes/defects");
 const checklistsRouter = require("./routes/checklists");
 const documentsRouter = require("./routes/documents");
-const logsRouter = require('./routes/logs');
-const emailRoutes = require('./routes/emails');
+const logsRouter = require("./routes/logs");
+const emailRoutes = require("./routes/emails");
 
-const authRouter = require('./routes/users');
+const authRouter = require("./routes/users");
 const app = express();
 
 require("dotenv").config();
@@ -23,21 +23,20 @@ const frontend_url = process.env.FRONTEND_URL;
 // Middleware setup
 app.set("trust proxy", 1);
 
-
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://project-16-dev-dynasty.vercel.app',
-  'https://project-16-dev-dynasty-git-main-andyhus-projects.vercel.app',
-  'https://project-16-dev-dynasty-q3q9y5yne-andyhus-projects.vercel.app',
-  'https://project-16-dev-dynasty-frontend.onrender.com'
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://project-16-dev-dynasty.vercel.app",
+  "https://project-16-dev-dynasty-git-main-andyhus-projects.vercel.app",
+  "https://project-16-dev-dynasty-q3q9y5yne-andyhus-projects.vercel.app",
+  "https://project-16-dev-dynasty-frontend.onrender.com",
 ];
 
 app.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
-  })
+  }),
 );
 app.use(logger("dev"));
 app.use(express.json());
@@ -51,9 +50,9 @@ app.use("/bays", baysRouter);
 app.use("/customers", customersRouter);
 app.use("/documents", documentsRouter);
 app.use("/defects", defectsRouter);
-app.use('/users', authRouter);
+app.use("/users", authRouter);
 app.use("/checklists", checklistsRouter);
 app.use("/logs", logsRouter);
-app.use('/api/emails', emailRoutes);
+app.use("/api/emails", emailRoutes);
 
 module.exports = app;
