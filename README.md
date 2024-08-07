@@ -2,6 +2,10 @@
 
 ![workflow](https://github.com/ubc-cpsc455-2024S/project-16_dev_dynasty/actions/workflows/cicd-frontend.yml/badge.svg)
 
+Deployed URL: https://project-16-dev-dynasty-frontend.onrender.com/ \
+Username: admin \
+Password: admin123 
+
 # BayBuild
 
 BayBuild is a proof-of-concept project management web application designed for a modular home manufacturing
@@ -27,7 +31,7 @@ each house in the 20 bays of production.
 to that house.
 
 ✔️ **Update House Status** - allow users to modify the status of a house and update its position in the 20-bay production
-line (e.g., a house that has completed all work in Bay 11 - "Electrical Rough In" can proceed to Bay 10 - "Insulation/Sheathing").
+line (e.g., a house that has completed all work in Bay 11 - 'Electrical Rough In' can proceed to Bay 10 - 'Insulation/Sheathing').
 
 ### Standard Requirements
 
@@ -37,8 +41,8 @@ allow users to login and logout.
 ✔️ **Create Fillable Quality Control Forms** - allow users to fill out standardized quality control checklists specific to
 different areas of a house and flag defects.
 
-✔️ **Track House Progress on Production Line Status Board** - allow users to visualize the current status of each house on the Production Line Status Board (e.g., red = "work in progress", yellow = "QA required",
-green = "work complete").
+✔️ **Track House Progress on Production Line Status Board** - allow users to visualize the current status of each house on the Production Line Status Board (e.g., red = 'work in progress', yellow = 'QA required',
+green = 'work complete').
 
 ✔️ **Create, Modify, and Retrieve Defects** - allow users to create, modify, and retrieve defect records (including
 images) specific to a house and production bay.
@@ -90,7 +94,7 @@ Frontend/
 
 Node.js was used as the runtime environment to execute JavaScript code on the backend server. The Express.js framework was used with Node.js to handle routing and build RESTful API endpoints to serve responses to the HTTP requests generated from the frontend.
 
-We have organized our Express.js backend code into a detailed set of folders to make it easier to locate specific information. Each folder contains files that pertain to a particular area of functionality. For example, the routes folder includes a "houses.js" file that handles the routes for houses, while the services folder contains a "houseService.js" file with all the database queries related to houses.
+We have organized our Express.js backend code into a detailed set of folders to make it easier to locate specific information. Each folder contains files that pertain to a particular area of functionality. For example, the routes folder includes a 'houses.js' file that handles the routes for houses, while the services folder contains a 'houseService.js' file with all the database queries related to houses.
 
 ```
 Backend/
@@ -112,12 +116,12 @@ Backend/
 
 ### Module 4: MongoDB
 
-A MongoDB document database with eight unique collections was used on the backend to store all information for the application. The Mongoose ODM was used to simplify database querying. All database related files were organized into the following folders in the Express.js backend code:
+A MongoDB document database with eight unique collections was used on the backend to store all information for the application. The Mongoose ODM was used to create schemas and simplify database querying. All database related files were organized into the following folders in the Express.js backend code:
 
 - `models` folder - All data models / types
 - `services` folder - All database queries
 
-To perform complex queries involving multiple collections in the backend, two aggregation pipelines, referred to as "Views", were created in the models folder. They could be queried like regular MongoDB collections. These views were called:
+To perform complex queries involving multiple collections in the backend, two aggregation pipelines, referred to as 'Views', were created in the models folder. They could be queried like regular MongoDB collections. These views were called:
 
 - `Bay_View`
 - `House_View`
@@ -136,9 +140,9 @@ A CI/CD pipeline was set up using GitHub Actions for both the backend and fronte
 
 - **Ongoing Communication**: Throughout development, we communicated via email to clarify and define additional requirements.
 
-- **Testing and Feedback**: Late in the process, we shared the deployed URL with our contact for testing and feedback.
+- **Testing and Feedback**: Late in the development process, we shared the deployed URL with our contact for testing and feedback.
 
-- **Future Opportunities**: There may be opportunities to continue developing the application on behalf of the company after completing this class.
+- **Future Opportunities**: There may be opportunities to continue developing the application on behalf of the company after completing this course.
 
 ### Automated Emails
 
@@ -169,15 +173,15 @@ A CI/CD pipeline was set up using GitHub Actions for both the backend and fronte
 
 ### PDF Previewer
 
-- **Challenge of PDF Rendering:** As a developer, I've frequently faced the challenge of providing a seamless PDF viewing experience on the web. While it might seem straightforward, rendering PDFs effectively across various devices and browsers can be complex. Simply opening PDFs in a new tab disrupts user experience by forcing them to switch contexts, while using iframes often leads to compatibility issues and security restrictions, especially in older browsers.
+- **Challenge of PDF Rendering:** Rendering PDFs effectively across various devices and browsers can be complex. Simply opening PDFs in a new tab disrupts user experience by forcing them to switch contexts, while using iframes often leads to compatibility issues and security restrictions, especially in older browsers.
   
-- **Initial Attempts:** My initial solutions included opening PDFs in new tabs and embedding them in iframes. However, both approaches had significant drawbacks. New tabs pull users away from the application and disrupt their workflow, while iframes suffer from cross-browser inconsistencies and can be hindered by security policies that prevent certain PDFs from rendering.
+- **Initial Attempts:** Our initial solutions included opening PDFs in new tabs and embedding them in iframes. However, both approaches had significant drawbacks. New tabs pull users away from the application and disrupt their workflow, while iframes suffer from cross-browser inconsistencies and can be hindered by security policies that prevent certain PDFs from rendering.
 
-- **Finding a Solution:** Determined to create a more intuitive, in-page PDF viewing experience, I explored various libraries and ultimately discovered Mozilla’s PDF.js. PDF.js leverages readable streams to render PDFs efficiently, offering a robust foundation for implementing a seamless viewing experience.
+- **Finding a Solution:** Determined to create a more intuitive, in-page PDF viewing experience, we explored various libraries and ultimately discovered Mozilla’s PDF.js. PDF.js leverages readable streams to render PDFs efficiently, offering a robust foundation for implementing a seamless viewing experience.
 
-- **Integration with React and AWS S3:** While PDF.js provided the functionality I needed, it wasn’t directly compatible with React applications out of the box. To address this, I developed a custom React component that integrates PDF.js, allowing us to render PDFs directly within the application. By pulling PDFs from URLs stored in AWS S3 buckets, we maintained a centralized and scalable document management system.
+- **Integration with React and AWS S3:** While PDF.js provided the needed functionality, it wasn’t directly compatible with React applications out of the box. To address this, we developed a custom React component that integrates PDF.js, allowing us to render PDFs directly within the application. By pulling PDFs from URLs stored in AWS S3 buckets, we maintained a centralized and scalable document management system.
   
-- **Performance Optimization with Multithreading:** A major challenge was rendering PDFs efficiently, particularly when downloading them from AWS S3 buckets, which can introduce latency. This issue became more pronounced when rendering multiple documents or thumbnails on a single page. To tackle this, I implemented **multithreading** on the frontend. By **utilizing web workers**, we offloaded PDF rendering tasks to separate threads, significantly speeding up the process and providing a smoother user experience. This approach ensured that the main UI thread remained responsive, even when handling multiple PDFs simultaneously.
+- **Performance Optimization with Multithreading:** A major challenge was rendering PDFs efficiently, particularly when downloading them from AWS S3 buckets, which can introduce latency. This issue became more pronounced when rendering multiple documents or thumbnails on a single page. To tackle this, we implemented **multithreading** on the frontend. By **utilizing web workers**, we offloaded PDF rendering tasks to separate threads, significantly speeding up the process and providing a smoother user experience. This approach ensured that the main UI thread remained responsive, even when handling multiple PDFs simultaneously.
 
 - **User Experience Enhancement:** Incorporating the PDF previewer directly into our React frontend allowed users to view PDF documents without leaving the application. This feature preserves the user context and ensures a more cohesive and engaging experience.
 
@@ -188,6 +192,8 @@ A CI/CD pipeline was set up using GitHub Actions for both the backend and fronte
 - **PDF Generation**: The main challenge in implementing the checklist PDF feature was finding a JavaScript library that could easily convert JSON data into a tabular format. We researched and tested multiple libraries, including pdfmake, jsPDF, and PDFKit. Ultimately, we identified PDFKit-table, a JavaScript wrapper for the PDFKit library, as the best choice. Checklist data retrieved from the MongoDB document database was converted into a format compatible with the PDFKit-table API. The API handled the data on the backend, generating the PDF. The resulting PDF was then sent in an HTTP response to the frontend for download.   
 
 ## Next Steps
+
+- **Meet With Industry Contact:** Towards the end of the development phase, we provided our industry contact with the deployed project URL for testing and feedback. After completing this course, we will schedule a meeting with them to review their feedback and discuss their future requirements. This meeting may also reveal opportunities to further develop the application for the company.
 
 - **User Authentication Improvements:** Implement refresh token functionality in JWT authentication to enhance the user experience by allowing seamless token renewal without requiring frequent logins.
   
