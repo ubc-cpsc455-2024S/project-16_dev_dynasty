@@ -141,20 +141,17 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 
 - **Challenge of Integrating Mailing Services:** Integrating a reliable and efficient mailing service into our application was a critical task, given that emailing is one of the most time-consuming parts of the workflow. Our goal was to automate this process to help workers identify and fix defects more efficiently. However, finding the right SMTP service and API for an automated email bot proved to be challenging.
 
-- **Initial Attempts with Gmail:** Initially, we attempted to use Gmail as our SMTP service. However, Gmail imposes several restrictions to prevent unauthorized access and ensure account security. It requires 2-factor authentication (2FA) and implements heuristics to detect and block suspicious login attempts, which posed significant obstacles. Gmail's concept of "Less Secure" apps further complicated matters, as it requires special configurations to allow applications to send emails without using OAuth 2.0. Despite these efforts, Gmail's restrictions often slowed down the demo and affected the overall reliability of our mailing system.
+- **Initial Attempts with Gmail+nodemailer:** Initially, we attempted to use Gmail as our SMTP service. However, Gmail imposes several restrictions to prevent unauthorized access and ensure account security. It requires 2-factor authentication (2FA) and implements heuristics to detect and block suspicious login attempts, which posed significant obstacles. Gmail's concept of "Less Secure" apps further complicated matters, as it requires special configurations to allow applications to send emails without using OAuth 2.0. Despite these efforts, Gmail's restrictions often slowed down the demo and affected the overall reliability of our mailing system.
 
-- **Transition to Mailgun:** To overcome these limitations, we switched to Mailgun, a dedicated email delivery service that supports automated emailing and offers advanced features like email analysis. Mailgun’s robust API and support for automation made it an ideal choice for our needs. By leveraging Mailgun, we not only enabled automatic mailing but also provided valuable email analytics that could benefit our customers by offering insights into email delivery and engagement.
+- **Transition to Mailgun:** To overcome these limitations, we switched to Mailgun, a dedicated email delivery service that supports automated emailing and offers advanced features like email analysis. By leveraging Mailgun, we not only enabled automatic mailing but also provided valuable email analytics that could benefit our customers by offering insights into email delivery and engagement.
 
-- **Creating a Seamless Workflow:** To streamline the email process, we created a template that pre-fills much of the information needed for sending emails. This approach minimized manual input and reduced the potential for errors. Users like Justin can now simply select the recipient and attach the checklist that was just downloaded, speeding up the process significantly. By embedding the mailing service directly into the application, we ensured that the workflow remained smooth and efficient.
-
-- **User Experience and Efficiency:** The integration of Mailgun allowed us to automate a traditionally manual task, reducing the time and effort required to send emails. This feature enhances the overall workflow, enabling users to focus on more critical tasks while ensuring that communication remains prompt and accurate.
-
-- **Valuable Insights Through Email Analysis:** Mailgun's email analysis capabilities provide customers with valuable insights into the performance of their emails. This feature allows users to monitor delivery rates, engagement metrics, and more, enabling them to make informed decisions about their communication strategies.
+- **Creating a Seamless Workflow:** To streamline the email process, we created a template that pre-fills much of the information needed for sending emails. By embedding the mailing service directly into the application, we ensured that the workflow remained smooth and efficient. This approach allow user to access the info in the app so it minimized manual input and reduced the potential for errors, enabling users to focus on more critical tasks while ensuring that communication remains prompt and accurate.
 
 
-### Amazon S3 Storage
+### File Storage and Retrieval 
 
-- Implemented a system for storing pictures and documents using AWS S3 buckets
+- **Implementation of AWS S3 for Storage**: We implemented a robust system for storing pictures and documents using AWS S3 buckets, enabling secure and scalable file management. This setup allows us to efficiently handle large volumes of data while ensuring high availability and durability.
+- **Integration with Multer**: To facilitate seamless file uploads, we integrated Multer, a middleware for handling multipart/form-data. This integration streamlined the process of uploading files to S3 directly from the application, ensuring a smooth and user-friendly experience.
 
 ### User Authentication and Authorization with Role based access control 
 - Implemented user authentication and authorization using jwt in httpOnly and secure cookies and bcrypt
@@ -163,10 +160,15 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 ### PDF Previewer
 
 - **Challenge of PDF Rendering:** As a developer, I've frequently faced the challenge of providing a seamless PDF viewing experience on the web. While it might seem straightforward, rendering PDFs effectively across various devices and browsers can be complex. Simply opening PDFs in a new tab disrupts user experience by forcing them to switch contexts, while using iframes often leads to compatibility issues and security restrictions, especially in older browsers.
+  
 - **Initial Attempts:** My initial solutions included opening PDFs in new tabs and embedding them in iframes. However, both approaches had significant drawbacks. New tabs pull users away from the application and disrupt their workflow, while iframes suffer from cross-browser inconsistencies and can be hindered by security policies that prevent certain PDFs from rendering.
-- Finding a Solution: Determined to create a more intuitive, in-page PDF viewing experience, I explored various libraries and ultimately discovered Mozilla’s PDF.js. PDF.js leverages readable streams to render PDFs efficiently, offering a robust foundation for implementing a seamless viewing experience.
+
+- **Finding a Solution:** Determined to create a more intuitive, in-page PDF viewing experience, I explored various libraries and ultimately discovered Mozilla’s PDF.js. PDF.js leverages readable streams to render PDFs efficiently, offering a robust foundation for implementing a seamless viewing experience.
+
 - **Integration with React and AWS S3:** While PDF.js provided the functionality I needed, it wasn’t directly compatible with React applications out of the box. To address this, I developed a custom React component that integrates PDF.js, allowing us to render PDFs directly within the application. By pulling PDFs from URLs stored in AWS S3 buckets, we maintained a centralized and scalable document management system.
+  
 - **Performance Optimization with Multithreading:** A major challenge was rendering PDFs efficiently, particularly when downloading them from AWS S3 buckets, which can introduce latency. This issue became more pronounced when rendering multiple documents or thumbnails on a single page. To tackle this, I implemented multithreading on the frontend. By utilizing web workers, we offloaded PDF rendering tasks to separate threads, significantly speeding up the process and providing a smoother user experience. This approach ensured that the main UI thread remained responsive, even when handling multiple PDFs simultaneously.
+
 - **User Experience Enhancement:** Incorporating the PDF previewer directly into our React frontend allowed users to view PDF documents without leaving the application. This feature preserves the user context and ensures a more cohesive and engaging experience. By maintaining document rendering within the app, we enhanced the overall usability and reliability of the feature, ensuring quick and consistent performance across different devices and browsers.
 
 ### Checklist PDF Generation and Download
