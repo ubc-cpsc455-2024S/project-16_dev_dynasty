@@ -187,9 +187,6 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 - S3 Bucket Setup: Configured an S3 bucket for secure file storage and retrieval, addressing access permissions and implementing upload and download functionalities for managing house documents.
 - PDF Management: Developed PDF preview and thumbnail functionalities to enable document viewing within the application, enhancing user experience with easy access to document previews.
 - Automailing Service: Implemented an automailing service using Mailgun to automate user communications, ensuring timely delivery of updates and reports via email notifications.
-- Refactored the House Page into distinct sections for House Detail, Defects, and Documents, providing specific functionalities and improving organization and user experience.
-- Developed the House Defects Page to log and manage defects, featuring options for reporting new defects, updating statuses, deleting resolved issues.
-- Created the Documents Page with components for handling various house documents, designing backend logic for document operations, and structuring data models for efficient document management.
 
 ### Andy
 - Reproduced the Production Line Status Board layout for the company using CSS grid and implemented drag and drop functionalities for house cards to update their bays in the frontend.
