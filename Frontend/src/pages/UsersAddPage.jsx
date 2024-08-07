@@ -1,18 +1,24 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Navbar from '../components/navigation/Navbar.jsx'
 import Header1 from '../components/headers/Header1'
-import { TextField, Button, Box, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material'
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-import {userSignupAsync} from '../redux/auth/thunkAuth.js'
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { userSignupAsync } from '../redux/auth/thunkAuth.js'
 
 const UsersAddPage = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [role, setRole] = useState('');
-
-
-
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [role, setRole] = useState('')
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -22,19 +28,18 @@ const UsersAddPage = () => {
     const email = e.target.email.value
     const role = e.target.role.value
 
-
     const userSignupForm = {
       name: name,
       email: email,
       password: password,
-      confirmPassword:confirmPassword,
-      role: role
+      confirmPassword: confirmPassword,
+      role: role,
     }
 
     try {
-      const result = await dispatch(userSignupAsync(userSignupForm)).unwrap();
+      const result = await dispatch(userSignupAsync(userSignupForm)).unwrap()
       if (result) {
-        navigate(-1);
+        navigate(-1)
       }
     } catch (err) {
       console.log('error when signup async dispatch')
@@ -53,18 +58,17 @@ const UsersAddPage = () => {
             <TextField name={'email'} label={'email'} />
             <TextField name={'password'} label={'password'} />
             <TextField name={'confirmPassword'} label={'confirmPassword'} />
-            {/* <TextField name={'role'} label={'role'} /> */}
             <FormControl>
-              <InputLabel id="role-label">role</InputLabel>
+              <InputLabel id='role-label'>role</InputLabel>
               <Select
-                labelId="role-label"
-                name="role"
+                labelId='role-label'
+                name='role'
                 value={role}
-                onChange={(e) => setRole(e.target.value)}
-                label="Role"
+                onChange={e => setRole(e.target.value)}
+                label='Role'
               >
-                <MenuItem value="user">user</MenuItem>
-                <MenuItem value="admin">admin</MenuItem>
+                <MenuItem value='user'>user</MenuItem>
+                <MenuItem value='admin'>admin</MenuItem>
               </Select>
             </FormControl>
             <Button variant='contained' type='submit'>

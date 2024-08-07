@@ -1,25 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
 } from '@mui/material'
-import {
-  bayToHouseAsync,
-  updateHouseAsync,
-} from '../../redux/houses/thunksHouses'
+import { bayToHouseAsync } from '../../redux/houses/thunksHouses'
 import { useDispatch, useSelector } from 'react-redux'
 import SelectCustom from '../inputs/SelectCustom'
-import { colors } from '../../styles/colors'
 
 const BayEditDialog = ({ isOpen, houseInfo, handleClose }) => {
   const emptyBays = useSelector(state => state.bays.emptyBays || [])

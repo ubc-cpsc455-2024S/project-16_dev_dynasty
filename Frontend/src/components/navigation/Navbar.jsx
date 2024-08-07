@@ -8,8 +8,7 @@ import Sidebar from './Sidebar'
 import { useNavigate } from 'react-router-dom'
 import { routes } from '../../router/routes'
 import { useSelector, useDispatch } from 'react-redux'
-import { userLoginAsync, userLogoutAsync } from '../../redux/auth/thunkAuth'
-import { colors } from '../../styles/colors'
+import { userLogoutAsync } from '../../redux/auth/thunkAuth'
 import { BsFillPersonFill } from 'react-icons/bs'
 
 const Navbar = ({ children }) => {

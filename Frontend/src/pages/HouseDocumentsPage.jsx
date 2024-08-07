@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Container, Button, Grid, Modal, Typography } from '@mui/material'
+import { Box, Button, Grid, Modal, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   fetchDocumentsByHouseId,
   deleteDocumentAsync,
 } from '../redux/documents/thunksDocuments'
-import Navbar from '../components/navigation/Navbar'
-import HouseTabs from '../components/navigation/HouseTabs'
-import Header1 from '../components/headers/Header1'
-import HouseHeader from '../components/headers/HouseHeader'
+
 import PdfViewer from '../components/pdf/PdfViewer'
 import DocumentCard from '../components/card/DocumentCard'
 
@@ -89,7 +86,7 @@ const HouseDocumentsPage = () => {
           <Box
             sx={{
               maxWidth: '75%',
-              maxHeight: '90vh', 
+              maxHeight: '90vh',
               margin: 'auto',
               mt: 5,
               p: 2,
@@ -106,7 +103,7 @@ const HouseDocumentsPage = () => {
           >
             <Box
               sx={{
-                flex: '1 1 75%', 
+                flex: '1 1 75%',
                 overflow: 'auto',
                 maxHeight: '85vh',
                 width: '100%',
@@ -118,7 +115,7 @@ const HouseDocumentsPage = () => {
 
             <Box
               sx={{
-                flex: '1 1 30%', 
+                flex: '1 1 30%',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
@@ -129,11 +126,11 @@ const HouseDocumentsPage = () => {
               }}
             >
               <Typography
-                variant='h4' 
+                variant='h4'
                 gutterBottom
                 sx={{
-                  whiteSpace: 'pre-wrap', 
-                  wordBreak: 'break-word', 
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
                 }}
               >
                 {selectedDocument.title}
@@ -142,7 +139,7 @@ const HouseDocumentsPage = () => {
                 variant='body1'
                 gutterBottom
                 sx={{
-                  whiteSpace: 'pre-wrap', 
+                  whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                 }}
               >
@@ -152,7 +149,8 @@ const HouseDocumentsPage = () => {
                 Type: {selectedDocument.type}
               </Typography>
               <Typography variant='body2' color='inherit'>
-                Uploaded: {new Date(selectedDocument.uploadDate).toLocaleDateString()}
+                Uploaded:{' '}
+                {new Date(selectedDocument.uploadDate).toLocaleDateString()}
               </Typography>
               <Button
                 variant='contained'

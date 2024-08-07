@@ -7,9 +7,7 @@ import {
   fetchDefectsByHouseId,
 } from '../redux/defects/thunksDefects'
 import { getAllBaysAsync } from '../redux/bays/thunksBays'
-import { getHouseAsync } from '../redux/houses/thunksHouses'
 import {
-  Box,
   Button,
   Container,
   TextField,

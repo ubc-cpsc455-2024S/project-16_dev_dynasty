@@ -1,33 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import {
-  getHouseAsync,
-  updateHouseAsync,
-  deleteHouseAsync,
-  bayToHouseAsync,
-} from '../redux/houses/thunksHouses'
-import {
-  getAllBaysAsync,
-  getAvailableBaysAsync,
-} from '../redux/bays/thunksBays'
+import { getHouseAsync, updateHouseAsync } from '../redux/houses/thunksHouses'
+import { getAvailableBaysAsync } from '../redux/bays/thunksBays'
 import StatusEditDialog from '../components/workshop/StatusEditDialog'
 import BayEditDialog from '../components/workshop/BayEditDialog'
 import {
   houseStatusEnumSelectable,
   houseStatusEnumAll,
 } from '../constants/contants'
-import Navbar from '../components/navigation/Navbar'
-import Header1 from '../components/headers/Header1'
-import SelectCustom from '../components/inputs/SelectCustom'
-import HouseTabs from '../components/navigation/HouseTabs'
-import HouseHeader from '../components/headers/HouseHeader'
+
 import { MdEdit } from 'react-icons/md'
 import {
   Chip,
   Box,
   CircularProgress,
-  Container,
   Typography,
   Grid,
   Paper,
@@ -38,16 +25,8 @@ import {
   TableContainer,
   TableRow,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
 } from '@mui/material'
 import { styled } from '@mui/system'
-import { routes } from '../router/routes'
-import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists.js'
-import { toast } from 'react-toastify'
 import { colors } from '../styles/colors'
 import dayjs from 'dayjs'
 

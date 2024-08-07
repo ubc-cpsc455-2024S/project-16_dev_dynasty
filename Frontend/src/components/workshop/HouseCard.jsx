@@ -1,9 +1,6 @@
 import React from 'react'
-import { useDraggable } from '@dnd-kit/core'
-import { CSS } from '@dnd-kit/utilities'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Typography } from '@mui/material'
-import { routes } from '../../router/routes'
 
 const HouseCard = ({ house }) => {
   const navigate = useNavigate()

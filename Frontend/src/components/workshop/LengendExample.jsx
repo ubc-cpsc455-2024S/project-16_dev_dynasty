@@ -1,6 +1,6 @@
 import React from 'react'
 import './styles/legendExample.css'
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { ImArrowRight } from 'react-icons/im'
 import { colors } from '../../styles/colors'
 

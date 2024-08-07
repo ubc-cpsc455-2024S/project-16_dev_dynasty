@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import Productionline from '../components/workshop/Productionline'
-import { Box, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { IoLocationSharp } from 'react-icons/io5'
 import { ButtonPointerWrapper } from '../components/buttons/ButtonPointerWrapper'
 import { colors } from '../styles/colors'
@@ -46,4 +46,4 @@ const WorkshopPage = () => {
   )
 }
 
-export default WorkshopPage;
+export default WorkshopPage

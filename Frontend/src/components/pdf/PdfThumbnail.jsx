@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import React, { useEffect, useRef } from 'react'
+import * as pdfjsLib from 'pdfjs-dist'
 
 // Set worker URL to fetch the worker script from a CDN
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js`
@@ -28,19 +28,18 @@ const PdfThumbnail = ({ url, width = 150, height = 200 }) => {
         canvas.width = scaledViewport.width
         canvas.height = scaledViewport.height
 
-       
         if (renderTaskRef.current) {
-          renderTaskRef.current.cancel();
+          renderTaskRef.current.cancel()
         }
 
         const renderContext = {
           canvasContext: context,
           viewport: scaledViewport,
-        };
+        }
 
-        renderTaskRef.current = page.render(renderContext);
+        renderTaskRef.current = page.render(renderContext)
 
-        await renderTaskRef.current.promise;
+        await renderTaskRef.current.promise
       } catch (error) {
         if (error.name === 'RenderingCancelledException') {
           // Handle the rendering cancellation gracefully this can be ingored as rendering multiple thumbnails will cancel the previous render task
@@ -49,22 +48,26 @@ const PdfThumbnail = ({ url, width = 150, height = 200 }) => {
           console.error('Error loading PDF:', error)
         }
       }
-    };
+    }
 
-    renderThumbnail();
+    renderThumbnail()
     return () => {
       if (renderTaskRef.current) {
         renderTaskRef.current.cancel()
       }
-    };
-  }, [url, width, height]);
+    }
+  }, [url, width, height])
 
   return (
     <canvas
       ref={canvasRef}
-      style={{ width: `${width}px`, height: `${height}px`, border: '1px solid #ccc' }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        border: '1px solid #ccc',
+      }}
     />
-  );
-};
+  )
+}
 
-export default PdfThumbnail;
+export default PdfThumbnail

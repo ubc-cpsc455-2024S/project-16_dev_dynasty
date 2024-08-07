@@ -1,5 +1,4 @@
 import { Box, Container, Typography } from '@mui/material'
-import { ReactNode } from 'react'
 
 const Header1 = ({ children, title, button }) => {
   return (

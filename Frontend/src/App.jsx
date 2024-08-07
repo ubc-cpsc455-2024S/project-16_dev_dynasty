@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import MainRouter from './router/MainRouter'
 import { theme } from './styles/theme'
 import { ThemeProvider } from '@emotion/react'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import './styles/baseStyling.css'
-import { useDispatch } from 'react-redux';
-// import {jwtDecode} from 'jwt-decode';
-import { verifyTokenAsync } from './redux/auth/thunkAuth';
+import { useDispatch } from 'react-redux'
+import { verifyTokenAsync } from './redux/auth/thunkAuth'
 
 function App() {
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const verifyToken = async () => {
-      await dispatch(verifyTokenAsync());
-      setIsLoading(false);
-    };
+      await dispatch(verifyTokenAsync())
+      setIsLoading(false)
+    }
 
-    verifyToken();
-  }, [dispatch]);
-
+    verifyToken()
+  }, [dispatch])
 
   if (isLoading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>
   }
 
   return (

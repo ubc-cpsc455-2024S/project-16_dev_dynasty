@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { addDocumentAsync } from '../redux/documents/thunksDocuments'
 import {
-  Box,
   Button,
   Container,
   TextField,
@@ -20,7 +19,6 @@ import {
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import HouseHeader from '../components/headers/HouseHeader'
-import { House } from '@mui/icons-material'
 
 const AddHouseDocumentPage = () => {
   const { id } = useParams()
@@ -84,7 +82,7 @@ const AddHouseDocumentPage = () => {
               fullWidth
               margin='normal'
             />
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin='normal'>
               <InputLabel>Type</InputLabel>
               <Select
                 value={type}

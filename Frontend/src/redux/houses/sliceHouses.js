@@ -3,7 +3,6 @@ import { toast } from 'react-toastify'
 import {
   getAllHousesAsync,
   getHousesInbayAsync,
-  getHouseInABayAsync,
   getHouseAsync,
   addHouseAsync,
   deleteHouseAsync,

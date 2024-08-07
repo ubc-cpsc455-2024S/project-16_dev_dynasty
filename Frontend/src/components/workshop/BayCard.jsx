@@ -4,8 +4,6 @@ import HouseCard from './HouseCard'
 import { useDroppable, useDraggable } from '@dnd-kit/core'
 import { MdEdit } from 'react-icons/md'
 import { CSS } from '@dnd-kit/utilities'
-import { Button } from '@mui/material'
-import { MdInfoOutline } from 'react-icons/md'
 import { ButtonPointerWrapper } from '../buttons/ButtonPointerWrapper'
 export default function BayCard({
   bay,
