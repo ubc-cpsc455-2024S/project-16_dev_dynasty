@@ -164,11 +164,9 @@ Setup CI/CD pipeline using github actions for backend and frontend. The workflow
 ### Andy
 
 - Reproduced the production line layout for the company using css grid and implemented drag and drop functionalities for house cards to update their bays in the frontend.
-- Set up MongoDB for the project and created Models for bays, houses, event logs, and users.
-- Setup frontend Redux thunks and slices for houses, bays, event logs and users for react state management.
-- Implemented user authentication and authorization system on the backend using jwt in cookies and setup frontend user management page and route protection based on user permissions.
+- Implemented user authentication and authorization system on the backend using jwt in cookies and setup frontend user management page and route protection based on user permissions. Also implemented the event log system functionality on backend and frontend.
 - Setup CI/CD pipeline using github actions for backend and frontend and deployed our project on Render. Wrote tests for backend that runs during the workflow to ensure continuous integration before sending it to production.
-- Implemented the event log system functionality on backend and frontend.
+  
 
 ### Justin
 
