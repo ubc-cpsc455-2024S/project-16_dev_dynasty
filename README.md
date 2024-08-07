@@ -112,12 +112,12 @@ Backend/
 
 ### Module 4 : MongoDB
 
-MongoDB database used on the backend to store all information for the application. The Mongoose npm library is used to simplify database querying. All database related files were stored in the following folders:
+MongoDB document database was used on the backend to store all information for the application. The Mongoose ODM was used to simplify database querying. All database related files were stored were the following folders in the express api:
 
 - `models` folder - All data models / types
 - `services` folder - All database queries
 
-To perform joins on multiple collections in the backend, two joined "Views" were created in the `models` folder. These models combine data from multiple MongoDB collections. They can be queried like regular MongoDB collections. These views are called:
+To perform joins on multiple collections in the backend, two joined "Views" were created in the models folder. These models combined data from multiple MongoDB collections. They could be queried like regular MongoDB collections. These views were called:
 
 - `Bay_View`
 - `House_View`
