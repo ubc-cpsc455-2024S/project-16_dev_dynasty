@@ -10,7 +10,7 @@ environment and relies primarily on manual planning and record-keeping systems. 
 company to track its house manufacturing progress through a 20-bay production line, and automate the creation, modification,
 and retrieval of house information including customer details, quality checks, defect records, and documents. The consistent and 
 centralized storage of house information is critical for the construction team to ensure a controlled handoff between
-production stages. An event logging feature in BayBuild allows managers to access metrics such as the average time spent per production 
+production bays. An event logging feature in BayBuild allows managers to access metrics such as the average time spent per production 
 line bay and the average number of houses manufactured per month.     
 
 ## Project Goals
@@ -60,30 +60,45 @@ line bay and the average number of houses manufactured per month.
 
 ## Technologies Used
 
-### Module 1: Front-End UI (HTML/CSS/Javascript)
-Used HTML and CSS to style website
+### Module 1: HTML, CSS, and JavaScript
+HTML, CSS, and JavaScript were used extensively throughout the project, playing crucial roles in both the frontend and backend development.  HTML was used indirectly via MaterialUI to define the elements and layout of the JSX components created using React. CSS was used to apply styling to the JSX components, ensuring a visually appealing user interface. JavaScript was the primary coding language used for the project. On the frontend, JavaScript, combined with React and Redux, facilitated the development of a sophisticated and responsive user interface. On the backend, JavaScript code, executed in a Node.js environment, was used to handle all server-side functionality.       
 
-### Module 2: Front-End Framework (React & Redux)
-Utilized React for frontend and Redux for state managment to store information queried from the backend which included house, user, customer, and bay information.
+### Module 2: React and Redux
+The React JavaScript library and MaterialUI component library were integrated to develop a dynamic, responsive, and visually appealing user interface composed of reusable JSX components. React's component-based architecture allowed for modular development, promoting code reusability, consistent styling, easier collaboration, and simplified revisions. Redux was used to manage and update the global application state, ensuring data consistency across components and enabling efficient state transitions.
 
-### Module 3: Database (MongoDB)
+### Module 3: Node.js and Express.js
+Node.js was used as the runtime environment to execute JavaScript code on the backend server. The Express.js framework was used with Node.js to handle routing and build RESTful API endpoints to serve responses to the HTTP requests generated from the frontend.   
+
+
+### Module 4 : MongoDB
 MongoDB database used on the backend to store all information for the application
 
-### Module 4: Release Engineering (GitHub Actions & Render)
+### Module 5: GitHub Actions & Render
 Implemented a GitHub Action to deploy the frontend and backend to Render upon merging changes to the main branch. An additional GitHub Action was set up to run tests on all pull requests to ensure that a broken version of the application is not merged.
 
 ## Above and Beyond Functionality
+
+### Industry Partnership
 - Partnered with a real client to develop the project, ensuring that the application meets real-world needs and requirements.
-- Integrated email sending functionality to send notification to users with SendGrid
+
+### Automated Emails
+- Integrated email sending functionality to send notification to users with Mailgun
+
+### Amazon S3 Storage
 - Implemented a system for storing pictures and documents using AWS S3 buckets
+
+### PDF Previewer
 - Developed a PDF previewer on the React frontend, allowing users to view PDF documents directly within the application from AWS S3 buckes. This feature provides a smooth and user-friendly experience by eliminating the need to download files for viewing.
+
+### Checklist PDF Generation and Download
 
 ## Next Steps
 
-- Business metrics
+- Business analytics (cost per square feet)
 - Inventory management
-- Automated email status updates
+- Timesheet management (employee management & payroll)  
 
+  
 ## Team Member Contributions
 
 ### Andrew
@@ -93,9 +108,9 @@ Implemented a GitHub Action to deploy the frontend and backend to Render upon me
 ### Justin
 
 ### Ryan
-- Found industry contact and managed all communication with client
-- Set up all frontend pages with routing to allow other users to build upon them. Also, configured all initial routing for the Express backend. Established a folder structure and components for the team to expand on in Frontend and Backend.
-- Restyled the entire app, and fixed major asethetic bugs after proof of concept was built
+- Found industry contact and managed all communication with the client.
+- Set up all frontend pages with routing to allow other users to build upon them. Also, configured all initial routing for the Express backend. Established a folder structure and components for the team to expand on in frontend and backend.
+- Restyled the entire app, and fixed major aesthetic bugs after proof of concept was built.
 
 ## Prototype Images
 
