@@ -20,7 +20,7 @@ line bay and the average number of houses manufactured per month.
 ✔️ **Add House Record** - allow users to add a house record to the system (i.e., a house to be constructed) with information
 including project number, model number, customer name, size, bay location, and status. 
 
-✔️ **View Production Line Status Board** - allow users to view the production line status board and see the position of
+✔️ **View Production Line Status Board** - allow users to view the Production Line Status Board and see the position of
 each house in the 20 bays of production.
 
 ✔️ **Find House Record** - allow users to find a particular house in the system via a search and view details specific
@@ -37,7 +37,7 @@ allow users to login and logout.
 ✔️ **Create Fillable Quality Control Forms** - allow users to fill out standardized quality control checklists specific to
 different areas of a house and flag defects. 
 
-✔️ **Track House Progress on Production Line Status Board** - allow users to visualize the current status of each house on the production line status board (e.g., red = "work in progress", yellow = "QA required",
+✔️ **Track House Progress on Production Line Status Board** - allow users to visualize the current status of each house on the Production Line Status Board (e.g., red = "work in progress", yellow = "QA required",
 green = "work complete").
 
 ✔️ **Create, Modify, and Retrieve Defects** - allow users to create, modify, and retrieve defect records (including
@@ -51,7 +51,7 @@ customer.
 
 ### Strech Requirements
 
-✔️ **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line bays on the production line status board.
+✔️ **Drag and Drop Houses Between Stages** -  allow users to drag and drop houses between production line bays on the Production Line Status Board.
 
 ✔️ **Email Updates** - allow users to receive email updates detailing important information about a house's status.
 
@@ -74,7 +74,8 @@ Node.js was used as the runtime environment to execute JavaScript code on the ba
 MongoDB database used on the backend to store all information for the application
 
 ### Module 5: GitHub Actions & Render
-Setup CI/CD pipeline using github actions for backend and frontend. The workflow ensures backend tests are ran, frontend build is ran on push to main and on pr before deploying our project on Render. This ensures there's no failing tests and our frontend successfully builds before it is sent to production. Branch protection was also setup so that pr with failing workflow not being able to be merged to main.
+Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workflows ensure that the backend tests are run, and the frontend build is run on both a push to main and a pull request before deploying  the project on Render. This ensures that there are no failing tests and that our frontend successfully builds before it is deployed to production. Branch protection was also setup so that pull requests with failing workflow are not able to be merged to main.
+
 ## Above and Beyond Functionality
 
 ### Industry Partnership
@@ -103,14 +104,18 @@ Setup CI/CD pipeline using github actions for backend and frontend. The workflow
 ### Andrew
 
 ### Andy
-- Reproduced the production line layout for the company using css grid and implemented drag and drop functionalities for house cards to update their bays in the frontend.
+- Reproduced the Production Line Status Board layout for the company using CSS grid and implemented drag and drop functionalities for house cards to update their bays in the frontend.
 - Set up MongoDB for the project and created Models for bays, houses, event logs, and users.
 - Setup frontend Redux thunks and slices for houses, bays, event logs and users for react state management.
 - Implemented user authentication and authorization system on the backend using jwt in cookies and setup frontend user management page and route protection based on user permissions.
-- Setup CI/CD pipeline using github actions for backend and frontend and deployed our project on Render. Wrote tests for backend that runs during the workflow to ensure continuous integration before sending it to production. 
+- Setup CI/CD pipeline using GitHub actions for backend and frontend and deployed our project on Render. Wrote tests for backend that runs during the workflow to ensure continuous integration before sending it to production. 
 - Implemented the event log system functionality on backend and frontend. 
 
 ### Justin
+- Created the initial BayCard component in React to represent houses on the Production Line Status Board.
+- Developed the "Add House" page, including designing a form to capture and validate user input, creating a backend API endpoint to handle POST requests for adding new houses to the MongoDB collection, and implementing an Async Thunk to update the Redux store.
+-  Developed "Customers" functionality, including designing a form element to capture and validate user input, creating backend API endpoints to handle POST, GET, PUT, PATCH, and DELETE requests for manipulating the MongoDB customers collection, and connecting React and Redux frontend components to the backend APIs.
+- Developed the "House Checklist" page featuring fillable form elements to capture user input. Designed a MongoDB schema to model the checklist document collection and created GET, PUT, and DELETE API endpoints for data manipulation. Additionally, implemented PDF generation and download functionality.      
 
 ### Ryan
 - Found industry contact and managed all communication with the client.
