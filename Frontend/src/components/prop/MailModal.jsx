@@ -12,8 +12,10 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  IconButton,
 } from "@mui/material";
 import AttachmentIcon from "@mui/icons-material/Attachment";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import SelectUserMail from "../inputs/SelectUserMail";
 import { getUsersAsync } from "../../redux/auth/thunkAuth";
@@ -36,7 +38,7 @@ const MailModal = ({
   const [subject, setSubject] = useState(title || "");
   const [recipients, setRecipients] = useState(recipient ? [recipient] : []);
   const [body, setBody] = useState("");
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState([]); 
 
   useEffect(() => {
     if (open) {
@@ -61,7 +63,7 @@ Please investigate the issues and take the necessary steps to resolve them as so
     const formData = new FormData();
     formData.append("subject", subject);
     formData.append("to", recipients.join(","));
-    formData.append("type", "defect"); 
+    formData.append("type", "defect");
     formData.append("body", body);
     formData.append("data", JSON.stringify(data));
 
@@ -86,20 +88,27 @@ Please investigate the issues and take the necessary steps to resolve them as so
       }
 
       const result = response.data;
-      if (result.success) {
+      console.log(result);
+      console.log(response);
+      if (response.status === 200) {
         toast.success("Email sent successfully!");
-        handleClose();
+        setTimeout(() => {
+          handleClose();
+        }, 2000);
       } else {
-        toast.error(`Failed to send email: ${result.message}`);
+        toast.error(`Failed to send email: ${result.message || 'An unknown error occurred.'}`);
       }
     } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error("Error sending email.");
+      toast.error(`Error sending email: ${error.response?.data?.message || error.message || 'An unknown error occurred.'}`);
     }
   };
 
   const handleFileChange = (e) => {
-    setFiles(Array.from(e.target.files));
+    setFiles([...files, ...Array.from(e.target.files)]);
+  };
+
+  const handleRemoveFile = (index) => {
+    setFiles(files.filter((_, i) => i !== index));
   };
 
   return (
@@ -108,10 +117,6 @@ Please investigate the issues and take the necessary steps to resolve them as so
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
       >
         <Fade in={open}>
           <Box
@@ -151,7 +156,7 @@ Please investigate the issues and take the necessary steps to resolve them as so
                 <TextField
                   fullWidth
                   multiline
-                  rows={10} 
+                  rows={7}
                   label="Body"
                   value={body}
                   onChange={(e) => setBody(e.target.value)}
@@ -176,9 +181,6 @@ Please investigate the issues and take the necessary steps to resolve them as so
 
               {files.length > 0 && (
                 <Grid item xs={12}>
-                  <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    Attachments Preview
-                  </Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                     {files.map((file, index) => (
                       <Box
@@ -206,6 +208,13 @@ Please investigate the issues and take the necessary steps to resolve them as so
                         >
                           {file.name}
                         </Typography>
+                        <IconButton
+                          size="small"
+                          onClick={() => handleRemoveFile(index)}
+                          sx={{ color: "#fff", ml: 1 }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
                       </Box>
                     ))}
                   </Box>
@@ -226,7 +235,7 @@ Please investigate the issues and take the necessary steps to resolve them as so
           </Box>
         </Fade>
       </Modal>
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer position="top-center" autoClose={1000} />
     </>
   );
 };
