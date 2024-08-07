@@ -158,9 +158,11 @@ Setup a CI/CD pipeline using GitHub actions for backend and frontend. The workfl
 
 ## Next Steps
 
-- Business analytics (cost per square feet)
+- Furthur develop on the Business analytics functionality (cost per square feet)
 - Inventory management
 - Timesheet management (employee management & payroll)
+- Add refresh token functionality to jwt auths for better user experience
+- Deploy frontend and backend to the same domain so that the jwt cookies could be set with the sameSite property to strict to help better prevent Cross-Site Request Forgery (CSRF) attacks and make our application more secure
 
 ## Team Member Contributions
 
