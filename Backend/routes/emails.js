@@ -17,6 +17,16 @@ router.post("/send-email", upload.array("attachments"), async (req, res) => {
   const { subject, to, body, data } = req.body;
   const attachments = req.files;
 
+  if (!to) {
+    return res.status(400).json({ success: false, message: "Recipient 'to' parameter is missing." });
+  }
+  if (!subject) {
+    return res.status(400).json({ success: false, message: "Subject is required." });
+  }
+  if (!body) {
+    return res.status(400).json({ success: false, message: "Body is required." });
+  }
+
   const parsedData = JSON.parse(data);
   const { title, images, status, description, bay_id } = parsedData;
 
@@ -26,7 +36,7 @@ router.post("/send-email", upload.array("attachments"), async (req, res) => {
     from: "Modsolid <noreply@modsolid.com>",
     to,
     subject,
-    text: body, 
+    text: body,
     html: `
       <div style="font-family: Arial, sans-serif; color: rgb(255, 255, 255); background-color: #12151F; padding: 20px;">
         <div style="background-color: #1E1F2A; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 0px;">
@@ -45,8 +55,8 @@ router.post("/send-email", upload.array("attachments"), async (req, res) => {
           ${images
             .map(
               (image) => `
-                <div style="border: 1px solid #ccc; border-radius: 4px; overflow: hidden;  margin: 20px">
-                  <img src="${image}" alt="Defect Image" style="width: 200px; height: 150; object-fit: cover; display: block;">
+                <div style="border: 1px solid #ccc; border-radius: 4px; overflow: hidden; margin: 20px;">
+                  <img src="${image}" alt="Defect Image" style="width: 200px; height: 150px; object-fit: cover; display: block;">
                 </div>
               `
             )
@@ -63,13 +73,29 @@ router.post("/send-email", upload.array("attachments"), async (req, res) => {
 
   try {
     await mg.messages.create(process.env.MAILGUN_DOMAIN, mailOptions);
-    res
-      .status(200)
-      .json({ success: true, message: "Email sent successfully!" });
+    res.status(200).json({ success: true, message: "Email sent successfully!" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to send email.", error: error.message });
+    console.error("Error sending email:", error);
+
+     if (error.status === 400) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad Request",
+        details: error.details || "The request parameters might be invalid.",
+      });
+    } else if (error.status === 403) {
+      return res.status(403).json({
+        success: false,
+        message: "Can't reach recipient domain",
+        details: error.details || "Domain is not authorized to send emails. Please check your Mailgun account settings.",
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send email.",
+        details: error.message || "An unknown error occurred.",
+      });
+    }
   }
 });
 
