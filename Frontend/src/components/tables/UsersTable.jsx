@@ -17,10 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router-dom'
 import { colors } from '../../styles/colors'
 import { toast } from 'react-toastify'
-import {
-    deleteUserAsync,
-    getUsersAsync,
-  } from '../../redux/auth/thunkAuth'
+import { deleteUserAsync, getUsersAsync } from '../../redux/auth/thunkAuth'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -51,10 +48,8 @@ const UsersTable = ({
     } else {
       await dispatch(deleteUserAsync(userId))
       await dispatch(getUsersAsync())
-    } 
+    }
   }
-
- 
 
   return (
     <TableContainer component={Paper} elevation={3}>
@@ -76,35 +71,35 @@ const UsersTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {Array.isArray(users) && users
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map(user => (
-              <TableRowStyled
-                key={user._id}
-              >
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role}</TableCell>
-                <TableCell onClick={e => e.stopPropagation()}>
-                  <IconButton onClick={() => handleDelete(user._id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRowStyled>
-            ))}
+          {Array.isArray(users) &&
+            users
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map(user => (
+                <TableRowStyled key={user._id}>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.role}</TableCell>
+                  <TableCell onClick={e => e.stopPropagation()}>
+                    <IconButton onClick={() => handleDelete(user._id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRowStyled>
+              ))}
         </TableBody>
       </Table>
 
-      {Array.isArray(users) && <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component='div'
-        count={users.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />}
-      
+      {Array.isArray(users) && (
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={users.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
     </TableContainer>
   )
 }

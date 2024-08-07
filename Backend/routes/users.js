@@ -25,23 +25,19 @@ router.post(
     } catch (error) {
       console.log("signup error recieved was: ", error);
       if (error.message.includes("not a valid enum value for path")) {
-        return res
-          .status(408)
-          .json({
-            signUpError: "The role you selected for the user is invalid",
-          });
+        return res.status(408).json({
+          signUpError: "The role you selected for the user is invalid",
+        });
       } else if (error.message.includes("duplicate key error")) {
-        return res
-          .status(405)
-          .json({
-            signUpError:
-              "This user name already exsist, please choose a different one",
-          });
+        return res.status(405).json({
+          signUpError:
+            "This user name already exsist, please choose a different one",
+        });
       } else {
         res.status(400).json({ signUpError: error.message });
       }
     }
-  }
+  },
 );
 
 router.post("/signin", async (req, res, next) => {
@@ -129,7 +125,7 @@ router.delete(
     } catch (error) {
       res.status(500).send("Server error");
     }
-  }
+  },
 );
 
 module.exports = router;

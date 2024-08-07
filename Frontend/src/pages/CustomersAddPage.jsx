@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import Header1 from '../components/headers/Header1'
 import Navbar from '../components/navigation/Navbar'
-import { TextField, Button, Box, Typography, MenuItem } from '@mui/material'
+import { TextField, Button, Box, MenuItem } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { addCustomerAsync } from '../redux/customers/thunksCustomers.js'

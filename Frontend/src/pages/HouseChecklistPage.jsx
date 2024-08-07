@@ -2,28 +2,21 @@ import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
-  CircularProgress,
-  Container,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
 } from '@mui/material'
-import Navbar from '../components/navigation/Navbar'
-import HouseTabs from '../components/navigation/HouseTabs'
-import HouseHeader from '../components/headers/HouseHeader'
-import Header1 from '../components/headers/Header1'
 import ChecklistTable from '../components/tables/ChecklistTable.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getHouseAsync } from '../redux/houses/thunksHouses.js'
-import { styled } from '@mui/system'
 import {
   getChecklistAsync,
   putChecklistAsync,
 } from '../redux/checklists/thunksChecklists.js'
 import ChecklistDownloadButton from '../components/buttons/ChecklistDownloadButton.jsx'
-import { MdFileDownload, MdSave } from 'react-icons/md'
+import { MdSave } from 'react-icons/md'
 import { toast } from 'react-toastify'
 import LoadingPage from '../components/housePage/LoadingPage.jsx'
 

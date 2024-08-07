@@ -1,6 +1,5 @@
 const House = require("../models/House");
 const Customer = require("../models/Customer");
-const mongoose = require("mongoose");
 const House_View = require("../models/House_View");
 const Bay_View = require("../models/Bay_View");
 const { ObjectId } = require("mongodb");
@@ -143,7 +142,7 @@ const toggleBayAssignment = async (houseid, bayid) => {
       const newBay = await Bay_View({ bay_id: bayid });
       if (newBay[0].house_id) {
         throw new Error(
-          `Bay in use: ${bayid} is already assigned to another house.`
+          `Bay in use: ${bayid} is already assigned to another house.`,
         );
       }
     }

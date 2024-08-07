@@ -12,7 +12,6 @@ import {
 } from '../../redux/houses/thunksHouses'
 import { DndContext, useSensor, useSensors, MouseSensor } from '@dnd-kit/core'
 import StatusEditDialog from './StatusEditDialog.jsx'
-import { houseStatusEnumSelectable } from '../../constants/contants.js'
 import { toast } from 'react-toastify'
 const Productionline = () => {
   const dispatch = useDispatch()

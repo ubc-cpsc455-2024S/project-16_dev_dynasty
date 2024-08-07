@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography, Link } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 const HouseHeader = ({ npl, secondHeader }) => {

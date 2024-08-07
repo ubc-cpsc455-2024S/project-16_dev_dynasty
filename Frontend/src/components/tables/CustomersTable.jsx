@@ -53,7 +53,6 @@ const CustomersTable = ({
       await dispatch(deleteCustomerAsync(customerId))
       dispatch(getCustomersAsync({ customerNameQuery }))
     }
-    
   }
 
   const handleRowClick = customerId => {

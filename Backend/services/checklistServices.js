@@ -1,5 +1,4 @@
 const Checklist = require("../models/Checklist");
-// const fs = require("fs");
 const PDFDocument = require("pdfkit-table");
 const templateList = require("../checklist_templates/template_list");
 
@@ -122,5 +121,3 @@ module.exports = {
   deleteChecklistFromDb,
   createPdfChecklist,
 };
-
-// requires

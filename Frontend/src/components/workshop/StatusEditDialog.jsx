@@ -1,23 +1,16 @@
 import { useState, useEffect } from 'react'
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
 } from '@mui/material'
 import { updateHouseAsync } from '../../redux/houses/thunksHouses'
 import { useDispatch } from 'react-redux'
 import { houseStatusEnumSelectable } from '../../constants/contants'
 import SelectCustom from '../inputs/SelectCustom'
-import { colors } from '../../styles/colors'
 
 const StatusEditDialog = ({ isOpen, houseInfo, handleClose }) => {
   const [houseStatus, setHouseStatus] = useState(houseInfo.status)

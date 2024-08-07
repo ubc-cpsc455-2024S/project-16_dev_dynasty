@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
@@ -11,8 +11,6 @@ import {
   MenuItem,
   Button,
   TextField,
-  FormControl,
-  InputLabel,
   FormLabel,
 } from '@mui/material'
 import { getEventLogsAsync } from '../redux/logs/thunkLog'

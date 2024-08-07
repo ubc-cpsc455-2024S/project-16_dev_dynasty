@@ -8,10 +8,10 @@ import BuildIcon from '@mui/icons-material/Build'
 import HomeWorkIcon from '@mui/icons-material/HomeWork'
 import PersonIcon from '@mui/icons-material/Person'
 import GroupIcon from '@mui/icons-material/Group'
-import EventNoteIcon from '@mui/icons-material/EventNote';
+import EventNoteIcon from '@mui/icons-material/EventNote'
 import { closeSidebar } from '../../redux/sidebar/sidebarSlice'
 import CompanyLogo from '../../assets/logo.png'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { routes } from '../../router/routes'
 import { colors } from '../../styles/colors'
 

@@ -14,7 +14,7 @@ const getBaysFromDb = async () => {
 const getAvailableBaysFromDb = async () => {
   const allbayviews = await Bay_View();
   const filteredData = allbayviews.filter(
-    (item) => !Object.keys(item).includes("house_id")
+    (item) => !Object.keys(item).includes("house_id"),
   );
   const noBay = {
     bay_id: "0",

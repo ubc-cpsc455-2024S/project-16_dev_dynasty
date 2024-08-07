@@ -10,15 +10,15 @@ const PrivateRoute = ({ element: Component, requiredRole, ...rest }) => {
   const navigate = useNavigate()
 
   if (!isSignedIn) {
-    return <Navigate to={routes.loginRoute} />;
+    return <Navigate to={routes.loginRoute} />
   }
 
   if (requiredRole && currentUser?.role !== requiredRole) {
-    toast.error('Only admin users can access this page');
-    return <Navigate to={routes.loginRoute} />;
+    toast.error('Only admin users can access this page')
+    return <Navigate to={routes.loginRoute} />
   }
 
-  return <Component {...rest} />;
+  return <Component {...rest} />
 }
 
 export default PrivateRoute

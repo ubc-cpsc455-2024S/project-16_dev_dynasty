@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const documentSchema = new mongoose.Schema({
   title: {
@@ -7,11 +7,11 @@ const documentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    required: true, 
+    required: true,
   },
   description: {
     type: String,
-    default: '',
+    default: "",
   },
   uploadDate: {
     type: Date,
@@ -23,4 +23,4 @@ const documentSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Document', documentSchema);
+module.exports = mongoose.model("Document", documentSchema);

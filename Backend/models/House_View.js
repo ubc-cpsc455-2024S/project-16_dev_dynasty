@@ -53,7 +53,6 @@ const House_View = async (query) => {
       },
     });
   }
-  // return await House.aggregate(house_join);
   try {
     const result = await House.aggregate(house_join);
 

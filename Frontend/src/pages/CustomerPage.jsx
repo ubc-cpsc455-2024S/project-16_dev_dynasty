@@ -13,7 +13,6 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import CustomerTable from '../components/tables/CustomerTable.jsx'
-import { colors } from '../styles/colors'
 
 const LoadingContainer = styled(Box)({
   display: 'flex',

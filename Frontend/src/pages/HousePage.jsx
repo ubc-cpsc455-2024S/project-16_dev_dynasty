@@ -1,39 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
-import {
-  Box,
-  CircularProgress,
-  Container,
-  Typography,
-  Link,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  TableHead,
-  Chip,
-  Tabs,
-  Tab,
-  Button,
-} from '@mui/material'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { Box, Container, TableCell, Tabs, Tab, Button } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  deleteHouseAsync,
-  getHouseAsync,
-  updateHouseAsync,
-} from '../redux/houses/thunksHouses'
+import { deleteHouseAsync, getHouseAsync } from '../redux/houses/thunksHouses'
 import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists'
-import {
-  houseStatusEnumAll,
-  houseStatusEnumSelectable,
-} from '../constants/contants'
-import SelectCustom from '../components/inputs/SelectCustom'
 import { getAvailableBaysAsync } from '../redux/bays/thunksBays'
-import HouseTabs from '../components/navigation/HouseTabs'
 import { styled } from '@mui/system'
 import { colors } from '../styles/colors'
 import HouseDetailsPage from './HouseDetailsPage'

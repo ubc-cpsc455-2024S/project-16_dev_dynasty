@@ -7,7 +7,6 @@ import {
   fetchDocumentsByHouseId,
 } from '../redux/documents/thunksDocuments'
 import {
-  Box,
   Button,
   Container,
   TextField,

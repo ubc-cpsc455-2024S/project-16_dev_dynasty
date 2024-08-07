@@ -21,7 +21,7 @@ const SelectUserMail = ({ recipients, setRecipients }) => {
     }
   }
 
-  const handleDeleteRecipient = (emailToDelete) => {
+  const handleDeleteRecipient = emailToDelete => {
     setRecipients(recipients.filter(email => email !== emailToDelete))
   }
 
@@ -29,36 +29,36 @@ const SelectUserMail = ({ recipients, setRecipients }) => {
     <div>
       <Autocomplete
         options={allUsers}
-        getOptionLabel={(option) => `${option.name} (${option.email})`}
+        getOptionLabel={option => `${option.name} (${option.email})`}
         filterOptions={(options, { inputValue }) =>
           options.filter(
-            (option) =>
+            option =>
               option.name.toLowerCase().includes(inputValue.toLowerCase()) ||
               option.email.toLowerCase().includes(inputValue.toLowerCase())
           )
         }
-        renderInput={(params) => (
+        renderInput={params => (
           <TextField
             {...params}
-            label="Recipients"
-            variant="outlined"
-            size="small"
+            label='Recipients'
+            variant='outlined'
+            size='small'
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
           />
         )}
         onChange={handleAddRecipient}
       />
 
       <ChipContainer>
-        {recipients.map((email) => (
+        {recipients.map(email => (
           <Chip
             key={email}
             label={email}
             onDelete={() => handleDeleteRecipient(email)}
             deleteIcon={<MdClose />}
-            color="primary"
-            variant="outlined"
+            color='primary'
+            variant='outlined'
           />
         ))}
       </ChipContainer>

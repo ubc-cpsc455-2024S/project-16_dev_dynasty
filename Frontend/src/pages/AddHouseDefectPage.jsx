@@ -9,7 +9,6 @@ import {
 import { getAllBaysAsync } from '../redux/bays/thunksBays'
 import { getHouseAsync } from '../redux/houses/thunksHouses'
 import {
-  Box,
   Button,
   Container,
   TextField,

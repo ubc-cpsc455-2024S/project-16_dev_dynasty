@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'; 
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams, useNavigate } from 'react-router-dom'
 import {
   Box,
   Paper,
@@ -14,7 +14,6 @@ import {
   Button,
   IconButton,
   Modal,
-  Backdrop,
   Fade,
   Tooltip,
   Dialog,
@@ -24,95 +23,105 @@ import {
   DialogTitle,
   styled,
   Chip,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MailIcon from '@mui/icons-material/Mail';
-import { colors } from '../styles/colors';
-import LoadingPage from '../components/housePage/LoadingPage';
-import MailModal from '../components/prop/MailModal';
+} from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import MailIcon from '@mui/icons-material/Mail'
+import { colors } from '../styles/colors'
+import LoadingPage from '../components/housePage/LoadingPage'
+import MailModal from '../components/prop/MailModal'
 import {
   fetchDefectsByHouseId,
   deleteDefectAsync,
-} from '../redux/defects/thunksDefects';
+} from '../redux/defects/thunksDefects'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
   backgroundColor: colors.tableHeadCellBackground,
-});
+})
 
 const TableRowStyled = styled(TableRow)({
   '&:nth-of-type(odd)': {
     backgroundColor: colors.tableRowOddBackground,
   },
-});
+})
 
 const HouseDefectsPage = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch(); 
-  const navigate = useNavigate();
-  const defects = useSelector((state) => state.defects.list); 
-  const loading = useSelector((state) => state.defects.loading);
-  const [open, setOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedDefectId, setSelectedDefectId] = useState(null);
-  const [mailModalOpen, setMailModalOpen] = useState(false);
-  const [selectedDefect, setSelectedDefect] = useState(null);
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const defects = useSelector(state => state.defects.list)
+  const loading = useSelector(state => state.defects.loading)
+  const [open, setOpen] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [selectedDefectId, setSelectedDefectId] = useState(null)
+  const [mailModalOpen, setMailModalOpen] = useState(false)
+  const [selectedDefect, setSelectedDefect] = useState(null)
 
   useEffect(() => {
-    dispatch(fetchDefectsByHouseId(id));
-  }, [dispatch, id]);
+    dispatch(fetchDefectsByHouseId(id))
+  }, [dispatch, id])
 
   const handleDelete = async () => {
-    await dispatch(deleteDefectAsync({ houseId: id, defectId: selectedDefectId }));
-    setDeleteDialogOpen(false);
-    setSelectedDefectId(null);
-    dispatch(fetchDefectsByHouseId(id));
-  };
+    await dispatch(
+      deleteDefectAsync({ houseId: id, defectId: selectedDefectId })
+    )
+    setDeleteDialogOpen(false)
+    setSelectedDefectId(null)
+    dispatch(fetchDefectsByHouseId(id))
+  }
 
   const handleCloseDeleteDialog = () => {
-    setDeleteDialogOpen(false);
-    setSelectedDefectId(null);
-  };
+    setDeleteDialogOpen(false)
+    setSelectedDefectId(null)
+  }
 
   const handleCloseImageModal = () => {
-    setOpen(false);
-    setSelectedImage(null);
-  };
+    setOpen(false)
+    setSelectedImage(null)
+  }
 
-  const handleOpenDeleteDialog = (defectId) => {
-    setSelectedDefectId(defectId);
-    setDeleteDialogOpen(true);
-  };
+  const handleOpenDeleteDialog = defectId => {
+    setSelectedDefectId(defectId)
+    setDeleteDialogOpen(true)
+  }
 
-  const handleOpenImageModal = (url) => {
-    setSelectedImage(url);
-    setOpen(true);
-  };
+  const handleOpenImageModal = url => {
+    setSelectedImage(url)
+    setOpen(true)
+  }
 
-  const handleOpenMailModal = (defect) => {
-    setSelectedDefect(defect);
-    setMailModalOpen(true);
-  };
+  const handleOpenMailModal = defect => {
+    setSelectedDefect(defect)
+    setMailModalOpen(true)
+  }
 
   const handleCloseMailModal = () => {
-    setMailModalOpen(false);
-    setSelectedDefect(null);
-  };
+    setMailModalOpen(false)
+    setSelectedDefect(null)
+  }
 
-  if (loading) return <LoadingPage />;
+  if (loading) return <LoadingPage />
 
   return (
     <>
       <Box mt={3} display={'flex'} justifyContent={'space-between'}>
-
-        <Button variant="contained" color="primary" onClick={() => navigate(`/houses/${id}/add-defect`)}>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => navigate(`/houses/${id}/add-defect`)}
+        >
           Add Defect
         </Button>
       </Box>
       {defects.length === 0 ? (
-        <Box height={'200px'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Box
+          height={'200px'}
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
           <Typography>No Defects Created</Typography>
         </Box>
       ) : (
@@ -137,27 +146,37 @@ const HouseDefectsPage = () => {
               padding: '16px',
             }}
           >
-            <img src={selectedImage} alt="Selected" style={{ width: '100%', height: 'auto' }} />
+            <img
+              src={selectedImage}
+              alt='Selected'
+              style={{ width: '100%', height: 'auto' }}
+            />
           </div>
         </Fade>
       </Modal>
       <Dialog
         open={deleteDialogOpen}
         onClose={handleCloseDeleteDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id="alert-dialog-title">{'Confirm Deletion'}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{'Confirm Deletion'}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this defect? This action cannot be undone.
+          <DialogContentText id='alert-dialog-description'>
+            Are you sure you want to delete this defect? This action cannot be
+            undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} color="secondary">
+          <Button onClick={handleCloseDeleteDialog} color='secondary'>
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary" variant={'contained'} autoFocus>
+          <Button
+            onClick={handleDelete}
+            color='primary'
+            variant={'contained'}
+            autoFocus
+          >
             Delete
           </Button>
         </DialogActions>
@@ -167,35 +186,40 @@ const HouseDefectsPage = () => {
           open={mailModalOpen}
           handleClose={handleCloseMailModal}
           title={`Defect Report: ${selectedDefect.title}`}
-          type="defect"
-          images = {selectedDefect.images}
+          type='defect'
+          images={selectedDefect.images}
           data={selectedDefect}
         />
       )}
     </>
-  );
-};
+  )
+}
 
-const HouseDefectTable = ({ defects, handleOpenDeleteDialog, handleOpenImageModal, handleOpenMailModal }) => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+const HouseDefectTable = ({
+  defects,
+  handleOpenDeleteDialog,
+  handleOpenImageModal,
+  handleOpenMailModal,
+}) => {
+  const { id } = useParams()
+  const navigate = useNavigate()
 
-  const getStatusColor = (status) => {
+  const getStatusColor = status => {
     switch (status) {
       case 'Incomplete':
-        return 'red';
+        return 'red'
       case 'In progress':
-        return 'rgb(117, 59, 8)';
+        return 'rgb(117, 59, 8)'
       case 'Resolved':
-        return 'green';
+        return 'green'
       default:
-        return 'black';
+        return 'black'
     }
-  };
+  }
 
   const truncateText = (text, maxLength) => {
-    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-  };
+    return text.length > maxLength ? text.slice(0, maxLength) + '...' : text
+  }
 
   return (
     <Paper elevation={3} style={{ padding: '16px', marginTop: '20px' }}>
@@ -212,7 +236,7 @@ const HouseDefectTable = ({ defects, handleOpenDeleteDialog, handleOpenImageModa
             </TableRow>
           </TableHead>
           <TableBody>
-            {defects.map((defect) => (
+            {defects.map(defect => (
               <TableRowStyled key={defect._id}>
                 <TableCell>
                   <Tooltip title={defect.title} arrow>
@@ -237,7 +261,8 @@ const HouseDefectTable = ({ defects, handleOpenDeleteDialog, handleOpenImageModa
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+                      gridTemplateColumns:
+                        'repeat(auto-fill, minmax(80px, 1fr))',
                       gap: '8px',
                       maxHeight: '150px',
                       overflowY: 'auto',
@@ -261,13 +286,19 @@ const HouseDefectTable = ({ defects, handleOpenDeleteDialog, handleOpenImageModa
                   </div>
                 </TableCell>
                 <TableCell>
-                  <IconButton onClick={() => navigate(`/houses/${id}/edit-defect/${defect._id}`)}>
+                  <IconButton
+                    onClick={() =>
+                      navigate(`/houses/${id}/edit-defect/${defect._id}`)
+                    }
+                  >
                     <EditIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleOpenDeleteDialog(defect._id)}>
+                  <IconButton
+                    onClick={() => handleOpenDeleteDialog(defect._id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleOpenMailModal(defect)}> 
+                  <IconButton onClick={() => handleOpenMailModal(defect)}>
                     <MailIcon />
                   </IconButton>
                 </TableCell>
@@ -277,7 +308,7 @@ const HouseDefectTable = ({ defects, handleOpenDeleteDialog, handleOpenImageModa
         </Table>
       </TableContainer>
     </Paper>
-  );
-};
+  )
+}
 
-export default HouseDefectsPage;
+export default HouseDefectsPage

@@ -1,6 +1,5 @@
 import axios from 'axios'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
-import { toast } from 'react-toastify'
 
 const getAllLogs = async () => {
   try {
@@ -104,7 +103,8 @@ const getAllLogs = async () => {
       },
       {
         eventTime: '2023-09-09 13:15:42',
-        logContent: 'Defect created for house with NPL 369258 in Bay 4, and the house model is 987-654',
+        logContent:
+          'Defect created for house with NPL 369258 in Bay 4, and the house model is 987-654',
         eventType: 'Defect created',
       },
       {
