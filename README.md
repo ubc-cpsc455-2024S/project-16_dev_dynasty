@@ -130,7 +130,7 @@ Setup CI/CD pipeline using github actions for backend and frontend. The workflow
 
 ### Industry Partnership
 
-- **Description:**Partnered with a real client to develop the project
+- **Description:** Partnered with a real client to develop the project
 - **Above and Beyond:**
   - Held an initial kickoff meeting with client
   - Defined client requirements and clarified additional requirements while building over email
