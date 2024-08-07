@@ -1,14 +1,15 @@
 import React from 'react'
 import { Box, Typography, Link } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 
 const HouseHeader = ({ npl, secondHeader }) => {
   return (
     <Box>
-      <Link href='/houses' underline='none'>
+      <NavLink to='/houses' style={{ textDecoration: 'none' }}>
         <Typography variant='h4' component='span' color='primary'>
           Houses
         </Typography>
-      </Link>
+      </NavLink>
       <Typography variant='h4' component='span' color='textPrimary'>
         {' > House ' + npl}
       </Typography>
