@@ -52,12 +52,11 @@ const Productionline = () => {
       return
     }
 
-    const newBayId = parseFloat(over.id)
-    const oldBay = active.data.current.oldBay
-    if (oldBay === newBayId) {
-      return
+    const newBayId = parseFloat(over.id).toString()
+    const oldBay = active.data.current.bay_id
+    if (oldBay !== newBayId) {
+      dispatch(bayToHouseAsync({ houseId: houseId, bayId: newBayId }))
     }
-    dispatch(bayToHouseAsync({ houseId: houseId, bayId: newBayId }))
   }
 
   const handleOpenEditHouseStatusDialog = houseInfo => {
