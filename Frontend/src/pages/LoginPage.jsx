@@ -62,7 +62,7 @@ const LoginPage = () => {
             boxShadow: 'rgba(158, 134, 134, 0.24) 0px 3px 8px',
           }}
         >
-          <Typography variant='h5'>Login</Typography>
+          <Typography variant='h5'>Please Login</Typography>
           <br />
           <form onSubmit={handleSubmit}>
             <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
