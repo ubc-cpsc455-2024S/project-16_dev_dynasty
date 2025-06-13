@@ -50,6 +50,10 @@ const UsersTable = ({
       toast.error('Only admin user authorized for this action')
       return
     }
+    if (user.role === 'admin') {
+      toast.error('Cannot delete admin user')
+      return
+    }
     setUserToDelete(user)
     setDeleteDialogOpen(true)
   }
@@ -100,7 +104,10 @@ const UsersTable = ({
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell onClick={e => e.stopPropagation()}>
-                      <IconButton onClick={() => handleDeleteClick(user)}>
+                      <IconButton 
+                        onClick={() => handleDeleteClick(user)}
+                        disabled={user.role === 'admin'}
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
