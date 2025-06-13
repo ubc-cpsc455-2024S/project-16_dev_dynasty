@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/navigation/Navbar'
 import Header1 from '../components/headers/Header1'
 import { Box, Container, TableCell, Tabs, Tab, Button } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteHouseAsync, getHouseAsync } from '../redux/houses/thunksHouses'
 import { deleteChecklistAsync } from '../redux/checklists/thunksChecklists'
@@ -16,6 +16,8 @@ import HouseChecklistPage from './HouseChecklistPage'
 import DeleteHouseDialog from '../components/housePage/DeleteHouseDialog'
 import HouseHeader from '../components/headers/HouseHeader'
 import LoadingPage from '../components/housePage/LoadingPage'
+import { routes } from '../router/routes'
+import { toast } from 'react-toastify'
 
 const TableHeadCell = styled(TableCell)({
   fontWeight: 'bold',
@@ -24,10 +26,12 @@ const TableHeadCell = styled(TableCell)({
 
 const HousePage = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [tabValue, setTabValue] = useState('Details')
   const [deleteHouseDialogOpen, setDeleteHouseDialogOpen] = useState(false)
   const dispatch = useDispatch()
   const houseInfo = useSelector(state => state.houses.findHouse || null)
+  const currentUser = useSelector(state => state.auth.user)
 
   useEffect(() => {
     dispatch(getHouseAsync(id))
@@ -35,17 +39,28 @@ const HousePage = () => {
   }, [dispatch, id])
 
   const handleDeleteHouse = async () => {
-    await dispatch(deleteHouseAsync(houseInfo._id))
-    await dispatch(deleteChecklistAsync(houseInfo._id))
-    navigate(routes.housesRoute)
+    try {
+      await dispatch(deleteHouseAsync(houseInfo._id))
+      await dispatch(deleteChecklistAsync(houseInfo._id))
+      toast.success('House deleted successfully')
+      navigate(routes.housesRoute)
+    } catch (error) {
+      toast.error('Failed to delete house')
+    }
   }
 
   const handleClickOpenDeleteHouseDialog = () => {
+    if (!currentUser) {
+      toast.error('Please log in to perform this action')
+      return
+    }
+
     if (currentUser.role !== 'admin') {
       toast.error('Only admin user authorized for this action')
-    } else {
-      setDeleteHouseDialogOpen(true)
+      return
     }
+
+    setDeleteHouseDialogOpen(true)
   }
 
   const handleCloseDeleteHouseDialog = () => {
@@ -64,16 +79,14 @@ const HousePage = () => {
       <Header1
         title={<HouseHeader npl={houseInfo?.npl} />}
         button={
-          <Box display={'flex'}>
-            <Button
-              variant='outlined'
-              color='secondary'
-              onClick={handleClickOpenDeleteHouseDialog}
-              style={{ marginLeft: '10px' }}
-            >
-              Delete House
-            </Button>
-          </Box>
+          <Button
+            variant='outlined'
+            color='secondary'
+            onClick={handleClickOpenDeleteHouseDialog}
+            style={{ marginLeft: '10px' }}
+          >
+            Delete House
+          </Button>
         }
       />
       <Container>
