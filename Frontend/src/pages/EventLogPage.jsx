@@ -69,20 +69,22 @@ const EventLogPage = () => {
     setNpl('')
   }
 
-  const filteredLogs = eventLogs.filter(log => {
-    const logDate = new Date(log.eventTime)
-    const logYear = logDate.getFullYear()
-    const logMonth = logDate.getMonth() + 1
+  const filteredLogs = eventLogs
+    .filter(log => {
+      const logDate = new Date(log.eventTime)
+      const logYear = logDate.getFullYear()
+      const logMonth = logDate.getMonth() + 1
 
-    return (
-      (!year || logYear === parseInt(year)) &&
-      (!month || logMonth === parseInt(month)) &&
-      (!type || log.eventType.toLowerCase().includes(type.toLowerCase())) &&
-      (!bay || log.logContent.toLowerCase().includes(bay.toLowerCase())) &&
-      (!npl || log.logContent.toLowerCase().includes(npl.toLowerCase())) &&
-      (!model || log.logContent.toLowerCase().includes(model.toLowerCase()))
-    )
-  })
+      return (
+        (!year || logYear === parseInt(year)) &&
+        (!month || logMonth === parseInt(month)) &&
+        (!type || log.eventType.toLowerCase().includes(type.toLowerCase())) &&
+        (!bay || log.logContent.toLowerCase().includes(bay.toLowerCase())) &&
+        (!npl || log.logContent.toLowerCase().includes(npl.toLowerCase())) &&
+        (!model || log.logContent.toLowerCase().includes(model.toLowerCase()))
+      )
+    })
+    .sort((a, b) => new Date(b.eventTime) - new Date(a.eventTime))
 
   const ErrorText = styled(Typography)({
     color: colors.errorTextColor,
@@ -188,7 +190,7 @@ const EventLogPage = () => {
               <MenuItem value=''>
                 <em>All Years</em>
               </MenuItem>
-              {[2022, 2023, 2024].map(y => (
+              {[2022, 2023, 2024, 2025].map(y => (
                 <MenuItem key={y} value={y}>
                   {y}
                 </MenuItem>
