@@ -64,6 +64,23 @@ const LoginPage = () => {
         >
           <Typography variant='h5'>Please Login</Typography>
           <br />
+          <Box sx={{ 
+            backgroundColor: '#323232ff', 
+            padding: 2, 
+            borderRadius: 1, 
+            marginBottom: 2,
+            textAlign: 'center'
+          }}>
+            <Typography variant='body2' color='text.secondary'>
+              <strong>Test Accounts for Visitors:</strong>
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Username: <strong>admin</strong> | Password: <strong>admin123</strong>
+            </Typography>
+            <Typography variant='body2' color='text.secondary'>
+              Username: <strong>user</strong> | Password: <strong>user123</strong>
+            </Typography>
+          </Box>
           <form onSubmit={handleSubmit}>
             <Box display={'flex'} flexDirection={'column'} gap={'10px'}>
               <FormLabel>Username</FormLabel>
